@@ -1,0 +1,115 @@
+---
+title: "Israel's election for the 25th Knesset"
+subtitle: "What just happened??"
+author: "Guy Freeman"
+date: 2022-11-09
+categories: [israel, elections, data, analysis]
+execute:
+  echo: false
+  warning: false
+---
+
+## Introduction
+
+After an unprecedented fifth general election in four years for Israel's Knesset (parliament), everyone was expecting another close result. Instead, the faction allied to the erstwhile prime minister Benjamin Netanyahu ended up with a strong (by Israeli standards) majority of 65 seats out of 120. Meanwhile, the venerable left-wing Meretz party will have no members in the Knesset for the first time since its founding, and the unsubtly racist Otzma Yehudit [Jewish Power] party, until a couple of years ago on the outer fringes of Israeli politics, has 7 seats.
+
+What happened? Tom Friedman stopped talking to the nearest taxi driver long enough to proclaim "the end of the Israel we knew".
+
+Those who didn't panic noted that the number of votes for the two factions (pro- and anti-Bibi) were very similar, and only a treacherous vote threshold caused two anti-Bibi parties (including the aforementioned venerable Meretz) to fail to win any seats, rather than a literal collapse to zero votes.
+
+## Data Analysis
+
+```{r}
+#| label: setup
+#| echo: false
+
+library(tidyverse)
+library(DT)
+
+bechirotraw <- read_csv("bechirot.csv") %>% 
+  mutate(elections = as.character(elections))
+
+bechirot <- bechirotraw %>% 
+  mutate(envelopes = if_else(place %in% c(0, 875, 9999, 99999), TRUE, FALSE))
+
+population_per_election <- bechirot %>% 
+  filter(envelopes == 0) %>% 
+  group_by(elections) %>% 
+  summarize(pop = sum(votes))
+
+voters_per_election <- bechirot %>% 
+  filter(!party %in% c("didntvote", "cancelled")) %>% 
+  group_by(elections) %>% 
+  summarize(valid = sum(votes)) %>% 
+  inner_join(population_per_election)
+
+votes_per_party <- bechirot %>% 
+  filter(!party %in% c("didntvote")) %>% 
+  group_by(elections, party) %>% 
+  summarize(pv = sum(votes)) %>% 
+  inner_join(voters_per_election) %>% 
+  mutate(validshare = pv/valid) %>% 
+  mutate(popshare = pv/pop)
+
+votes_per_party_over1percent <- votes_per_party %>% 
+  filter(validshare >= 0.01)
+
+votes_per_party_over1percent_elections24plus <- votes_per_party_over1percent %>% 
+  filter(elections >= 24) %>% 
+  mutate(partyid = recode(party, 
+    `ת` = "כן", 
+    `ד` = "ודעם", 
+    `ום` = "ודעם", 
+    .default = party))
+
+votes_per_partyid_elections24plus <- votes_per_party_over1percent_elections24plus %>% 
+  mutate(party = NULL) %>% 
+  group_by(elections, partyid) %>% 
+  summarize(partyidvotes = sum(pv)) %>% 
+  inner_join(voters_per_election) %>% 
+  mutate(validshare = partyidvotes/valid) %>% 
+  mutate(popshare = partyidvotes/pop) %>% 
+  mutate(pv = NULL, valid = NULL, pop = NULL) %>% 
+  pivot_longer(c(partyidvotes, validshare, popshare)) %>% 
+  pivot_wider(names_from = c(elections), values_from = value) %>% 
+  mutate(change = `25` - `24`)
+
+votes_per_bibi_elections24plus <- votes_per_party_over1percent_elections24plus %>% 
+  mutate(bibi = if_else(party %in% c("מחל", "שס", "ג", "ט", "טב", "כ", "כף‎", "ב", "נץ‎", "ז", "כף", "נר", "נ"), TRUE, 
+                        if_else(party %in% c("פה", "כן", "ל", "עם", "עם", "ום", "אמת", "מרצ", "ד", "ודעם", "ודעם", "ת", "דעם"), FALSE, NA))) %>% 
+  group_by(elections, bibi) %>% 
+  summarize(bv = sum(pv)) %>% 
+  inner_join(voters_per_election) %>% 
+  mutate(validshare = bv/valid) %>% 
+  mutate(popshare = bv/pop)
+```
+
+## Key Findings
+
+The analysis reveals that vote totals between the most recent two elections didn't change much between the blocs. For simplicity, I only classify lists that received more than 1% of valid votes, counting Ayelet Shaked's previous and eventual political vehicles of Yamina and Jewish Home respectively (both ב) in the pro-Bibi camp, while erstwhile Bibi ally's Lieberman's Israel Beiteinu (ל) is put in the anti-Bibi camp.
+
+With this calculation, the surface analysis is correct that the vote totals were very similar and very unchanged between the camps: the pro-Bibi camp (including Ayelet Shaked) received 48.3% of the valid votes in the 24th election, and 49.6% in the 25th election, while the anti-Bibi camp received 50.2% and 48.9%. Interestingly, as a percentage of the eligible voting population (so taking into account turnout), both camps grew, the Bibists from 32.4% to 34.8%, and the rest from 33.7% to 34.3%.
+
+## Vote Share Changes
+
+```{r}
+#| label: vote-changes
+#| echo: false
+
+votes_per_partyid_elections24plus %>% 
+  select(partyid, name, change) %>% 
+  pivot_wider(values_from = change) %>% 
+  mutate(validshare = round(validshare * 100, 1), 
+         popshare = round(popshare * 100, 1)) %>% 
+  rename(`Vote change` = partyidvotes, 
+         `Valid % change` = validshare, 
+         `Pop % change` = popshare, 
+         List = partyid) %>% 
+  datatable(options = list(pageLength = 10))
+```
+
+## Conclusion
+
+The data shows that while the overall vote shares between the two main blocs remained relatively stable, there were significant shifts within the anti-Bibi camp that led to Meretz falling below the electoral threshold and Otzma Yehudit gaining representation.
+
+*Data source: [Public Data Market](https://publicdatamarket.com/israeldata/bechirot)* 

@@ -1,0 +1,11 @@
+# options apply to all posts in this folder
+
+# freeze computational output
+freeze: true
+
+# default format options for posts
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    fig-cap-location: bottom 

@@ -1,0 +1,23 @@
+---
+title: "About Guy Freeman"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/gfrm_in
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/guyfreemanstat
+    - icon: github
+      text: Github
+      href: https://github.com/gfrmin
+
+---
+
+Guy Freeman is a data geek who has lived in Israel, England, Hong Kong, and Israel, in that order.
+
+At some point he got a PhD in statistics. This has been wonderfully useful, at least in finding well-renumerated and interesting work, across all areas of data science, to while away the days. He doesn't use the title "Dr.", though, because he's not a medical doctor, thank goodness.
+
+Controversially, and astoundingly, he's fine with the Oxford comma.
