@@ -37,7 +37,7 @@ To run this blog locally:
    ```
 4. **Clone this repository**:
    ```bash
-   git clone https://github.com/yourusername/blog-quarto.git
+   git clone git@gitlab.com:gfrmin/blog-quarto.git
    cd blog-quarto
    ```
 5. **Start the development server**:
@@ -53,21 +53,22 @@ To run this blog locally:
 
 ```
 blog-quarto/
-├── _quarto.yml          # Quarto configuration file
-├── index.qmd            # Homepage content
-├── about.qmd            # About page
-├── posts/               # Blog posts directory
-│   ├── _metadata.yml    # Posts metadata
-│   ├── bechirot/        # Election analysis post
+├── _quarto.yml           # Quarto configuration file
+├── index.qmd             # Homepage content
+├── about.qmd             # About page
+├── posts/                # Blog posts directory
+│   ├── _metadata.yml     # Posts metadata
+│   ├── bechirot/         # Election analysis post
 │   └── hanukkah-of-code/ # Data puzzles post
-├── styles.css           # Custom CSS styling
-├── profile.jpg          # Profile image
-├── main.py              # Python utility script
-├── pyproject.toml       # Python project configuration
-├── uv.lock              # Python dependency lock file
-├── _site/               # Generated site (gitignored)
-├── _freeze/             # Quarto cache (gitignored)
-└── .venv/               # Python virtual environment (gitignored)
+├── docs/                 # Documentation directory
+│   └── memory-bank/      # Memory bank documentation
+├── styles.css            # Custom CSS styling
+├── profile.jpg           # Profile image
+├── main.py               # Python utility script
+├── pyproject.toml        # Python project configuration
+├── uv.lock               # Python dependency lock file
+├── _site/                # Generated site (gitignored)
+├── _freeze/              # Quarto cache (gitignored)
 ```
 
 ## Dependencies
@@ -97,13 +98,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-- **GitHub**: [@yourusername](https://github.com/yourusername)
-- **Twitter**: [@yourusername](https://twitter.com/yourusername)
-- **Email**: your.email@example.com
+- **GitHub**: [@gfrmin](https://github.com/gfrmin)
+- **Twitter**: [@gfrmin](https://twitter.com/gfrmin)
 
 ---
 
 *Built with ❤️ using Quarto*
-
-
-
