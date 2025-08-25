@@ -3,19 +3,19 @@ project:
 
 website:
   title: "Guy Freeman"
+  site-url: https://www.gfrm.in
+  description: "A blog about data science, statistics, and more."
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/gfrmin
       - icon: twitter
-        href: https://twitter.com
+        href: https://twitter.com/gfrmin
+      - icon: rss
+        href: index.xml
 format:
   html:
     theme:
       - cosmo
-      - brand
     css: styles.css
-
-
-

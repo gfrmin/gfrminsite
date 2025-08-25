@@ -24,13 +24,16 @@ Those who didn't panic noted that the number of votes for the two factions (pro-
 #| echo: false
 
 library(tidyverse)
+library(duckdb)
 library(DT)
 
-bechirotraw <- read_csv("bechirot.csv") %>% 
-  mutate(elections = as.character(elections))
+# download from "https://renavon.com/api/v1/datasets/pdm/bechirot/download?format=csv" and save as bechirot.csv
+
+conn <- dbConnect(duckdb())
+bechirotraw <- dbGetQuery(conn, "SELECT * FROM read_csv_auto('bechirot.csv')") %>% as_tibble() %>% mutate(elections = as.character(election))
 
 bechirot <- bechirotraw %>% 
-  mutate(envelopes = if_else(place %in% c(0, 875, 9999, 99999), TRUE, FALSE))
+  mutate(envelopes = if_else(city_number %in% c(0, 875, 9999, 99999), TRUE, FALSE))
 
 population_per_election <- bechirot %>% 
   filter(envelopes == 0) %>% 
@@ -75,7 +78,7 @@ votes_per_partyid_elections24plus <- votes_per_party_over1percent_elections24plu
   mutate(change = `25` - `24`)
 
 votes_per_bibi_elections24plus <- votes_per_party_over1percent_elections24plus %>% 
-  mutate(bibi = if_else(party %in% c("מחל", "שס", "ג", "ט", "טב", "כ", "כף‎", "ב", "נץ‎", "ז", "כף", "נר", "נ"), TRUE, 
+  mutate(bibi = if_else(party %in% c("מחל", "שס", "ג", "ט", "טב", "כ", "כף", "ב", "נץ", "ז", "כף", "נר", "נ"), TRUE, 
                         if_else(party %in% c("פה", "כן", "ל", "עם", "עם", "ום", "אמת", "מרצ", "ד", "ודעם", "ודעם", "ת", "דעם"), FALSE, NA))) %>% 
   group_by(elections, bibi) %>% 
   summarize(bv = sum(pv)) %>% 
