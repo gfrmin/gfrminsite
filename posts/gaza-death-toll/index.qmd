@@ -1,0 +1,27 @@
+---
+title: "Analysing the official Gaza death toll"
+author: "Guy Freeman"
+date: 2023-10-31
+categories: [data, analysis, gaza, war]
+execute:
+  echo: false
+  warning: false
+---
+
+```{r}
+library(tidyverse)
+
+dead_everyone_raw <- read_csv("tabula-here-adults.csv", na="أقل من عام")
+colnames(dead_everyone_raw) <- c("id", "idnumber", "name", "gender", "age")
+
+dead_everyone <- dead_everyone_raw |>
+  mutate(
+    age = if_else(is.na(age), 0, as.double(age)),
+    gender = if_else(gender == "ذكر", "m", "f"),
+    idnumber1 = str_sub(idnumber, 1, 1)
+  )
+
+ggplot(dead_everyone |> filter(age < 1000)) +
+  geom_freqpoly(aes(age, after_stat(density), colour = gender)) +
+  labs(x = "Age", y = "Percent", colour = "Gender")
+```

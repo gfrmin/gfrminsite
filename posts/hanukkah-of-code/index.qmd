@@ -6,10 +6,9 @@ date: 2022-12-25
 categories: [data, analysis, fun]
 execute:
   echo: true
+  message: false
   warning: false
 ---
-
-## Introduction
 
 The madpersons behind the retro-chic data analysis tool [VisiData](https://visidata.org) have created an alternative to the infamous "Advent of Code". Instead of programming to solve yet more optimization puzzles, and instead of the hackneyed Christmas theme, the "Hanukkah of Data" requires data analysis to solve a ~~murder mystery~~ rug-finding mission.
 
@@ -19,12 +18,7 @@ I only just found out about it, so although one puzzle was released for each day
 
 Here's how I solved all 8 puzzles in R. I can probably also give more details (aka make the code clearer) upon request.
 
-## Setup
-
 ```{r}
-#| label: setup
-#| echo: true
-
 # libraries
 library(tidyverse, warn.conflicts = FALSE)
 library(lubridate, warn.conflicts = FALSE)
@@ -37,13 +31,11 @@ customers <- read_csv("noahs-customers.csv")
 orders <- read_csv("noahs-orders.csv")
 items <- read_csv("noahs-orders_items.csv")
 products <- read_csv("noahs-products.csv")
-orders_plus <- orders %>% inner_join(items) %>% inner_join(products) %>% inner_join(customers)
+orders_plus <- orders |> inner_join(items) |> inner_join(products) |> inner_join(customers)
 ```
 
-## Puzzle 1: The Investigator
-
 ```{r}
-#| label: puzzle1
+# Puzzle 1
 
 letter_to_phonenumber <- function(letter) {
     letter_index <- which(letters == letter)
@@ -56,152 +48,132 @@ letter_to_phonenumber <- function(letter) {
 }
 
 name_to_phonenumber <- function(name) {
-    surname <- (strsplit(name, " ") %>% unlist)[-1]
-    name_lower <- str_to_lower(surname) %>% str_replace_all("[^a-z]", "")
+    surname <- (strsplit(name, " ") |> unlist())[-1]
+    name_lower <- str_to_lower(surname) |> str_replace_all("[^a-z]", "")
     name_short <- str_sub(name_lower, end = 10)
     name_vector <- unlist(strsplit(name_short, ""))
     name_phonenumber_vector <- map_chr(name_vector, letter_to_phonenumber)
-    return(name_phonenumber_vector %>% paste0(collapse = ""))
+    return(name_phonenumber_vector |> paste0(collapse = ""))
 }
 
-customers_with_phonenumbers <- customers %>% 
-  mutate(name_phone = map_chr(name, name_to_phonenumber)) %>% 
+customers_with_phonenumbers <- customers |>
+  mutate(name_phone = map_chr(name, name_to_phonenumber)) |>
   mutate(phoneraw = str_replace_all(phone, "-", ""))
 
-investigator <- customers_with_phonenumbers %>% filter(phoneraw == name_phone)
-investigator_phone <- investigator %>% pull(phone)
+investigator <- customers_with_phonenumbers |> filter(phoneraw == name_phone)
+investigator_phone <- investigator |> pull(phone)
 
 print(investigator_phone)
 ```
 
-## Puzzle 2: The Contractor
-
 ```{r}
-#| label: puzzle2
+# Puzzle 2
 
 name_to_initials <- function(name) {
-    initials <- str_extract_all(name, "[A-Z]") %>% unlist %>% paste0(collapse = "")
+    initials <- str_extract_all(name, "[A-Z]") |> unlist() |> paste0(collapse = "")
     return(initials)
 }
 
-orders_plus_jd <- orders_plus %>% 
-  mutate(name_initials = map_chr(name, name_to_initials)) %>% 
+orders_plus_jd <- orders_plus |>
+  mutate(name_initials = map_chr(name, name_to_initials)) |>
   filter(name_initials == "JD")
 
-orders_coffeebagels_2017 <- orders_plus %>% 
-  filter(sku %in% c("DLI1464", "BKY4234", "BKY5887")) %>% 
-  group_by(orderid) %>% 
-  filter(n() > 1) %>% 
-  ungroup %>% 
+orders_coffeebagels_2017 <- orders_plus |>
+  filter(sku %in% c("DLI1464", "BKY4234", "BKY5887")) |>
+  group_by(orderid) |>
+  filter(n() > 1) |>
+  ungroup() |>
   filter(year(shipped) == 2017)
 
-contractor_phone <- orders_coffeebagels_2017 %>% pull(phone) %>% unique
+contractor_phone <- orders_coffeebagels_2017 |> pull(phone) |> unique()
 
 print(contractor_phone)
 ```
 
-## Puzzle 3: The Spider Guy
-
 ```{r}
-#| label: puzzle3
+# Puzzle 3
 
-spiderguy <- customers %>% 
-  filter(year(birthdate) %in% c(2006, 1994, 1982, 1970, 1958, 1946, 1934)) %>% 
-  filter(month(birthdate) %in% c(3,4)) %>% 
+spiderguy <- customers |>
+  filter(year(birthdate) %in% c(2006, 1994, 1982, 1970, 1958, 1946, 1934)) |>
+  filter(month(birthdate) %in% c(3, 4)) |>
   filter(citystatezip == "South Ozone Park, NY 11420")
 
-spiderguy_phone <- spiderguy %>% pull(phone)
+spiderguy_phone <- spiderguy |> pull(phone)
 
 print(spiderguy_phone)
 ```
 
-## Puzzle 4: The Tinder Girl
-
 ```{r}
-#| label: puzzle4
+# Puzzle 4
 
-orders_pastries_before5am <- orders_plus %>% 
-  filter(hour(ordered) == 4) %>% 
-  filter(ordered == shipped) %>% 
+orders_pastries_before5am <- orders_plus |>
+  filter(hour(ordered) == 4) |>
+  filter(ordered == shipped) |>
   filter(str_detect(sku, "BKY"))
 
-tinder_girl <- customers %>% filter(customerid == 5375)
-tinder_girl_phone <- tinder_girl %>% pull(phone)
+tinder_girl <- customers |> filter(customerid == 5375)
+tinder_girl_phone <- tinder_girl |> pull(phone)
 
 print(tinder_girl_phone)
 ```
 
-## Puzzle 5: The Cat Lady
-
 ```{r}
-#| label: puzzle5
+# Puzzle 5
 
-orders_queens_cats <- orders_plus %>% 
-  filter(str_detect(citystatezip, "Queens")) %>% 
+orders_queens_cats <- orders_plus |>
+  filter(str_detect(citystatezip, "Queens")) |>
   filter(str_detect(desc, "Cat"))
 
-cat_lady_candidates <- orders_queens_cats %>% 
-  select(customerid, name, phone) %>% 
-  distinct # only one female name
+cat_lady_candidates <- orders_queens_cats |>
+  select(customerid, name, phone) |>
+  distinct() # only one female name
 
 print(cat_lady_candidates[1,]$phone)
 ```
 
-## Puzzle 6: The Frugal Cousin
-
 ```{r}
-#| label: puzzle6
+# Puzzle 6
 
-orders_losing <- orders_plus %>% filter(wholesale_cost > unit_price)
-frugal_cousin <- customers %>% filter(customerid == 8342) # by far the most lossy orders
-frugal_cousin_phone <- frugal_cousin %>% pull(phone)
+orders_losing <- orders_plus |> filter(wholesale_cost > unit_price)
+frugal_cousin <- customers |> filter(customerid == 8342) # by far the most lossy orders
+frugal_cousin_phone <- frugal_cousin |> pull(phone)
 
 print(frugal_cousin_phone)
 ```
 
-## Puzzle 7: True Love
-
 ```{r}
-#| label: puzzle7
+# Puzzle 7
 
-orders_plus_orderdate <- orders_plus %>% 
-  mutate(order_day = day(ordered), 
-         order_month = month(ordered), 
-         order_year = year(ordered)) %>% 
-  mutate(desc_without_colour = (str_replace(desc, "\\([a-z]+\\)", "") %>% str_squish))
+orders_plus_orderdate <- orders_plus |>
+  mutate(order_day = day(ordered),
+         order_month = month(ordered),
+         order_year = year(ordered)) |>
+  mutate(desc_without_colour = (str_replace(desc, "\\([a-z]+\\)", "") |> str_squish()))
 
-frugal_cousin_orders <- orders_plus_orderdate %>% filter(customerid == 8342)
-common_orders <- frugal_cousin_orders %>% 
-  inner_join(orders_plus_orderdate, by=c("desc_without_colour", "order_day", "order_month", "order_year")) %>% 
-  filter(customerid.y != 8342) %>% 
+frugal_cousin_orders <- orders_plus_orderdate |> filter(customerid == 8342)
+common_orders <- frugal_cousin_orders |>
+  inner_join(orders_plus_orderdate, by = c("desc_without_colour", "order_day", "order_month", "order_year")) |>
+  filter(customerid.y != 8342) |>
   filter(desc.x != desc.y)
 
-true_love <- common_orders %>% 
-  arrange(abs(ordered.x - ordered.y)) %>% 
-  select(ordered.x, ordered.y, name.y, phone.y) %>% 
+true_love <- common_orders |>
+  arrange(abs(ordered.x - ordered.y)) |>
+  select(ordered.x, ordered.y, name.y, phone.y) |>
   slice(1)
 
 print(true_love$phone.y)
 ```
 
-## Puzzle 8: The Collector
-
 ```{r}
-#| label: puzzle8
+# Puzzle 8
 
-collector <- orders_plus %>% 
-  filter(str_detect(desc, "^Noah")) %>% 
-  group_by(customerid) %>% 
-  filter(n() > 200) %>% 
-  select(name, phone) %>% 
-  distinct
+collector <- orders_plus |>
+  filter(str_detect(desc, "^Noah")) |>
+  group_by(customerid) |>
+  filter(n() > 200) |>
+  select(name, phone) |>
+  distinct()
 
-collector_phone <- collector %>% pull(phone)
+collector_phone <- collector |> pull(phone)
 print(collector_phone)
 ```
-
-## Conclusion
-
-This was a fun data analysis challenge that combined detective work with data manipulation. Each puzzle built upon the previous ones, creating a cohesive narrative while testing various data analysis skills in R.
-
-*Challenge source: [Hanukkah of Data 5783](https://hanukkah.bluebird.sh/5783/)* 
