@@ -27,7 +27,10 @@ uv sync
 - **`_quarto.yml`**: Main site configuration (theme, navbar, site URL)
 - **`posts/`**: Blog posts, each in its own subdirectory with an `index.qmd` file
 - **`posts/_metadata.yml`**: Default settings for all posts (freeze enabled, code-fold on)
+- **`projects/`**: Project showcases (similar structure to posts)
+- **`projects.qmd`**: Projects listing page
 - **`_site/`**: Generated output (gitignored)
+- **`CNAME`**: Custom domain for GitHub Pages (www.gfrm.in)
 
 ## Key Conventions
 
@@ -42,3 +45,10 @@ uv sync
 Create a new directory under `posts/` with:
 1. `index.qmd` - the post content with YAML frontmatter (title, date, categories)
 2. Any data files needed for the analysis
+
+## Deployment
+
+Site deploys to GitHub Pages with custom domain `www.gfrm.in`:
+- DNS managed via Cloudflare
+- Push to `master` triggers deployment
+- `quarto publish gh-pages` for manual deployment
