@@ -5,6 +5,7 @@ author: "Guy Freeman"
 date: 2022-12-25
 categories: [data, analysis, fun]
 execute:
+  eval: true
   echo: true
   message: false
   warning: false
