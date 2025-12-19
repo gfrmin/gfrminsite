@@ -55,20 +55,17 @@ To run this blog locally:
 blog-quarto/
 ├── _quarto.yml           # Quarto configuration file
 ├── index.qmd             # Homepage content
-├── about.qmd             # About page
+├── about.qmd             # About page redirect
+├── projects.qmd          # Projects page redirect
 ├── posts/                # Blog posts directory
 │   ├── _metadata.yml     # Posts metadata
-│   ├── bechirot/         # Election analysis post
 │   └── hanukkah-of-code/ # Data puzzles post
-├── docs/                 # Documentation directory
-│   └── memory-bank/      # Memory bank documentation
+├── projects/             # Project showcases
 ├── styles.css            # Custom CSS styling
 ├── profile.jpg           # Profile image
-├── main.py               # Python utility script
 ├── pyproject.toml        # Python project configuration
 ├── uv.lock               # Python dependency lock file
-├── _site/                # Generated site (gitignored)
-├── _freeze/              # Quarto cache (gitignored)
+├── _freeze/              # Quarto cache (tracked for reproducibility)
 ```
 
 ## Dependencies
@@ -94,7 +91,7 @@ This is a personal blog, but suggestions and feedback are welcome! Feel free to:
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This work is licensed under [CC BY SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
 
 ## Contact
 

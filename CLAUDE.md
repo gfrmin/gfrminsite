@@ -16,10 +16,13 @@ quarto preview
 quarto render
 
 # Render a specific post
-quarto render posts/bechirot/index.qmd
+quarto render posts/hanukkah-of-code/index.qmd
 
 # Install Python dependencies
 uv sync
+
+# Install R package to project-local library
+R -e "install.packages('packagename')"
 ```
 
 ## Architecture
@@ -28,9 +31,9 @@ uv sync
 - **`posts/`**: Blog posts, each in its own subdirectory with an `index.qmd` file
 - **`posts/_metadata.yml`**: Default settings for all posts (freeze enabled, code-fold on)
 - **`projects/`**: Project showcases (similar structure to posts)
-- **`projects.qmd`**: Projects listing page
-- **`_site/`**: Generated output (gitignored)
-- **`CNAME`**: Custom domain for GitHub Pages (www.gfrm.in)
+- **`public/`**: Generated output for GitLab Pages (gitignored)
+- **`.gitlab-ci.yml`**: CI/CD pipeline for GitLab Pages deployment
+- **`.Rprofile`**: Configures project-local R library at `.R/library/`
 
 ## Key Conventions
 
@@ -38,7 +41,7 @@ uv sync
 - Code blocks have `code-fold: true` (collapsible) and `code-tools: true` (copy button)
 - Data files (CSV, xlsx, rds) are gitignored but stored locally in post directories
 - Python managed via `uv` with dependencies in `pyproject.toml`
-- R packages installed separately (tidyverse, ggplot2, dplyr, readr commonly used)
+- R packages installed to project-local `.R/library/` directory (tidyverse, ggplot2, dplyr, readr commonly used)
 
 ## Writing New Posts
 
@@ -48,7 +51,7 @@ Create a new directory under `posts/` with:
 
 ## Deployment
 
-Site deploys to GitHub Pages with custom domain `www.gfrm.in`:
+Site deploys to GitLab Pages with custom domain `www.gfrm.in`:
+- CI pipeline uses `rocker/verse:latest` image with R and Quarto
+- Push to `master` triggers automatic deployment
 - DNS managed via Cloudflare
-- Push to `master` triggers deployment
-- `quarto publish gh-pages` for manual deployment

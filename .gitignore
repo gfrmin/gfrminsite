@@ -1,87 +1,44 @@
-# Python-generated files
+# Python
 __pycache__/
 *.py[oc]
 build/
 dist/
 wheels/
 *.egg-info
+.venv/
+.env/
 
-# Virtual environments
-.venv
-
+# R
 .R/
-
-# Quarto-specific files
-.quarto/
-_site/
-_site.yml
-
-# R-specific files
 .Rhistory
 .RData
 .Ruserdata
-.Rprofile
+*.Rproj.user
 
-# Data files
+# Quarto
+.quarto/
+_site/
+public/
+*_cache/
+**/*.quarto_ipynb
+.luarc.json
+
+# Data files (downloaded at render time)
 *.csv
 *.xlsx
 *.rds
 *.rda
+*.zip
 
-# Temporary files
-*.tmp
-*.temp
+# OS/IDE
 .DS_Store
 Thumbs.db
-
-# IDE files
 .vscode/
 .idea/
 *.swp
-*.swo
-
-# OS files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
 *~
 
-/.quarto/
-/_site/
-/_book/
-.env/
-/.venv/
-*.Rproj.user
-.DS_Store
-.Rhistory
-*.local
-*_cache/
-requirements.txt
+# Misc
+*.tmp
+*.mht
 *.html
-*.zip
-*.csv
-
-.Rproj.user
-.DS_Store
-.Rhistoryt
-.Rhistory
-/.quarto/
-/_*.local
-/.venv/
-/.condaenv/
-*_cache/
-/env/
-/_site/
-/.venv/
-
-
-/.luarc.json
-
-# Use pipenv to manage dependencies
-# so we don't want to track this file in git
-requirements.txt
-**/*.quarto_ipynb
