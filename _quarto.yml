@@ -4,19 +4,42 @@ project:
 website:
   title: "Guy Freeman"
   site-url: https://www.gfrm.in
-  description: "A blog about data science, statistics, and more."
+  description: "Guy Freeman's website"
+  favicon: favicon.ico
   navbar:
+    background: dark
+    left:
+      - text: Home
+        href: index.qmd
+      - text: Posts
+        href: "#posts"
+      - text: Projects
+        href: "#projects"
+      - text: Contact
+        href: "#contact"
     right:
-      - projects.qmd
-      - about.qmd
+      - icon: twitter
+        href: https://twitter.com/gfrm_in
+        aria-label: Twitter
+      - icon: mastodon
+        href: https://fedi.gfrm.in/@gf
+        aria-label: Mastodon
       - icon: github
         href: https://github.com/gfrmin
-      - icon: twitter
-        href: https://twitter.com/gfrmin
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://linkedin.com/in/guyfreemanstat
+        aria-label: LinkedIn
       - icon: rss
         href: index.xml
+        aria-label: RSS Feed
+  page-footer:
+    center: "© 2024 Guy Freeman. Licensed under [CC BY SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)"
+
 format:
   html:
-    theme:
-      - cosmo
+    theme: darkly
     css: styles.css
+    fontsize: 1.05em
+    linestretch: 1.65
+    link-external-newwindow: true

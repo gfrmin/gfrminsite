@@ -1,8 +1,13 @@
 ---
 title: "Projects"
-listing:
-  contents: projects
-  sort: "date desc"
-  type: default
-page-layout: full
+aliases:
+  - /projects/
 ---
+
+<meta http-equiv="refresh" content="0; url=/#projects">
+
+<script>
+window.location.href = "/#projects";
+</script>
+
+If you are not redirected automatically, [click here](/#projects).

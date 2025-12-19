@@ -84,3 +84,4 @@ requirements.txt
 # Use pipenv to manage dependencies
 # so we don't want to track this file in git
 requirements.txt
+**/*.quarto_ipynb
