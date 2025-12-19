@@ -15,7 +15,7 @@ listing:
 ::: {#about .section}
 ::: {.grid}
 ::: {.g-col-12 .g-col-lg-4 .profile}
-![](profile.jpg){.avatar}
+![Guy Freeman profile photo](profile.jpg){.avatar}
 
 ## Guy Freeman
 

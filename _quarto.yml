@@ -6,6 +6,10 @@ website:
   site-url: https://www.gfrm.in
   description: "Guy Freeman's website"
   favicon: favicon.ico
+  open-graph: true
+  twitter-card:
+    creator: "@gfrm_in"
+    card-style: summary_large_image
   navbar:
     background: dark
     left:
@@ -36,9 +40,17 @@ website:
   page-footer:
     center: "© 2025 Guy Freeman. Licensed under [CC BY SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)"
 
+execute:
+  freeze: auto
+  cache: true
+  warning: false
+  message: false
+
 format:
   html:
-    theme: darkly
+    theme:
+      light: flatly
+      dark: darkly
     css: styles.css
     fontsize: 1.05em
     linestretch: 1.65

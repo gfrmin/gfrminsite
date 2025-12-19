@@ -1,7 +1,10 @@
 # options apply to all posts in this folder
 
-# freeze computational output
-freeze: true
+# freeze computational output (auto = re-render when source changes)
+freeze: auto
+
+# enable table of contents for longer posts
+toc: true
 
 # default format options for posts
 format:
