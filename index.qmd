@@ -8,7 +8,7 @@ listing:
   sort: "date desc"
   type: default
   max-items: 5
-  fields: [title, date, reading-time]
+  fields: [title, date, reading-time, description]
   feed: true
 ---
 
@@ -19,13 +19,15 @@ listing:
 
 ## Guy Freeman
 
-::: {.social-icons}
-<a href="#contact" title="Email"><i class="bi bi-envelope"></i></a>
-<a href="https://twitter.com/gfrm_in" target="_blank" rel="noopener" title="Twitter"><i class="bi bi-twitter"></i></a>
-<a href="https://fedi.gfrm.in/@gf" target="_blank" rel="me" title="Mastodon"><i class="bi bi-mastodon"></i></a>
-<a href="https://github.com/gfrmin" target="_blank" rel="noopener" title="GitHub"><i class="bi bi-github"></i></a>
-<a href="https://linkedin.com/in/guyfreemanstat" target="_blank" rel="noopener" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
-:::
+```{=html}
+<div class="social-icons">
+  <a href="#contact" title="Email"><i class="bi bi-envelope"></i></a>
+  <a href="https://twitter.com/gfrm_in" target="_blank" rel="noopener" title="Twitter"><i class="bi bi-twitter"></i></a>
+  <a href="https://fedi.gfrm.in/@gf" target="_blank" rel="me" title="Mastodon"><i class="bi bi-mastodon"></i></a>
+  <a href="https://github.com/gfrmin" target="_blank" rel="noopener" title="GitHub"><i class="bi bi-github"></i></a>
+  <a href="https://linkedin.com/in/guyfreemanstat" target="_blank" rel="noopener" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+</div>
+```
 :::
 
 ::: {.g-col-12 .g-col-lg-8 .biography}
