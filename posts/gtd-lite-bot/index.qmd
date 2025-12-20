@@ -4,6 +4,9 @@ subtitle: "Using Claude Haiku for natural language task parsing"
 author: "Guy Freeman"
 date: 2025-12-20
 categories: [telegram, ai, productivity, python]
+execute:
+  eval: false
+  echo: true
 ---
 
 Every GTD app I've tried falls into one of two camps: either it's a complex beast with more features than I'll ever use (looking at you, OmniFocus), or it's simple but forces me to manually categorize everything with rigid syntax.
@@ -39,7 +42,7 @@ One-click deployment to Render with a managed Postgres database.
 
 The core insight is that you don't need complex NLP libraries or custom models. Claude Haiku is fast, cheap, and remarkably good at intent classification. Every message the user sends gets parsed through this system prompt:
 
-```python
+```{python}
 system_prompt = f"""You are a GTD task parser. Parse the user's message into a JSON action.
 
 Today's date is {today_date}.
@@ -90,7 +93,7 @@ Haiku returns structured JSON that the bot then acts on. If parsing fails or the
 
 The database schema is minimal:
 
-```sql
+```{sql}
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL,
