@@ -4,6 +4,7 @@ subtitle: "Using Claude Haiku for natural language task parsing"
 author: "Guy Freeman"
 date: 2025-12-20
 categories: [telegram, ai, productivity, python]
+freeze: false
 execute:
   eval: false
   echo: true

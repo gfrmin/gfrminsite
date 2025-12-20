@@ -11,4 +11,5 @@ format:
   html:
     code-fold: true
     code-tools: true
+    code-copy: false
     fig-cap-location: bottom 
