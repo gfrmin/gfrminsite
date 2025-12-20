@@ -16,7 +16,7 @@ about:
       href: https://twitter.com/gfrm_in
     - icon: mastodon
       text: Mastodon
-      href: https://fedi.gfrm.in/@gf
+      href: https://defcon.social/@gfrmin
     - icon: github
       text: GitHub
       href: https://github.com/gfrmin

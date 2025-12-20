@@ -26,7 +26,7 @@ website:
         href: https://twitter.com/gfrm_in
         aria-label: Twitter
       - icon: mastodon
-        href: https://fedi.gfrm.in/@gf
+        href: https://defcon.social/@gfrmin
         aria-label: Mastodon
       - icon: github
         href: https://github.com/gfrmin
