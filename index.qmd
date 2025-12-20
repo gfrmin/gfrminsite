@@ -47,9 +47,15 @@ Controversially, and astoundingly, he's fine with the Oxford comma.
 ## Projects
 
 ::: {.project-card}
-### [Knesset election results](https://bechirot.xyz/){target="_blank"}
+### [Jarvis Lite](https://github.com/gfrmin/jarvis-lite){target="_blank"}
 
-Explore Israeli parliament (Knesset) election results from 1999 to 2022
+A GTD (Getting Things Done) Telegram bot for simple task management
+:::
+
+::: {.project-card}
+### [GTD Lite Bot](https://t.me/gtdlitebot){target="_blank"}
+
+Live hosted instance of Jarvis Lite
 :::
 
 ## Get in touch {#contact}
