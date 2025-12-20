@@ -1,68 +1,58 @@
 ---
 title: "Guy Freeman"
+image: profile.jpg
 page-layout: full
 toc: false
+about:
+  template: solana
+  image-shape: round
+  image-width: 200px
+  links:
+    - icon: envelope
+      text: Contact
+      href: "#contact"
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/gfrm_in
+    - icon: mastodon
+      text: Mastodon
+      href: https://fedi.gfrm.in/@gf
+    - icon: github
+      text: GitHub
+      href: https://github.com/gfrmin
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/guyfreemanstat
 listing:
   id: post-listing
   contents: posts
   sort: "date desc"
   type: default
   max-items: 5
-  fields: [title, date, reading-time, description]
+  fields: [title, date, reading-time]
   feed: true
 ---
-
-::: {#about .section}
-::: {.grid}
-::: {.g-col-12 .g-col-lg-4 .profile}
-![Guy Freeman profile photo](profile.jpg){.avatar}
-
-## Guy Freeman
-
-```{=html}
-<div class="social-icons">
-  <a href="#contact" title="Email"><i class="bi bi-envelope"></i></a>
-  <a href="https://twitter.com/gfrm_in" target="_blank" rel="noopener" title="Twitter"><i class="bi bi-twitter"></i></a>
-  <a href="https://fedi.gfrm.in/@gf" target="_blank" rel="me" title="Mastodon"><i class="bi bi-mastodon"></i></a>
-  <a href="https://github.com/gfrmin" target="_blank" rel="noopener" title="GitHub"><i class="bi bi-github"></i></a>
-  <a href="https://linkedin.com/in/guyfreemanstat" target="_blank" rel="noopener" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
-</div>
-```
-:::
-
-::: {.g-col-12 .g-col-lg-8 .biography}
-## Biography
 
 Guy Freeman is a data scientist who has lived in Israel, England, Hong Kong, and Israel, in that order.
 
 At some point he got a PhD in statistics. This has been wonderfully useful, at least in finding well-renumerated and interesting work, across all areas of data science, to while away the days.
 
 Controversially, and astoundingly, he's fine with the Oxford comma.
-:::
-:::
-:::
 
-::: {#posts .section}
 ## Recent Posts
 
 ::: {#post-listing}
 :::
-:::
 
-::: {#projects .section}
 ## Projects
 
 ::: {.project-card}
-::: {.project-info}
 ### [Knesset election results](https://bechirot.xyz/){target="_blank"}
 
 Explore Israeli parliament (Knesset) election results from 1999 to 2022
 :::
-:::
-:::
 
-::: {#contact .section}
-## Get in touch
+## Get in touch {#contact}
 
 <form class="contact-form" action="https://formspree.io/f/mgeqrkaq" method="POST">
   <input type="text" name="name" placeholder="Name" required>
@@ -71,4 +61,3 @@ Explore Israeli parliament (Knesset) election results from 1999 to 2022
   <input type="hidden" name="_gotcha" style="display:none">
   <button type="submit">Send</button>
 </form>
-:::
