@@ -1,0 +1,45 @@
+<script>
+(function() {
+  // Only add schema for blog posts (pages with article role)
+  if (!document.querySelector('article.quarto-post')) return;
+
+  const title = document.querySelector('meta[property="og:title"]')?.content || document.title;
+  const description = document.querySelector('meta[property="og:description"]')?.content || '';
+  const url = document.querySelector('meta[property="og:url"]')?.content || window.location.href;
+  const image = document.querySelector('meta[property="og:image"]')?.content || '';
+  const dateEl = document.querySelector('.quarto-title-meta-contents time');
+  const datePublished = dateEl?.getAttribute('datetime') || '';
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "description": description,
+    "url": url,
+    "datePublished": datePublished,
+    "author": {
+      "@type": "Person",
+      "name": "Guy Freeman",
+      "url": "https://www.gfrm.in"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Guy Freeman",
+      "url": "https://www.gfrm.in"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": url
+    }
+  };
+
+  if (image) {
+    schema.image = image;
+  }
+
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.text = JSON.stringify(schema);
+  document.head.appendChild(script);
+})();
+</script>
