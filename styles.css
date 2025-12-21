@@ -22,6 +22,18 @@ h1, h2, h3, h4, h5, h6 {
   gap: 1rem;
 }
 
+.contact-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.contact-form label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--bs-body-color);
+}
+
 .contact-form input,
 .contact-form textarea {
   font-family: inherit;
@@ -33,6 +45,13 @@ h1, h2, h3, h4, h5, h6 {
   color: inherit;
 }
 
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+  border-color: var(--brand-primary);
+}
+
 .contact-form button {
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
@@ -41,4 +60,151 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 6px;
   cursor: pointer;
   color: inherit;
+}
+
+/* Brand color palette */
+:root {
+  --brand-primary: #2563eb;
+  --brand-secondary: #0891b2;
+  --brand-accent: #7c3aed;
+  --brand-success: #059669;
+}
+
+[data-bs-theme="dark"] {
+  --brand-primary: #60a5fa;
+  --brand-secondary: #22d3d3;
+  --brand-accent: #a78bfa;
+  --brand-success: #34d399;
+}
+
+/* Apply brand colors to links */
+a {
+  color: var(--brand-primary);
+}
+
+a:hover {
+  color: var(--brand-accent);
+}
+
+/* Skip to content link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--brand-primary);
+  color: white;
+  padding: 8px 16px;
+  z-index: 1100;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Project cards */
+.project-card {
+  border: 1px solid var(--bs-border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.project-card h3 {
+  margin-top: 0;
+  color: var(--brand-primary);
+}
+
+/* Social share buttons */
+.share-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--bs-border-color);
+}
+
+.share-label {
+  font-weight: 600;
+  color: var(--bs-secondary-color);
+  font-size: 0.9rem;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bs-tertiary-bg);
+  color: var(--bs-body-color);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  position: relative;
+}
+
+.share-btn:hover {
+  transform: scale(1.1);
+}
+
+.share-twitter:hover {
+  background: #1da1f2;
+  color: white;
+}
+
+.share-linkedin:hover {
+  background: #0077b5;
+  color: white;
+}
+
+.share-mastodon:hover {
+  background: #6364ff;
+  color: white;
+}
+
+.share-copy:hover {
+  background: var(--brand-secondary);
+  color: white;
+}
+
+.share-copy .copy-feedback {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--brand-success);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.share-copy.copied .copy-feedback {
+  opacity: 1;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hover effects for code blocks */
+div.sourceCode:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }

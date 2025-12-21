@@ -4,12 +4,14 @@ project:
 website:
   title: "Guy Freeman"
   site-url: https://www.gfrm.in
-  description: "Guy Freeman's website"
+  description: "Guy Freeman's personal blog on data science, software engineering, and building with AI."
   favicon: favicon.ico
-  open-graph: true
+  open-graph:
+    image: og-default.png
   twitter-card:
     creator: "@gfrm_in"
     card-style: summary_large_image
+    image: og-default.png
   navbar:
     background: dark
     left:
@@ -55,3 +57,8 @@ format:
     fontsize: 1.05em
     linestretch: 1.65
     link-external-newwindow: true
+    include-before-body:
+      - _includes/skip-link.html
+    include-after-body:
+      - _includes/schema.html
+      - _includes/share-buttons.html

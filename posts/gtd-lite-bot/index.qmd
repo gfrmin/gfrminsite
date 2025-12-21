@@ -1,9 +1,11 @@
 ---
 title: "I Built a GTD Telegram Bot in Under an Hour with Claude Code"
 subtitle: "Using Claude Haiku for natural language task parsing"
+description: "How I built a Getting Things Done Telegram bot with natural language parsing using Claude Haiku, Python, and PostgreSQL - all in under an hour with Claude Code."
 author: "Guy Freeman"
 date: 2025-12-20
 categories: [telegram, ai, productivity, python]
+image: og-image.png
 freeze: false
 execute:
   eval: false
