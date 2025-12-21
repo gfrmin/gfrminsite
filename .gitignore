@@ -45,3 +45,6 @@ Thumbs.db
 !_includes/*.html
 
 /.quarto/
+
+# Playwright test screenshots
+.playwright-mcp/

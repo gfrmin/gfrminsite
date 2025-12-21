@@ -208,3 +208,189 @@ html {
 div.sourceCode:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* ============================================
+   MOBILE-FIRST DESIGN REFRESH
+   ============================================ */
+
+/* --- Phase 1: Mobile Home Page Layout --- */
+
+/* Reorder solana template on mobile - bio before social links */
+@media (max-width: 767.98px) {
+  .quarto-about-solana .about-entity {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Smaller profile image */
+  .quarto-about-solana .about-image {
+    width: 100px !important;
+    height: 100px !important;
+    margin: 0 auto 1rem;
+  }
+
+  /* Bio content appears BEFORE social links */
+  .quarto-about-solana .about-contents {
+    order: 1;
+  }
+
+  /* Social links move to bottom, become compact icons */
+  .quarto-about-solana .about-links {
+    order: 2;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    margin-top: 1rem;
+  }
+
+  /* Convert full-width buttons to icon circles */
+  .quarto-about-solana .about-link {
+    min-width: 44px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Hide button text, show only icon */
+  .quarto-about-solana .about-link .about-link-text {
+    display: none;
+  }
+}
+
+/* Restore text labels on larger screens */
+@media (min-width: 768px) {
+  .quarto-about-solana .about-link {
+    width: auto;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+  }
+
+  .quarto-about-solana .about-link .about-link-text {
+    display: inline;
+    margin-left: 0.5rem;
+  }
+}
+
+/* --- Phase 2: Code Block Mobile Readability --- */
+
+/* Code blocks - base styling */
+div.sourceCode {
+  border-radius: 6px;
+  margin: 1rem 0;
+  border: 1px solid var(--bs-border-color);
+}
+
+pre.sourceCode {
+  padding: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile code blocks */
+@media (max-width: 767.98px) {
+  pre.sourceCode code {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  /* Full-bleed code blocks on mobile */
+  div.sourceCode,
+  pre:not(.sourceCode) {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  pre.sourceCode {
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* Inline code */
+code:not(.sourceCode) {
+  background: var(--bs-tertiary-bg);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.875em;
+  word-break: break-word;
+}
+
+/* Non-highlighted code blocks (SQL, etc) */
+pre:not(.sourceCode) {
+  background: var(--bs-tertiary-bg);
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.875rem;
+}
+
+/* --- Phase 3: Typography & Spacing --- */
+
+/* Mobile typography */
+@media (max-width: 575.98px) {
+  body {
+    font-size: 1rem;
+  }
+
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+
+  /* Tighter section margins */
+  section, .quarto-listing {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Project cards */
+  .project-card {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Contact form - prevent iOS zoom */
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 16px;
+  }
+
+  .contact-form button {
+    width: 100%;
+    padding: 0.875rem;
+  }
+}
+
+/* Post listing mobile */
+@media (max-width: 575.98px) {
+  .quarto-listing .quarto-post {
+    padding: 0.75rem 0;
+  }
+
+  .quarto-post .listing-title {
+    font-size: 1rem;
+  }
+
+  .quarto-post .metadata {
+    font-size: 0.8rem;
+  }
+}
+
+/* --- Phase 4: Dark Mode Polish --- */
+
+[data-bs-theme="dark"] {
+  div.sourceCode {
+    border-color: var(--bs-border-color);
+  }
+
+  .quarto-about-solana .about-link {
+    background: var(--bs-tertiary-bg);
+  }
+}
