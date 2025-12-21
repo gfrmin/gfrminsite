@@ -7,6 +7,9 @@ date: 2025-12-20
 categories: [telegram, ai, productivity, python]
 image: og-image.png
 engine: knitr
+knitr:
+  opts_chunk:
+    python.reticulate: false
 execute:
   eval: false
   echo: true
