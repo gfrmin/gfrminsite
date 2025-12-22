@@ -70,6 +70,107 @@ h1, h2, h3, h4, h5, h6 {
   --brand-success: #059669;
 }
 
+/* ============================================
+   AVAILABILITY BOX
+   ============================================ */
+
+.availability-box {
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+  color: white;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  margin: 2rem 0;
+}
+
+.availability-box p {
+  margin: 0;
+}
+
+.availability-box p:first-child {
+  margin-bottom: 0.5rem;
+}
+
+.availability-box a {
+  color: white;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.availability-box a:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+[data-bs-theme="dark"] .availability-box {
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+}
+
+/* ============================================
+   WHAT I DO SECTION
+   ============================================ */
+
+.quarto-about-solana + .availability-box {
+  margin-top: 2rem;
+}
+
+/* Section spacing */
+h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Service list styling */
+main ul li {
+  margin-bottom: 0.75rem;
+}
+
+main ul li strong {
+  color: var(--brand-primary);
+}
+
+[data-bs-theme="dark"] main ul li strong {
+  color: var(--brand-primary);
+}
+
+/* ============================================
+   PROJECTS PAGE LAYOUT
+   ============================================ */
+
+.project-card + .project-card {
+  margin-top: 1rem;
+}
+
+.project-card p {
+  margin-bottom: 0;
+  color: var(--bs-secondary-color);
+}
+
+/* ============================================
+   CONTACT PAGE
+   ============================================ */
+
+.contact-form {
+  margin-top: 1.5rem;
+}
+
+/* ============================================
+   GENERAL SPACING & LAYOUT
+   ============================================ */
+
+/* Better content width */
+.content {
+  max-width: 800px;
+}
+
+/* Posts listing spacing */
+.quarto-listing {
+  margin-top: 1rem;
+}
+
+/* See all posts link */
+main > p:last-child a {
+  font-weight: 600;
+}
+
 [data-bs-theme="dark"] {
   --brand-primary: #60a5fa;
   --brand-secondary: #22d3d3;

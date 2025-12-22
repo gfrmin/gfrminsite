@@ -1,13 +1,42 @@
 ---
 title: "Projects"
-aliases:
-  - /projects/
+page-layout: full
 ---
 
-<meta http-equiv="refresh" content="0; url=/#projects">
+A selection of open source projects and civic tech initiatives.
 
-<script>
-window.location.href = "/#projects";
-</script>
+::: {.project-card}
+### [accessinfo.hk](https://accessinfo.hk){target="_blank"}
 
-If you are not redirected automatically, [click here](/#projects).
+Hong Kong's Freedom of Information request platform. Makes it easier for citizens to submit and track FOI requests to government bodies. Built on the Alaveteli platform.
+:::
+
+::: {.project-card}
+### [Webb Data](https://webbsite.renavon.com){target="_blank"}
+
+Open data platform providing 35 years of Hong Kong financial data—directors, boards, CCASS shareholding, and company registry records. Making corporate transparency accessible.
+:::
+
+::: {.project-card}
+### [Scalibur](https://github.com/gfrmin/scalibur){target="_blank"}
+
+Python tool for reading body composition data from cheap Bluetooth scales. Reverse-engineered BLE protocol, handles impedance measurements, and calculates body fat, muscle mass, and metabolic metrics. Designed to run on a Raspberry Pi for continuous data collection.
+:::
+
+::: {.project-card}
+### [Jarvis Lite](https://github.com/gfrmin/jarvis-lite){target="_blank"}
+
+A Getting Things Done (GTD) Telegram bot with natural language task parsing. Uses Claude Haiku for intent recognition, PostgreSQL for storage, and APScheduler for daily digest emails. Self-hostable.
+:::
+
+::: {.project-card}
+### [GTD Lite Bot](https://t.me/gtdlitebot){target="_blank"}
+
+Live hosted instance of Jarvis Lite. Try it out on Telegram.
+:::
+
+::: {.project-card}
+### [bayesian-agent](https://github.com/gfrmin/bayesian-agent){target="_blank"}
+
+Simulation framework for autonomous agents that learn to navigate an environment using Bayesian inference and Thompson sampling. Demonstrates online probabilistic learning and principled uncertainty quantification.
+:::
