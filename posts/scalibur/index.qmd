@@ -1,0 +1,240 @@
+---
+title: "Scalibur: Reading Body Composition from a Cheap Bluetooth Scale"
+subtitle: "A journey through BLE packet sniffing, protocol reverse-engineering, and Raspberry Pi deployment"
+description: "How I built a Raspberry Pi dashboard to capture and visualize body composition data from a GoodPharm TY5108 Bluetooth scale"
+author: "Guy Freeman"
+date: 2024-12-22
+categories: [python, iot, raspberry-pi, health, data, ble, hardware]
+image: og-image.png
+execute:
+  eval: false
+  echo: true
+---
+
+Body composition scales are genuinely useful devices. Step on, wait a few seconds, and you get weight, body fat percentage, muscle mass, and a handful of other metrics. The problem? Your data disappears into whatever proprietary app the manufacturer built, usually with aggressive upsells and questionable privacy practices.
+
+I bought a cheap GoodPharm TY5108 scale (it advertises itself as "tzc" over Bluetooth LE) for around £20. It works well enough, but I wanted to own my data. So I built [Scalibur](https://github.com/gfrmin/scalibur): a Raspberry Pi-based system that captures the raw BLE advertisements, decodes the measurements, calculates body composition metrics, and displays everything on a simple web dashboard.
+
+This is the story of how I got there.
+
+## The Hardware
+
+The setup is straightforward:
+
+- **GoodPharm TY5108 scale** - A cheap body composition scale with BLE. It measures weight using load cells and impedance through electrodes on the surface (you need to stand barefoot for the full reading).
+- **Raspberry Pi** - Any model with Bluetooth LE works. I used a Pi 4, but a Pi Zero W would be fine for this.
+
+The scale broadcasts its measurements as BLE advertisements. Unlike connected BLE devices that require pairing and a persistent connection, advertisement-based devices just shout their data into the void. Anyone listening can pick it up.
+
+## The Journey: Reverse-Engineering the Protocol
+
+My first attempt used `bleak`, a popular Python BLE library. I could see the device advertising, but the high-level APIs abstracted away the manufacturer-specific data I needed. The scale wasn't exposing GATT services in the usual way - all the interesting data was in the advertisement packets themselves.
+
+I switched to `aioblescan`, which gives you raw HCI (Host Controller Interface) packets. This is the low-level interface between the Bluetooth controller and the host system. Here's where it gets interesting:
+
+```python
+def parse_hci_packet(data: bytes) -> tuple[str | None, int | None, bytes | None]:
+    """Parse raw HCI LE advertising packet."""
+    if len(data) < 14 or data[0:2] != b'\x04\x3e':
+        return None, None, None
+
+    if data[3] != 0x02:  # Not LE Advertising Report
+        return None, None, None
+
+    adv_len = data[13]
+    adv_data = data[14:14 + adv_len]
+
+    device_name = None
+    manufacturer_id = None
+    manufacturer_data = None
+
+    i = 0
+    while i < len(adv_data):
+        if i + 1 >= len(adv_data):
+            break
+        length = adv_data[i]
+        if length == 0 or i + length >= len(adv_data):
+            break
+        ad_type = adv_data[i + 1]
+        ad_value = adv_data[i + 2:i + 1 + length]
+
+        if ad_type == 0x09:  # Complete Local Name
+            device_name = ad_value.decode('utf-8')
+        elif ad_type == 0xFF and len(ad_value) >= 2:  # Manufacturer Specific Data
+            manufacturer_id = int.from_bytes(ad_value[0:2], "little")
+            manufacturer_data = ad_value[2:]
+
+        i += 1 + length
+
+    return device_name, manufacturer_id, manufacturer_data
+```
+
+The BLE advertising data structure is a series of TLV (Type-Length-Value) entries. We're looking for type `0xFF` - manufacturer-specific data - which contains the actual scale reading.
+
+### The Debugging Saga
+
+Getting the byte offsets right took several iterations. My git history tells the story:
+
+```
+f477996 Fix packet decoding: weight in data bytes, not manufacturer_id
+28de4a4 Fix packet decoding: weight is in manufacturer ID field
+```
+
+I initially thought the weight was encoded in the manufacturer ID field (the first two bytes of the manufacturer-specific data). Then I thought the opposite. Both were wrong in different ways.
+
+The actual layout, once I figured it out:
+
+| Bytes | Description |
+|-------|-------------|
+| 0-1 | Weight (big-endian, divide by 10 for kg) |
+| 2-3 | Impedance (big-endian, divide by 10 for ohms; 0 = not measured) |
+| 4-5 | User ID |
+| 6 | Status: 0x20 = weight only, 0x21 = weight + impedance |
+| 7+ | MAC address (ignored) |
+
+The status byte was crucial. The scale first broadcasts `0x20` when it has a stable weight reading, then `0x21` once it's also measured impedance (which takes a few more seconds and requires bare feet contact with the electrodes).
+
+```python
+def decode_packet(manufacturer_id: int, manufacturer_data: bytes) -> ScaleReading | None:
+    """Decode tzc scale advertisement packet."""
+    if len(manufacturer_data) < 7:
+        return None
+
+    weight_raw = int.from_bytes(manufacturer_data[0:2], "big")
+    weight_kg = weight_raw / 10
+
+    impedance_raw = int.from_bytes(manufacturer_data[2:4], "big")
+    impedance_ohm = impedance_raw / 10 if impedance_raw > 0 else None
+
+    user_id = int.from_bytes(manufacturer_data[4:6], "big")
+
+    status = manufacturer_data[6]
+    is_complete = status == 0x21 or (status == 0x20 and impedance_raw == 0)
+
+    return ScaleReading(
+        weight_kg=weight_kg,
+        impedance_raw=impedance_raw,
+        impedance_ohm=impedance_ohm,
+        user_id=user_id,
+        is_complete=is_complete,
+        is_locked=is_complete,
+    )
+```
+
+## Body Composition Math
+
+Once you have weight and impedance, you can calculate body composition using BIA (Bioelectrical Impedance Analysis) formulas. These are well-documented - I used formulas compatible with [openScale](https://github.com/oliexdev/openScale), an open-source Android app for body composition scales.
+
+The key insight is that lean tissue conducts electricity better than fat. By measuring the body's impedance and knowing height/age/gender, you can estimate lean body mass:
+
+```python
+def calculate_body_composition(
+    weight_kg: float,
+    impedance_ohm: float,
+    height_cm: int,
+    age: int,
+    gender: str,
+) -> BodyComposition:
+    """Calculate body composition using standard BIA formulas."""
+    height_sq = height_cm**2
+
+    # Lean Body Mass
+    if gender == "male":
+        lbm = 0.485 * (height_sq / impedance_ohm) + 0.338 * weight_kg + 5.32
+    else:
+        lbm = 0.474 * (height_sq / impedance_ohm) + 0.180 * weight_kg + 5.03
+
+    # Body Fat
+    fat_mass_kg = weight_kg - lbm
+    body_fat_pct = (fat_mass_kg / weight_kg) * 100
+
+    # BMR (Mifflin-St Jeor equation)
+    if gender == "male":
+        bmr = 88.36 + (13.4 * weight_kg) + (4.8 * height_cm) - (5.7 * age)
+    else:
+        bmr = 447.6 + (9.2 * weight_kg) + (3.1 * height_cm) - (4.3 * age)
+
+    # ... plus body water, muscle mass, bone mass, BMI
+```
+
+These formulas aren't perfectly accurate - consumer BIA scales are notoriously inconsistent - but they're good enough for tracking trends over time.
+
+## The Smart ETL Challenge
+
+Here's a problem I didn't anticipate: the scale sends multiple packets per measurement. First you get weight-only packets (`0x20`), then eventually a complete packet with impedance (`0x21`). Sometimes the impedance packet arrives seconds after the weight.
+
+I needed an ETL pipeline that could:
+
+1. Group packets into "sessions" (measurements within 30 seconds of each other)
+2. Pick the best packet from each session (prefer `0x21` over `0x20`)
+3. Update existing measurements if better data arrives later
+
+```python
+def group_into_sessions(packets: list[dict], gap_seconds: int = 30) -> list[list[dict]]:
+    """Group packets into sessions based on time gaps."""
+    if not packets:
+        return []
+
+    sessions = []
+    current_session = [packets[0]]
+
+    for packet in packets[1:]:
+        prev_time = datetime.fromisoformat(current_session[-1]["timestamp"])
+        curr_time = datetime.fromisoformat(packet["timestamp"])
+
+        if curr_time - prev_time > timedelta(seconds=gap_seconds):
+            sessions.append(current_session)
+            current_session = [packet]
+        else:
+            current_session.append(packet)
+
+    sessions.append(current_session)
+    return sessions
+```
+
+The ETL also handles the case where you step on the scale without bare feet (weight-only mode). If impedance arrives later for an existing weight measurement, it updates the record rather than creating a duplicate.
+
+## The Dashboard
+
+The web interface is a simple Flask app with Chart.js for visualization. It shows:
+
+- Latest measurement (weight, body fat %)
+- 30-day weight trend chart
+- Measurement history table
+
+```python
+@app.route("/")
+def index():
+    """Render the dashboard."""
+    run_etl()  # Process any new packets first
+    latest = db.get_latest_measurement()
+    recent = db.get_measurements(limit=10)
+    return render_template("index.html", latest=latest, recent=recent)
+```
+
+Nothing fancy, but it works. The ETL runs on every page load, so new measurements appear immediately.
+
+## Deployment
+
+Deployment to a Raspberry Pi is a single command:
+
+```bash
+PI_USER=pi ./deploy.sh raspberrypi.local
+```
+
+This rsyncs the code, installs dependencies via `uv`, and sets up two systemd services:
+
+- `scalibur-scanner.service` - The BLE scanner daemon (needs `CAP_NET_RAW` for raw socket access)
+- `scalibur-dashboard.service` - The Flask dashboard on port 5000
+
+SQLite with WAL mode handles concurrent access between the scanner writing packets and the dashboard reading measurements.
+
+## Lessons Learned
+
+**Low-level BLE is tricky but rewarding.** Most BLE tutorials focus on GATT services and characteristics. Advertisement-based protocols are less common but simpler once you understand HCI packets.
+
+**Iterative debugging with real hardware is slow.** I burned a lot of time stepping on and off the scale, waiting for packets, checking hex dumps. A good test suite with captured packets would have saved hours.
+
+**Owning your data is worth the effort.** The scale's original app is fine, but now I have a SQLite database I can query however I want. I can export to CSV, build custom visualizations, or integrate with other health tracking systems.
+
+The code is on [GitHub](https://github.com/gfrmin/scalibur) if you want to try it with your own TY5108 scale or adapt it for similar devices. The packet parsing logic might work for other cheap BLE scales with minor tweaks - the protocol seems fairly common among generic Chinese body composition scales.
