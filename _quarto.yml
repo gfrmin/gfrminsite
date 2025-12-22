@@ -3,7 +3,7 @@ project:
 
 website:
   title: "Guy Freeman"
-  site-url: https://www.gfrm.in
+  site-url: https://gfrm.in
   description: "Guy Freeman's personal blog on data science, software engineering, and building with AI."
   favicon: favicon.ico
   open-graph:
