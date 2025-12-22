@@ -3,7 +3,7 @@ title: "Scalibur: Reading Body Composition from a Cheap Bluetooth Scale"
 subtitle: "A journey through BLE packet sniffing, protocol reverse-engineering, and Raspberry Pi deployment"
 description: "How I built a Raspberry Pi dashboard to capture and visualize body composition data from a GoodPharm TY5108 Bluetooth scale"
 author: "Guy Freeman"
-date: 2024-12-22
+date: 2025-12-22
 categories: [python, iot, raspberry-pi, health, data, ble, hardware]
 image: og-image.png
 execute:
