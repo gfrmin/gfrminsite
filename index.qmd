@@ -39,7 +39,7 @@ Based in Tel Aviv. Controversially, and astoundingly, still fine with the Oxford
 ::: {.availability-box}
 **Open to contract, consulting, part-time, and full-time opportunities.**
 
-Whether you're building something new or have a stuck project that needs rescuing, [get in touch](contact.qmd).
+Whether you're building something new or have a stuck project that needs rescuing, [get in touch](contact/).
 :::
 
 ## What I Do
@@ -55,9 +55,28 @@ I help organisations build and fix production data systems—from initial archit
 
 I've worked across fintech, insurance, HR tech, venture capital, and civic tech—so I'm comfortable translating between business stakeholders and technical implementation.
 
+## Recent Projects
+
+::: {.project-card}
+### [Scalibur](https://github.com/gfrmin/scalibur){target="_blank"}
+Python tool for reading body composition data from cheap Bluetooth scales. Reverse-engineered BLE protocol for Raspberry Pi deployment.
+:::
+
+::: {.project-card}
+### [Jarvis Lite](https://github.com/gfrmin/jarvis-lite){target="_blank"}
+GTD Telegram bot with natural language task parsing, powered by Claude Haiku.
+:::
+
+::: {.project-card}
+### [accessinfo.hk](https://accessinfo.hk){target="_blank"}
+Hong Kong's Freedom of Information request platform for citizens.
+:::
+
+[See all projects →](projects/)
+
 ## Recent Posts
 
 ::: {#post-listing}
 :::
 
-[See all posts →](posts.qmd)
+[See all posts →](posts/)

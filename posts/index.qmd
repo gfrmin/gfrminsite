@@ -2,7 +2,7 @@
 title: "Posts"
 listing:
   id: posts-listing
-  contents: posts
+  contents: .
   sort: "date desc"
   type: default
   fields: [title, date, reading-time, categories]
