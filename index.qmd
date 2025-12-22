@@ -39,7 +39,7 @@ Based in Tel Aviv. Controversially, and astoundingly, still fine with the Oxford
 ::: {.availability-box}
 **Open to contract, consulting, part-time, and full-time opportunities.**
 
-Whether you're building something new or have a stuck project that needs rescuing, [get in touch](contact.qmd).
+Whether you're building something new or have a stuck project that needs rescuing, [get in touch](contact/).
 :::
 
 ## What I Do
@@ -72,11 +72,11 @@ GTD Telegram bot with natural language task parsing, powered by Claude Haiku.
 Hong Kong's Freedom of Information request platform for citizens.
 :::
 
-[See all projects →](projects.qmd)
+[See all projects →](projects/)
 
 ## Recent Posts
 
 ::: {#post-listing}
 :::
 
-[See all posts →](posts.qmd)
+[See all posts →](posts/)
