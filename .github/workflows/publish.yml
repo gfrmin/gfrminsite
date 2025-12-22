@@ -22,8 +22,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
+      - name: Install Quarto
+        run: |
+          apt-get update && apt-get install -y curl
+          curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
+          dpkg -i quarto-linux-amd64.deb
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
