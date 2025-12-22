@@ -1,5 +1,6 @@
 ---
 title: "Guy Freeman"
+subtitle: "Data Systems Architect"
 image: profile.jpg
 page-layout: full
 toc: false
@@ -22,7 +23,7 @@ about:
       href: https://defcon.social/@gfrmin
 listing:
   id: post-listing
-  contents: posts
+  contents: posts/*/index.qmd
   sort: "date desc"
   type: default
   max-items: 5
@@ -30,11 +31,11 @@ listing:
   feed: true
 ---
 
-Guy Freeman is an end-to-end data specialist with 10+ years building production systems across fintech, insurance, HR tech, and data governance. He's led teams, architected pipelines, and shipped products—from document AI systems processing thousands of files to ML models that identified startups before they went public.
+I'm an end-to-end data specialist with 10+ years building production systems across fintech, insurance, HR tech, and data governance. I've led teams, architected pipelines, and shipped products—from document AI systems processing thousands of files to ML models that identified startups before they went public.
 
-His academic work on Bayesian methods and causal inference has been [cited over 1,750 times](https://scholar.google.com/citations?hl=en&user=H422hdkAAAAJ). He holds a PhD in Statistics from Warwick and a BA in Mathematical Sciences from Oxford.
+My academic work on Bayesian methods and causal inference has been [cited over 1,750 times](https://scholar.google.com/citations?hl=en&user=H422hdkAAAAJ). I hold a PhD in Statistics from Warwick and a BA in Mathematical Sciences from Oxford.
 
-Based in Tel Aviv. Controversially, and astoundingly, still fine with the Oxford comma.
+Based in Tel Aviv. Loves data, coffee, and the Oxford comma.
 
 ::: {.availability-box}
 **Open to contract, consulting, part-time, and full-time opportunities.**
