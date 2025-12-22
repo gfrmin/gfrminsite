@@ -1,0 +1,134 @@
+---
+title: "Projects"
+page-layout: full
+---
+
+A selection of open source projects and civic tech initiatives.
+
+<div class="project-card">
+<div class="project-card-image">
+<a href="https://accessinfo.hk" target="_blank">
+<img src="images/accessinfo-hk.png" alt="accessinfo.hk screenshot">
+</a>
+</div>
+<div class="project-card-body">
+
+### [accessinfo.hk](https://accessinfo.hk){target="_blank"}
+
+Hong Kong's Freedom of Information request platform. Makes it easier for citizens to submit and track FOI requests to government bodies. Built on the Alaveteli platform.
+
+<div class="project-tags">
+<span class="project-tag">Civic Tech</span>
+<span class="project-tag">Ruby</span>
+<span class="project-tag">Alaveteli</span>
+</div>
+
+</div>
+</div>
+
+<div class="project-card">
+<div class="project-card-image">
+<a href="https://webbsite.renavon.com" target="_blank">
+<img src="images/webb-data.png" alt="Webb Data screenshot">
+</a>
+</div>
+<div class="project-card-body">
+
+### [Webb Data](https://webbsite.renavon.com){target="_blank"}
+
+Open data platform providing 35 years of Hong Kong financial data—directors, boards, CCASS shareholding, and company registry records. Making corporate transparency accessible.
+
+<div class="project-tags">
+<span class="project-tag">Data Platform</span>
+<span class="project-tag">Python</span>
+<span class="project-tag">PostgreSQL</span>
+</div>
+
+</div>
+</div>
+
+<div class="project-card">
+<div class="project-card-image">
+<a href="https://github.com/gfrmin/scalibur" target="_blank">
+<img src="images/scalibur.png" alt="Scalibur project screenshot">
+</a>
+</div>
+<div class="project-card-body">
+
+### [Scalibur](https://github.com/gfrmin/scalibur){target="_blank"}
+
+Python tool for reading body composition data from cheap Bluetooth scales. Reverse-engineered BLE protocol, handles impedance measurements, and calculates body fat, muscle mass, and metabolic metrics. Designed to run on a Raspberry Pi for continuous data collection.
+
+<div class="project-tags">
+<span class="project-tag">IoT</span>
+<span class="project-tag">Python</span>
+<span class="project-tag">Raspberry Pi</span>
+<span class="project-tag">BLE</span>
+</div>
+
+</div>
+</div>
+
+<div class="project-card">
+<div class="project-card-image">
+<a href="https://github.com/gfrmin/jarvis-lite" target="_blank">
+<img src="images/jarvis-lite.png" alt="Jarvis Lite project screenshot">
+</a>
+</div>
+<div class="project-card-body">
+
+### [Jarvis Lite](https://github.com/gfrmin/jarvis-lite){target="_blank"}
+
+A Getting Things Done (GTD) Telegram bot with natural language task parsing. Uses Claude Haiku for intent recognition, PostgreSQL for storage, and APScheduler for daily digest emails. Self-hostable.
+
+<div class="project-tags">
+<span class="project-tag">AI</span>
+<span class="project-tag">Python</span>
+<span class="project-tag">Telegram</span>
+<span class="project-tag">Claude</span>
+</div>
+
+</div>
+</div>
+
+<div class="project-card">
+<div class="project-card-image">
+<a href="https://t.me/gtdlitebot" target="_blank">
+<img src="images/gtd-lite-bot.png" alt="GTD Lite Bot screenshot">
+</a>
+</div>
+<div class="project-card-body">
+
+### [GTD Lite Bot](https://t.me/gtdlitebot){target="_blank"}
+
+Live hosted instance of Jarvis Lite. Try it out on Telegram.
+
+<div class="project-tags">
+<span class="project-tag">Telegram Bot</span>
+<span class="project-tag">Live Demo</span>
+</div>
+
+</div>
+</div>
+
+<div class="project-card">
+<div class="project-card-image">
+<a href="https://github.com/gfrmin/bayesian-agent" target="_blank">
+<img src="images/bayesian-agent.png" alt="Bayesian Agent project screenshot">
+</a>
+</div>
+<div class="project-card-body">
+
+### [bayesian-agent](https://github.com/gfrmin/bayesian-agent){target="_blank"}
+
+Simulation framework for autonomous agents that learn to navigate an environment using Bayesian inference and Thompson sampling. Demonstrates online probabilistic learning and principled uncertainty quantification.
+
+<div class="project-tags">
+<span class="project-tag">ML</span>
+<span class="project-tag">Python</span>
+<span class="project-tag">Bayesian</span>
+<span class="project-tag">Simulation</span>
+</div>
+
+</div>
+</div>

@@ -26,7 +26,7 @@ listing:
   sort: "date desc"
   type: default
   max-items: 5
-  fields: [title, date, reading-time]
+  fields: [image, title, date, reading-time]
   feed: true
 ---
 
@@ -55,22 +55,22 @@ I help organisations build and fix production data systems—from initial archit
 
 I've worked across fintech, insurance, HR tech, venture capital, and civic tech—so I'm comfortable translating between business stakeholders and technical implementation.
 
-## Recent Projects
+## Featured Project
 
-::: {.project-card}
-### [Scalibur](https://github.com/gfrmin/scalibur){target="_blank"}
-Python tool for reading body composition data from cheap Bluetooth scales. Reverse-engineered BLE protocol for Raspberry Pi deployment.
-:::
+<div class="featured-project">
+<div class="featured-project-image">
+<img src="images/scalibur.png" alt="Scalibur project">
+</div>
+<div class="featured-project-content">
 
-::: {.project-card}
-### [Jarvis Lite](https://github.com/gfrmin/jarvis-lite){target="_blank"}
-GTD Telegram bot with natural language task parsing, powered by Claude Haiku.
-:::
+### Scalibur
 
-::: {.project-card}
-### [accessinfo.hk](https://accessinfo.hk){target="_blank"}
-Hong Kong's Freedom of Information request platform for citizens.
-:::
+Python tool for reading body composition data from cheap Bluetooth scales. Reverse-engineered BLE protocol, handles impedance measurements, and calculates body fat, muscle mass, and metabolic metrics.
+
+<a href="https://github.com/gfrmin/scalibur" target="_blank" class="featured-project-link">View on GitHub →</a>
+
+</div>
+</div>
 
 [See all projects →](projects/)
 

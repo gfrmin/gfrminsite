@@ -14,7 +14,7 @@ website:
     card-style: summary_large_image
     image: og-default.png
   navbar:
-    background: dark
+    background: light
     left:
       - text: Home
         href: index.qmd
