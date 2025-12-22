@@ -8,21 +8,18 @@ about:
   image-shape: round
   image-width: 200px
   links:
-    - icon: envelope
-      text: Contact
-      href: "#contact"
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com/gfrm_in
-    - icon: mastodon
-      text: Mastodon
-      href: https://defcon.social/@gfrmin
     - icon: github
       text: GitHub
       href: https://github.com/gfrmin
     - icon: linkedin
       text: LinkedIn
       href: https://linkedin.com/in/guyfreemanstat
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/gfrm_in
+    - icon: mastodon
+      text: Mastodon
+      href: https://defcon.social/@gfrmin
 listing:
   id: post-listing
   contents: posts
@@ -33,46 +30,34 @@ listing:
   feed: true
 ---
 
-Guy Freeman is a data scientist who has lived in Israel, England, Hong Kong, and Israel, in that order.
+Guy Freeman is an end-to-end data specialist with 10+ years building production systems across fintech, insurance, HR tech, and data governance. He's led teams, architected pipelines, and shipped products—from document AI systems processing thousands of files to ML models that identified startups before they went public.
 
-At some point he got a PhD in statistics. This has been wonderfully useful, at least in finding well-renumerated and interesting work, across all areas of data science, to while away the days.
+His academic work on Bayesian methods and causal inference has been [cited over 1,750 times](https://scholar.google.com/citations?hl=en&user=H422hdkAAAAJ). He holds a PhD in Statistics from Warwick and a BA in Mathematical Sciences from Oxford.
 
-Controversially, and astoundingly, he's fine with the Oxford comma.
+Based in Tel Aviv. Controversially, and astoundingly, still fine with the Oxford comma.
+
+::: {.availability-box}
+**Open to contract, consulting, part-time, and full-time opportunities.**
+
+Whether you're building something new or have a stuck project that needs rescuing, [get in touch](contact.qmd).
+:::
+
+## What I Do
+
+I help organisations build and fix production data systems—from initial architecture through to deployment and handover.
+
+**Typical engagements include:**
+
+- **Data pipeline architecture and engineering** — Python, SQL, dbt, Airflow, Snowflake, Databricks. I've built document AI systems that process 500+ files in 20 minutes with 95%+ accuracy.
+- **Machine learning in production** — From startup detection models for VC deal sourcing to anomaly detection for enterprise data governance.
+- **LLM integration** — Claude, GPT, Gemini. Early adopter (GPT-3 era) with production deployments.
+- **Team leadership and mentoring** — Hiring, architecture decisions, code review, unblocking stuck projects.
+
+I've worked across fintech, insurance, HR tech, venture capital, and civic tech—so I'm comfortable translating between business stakeholders and technical implementation.
 
 ## Recent Posts
 
 ::: {#post-listing}
 :::
 
-## Projects
-
-::: {.project-card}
-### [Jarvis Lite](https://github.com/gfrmin/jarvis-lite){target="_blank"}
-
-A GTD (Getting Things Done) Telegram bot for simple task management
-:::
-
-::: {.project-card}
-### [GTD Lite Bot](https://t.me/gtdlitebot){target="_blank"}
-
-Live hosted instance of Jarvis Lite
-:::
-
-## Get in touch {#contact}
-
-<form class="contact-form" action="https://formspree.io/f/mgeqrkaq" method="POST">
-<div class="form-group">
-<label for="contact-name">Name</label>
-<input type="text" id="contact-name" name="name" placeholder="Your name" required>
-</div>
-<div class="form-group">
-<label for="contact-email">Email</label>
-<input type="email" id="contact-email" name="email" placeholder="your@email.com" required>
-</div>
-<div class="form-group">
-<label for="contact-message">Message</label>
-<textarea id="contact-message" name="message" rows="5" placeholder="Your message..." required></textarea>
-</div>
-<input type="hidden" name="_gotcha" style="display:none">
-<button type="submit">Send</button>
-</form>
+[See all posts →](posts.qmd)

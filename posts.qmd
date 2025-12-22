@@ -1,0 +1,14 @@
+---
+title: "Posts"
+listing:
+  id: posts-listing
+  contents: posts
+  sort: "date desc"
+  type: default
+  fields: [title, date, reading-time, categories]
+  feed: true
+page-layout: full
+---
+
+::: {#posts-listing}
+:::

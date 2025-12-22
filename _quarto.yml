@@ -19,11 +19,11 @@ website:
       - text: Home
         href: index.qmd
       - text: Posts
-        href: "#posts"
+        href: posts.qmd
       - text: Projects
-        href: "#projects"
+        href: projects.qmd
       - text: Contact
-        href: "#contact"
+        href: contact.qmd
     right:
       - icon: twitter
         href: https://twitter.com/gfrm_in
