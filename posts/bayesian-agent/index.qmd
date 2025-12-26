@@ -1,0 +1,263 @@
+---
+title: "Building a Bayesian Learning Agent That Teaches Itself to Eat"
+subtitle: "Watching conjugate priors converge in real-time through Thompson Sampling"
+description: "A visual demonstration of Bayesian inference and the exploration-exploitation tradeoff. An agent navigates a grid world, learning which foods are safe through exact conjugate updates."
+author: "Guy Freeman"
+date: 2025-12-26
+categories: [python, bayesian, machine-learning, simulation, education]
+image: og-image.png
+execute:
+  eval: false
+  echo: true
+---
+
+Imagine you're stranded in an alien environment with 12 different types of food scattered around. Some combinations of shape and color provide energy, others are toxic. You start with limited energy and lose a bit with every step you take. How do you learn which foods are safe before you run out of energy?
+
+This is the exploration-exploitation tradeoff in its purest form. Pure exploration—trying everything randomly—will kill you. Pure exploitation—eating only what you *think* is best based on limited data—will starve you when better options exist. You need a strategy that balances both intelligently.
+
+Bayesian inference gives us an elegant solution. I built a simulation to *see* this learning process unfold in real-time: an agent navigating a grid world, updating its beliefs about food types using exact Bayesian inference, and making decisions through Thompson Sampling. No neural networks, no reinforcement learning algorithms, just probability theory and about 200 lines of Python.
+
+## The Demo
+
+The simulation runs in your terminal using curses. Watch the agent (@) navigate a 30×15 grid filled with foods represented by shapes (●, ■, ▲) in different colors. A live belief table shows what the agent has learned about each food type—higher numbers mean more energy, negative numbers mean toxic.
+
+![Simulation Demo](demo.gif)
+
+As the agent explores, you can watch uncertainty collapse. Belief bars narrow, means shift toward true values, and the agent's behavior evolves from random wandering to purposeful pursuit of high-energy foods. It's Bayesian inference happening in real-time.
+
+## The Problem: Exploration vs. Exploitation
+
+The agent starts with 10 energy units and loses 0.1 energy per step. It can see nearby food items and must decide which to pursue. There are 12 food types total: 3 shapes (circle, square, triangle) × 4 colors (red, green, blue, yellow). Each food type has an unknown true energy distribution—some are consistently good (circles), some are reliably toxic (triangles), and some are risky gambles (squares).
+
+The challenge: how do you decide which food to eat when you don't know which types are safe?
+
+Here's where Thompson Sampling comes in. Instead of using fixed exploration rates or complex formulas, it uses a beautifully simple idea: sample from your posterior belief about each food type, then pick the one with the highest sampled value.
+
+```{python}
+def select_target_food(self, available_foods):
+    """Select food using Thompson Sampling."""
+    best_value = -float('inf')
+    best_position = None
+
+    for position, shape, color in available_foods:
+        # Sample energy from our belief distribution
+        belief = self.beliefs[(shape, color)]
+        sampled_energy = np.random.normal(belief["mean"],
+                                         np.sqrt(belief["variance"]))
+
+        # Account for distance cost
+        distance = abs(position[0] - self.position[0]) + \
+                  abs(position[1] - self.position[1])
+        value = sampled_energy - distance * MOVEMENT_COST
+
+        if value > best_value:
+            best_value = value
+            best_position = position
+
+    return best_position
+```
+
+The elegance is in what this achieves:
+
+- **High uncertainty = wide distribution = exploration**: When you haven't tried a food much, its belief distribution is wide. Sometimes you'll sample extreme values, causing you to try it.
+- **Low uncertainty = narrow distribution = exploitation**: Once you've learned a food's true value, the distribution narrows. Samples consistently reflect the true mean.
+- **No hyperparameters**: The uncertainty itself controls the exploration rate. It's adaptive and automatic.
+
+## The Math: Conjugate Priors Made Simple
+
+Each food type has an unknown true energy value. The agent maintains a belief distribution over what that value might be, represented as a Normal distribution with mean μ (expected energy), variance σ² (uncertainty), and pseudo-observation count n (effective sample size).
+
+Initially, the agent knows nothing:
+
+```python
+# Prior belief for each food type
+μ₀ = 0.0      # Neutral expectation
+σ₀² = 10.0    # High uncertainty
+n₀ = 0.1      # Weak prior (easily overridden)
+```
+
+When the agent eats a food and observes its energy, it updates its belief using **conjugate Bayesian inference**. This is exact mathematics, not an approximation:
+
+```{python}
+def update_belief(self, shape, color, observed_energy):
+    """
+    Update belief using exact Bayesian inference (Normal-Normal conjugate).
+
+    Prior: μ ~ N(μ₀, σ₀²)
+    Likelihood: x ~ N(μ, σ²)
+    Posterior: μ ~ N(μ₁, σ₁²)
+    """
+    belief = self.beliefs[(shape, color)]
+
+    # Prior parameters
+    prior_mean = belief["mean"]
+    prior_variance = belief["variance"]
+    n = belief["n"]
+
+    # Weights for combining prior and observation
+    observation_weight = 1.0
+    total_weight = n + observation_weight
+
+    # Posterior mean: weighted average of prior and observation
+    new_mean = (n * prior_mean + observation_weight * observed_energy) / \
+               total_weight
+
+    # Posterior variance: always decreases with more data
+    new_variance = prior_variance / (1 + observation_weight / n)
+
+    # Update belief
+    belief["mean"] = new_mean
+    belief["variance"] = new_variance
+    belief["n"] = n + observation_weight
+```
+
+This is the mathematical heart of the system. The formula elegantly captures two key insights:
+
+1. **The posterior mean is a weighted average**: Trust old beliefs proportionally less as you gather new evidence. Early observations have huge impact; later ones refine.
+
+2. **Uncertainty always decreases**: With each observation, the variance shrinks. After one observation of a food type, variance drops from 10.0 to about 9.1. After ten observations, it's down to 0.9. The agent becomes more confident in what it knows.
+
+No MCMC sampling, no variational inference, no neural network approximations. This is the true Bayesian posterior because Normal-Normal is a conjugate pair. The math just works.
+
+## Thompson Sampling: The Exploration Strategy
+
+Why Thompson Sampling instead of other exploration strategies?
+
+**Epsilon-greedy** uses a fixed exploration rate: with probability ε, try something random; otherwise, exploit. The problem is that ε is arbitrary. Too high and you waste time on known bad options. Too low and you miss discovering better choices. And it doesn't adapt—you explore the same amount regardless of uncertainty.
+
+**Upper Confidence Bound (UCB)** uses a deterministic formula: `value = μ + c·σ - distance_cost`. It picks the option with highest upper confidence bound. UCB is provably good, but the constant c needs tuning, and it explores more rigidly than Thompson.
+
+**Thompson Sampling** just samples from your posterior and picks the max:
+
+```{python}
+# This is literally the entire exploration strategy
+sampled_energy = np.random.normal(belief["mean"], np.sqrt(belief["variance"]))
+```
+
+That's it. Sample from your posterior, account for travel cost, pick the highest sampled value. The mathematics handles exploration automatically.
+
+Early on, when beliefs are uncertain, you have wide distributions. Sampling from them occasionally gives extreme values, causing exploration of uncertain options. As beliefs sharpen, distributions narrow, samples become consistent, and behavior converges to pure exploitation. The uncertainty itself controls the tradeoff—no hyperparameters needed.
+
+Thompson Sampling is also provably optimal for multi-armed bandits with logarithmic regret O(log T). It's not a heuristic; it's a principled strategy that matches the probability of each option being best.
+
+## Implementation Highlights
+
+The implementation separates concerns cleanly: the agent maintains beliefs and makes decisions, the environment handles world state and dynamics, and the main loop orchestrates everything with curses rendering.
+
+**Grid World Setup**:
+
+The environment defines ground truth energy distributions for each food type. These are what the agent is trying to learn:
+
+```{python}
+# Example ground truth distributions in config.py
+ENERGY_DISTRIBUTIONS = {
+    ("○", "red"): (3.0, 1.0),     # Circle + red: consistently good
+    ("○", "green"): (2.0, 1.0),   # Circle + green: pretty good
+    ("■", "red"): (-1.0, 2.0),    # Square + red: risky, often toxic
+    ("■", "blue"): (2.5, 1.5),    # Square + blue: high variance gamble
+    ("▲", "red"): (-2.0, 1.0),    # Triangle + red: reliably toxic
+    # ... 7 more food types
+}
+```
+
+Circles tend to be positive, triangles tend to be negative, squares are mixed and risky. The agent doesn't know these values—it must infer them through experience.
+
+**The Learning Loop**:
+
+The main simulation ties everything together:
+
+```{python}
+# Simplified learning loop from main.py
+while agent.energy > 0 and steps < max_steps:
+    # Agent perceives nearby foods
+    visible_foods = world.get_nearby_foods(agent.position, radius=5)
+
+    if visible_foods:
+        # Thompson Sampling: pick target
+        target = agent.select_target_food(visible_foods)
+
+        # Move toward target
+        agent.move_toward(target)
+
+        # Try to eat at current position
+        consumed = world.consume_food(agent.position)
+        if consumed:
+            shape, color, energy = consumed
+            agent.energy += energy
+
+            # Bayesian update: exact conjugate inference
+            agent.update_belief(shape, color, energy)
+    else:
+        # No food visible, explore randomly
+        agent.move_random()
+
+    # Lose energy for movement
+    agent.energy -= MOVEMENT_COST
+    steps += 1
+
+    # Render to terminal
+    renderer.draw(world, agent)
+```
+
+Perceive → Decide → Act → Learn → Repeat. The Bayesian update is a single method call that performs exact inference. No training epochs, no convergence checks, just math.
+
+**Curses Visualization**:
+
+The terminal UI shows the grid world, the agent's position, all food items with their shapes and colors, and a live belief summary that updates after each observation. Watch the belief bars narrow and means shift as the agent learns. It's deeply satisfying to see uncertainty collapse in real-time.
+
+## What I Learned Building This
+
+**Conjugate priors are underrated**. In the era of deep learning and approximate inference, exact Bayesian updates feel like a superpower. No training epochs, no learning rate schedules, no convergence diagnostics. You observe data, update your belief with one formula, and you're done. The posterior is exact, not approximate. When you have conjugate pairs, use them.
+
+**Visualization changes understanding**. Reading about Thompson Sampling in a textbook gave me the theory. Watching this agent explore gave me the intuition. Seeing those belief bars narrow, watching the agent shift from random wandering to purposeful pursuit, observing how it balances trying new foods with exploiting known good ones—that's when I *got* it. Abstract concepts become concrete when you can see them unfold.
+
+**Simple simulations teach complex concepts**. This could be a teaching tool for intro ML courses. The grid world is arbitrary, the food types are made up, but the learning principles are universal. Bayesian inference, Thompson Sampling, exploration-exploitation tradeoffs, conjugate updates—all demonstrated in under 200 lines of code with zero ML frameworks. Sometimes simple is better.
+
+**Pure Python + NumPy is enough**. No TensorFlow, PyTorch, or JAX required. No GPU needed. The entire agent is mathematically exact using basic NumPy operations. This is a good reminder that not every ML problem needs deep learning. Some problems have closed-form solutions, and when they do, they're elegant.
+
+## Extensions and Next Steps
+
+The framework is clean and extensible. Here are natural next steps:
+
+**Environmental extensions**:
+- **Non-stationary environments**: Make food distributions drift over time, forcing the agent to adapt using discounted updates
+- **Spatial correlations**: Food quality depends on location—agents learn regional patterns
+- **Obstacles and pathfinding**: Add walls, implement A* pathfinding to navigate around them
+
+**Multi-agent scenarios**:
+- Competition: Multiple agents sharing resources
+- Cooperation: Agents can share observations to learn faster
+- Emergent behavior: Watch strategies evolve through interaction
+
+**Algorithmic variations**:
+- **Variance learning**: Use Normal-Gamma conjugate to learn both mean and variance
+- **Contextual bandits**: Food value depends on agent state (time of day, current energy)
+- **Beta-Bernoulli version**: Binary rewards (safe/toxic) instead of continuous energy values
+
+**Educational tools**:
+- Jupyter notebook with interactive plots showing belief evolution
+- Side-by-side comparison: Thompson Sampling vs. epsilon-greedy vs. UCB vs. random
+- Regret curve visualization—cumulative energy vs. oracle with perfect knowledge
+- Parameter sensitivity analysis—how does prior strength affect learning speed?
+
+The codebase is designed for experimentation. Adding new food types takes three lines in the config. Switching from Thompson to UCB is a single boolean flag. The Bayesian update is a standalone method you can modify to try different conjugate priors.
+
+## Conclusion
+
+This project started as "I want to understand Thompson Sampling." It ended as a visual demonstration of Bayesian inference in action, a teaching tool for probabilistic machine learning, and a reminder that some problems have exact solutions.
+
+The agent's journey from ignorance to competence mirrors real learning. It starts uncertain about everything, makes mistakes, gradually builds knowledge from experience, and eventually acts with confidence. No pre-training, no labeled data, no reward engineering. Just observations and Bayes' rule.
+
+There's something deeply satisfying about watching an agent learn from scratch. The mathematics is beautiful because it's both principled (provably optimal regret bounds) and practical (runs in a terminal with NumPy). Code can be poetry when it's this clean.
+
+The code is on [GitHub](https://github.com/gfrmin/bayesian-agent). Try it yourself:
+
+```bash
+git clone https://github.com/gfrmin/bayesian-agent
+cd bayesian-agent
+uv run main.py
+```
+
+Fork it, extend it, teach with it. Add new food types, try different priors, implement multi-agent scenarios, compare strategies. The framework is there. The math is exact. The learning is real.
+
+Watch an agent learn, and maybe learn something yourself about how learning works.
