@@ -4,6 +4,7 @@ subtitle: "A journey through BLE packet sniffing, protocol reverse-engineering, 
 description: "How I built a Raspberry Pi dashboard to capture and visualize body composition data from a GoodPharm TY5108 Bluetooth scale"
 author: "Guy Freeman"
 date: 2025-12-22
+date-modified: 2025-12-31
 categories: [python, iot, raspberry-pi, health, data, ble, hardware]
 image: og-image.png
 execute:
@@ -167,7 +168,9 @@ I needed an ETL pipeline that could:
 
 1. Group packets into "sessions" (measurements within 30 seconds of each other)
 2. Pick the best packet from each session (prefer `0x21` over `0x20`)
-3. Update existing measurements if better data arrives later
+3. Detect which user profile the measurement belongs to (by weight range)
+4. Calculate body composition only if the profile has complete parameters
+5. Update existing measurements if better data arrives later
 
 ```python
 def group_into_sessions(packets: list[dict], gap_seconds: int = 30) -> list[list[dict]]:
@@ -196,23 +199,68 @@ The ETL also handles the case where you step on the scale without bare feet (wei
 
 ## The Dashboard
 
-The web interface is a simple Flask app with Chart.js for visualization. It shows:
+The web interface is a Flask app with Chart.js for visualization and HTMX for dynamic updates. It shows:
 
 - Latest measurement (weight, body fat %)
 - 30-day weight trend chart
 - Measurement history table
+- Profile selector dropdown
+- Profile management modal
 
 ```python
 @app.route("/")
 def index():
     """Render the dashboard."""
-    run_etl()  # Process any new packets first
-    latest = db.get_latest_measurement()
-    recent = db.get_measurements(limit=10)
-    return render_template("index.html", latest=latest, recent=recent)
+    run_etl()  # Process any new packets
+    profiles = db.get_profiles()
+    profile_id = request.args.get("profile", profiles[0]["id"] if profiles else None)
+    latest = db.get_latest_measurement(profile_id=profile_id)
+    recent = db.get_measurements(limit=10, profile_id=profile_id)
+    return render_template("index.html", latest=latest, recent=recent,
+                          profiles=profiles, selected_profile=profile_id)
 ```
 
-Nothing fancy, but it works. The ETL runs on every page load, so new measurements appear immediately.
+The ETL runs on every page load, so new measurements appear immediately. All queries are filtered by the selected profile, so each household member sees only their own data.
+
+## Multi-User Support
+
+After the initial version worked, I faced a new challenge: my household has multiple people who use the scale. The original design assumed a single user with hardcoded height/age/gender values. I needed a way to identify who was standing on the scale.
+
+### Why Not Use the Scale's User ID?
+
+The BLE packets include a user ID field (bytes 4-5). My first attempt used this to identify users - but it turned out to be unreliable. The scale's internal user management didn't align with how we actually used it, and the IDs would sometimes change unexpectedly.
+
+### Weight-Based Profile Detection
+
+The solution was simpler: identify users by their weight range. Household members typically have non-overlapping weight ranges, so a measurement of 75kg obviously belongs to a different person than one of 55kg.
+
+```python
+def detect_profile(weight_kg: float, profiles: list[dict]) -> dict | None:
+    """Find profile where weight falls within min/max range."""
+    for profile in profiles:
+        min_w = profile.get("min_weight_kg")
+        max_w = profile.get("max_weight_kg")
+        if min_w is not None and max_w is not None and min_w <= weight_kg <= max_w:
+            return profile
+    return None
+```
+
+Each profile stores a weight range (min/max), plus the body composition parameters (height, age, gender). When a measurement comes in, the ETL matches it to the appropriate profile and calculates body composition using that profile's parameters.
+
+### Profile Management
+
+The dashboard includes an HTMX-powered modal for managing profiles. You can add, edit, or delete profiles without page reloads. When you update a profile's height, age, or gender, all existing measurements for that profile are automatically recalculated with the new values:
+
+```python
+@app.route("/api/profiles/<int:profile_id>", methods=["PUT"])
+def update_profile(profile_id: int):
+    """Update an existing profile."""
+    # ... validation and save ...
+    db.recalculate_profile_measurements(profile_id)
+    return jsonify({"id": profile_id})
+```
+
+This means you can correct a profile's parameters at any time and all historical body composition metrics will be updated accordingly.
 
 ## Deployment
 
@@ -227,7 +275,7 @@ This rsyncs the code, installs dependencies via `uv`, and sets up two systemd se
 - `scalibur-scanner.service` - The BLE scanner daemon (needs `CAP_NET_RAW` for raw socket access)
 - `scalibur-dashboard.service` - The Flask dashboard on port 5000
 
-SQLite with WAL mode handles concurrent access between the scanner writing packets and the dashboard reading measurements.
+SQLite with WAL mode handles concurrent access between the scanner writing packets and the dashboard reading measurements. The dashboard runs database migrations on startup, so existing installations are automatically upgraded when new schema changes are deployed (like the addition of the profiles table).
 
 ## Lessons Learned
 
@@ -236,5 +284,7 @@ SQLite with WAL mode handles concurrent access between the scanner writing packe
 **Iterative debugging with real hardware is slow.** I burned a lot of time stepping on and off the scale, waiting for packets, checking hex dumps. A good test suite with captured packets would have saved hours.
 
 **Owning your data is worth the effort.** The scale's original app is fine, but now I have a SQLite database I can query however I want. I can export to CSV, build custom visualizations, or integrate with other health tracking systems.
+
+**Weight-based identification is surprisingly robust.** When I needed multi-user support, my first instinct was to use the scale's built-in user ID field. That turned out to be unreliable. The simpler solution - identifying users by their weight range - works better in practice. Household members almost always have non-overlapping weight ranges, and the approach requires no coordination with the scale's internal state.
 
 The code is on [GitHub](https://github.com/gfrmin/scalibur) if you want to try it with your own TY5108 scale or adapt it for similar devices. The packet parsing logic might work for other cheap BLE scales with minor tweaks - the protocol seems fairly common among generic Chinese body composition scales.
