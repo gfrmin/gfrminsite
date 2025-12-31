@@ -1,0 +1,31 @@
+---
+title: "On Owning Your Data"
+subtitle: "A bathroom scale, a Raspberry Pi, and the quiet satisfaction of knowing where your numbers live"
+description: "Why I reverse-engineered a cheap Bluetooth scale to keep my health data out of the cloud"
+author: "Guy Freeman"
+date: 2025-12-31
+categories: [essays, privacy, data]
+image: dashboard.png
+---
+
+There's something faintly unsettling about stepping onto a bathroom scale and having your body composition beamed to a server in Shenzhen. The scale knows your weight, your body fat percentage, your muscle mass—and in exchange for this intimacy, you get an app that keeps suggesting you upgrade to premium.
+
+I don't object to companies making money. I object to the quiet assumption that my body's measurements belong, by default, to someone else's database. The data isn't especially sensitive in isolation, but there's a principle at stake: if I can't own the numbers that describe my own physical form, what exactly can I own?
+
+I bought a cheap Bluetooth scale for £20 and wondered if I might intercept the data before it left the building. It turned out that the scale, in its eagerness to communicate, simply shouts its measurements into the air as Bluetooth advertisements. Anyone with a Raspberry Pi and some patience can listen in.
+
+The patience part proved important. My git history contains two consecutive commits with directly contradictory theories about where in the data packet the weight was encoded. Both were wrong, though in interestingly different ways. Eventually I worked out the structure: weight in the first two bytes, impedance in the next two, and a small flag that tells you whether the measurement is complete or if the scale is still thinking.
+
+The more interesting problem came later. My household has several people who use the scale, and I needed some way to tell them apart. The scale does include a user ID field, presumably for this purpose, but it turned out to be unreliable in ways I never fully diagnosed. The solution was almost disappointingly simple: identify people by their weight range. Household members, it turns out, rarely overlap. A reading of 75kg belongs to one person; 55kg to another. No elaborate identification scheme required.
+
+![The dashboard, running on a Raspberry Pi in a cupboard](dashboard.png)
+
+The whole thing now runs on a Raspberry Pi in a cupboard, quietly recording measurements and displaying them on a small dashboard. It's not especially sophisticated—a few Python scripts, a SQLite database, a web page that wouldn't win any design awards. But there's a certain satisfaction in knowing exactly where your data lives. It lives in a cupboard, next to the router, on a device I own.
+
+This isn't a manifesto about leaving the cloud or rejecting modern conveniences. I use plenty of services that store my data elsewhere, and I don't lose sleep over it. But some data feels more personal than others, and it's worth occasionally asking whether the default arrangement—your information, their servers, their terms—is really the only option.
+
+Sometimes it isn't. Sometimes a £20 scale and a spare afternoon is all it takes to tip the balance back.
+
+---
+
+*For the technical details—BLE packet structures, Python code, deployment scripts—see [the full write-up](/posts/scalibur/). The code is on [GitHub](https://github.com/gfrmin/scalibur).*

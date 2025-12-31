@@ -16,6 +16,10 @@ Body composition scales are genuinely useful devices. Step on, wait a few second
 
 I bought a cheap GoodPharm TY5108 scale (it advertises itself as "tzc" over Bluetooth LE) for around £20. It works well enough, but I wanted to own my data. So I built [Scalibur](https://github.com/gfrmin/scalibur): a Raspberry Pi-based system that captures the raw BLE advertisements, decodes the measurements, calculates body composition metrics, and displays everything on a simple web dashboard.
 
+::: {.callout-note}
+For a less technical take on why I built this, see [On Owning Your Data](/posts/on-owning-your-data/).
+:::
+
 This is the story of how I got there.
 
 ## The Hardware
@@ -206,6 +210,8 @@ The web interface is a Flask app with Chart.js for visualization and HTMX for dy
 - Measurement history table
 - Profile selector dropdown
 - Profile management modal
+
+![The Scalibur dashboard showing weight trends and body composition metrics](dashboard.png)
 
 ```python
 @app.route("/")
