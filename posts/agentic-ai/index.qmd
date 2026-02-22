@@ -28,6 +28,10 @@ It's a Rube Goldberg machine built on vibes.
 
 ## An Experiment
 
+::: {.callout-note}
+For the technical implementation --- Beta posteriors, value-of-information calculations, and full code --- see [How Decision Theory Cuts Your AI Agent's API Bill in Half](/posts/decision-theory-agents/).
+:::
+
 I built a simple alternative — building on the Bayesian inference work from the [earlier posts](/posts/bayesian-agent/) — a Bayesian agent that maintains probability distributions over tool reliability, computes the expected value of information before making each query, and maximises expected utility across a coherent objective function. I called it [Credence](https://github.com/gfrmin/credence).
 
 Then I set it against a LangChain ReAct agent on a straightforward task: answer 50 multiple-choice questions using four tools with different strengths, where correct answers earn points, wrong answers lose points, and every tool query costs something. This is LangChain's home turf — tool-using question answering.
