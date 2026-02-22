@@ -1,0 +1,75 @@
+---
+title: "Agentic AI Is Neither Intelligent Nor an Agent"
+subtitle: "What a Bayesian benchmark reveals about the gap between tool-calling flowcharts and genuine decision-making"
+description: "I built a Bayesian agent and set it against LangChain on a tool-use benchmark. LangChain got more answers right and still lost — by 120 points."
+author: "Guy Freeman"
+date: 2026-02-23
+categories: [python, bayesian, machine-learning, ai, essays]
+execute:
+  eval: false
+  echo: true
+---
+
+I've spent the last few months building agents that maintain actual beliefs and update them from evidence — first [a Bayesian learner](/posts/bayesian-agent/) that teaches itself which foods are safe, then [an evolutionary system](/posts/bayesian-agent-part2/) that discovers its own cognitive architecture. Looking at what the industry calls "agents" has been clarifying.
+
+What would it take for an AI system to genuinely deserve the word "agent"?
+
+At minimum, an agent has *beliefs* — not hunches, not vibes, but quantifiable representations of what it thinks is true and how certain it is. An agent has *goals* — not a prompt that says "be helpful," but an objective function it's trying to maximise. And an agent *decides* — not by asking a language model what to do next, but by evaluating its options against its goals in light of its beliefs.
+
+By this standard, the systems we're calling "AI agents" are none of these things.
+
+## What LangChain Actually Is
+
+Strip away the abstractions and a LangChain ReAct agent is a directed graph of LLM calls with hand-coded routing logic. The "agent" is a flowchart where each node says "call GPT with this prompt" and the edges say "if the output contains X, go to node Y." The "state" is a mutable dictionary passed between nodes. The "reasoning" is whatever the LLM happens to emit.
+
+There is no model of the world. There is no uncertainty quantification. There is no principled decision about what to do next. There is no learning from experience within an episode. There is no adaptation when conditions change.
+
+It's a Rube Goldberg machine built on vibes.
+
+## An Experiment
+
+I built a simple alternative — building on the Bayesian inference work from the [earlier posts](/posts/bayesian-agent/) — a Bayesian agent that maintains probability distributions over tool reliability, computes the expected value of information before making each query, and maximises expected utility across a coherent objective function. I called it [Credence](https://github.com/gfrmin/credence).
+
+Then I set it against a LangChain ReAct agent on a straightforward task: answer 50 multiple-choice questions using four tools with different strengths, where correct answers earn points, wrong answers lose points, and every tool query costs something. This is LangChain's home turf — tool-using question answering.
+
+The results were instructive.
+
+## The Accuracy Paradox
+
+The LangChain ReAct agent achieved 63.7% accuracy. The Bayesian agent achieved 59.6%.
+
+LangChain got more answers right. And it *lost* — by 120 points.
+
+The LangChain agent scored -8.0 total. The Bayesian agent scored +112.6. How? The LangChain agent averaged 3.22 tool calls per question, querying nearly everything available for nearly every question, because it has no concept of whether a query is worth its cost. The Bayesian agent averaged far fewer, because it computed whether the expected information gain from each query exceeded the price of making it. When it didn't, the agent didn't ask.
+
+The LangChain agent knew more answers. The Bayesian agent knew which answers were *worth knowing*.
+
+## The Prompting Trap
+
+It gets worse. I built an enhanced LangChain agent with careful instructions: track which tools have been reliable, be selective about queries, abstain when uncertain. Every advantage I could give it through prompt engineering.
+
+This agent achieved 66.0% accuracy — the highest of any non-oracle agent. It also scored -68.2. The worst non-random score in the benchmark.
+
+The enhanced prompting made the agent more *thorough*. It queried 3.94 tools per question, nearly all four every time. The prompt told it to be careful, and it interpreted "careful" as "check everything," which is exactly the wrong response when checking has a cost. More sophisticated prompting produced worse outcomes, because *decision theory is not a prompting problem*.
+
+You cannot instruct an LLM to perform calibrated cost-benefit analysis through natural language. You can tell it to "only query tools when necessary," but it has no mechanism to determine what "necessary" means in quantitative terms. It has no posterior distribution over tool reliability. It cannot compute the marginal value of the next query. It just... guesses. More eloquently with a better prompt, but it still guesses.
+
+## What Goes Wrong When Things Change
+
+I ran a second experiment where one tool's reliability degraded mid-task — simulating the kind of API change, index update, or backend swap that happens routinely in production.
+
+An agent that always used the degraded tool saw its score collapse by 69 points. The Bayesian agent barely noticed. Its posterior over the tool's reliability shifted within a few questions, it reallocated queries to more reliable alternatives, and it continued accumulating points. No change-detection heuristic. No special handling. Just Bayes' rule doing what it does.
+
+The LangChain agent? It kept querying the broken tool with identical confidence, because it has no beliefs that could be updated and no reliability model that could shift.
+
+## What "Agent" Should Mean
+
+The word "agent" in "agentic AI" is doing an enormous amount of work whilst meaning almost nothing. It conjures images of autonomous decision-making, adaptive behaviour, goal-directed reasoning. What it delivers is a for-loop around an API call.
+
+A real agent — even a very simple one — maintains beliefs, updates them from evidence, and chooses actions to maximise expected utility given those beliefs. This isn't exotic technology. It's undergraduate decision theory, implemented in a few hundred lines of scipy. The Credence benchmark agent has no neural networks, no fine-tuning, no chain-of-thought prompting. It has Beta distributions and Bayes' rule.
+
+The question isn't whether we can build better AI agents. We manifestly can; the mathematics has existed for decades. The question is why the industry settled for so much less, and how long we'll keep calling flowcharts "agents" before we build systems that deserve the name.
+
+I don't know whether this Bayesian approach scales beyond toy benchmarks. Fifty multiple-choice questions with four tools is a long way from production systems with hundreds of endpoints, ambiguous objectives, and constraints that shift hourly. The expected-value-of-information calculation that works cleanly here might become intractable when the action space explodes. And there's a genuine question about whether principled decision-making and the flexibility of language models are complementary rather than competing — whether the right answer is Bayesian reasoning *on top of* LLM capabilities, not instead of them. I don't have answers yet, but the benchmark at least suggests that the questions are worth asking.
+
+Code and full results: [github.com/gfrmin/credence](https://github.com/gfrmin/credence)
