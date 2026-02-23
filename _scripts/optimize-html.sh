@@ -74,7 +74,7 @@ BI_FALLBACK_CSS='<style>.bi-caret-down-fill::before{content:"";display:inline-bl
 SED_ARGS+=(-e "s|</head>|${BI_FALLBACK_CSS}</head>|")
 
 # Swap profile image to WebP, add fetchpriority and dimensions for LCP
-SED_ARGS+=(-e 's|<img src="profile\.jpg"|<img src="profile.webp" fetchpriority="high" width="270" height="270"|g')
+SED_ARGS+=(-e 's|<img src="profile\.jpg"|<img src="profile.webp" fetchpriority="high" width="200" height="200"|g')
 
 # Add dimensions to listing thumbnail placeholders (prevents CLS, fixes Lighthouse audit)
 SED_ARGS+=(-e 's|<img loading="lazy" src="" class="thumbnail-image">|<img loading="lazy" src="" class="thumbnail-image" width="200" height="130">|g')
