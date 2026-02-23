@@ -77,7 +77,6 @@ format:
   html:
     html-math-method: plain
     include-in-header:
-      - _includes/critical-bootstrap.html
       - _includes/preload.html
       - _includes/posthog.html
     theme:

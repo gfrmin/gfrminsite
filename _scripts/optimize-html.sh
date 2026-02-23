@@ -59,8 +59,8 @@ SED_ARGS+=(-e 's|<link href="\([^"]*\)" rel="stylesheet"[^>]*class="quarto-color
 # Remove duplicate "-extra" stylesheet copies (Quarto adds these for theme switching; not needed for initial render)
 SED_ARGS+=(-e '/<link[^>]*class="quarto-color-scheme-extra"[^>]*>/d')
 
-# Defer Bootstrap theme CSS (critical subset is inlined via critical-bootstrap.html)
-SED_ARGS+=(-e 's|<link href="\([^"]*bootstrap[^"]*\.min\.css\)" rel="stylesheet"[^>]*class="quarto-color-scheme"[^>]*>|<link href="\1" rel="stylesheet" class="quarto-color-scheme" media="print" onload="this.media='"'"'all'"'"'">|g')
+# Note: primary Bootstrap CSS loads synchronously (90KB after PurgeCSS is acceptable).
+# Deferring it causes a double-render that hurts LCP.
 
 # Defer tippy.css (tooltip styles not needed for initial paint)
 SED_ARGS+=(-e 's|<link href="\([^"]*tippy\.css\)" rel="stylesheet">|<link href="\1" rel="stylesheet" media="print" onload="this.media='"'"'all'"'"'">|g')
