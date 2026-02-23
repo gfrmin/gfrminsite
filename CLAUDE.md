@@ -51,7 +51,6 @@ Create a new directory under `posts/` with:
 
 ## Deployment
 
-Site deploys to GitLab Pages with custom domain `www.gfrm.in`:
-- CI pipeline uses `rocker/verse:latest` image with R and Quarto
+Site deploys to GitHub Pages with custom domain `www.gfrm.in`:
 - Push to `master` triggers automatic deployment
-- DNS managed via Cloudflare
+- DNS managed via Cloudflare (CNAME to gfrmin.github.io)

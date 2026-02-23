@@ -21,7 +21,7 @@ Bayesian inference gives us an elegant solution. I built a simulation to *see* t
 
 The simulation runs in your terminal using curses. Watch the agent (@) navigate a 30×15 grid filled with foods represented by shapes (●, ■, ▲) in different colors. A live belief table shows what the agent has learned about each food type—higher numbers mean more energy, negative numbers mean toxic.
 
-![Simulation Demo](demo.gif)
+![Terminal simulation showing a Bayesian agent navigating a grid world, updating belief distributions about food safety in real-time](demo.gif)
 
 As the agent explores, you can watch uncertainty collapse. Belief bars narrow, means shift toward true values, and the agent's behavior evolves from random wandering to purposeful pursuit of high-energy foods. It's Bayesian inference happening in real-time.
 

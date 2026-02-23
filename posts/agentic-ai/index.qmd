@@ -5,6 +5,7 @@ description: "I built a Bayesian agent and set it against LangChain on a tool-us
 author: "Guy Freeman"
 date: 2026-02-23
 categories: [python, bayesian, machine-learning, ai, essays]
+image: og-image.png
 execute:
   eval: false
   echo: true

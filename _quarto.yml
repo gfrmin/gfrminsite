@@ -1,6 +1,11 @@
 project:
   type: website
   output-dir: public
+  render:
+    - "!drafts/"
+    - "!CLAUDE.md"
+    - "**/*.qmd"
+    - "**/*.md"
 
 website:
   title: "Guy Freeman"
@@ -61,6 +66,9 @@ execute:
   cache: true
   warning: false
   message: false
+
+filters:
+  - _filters/seo.lua
 
 format:
   html:

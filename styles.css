@@ -438,7 +438,7 @@ main li a:hover {
   font-size: 1.5rem;
 }
 
-.service-card h4 {
+.service-card h3 {
   font-size: 1.1rem;
   margin: 0 0 var(--space-sm);
   color: var(--text-primary);

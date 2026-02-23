@@ -1,45 +1,56 @@
 <script>
 (function() {
-  // Only add schema for blog posts (pages with article role)
+  // Only add supplementary schema for blog posts
   if (!document.querySelector('article.quarto-post')) return;
 
-  const title = document.querySelector('meta[property="og:title"]')?.content || document.title;
-  const description = document.querySelector('meta[property="og:description"]')?.content || '';
-  const url = document.querySelector('meta[property="og:url"]')?.content || window.location.href;
-  const image = document.querySelector('meta[property="og:image"]')?.content || '';
-  const dateEl = document.querySelector('.quarto-title-meta-contents time');
-  const datePublished = dateEl?.getAttribute('datetime') || '';
+  var title = document.querySelector('meta[property="og:title"]')?.content || document.title;
 
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": title,
-    "description": description,
-    "url": url,
-    "datePublished": datePublished,
-    "author": {
-      "@type": "Person",
-      "name": "Guy Freeman",
-      "url": "https://www.gfrm.in"
-    },
-    "publisher": {
-      "@type": "Person",
-      "name": "Guy Freeman",
-      "url": "https://www.gfrm.in"
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": url
-    }
-  };
+  // Breadcrumb schema (needs client-side URL parsing)
+  var pathParts = window.location.pathname.split('/').filter(Boolean);
+  if (pathParts.length >= 2) {
+    var breadcrumb = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://gfrm.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Posts",
+          "item": "https://gfrm.in/posts/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": title
+        }
+      ]
+    };
 
-  if (image) {
-    schema.image = image;
+    var script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(breadcrumb);
+    document.head.appendChild(script);
   }
 
-  const script = document.createElement('script');
-  script.type = 'application/ld+json';
-  script.text = JSON.stringify(schema);
-  document.head.appendChild(script);
+  // Augment the server-side JSON-LD with wordCount (needs DOM access)
+  var existing = document.querySelector('script[type="application/ld+json"]');
+  if (existing) {
+    try {
+      var data = JSON.parse(existing.text);
+      if (data["@type"] === "BlogPosting" && !data.wordCount) {
+        var articleBody = document.querySelector('#quarto-content');
+        if (articleBody) {
+          data.wordCount = articleBody.textContent.trim().split(/\s+/).length;
+          existing.text = JSON.stringify(data);
+        }
+      }
+    } catch (e) {}
+  }
 })();
 </script>

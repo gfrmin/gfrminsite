@@ -1,6 +1,7 @@
 ---
 title: "Guy Freeman"
 subtitle: "Data Systems Architect"
+description: "Guy Freeman — data systems architect with 10+ years in fintech, insurance, and AI. PhD in Statistics from Warwick. Blog on Bayesian inference, production ML, and building with LLMs."
 image: profile.jpg
 page-layout: full
 toc: false
@@ -50,22 +51,22 @@ I help organisations build and fix production data systems—from initial archit
 <div class="service-grid">
 <div class="service-card">
 <div class="service-card-icon"><i class="bi bi-database"></i></div>
-<h4>Data Pipeline Architecture</h4>
+<h3>Data Pipeline Architecture</h3>
 <p>Python, SQL, dbt, Airflow, Snowflake, Databricks. I've built document AI systems that process 500+ files in 20 minutes with 95%+ accuracy.</p>
 </div>
 <div class="service-card">
 <div class="service-card-icon"><i class="bi bi-cpu"></i></div>
-<h4>Machine Learning in Production</h4>
+<h3>Machine Learning in Production</h3>
 <p>From startup detection models for VC deal sourcing to anomaly detection for enterprise data governance.</p>
 </div>
 <div class="service-card">
 <div class="service-card-icon"><i class="bi bi-chat-dots"></i></div>
-<h4>LLM Integration</h4>
+<h3>LLM Integration</h3>
 <p>Claude, GPT, Gemini. Early adopter (GPT-3 era) with production deployments across multiple industries.</p>
 </div>
 <div class="service-card">
 <div class="service-card-icon"><i class="bi bi-people"></i></div>
-<h4>Team Leadership & Mentoring</h4>
+<h3>Team Leadership & Mentoring</h3>
 <p>Hiring, architecture decisions, code review, unblocking stuck projects.</p>
 </div>
 </div>
@@ -76,7 +77,7 @@ I've worked across fintech, insurance, HR tech, venture capital, and civic tech�
 
 <div class="featured-project">
 <div class="featured-project-image">
-<img src="images/scalibur.png" alt="Scalibur project">
+<img src="images/scalibur.png" alt="Scalibur — Python tool for reading body composition data from Bluetooth scales">
 </div>
 <div class="featured-project-content">
 

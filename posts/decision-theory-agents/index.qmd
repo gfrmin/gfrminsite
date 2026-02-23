@@ -5,6 +5,7 @@ description: "Most LLM agents use tools like a tourist uses a phrasebook. A few 
 author: "Guy Freeman"
 date: 2026-02-23
 categories: [python, bayesian, machine-learning, ai]
+image: og-image.png
 execute:
   eval: false
   echo: true
