@@ -1145,14 +1145,14 @@ blockquote p:last-child {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Profile header */
+/* Profile header — no animation delay (above-fold, affects LCP) */
 .quarto-about-solana .entity-contents {
-  animation: fadeInUp 0.5s ease-out both;
+  animation: none;
 }
 
-/* Main content area (bio, all sections) */
+/* Main content area — no animation delay (above-fold, affects FCP) */
 .quarto-about-solana .about-contents {
-  animation: fadeInUp 0.5s ease-out 0.15s both;
+  animation: none;
 }
 
 /* Staggered service cards */
