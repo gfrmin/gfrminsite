@@ -779,19 +779,26 @@ pre:not(.sourceCode) {
    ============================================ */
 .skip-link {
   position: absolute;
-  top: -50px;
-  left: 0;
-  background: var(--brand-primary);
-  color: var(--text-inverse);
-  padding: var(--space-sm) var(--space-md);
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
   z-index: 1100;
   text-decoration: none;
-  border-radius: 0 0 var(--radius-md) 0;
-  transition: top var(--transition-fast);
 }
 
 .skip-link:focus {
+  position: fixed;
   top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  background: var(--brand-primary);
+  color: var(--text-inverse);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 0 0 var(--radius-md) 0;
 }
 
 /* ============================================
