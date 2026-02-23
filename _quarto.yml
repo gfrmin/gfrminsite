@@ -70,10 +70,14 @@ execute:
 filters:
   - _filters/seo.lua
 
+resources:
+  - fonts/*.woff2
+
 format:
   html:
     html-math-method: plain
     include-in-header:
+      - _includes/font-preload.html
       - _includes/posthog.html
     theme:
       light: flatly
