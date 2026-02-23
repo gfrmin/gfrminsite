@@ -158,9 +158,9 @@ if [ -f "$SCRIPT_DIR/profile.webp" ]; then
   echo "Copied profile.webp to output"
 fi
 
-# Add LCP image preload to index.html only (not every page)
+# Add LCP image preload to index.html (early in <head> for early discovery)
 if [ -f "$OUTPUT_DIR/index.html" ]; then
-  sed -i 's|</head>|<link rel="preload" href="profile.webp" as="image" type="image/webp">\n</head>|' "$OUTPUT_DIR/index.html"
+  sed -i 's|<head>|<head>\n<link rel="preload" href="profile.webp" as="image" type="image/webp" fetchpriority="high">|' "$OUTPUT_DIR/index.html"
   echo "Added LCP image preload to index.html"
 fi
 
