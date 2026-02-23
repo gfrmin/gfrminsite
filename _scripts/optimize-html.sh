@@ -53,8 +53,14 @@ for pattern in "${REMOVE_PATTERNS[@]}"; do
   SED_ARGS+=(-e "/<script[^>]*${pattern}[^>]*><\/script>/d")
 done
 
-# Make dark theme CSS non-render-blocking: change to media="print" with onload swap
+# Defer ALL dark/alternate theme CSS (both Bootstrap and syntax highlighting)
 SED_ARGS+=(-e 's|<link href="\([^"]*\)" rel="stylesheet"[^>]*class="quarto-color-scheme quarto-color-alternate"[^>]*>|<link href="\1" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" media="print" onload="this.media='"'"'all'"'"'">|g')
+
+# Remove duplicate "-extra" stylesheet copies (Quarto adds these for theme switching; not needed for initial render)
+SED_ARGS+=(-e '/<link[^>]*class="quarto-color-scheme-extra"[^>]*>/d')
+
+# Defer Bootstrap theme CSS (critical subset is inlined via critical-bootstrap.html)
+SED_ARGS+=(-e 's|<link href="\([^"]*bootstrap[^"]*\.min\.css\)" rel="stylesheet"[^>]*class="quarto-color-scheme"[^>]*>|<link href="\1" rel="stylesheet" class="quarto-color-scheme" media="print" onload="this.media='"'"'all'"'"'">|g')
 
 # Defer tippy.css (tooltip styles not needed for initial paint)
 SED_ARGS+=(-e 's|<link href="\([^"]*tippy\.css\)" rel="stylesheet">|<link href="\1" rel="stylesheet" media="print" onload="this.media='"'"'all'"'"'">|g')
@@ -69,6 +75,9 @@ SED_ARGS+=(-e "s|</head>|${BI_FALLBACK_CSS}</head>|")
 
 # Swap profile image to WebP, add fetchpriority and dimensions for LCP
 SED_ARGS+=(-e 's|<img src="profile\.jpg"|<img src="profile.webp" fetchpriority="high" width="270" height="270"|g')
+
+# Add dimensions to listing thumbnail placeholders (prevents CLS, fixes Lighthouse audit)
+SED_ARGS+=(-e 's|<img loading="lazy" src="" class="thumbnail-image">|<img loading="lazy" src="" class="thumbnail-image" width="200" height="130">|g')
 
 count=0
 while IFS= read -r -d '' file; do
@@ -186,21 +195,12 @@ else
 module.exports = {
   safelist: {
     standard: [
-      'show', 'showing', 'hide', 'hiding', 'fade', 'collapse', 'collapsing',
-      'collapsed', 'active', 'disabled', 'visually-hidden',
+      'show', 'showing', 'fade', 'collapse', 'collapsing', 'collapsed',
+      'active', 'disabled', 'visually-hidden',
       'headroom', 'headroom--not-bottom', 'headroom--not-top',
       'headroom--top', 'headroom--bottom', 'headroom--pinned', 'headroom--unpinned',
-      /^bi$/,
     ],
     deep: [/data-bs-theme/, /data-bs-popper/],
-    greedy: [
-      /modal/, /offcanvas/, /toast/, /dropdown/, /tooltip/, /popover/,
-      /carousel/, /tab-/, /accordion/,
-      /^nav/, /^navbar/, /^btn/, /^form-/, /^input-/, /^list-group/,
-      /^table/, /^card/, /^badge/, /^alert/, /^spinner/, /^placeholder/,
-      /^quarto/, /^listing/, /^search/, /^autocomplete/,
-      /^about-/, /^column-/,
-    ],
   },
 };
 PURGE_EOF
