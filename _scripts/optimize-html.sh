@@ -56,8 +56,8 @@ done
 # Defer ALL dark/alternate theme CSS (both Bootstrap and syntax highlighting)
 SED_ARGS+=(-e 's|<link href="\([^"]*\)" rel="stylesheet"[^>]*class="quarto-color-scheme quarto-color-alternate"[^>]*>|<link href="\1" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" media="print" onload="this.media='"'"'all'"'"'">|g')
 
-# Remove duplicate "-extra" stylesheet copies (Quarto adds these for theme switching; not needed for initial render)
-SED_ARGS+=(-e '/<link[^>]*class="quarto-color-scheme-extra"[^>]*>/d')
+# Note: do NOT remove quarto-color-scheme-extra link tags — Quarto's theme
+# switcher JS accesses them immediately and would throw TypeError if missing.
 
 # Note: primary Bootstrap CSS loads synchronously (90KB after PurgeCSS is acceptable).
 # Deferring it causes a double-render that hurts LCP.
