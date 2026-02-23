@@ -47,12 +47,28 @@ Whether you're building something new or have a stuck project that needs rescuin
 
 I help organisations build and fix production data systems—from initial architecture through to deployment and handover.
 
-**Typical engagements include:**
-
-- **Data pipeline architecture and engineering** — Python, SQL, dbt, Airflow, Snowflake, Databricks. I've built document AI systems that process 500+ files in 20 minutes with 95%+ accuracy.
-- **Machine learning in production** — From startup detection models for VC deal sourcing to anomaly detection for enterprise data governance.
-- **LLM integration** — Claude, GPT, Gemini. Early adopter (GPT-3 era) with production deployments.
-- **Team leadership and mentoring** — Hiring, architecture decisions, code review, unblocking stuck projects.
+<div class="service-grid">
+<div class="service-card">
+<div class="service-card-icon"><i class="bi bi-database"></i></div>
+<h4>Data Pipeline Architecture</h4>
+<p>Python, SQL, dbt, Airflow, Snowflake, Databricks. I've built document AI systems that process 500+ files in 20 minutes with 95%+ accuracy.</p>
+</div>
+<div class="service-card">
+<div class="service-card-icon"><i class="bi bi-cpu"></i></div>
+<h4>Machine Learning in Production</h4>
+<p>From startup detection models for VC deal sourcing to anomaly detection for enterprise data governance.</p>
+</div>
+<div class="service-card">
+<div class="service-card-icon"><i class="bi bi-chat-dots"></i></div>
+<h4>LLM Integration</h4>
+<p>Claude, GPT, Gemini. Early adopter (GPT-3 era) with production deployments across multiple industries.</p>
+</div>
+<div class="service-card">
+<div class="service-card-icon"><i class="bi bi-people"></i></div>
+<h4>Team Leadership & Mentoring</h4>
+<p>Hiring, architecture decisions, code review, unblocking stuck projects.</p>
+</div>
+</div>
 
 I've worked across fintech, insurance, HR tech, venture capital, and civic tech—so I'm comfortable translating between business stakeholders and technical implementation.
 
@@ -73,11 +89,11 @@ Python tool for reading body composition data from cheap Bluetooth scales. Rever
 </div>
 </div>
 
-[See all projects →](projects/)
+<a href="projects/" class="cta-pill">See all projects &rarr;</a>
 
 ## Recent Posts
 
 ::: {#post-listing}
 :::
 
-[See all posts →](posts/)
+<a href="posts/" class="cta-pill">See all posts &rarr;</a>

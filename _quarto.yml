@@ -41,7 +41,20 @@ website:
         href: index.xml
         aria-label: RSS Feed
   page-footer:
-    center: "© 2025 Guy Freeman. Licensed under [CC BY SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)"
+    left: "© 2026 Guy Freeman. Licensed under [CC BY SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)"
+    right:
+      - icon: twitter
+        href: https://twitter.com/gfrm_in
+        aria-label: Twitter
+      - icon: mastodon
+        href: https://defcon.social/@gfrmin
+        aria-label: Mastodon
+      - icon: github
+        href: https://github.com/gfrmin
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://linkedin.com/in/guyfreemanstat
+        aria-label: LinkedIn
 
 execute:
   freeze: auto
