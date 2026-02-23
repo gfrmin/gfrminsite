@@ -72,6 +72,7 @@ filters:
 
 format:
   html:
+    html-math-method: plain
     include-in-header:
       - _includes/posthog.html
     theme:

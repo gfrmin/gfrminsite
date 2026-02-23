@@ -6,6 +6,9 @@ author: "Guy Freeman"
 date: 2026-02-23
 categories: [python, bayesian, machine-learning, ai]
 image: og-image.png
+format:
+  html:
+    html-math-method: katex
 execute:
   eval: false
   echo: true

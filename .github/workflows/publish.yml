@@ -34,6 +34,9 @@ jobs:
       - name: Render Quarto site
         run: quarto render
 
+      - name: Optimize HTML for performance
+        run: bash _scripts/optimize-html.sh
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
