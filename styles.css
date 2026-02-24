@@ -667,6 +667,13 @@ code:not(.sourceCode) {
   border: 1px solid var(--border-subtle);
 }
 
+/* Prevent KaTeX display math from overflowing content width */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
 /* Non-highlighted code blocks */
 pre:not(.sourceCode) {
   background: var(--bg-code);
