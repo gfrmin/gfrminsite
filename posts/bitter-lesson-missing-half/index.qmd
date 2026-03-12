@@ -1,0 +1,63 @@
+---
+title: "The Bitter Lesson Has No Utility Function"
+subtitle: "On being told I disagreed with an essay I hadn't read"
+description: "I wrote about decision theory fading from AI. Hacker News said I was annoyed at Rich Sutton's Bitter Lesson. I wasn't. But the misreading proves the point."
+author: "Guy Freeman"
+date: 2026-03-12
+categories: [essays, bayesian, machine-learning, ai]
+execute:
+  eval: false
+---
+
+I wrote [an essay](/posts/why-decision-theory-lost/) arguing that decision theory had been quietly abandoned by mainstream AI, not because it stopped working, but because deep learning absorbed all the oxygen. I posted it to [Hacker News](https://news.ycombinator.com/item?id=47306334). A commenter replied that I was "annoyed at the Bitter Lesson."
+
+I hadn't read the Bitter Lesson.
+
+So I read it. Rich Sutton's [essay](http://www.incompleteideas.net/IncIdeas/BitterLesson.html), published in 2019, argues that general methods leveraging computation consistently beat methods built on hand-crafted human knowledge. His examples are chess (deep search beat hand-tuned evaluation), Go (self-play beat human strategy), speech recognition (statistical methods beat phoneme engineering), and computer vision (neural networks beat edge detectors). The pattern, he argues, has held for seventy years:
+
+> We should build in only the meta-methods that can find and capture this arbitrary complexity. Essential to these methods is that they can find good approximations, but the search for them should be by our methods, not by us.
+
+I don't disagree with this. The historical pattern is real. I said as much in the original essay: deep learning won on genuine merits --- convenience, scalability, and the brute fact that it works astonishingly well at perception tasks. I'm not here to relitigate whether AlphaGo should have used hand-crafted Go heuristics. It shouldn't have.
+
+## What I Actually Argued
+
+My essay wasn't about perception. It was about decision-making.
+
+Decision theory doesn't compete with deep learning for the same job. It doesn't offer an alternative way to classify images or transcribe speech. It answers a different question entirely: given uncertainty about the world and finite resources, what should you *do*?
+
+Is the next API call worth its cost? Which experiment should you run next? Should you gather more information or act on what you have? These are not pattern-recognition problems. They are resource-allocation problems under uncertainty, and they have a mathematical framework that predates neural networks by decades: prior distributions, utility functions, expected value of information.
+
+The Bayesian agent I built didn't outperform a LangChain agent because it was better at reading text. It outperformed it because it could answer a question LangChain cannot pose: *is the next tool query worth its cost?*
+
+## The Category Error
+
+The Hacker News thread revealed something instructive. Commenters operate with a binary mental model:
+
+- **Camp A**: Hand-crafted domain knowledge --- symbolic AI, expert systems, feature engineering
+- **Camp B**: General methods plus compute --- deep learning, scaling, the Bitter Lesson
+
+Sutton says Camp B wins. My essay was filed under Camp A. But decision theory belongs to neither camp. It's not a competing method for perception. It's a framework for action.
+
+An analogy: Sutton tells you how to build a faster car. Decision theory asks where the car should go. Losing your navigation system because you upgraded the engine is not progress. It's a category error.
+
+Here is what the Bitter Lesson is silent on:
+
+**What to optimize for.** Sutton's essay has no utility function. "Leverage computation" --- toward what end? The essay is entirely about capability, about which method wins the benchmark. It says nothing about purpose.
+
+**How to allocate finite compute.** Sutton's argument rests on Moore's Law making computation abundant. But computation is never free. Training runs cost millions. The question "is this computation worth spending?" is itself a decision-theoretic problem. You cannot answer it by throwing more compute at it.
+
+**Whose values are encoded.** If you don't specify your objectives, you haven't removed human values from the system. You've just made them implicit --- buried in the choice of loss function, the training data, the deployment context. Decision theory forces you to state what you want. That's not a weakness. In a world increasingly worried about what AI systems are optimising for, it might be the most important feature a framework can have.
+
+## The Self-Proving Point
+
+Here is what struck me most about the Hacker News thread. Technically sophisticated readers --- people who understand gradient descent, who can discuss AlphaGo's architecture, who've read Sutton --- could not distinguish between hand-crafted symbolic AI and decision theory. They saw "mathematics that isn't deep learning" and filed it under "things the Bitter Lesson debunked."
+
+This is exactly the institutional-memory erosion my original essay described. Decision theory, Bayesian inference, and operations research are not symbolic AI. They are not expert systems. They are not hand-crafted features. They are mathematically rigorous frameworks for reasoning about uncertainty, objectives, and resource allocation. The fact that this needs to be said --- to an audience of engineers and researchers --- proves the point better than the essay itself did.
+
+Methods that aren't taught don't get used. And apparently, they can't be recognised when someone describes them.
+
+The wheel turns. The ideas will come back --- they always do. Bayesian methods have gone in and out of fashion since Bayes himself declined to publish his theorem. The question is whether we'll remember them or have to rediscover them from scratch.
+
+## Postscript: On Process
+
+Several commenters suggested the original essay was written by an LLM. They were half right. Both that essay and this one were written with Claude as a drafting partner. I directed the argument; the LLM helped with prose. I mention this not as confession but as demonstration: the human brought the utility function, the machine brought the compute. If that division of labour bothers you, I'd suggest the discomfort says more about the Bitter Lesson than about my writing process.
