@@ -4,6 +4,7 @@ subtitle: "On being told I disagreed with an essay I hadn't read"
 description: "I wrote about decision theory fading from AI. Hacker News said I was annoyed at Rich Sutton's Bitter Lesson. I wasn't. But the misreading proves the point."
 author: "Guy Freeman"
 date: 2026-03-12
+date-modified: 2026-03-13
 categories: [essays, bayesian, machine-learning, ai]
 execute:
   eval: false
@@ -31,32 +32,33 @@ The Bayesian agent I built didn't outperform a LangChain agent because it was be
 
 ## The Category Error
 
-The Hacker News thread revealed something instructive. Commenters operate with a binary mental model:
+Hacker News commenters sort AI arguments into two camps:
 
 - **Camp A**: Hand-crafted domain knowledge --- symbolic AI, expert systems, feature engineering
 - **Camp B**: General methods plus compute --- deep learning, scaling, the Bitter Lesson
 
-Sutton says Camp B wins. My essay was filed under Camp A. But decision theory belongs to neither camp. It's not a competing method for perception. It's a framework for action.
+Sutton says Camp B wins. [Commenters filed my essay under Camp A.](https://news.ycombinator.com/item?id=47355077) But decision theory doesn't sit on this axis. It's not a competing method for perception. It's a framework for action.
 
-An analogy: Sutton tells you how to build a faster car. Decision theory asks where the car should go. Losing your navigation system because you upgraded the engine is not progress. It's a category error.
+Think of the Bitter Lesson as saying "money solves everything." Money does solve a lot --- the historical pattern is real. But it doesn't tell you what to spend it on. That's the missing piece: the Bitter Lesson has no utility function. "Leverage computation" --- toward what end? Sutton's essay is entirely about capability, about which method wins the benchmark. It says nothing about purpose.
 
-Here is what the Bitter Lesson is silent on:
+And money is finite. Sutton's argument rests on Moore's Law making computation abundant, but training runs still cost millions. The question "is this next dollar of compute worth spending?" is itself a decision-theoretic problem --- one that more compute cannot answer. You need a utility function to say whether the next unit of computation buys enough to justify its cost. That question lives outside the Bitter Lesson's frame entirely.
 
-**What to optimize for.** Sutton's essay has no utility function. "Leverage computation" --- toward what end? The essay is entirely about capability, about which method wins the benchmark. It says nothing about purpose.
-
-**How to allocate finite compute.** Sutton's argument rests on Moore's Law making computation abundant. But computation is never free. Training runs cost millions. The question "is this computation worth spending?" is itself a decision-theoretic problem. You cannot answer it by throwing more compute at it.
-
-**Whose values are encoded.** If you don't specify your objectives, you haven't removed human values from the system. You've just made them implicit --- buried in the choice of loss function, the training data, the deployment context. Decision theory forces you to state what you want. That's not a weakness. In a world increasingly worried about what AI systems are optimising for, it might be the most important feature a framework can have.
+Then there is the question of whose values get encoded. If you don't specify your objectives, you haven't removed human judgement from the system. You've buried it in the loss function, the training data, the deployment context. Decision theory forces you to state what you want. In a world increasingly worried about what AI systems are optimising for, that might be the most important feature a framework can have.
 
 ## The Self-Proving Point
 
-Here is what struck me most about the Hacker News thread. Technically sophisticated readers --- people who understand gradient descent, who can discuss AlphaGo's architecture, who've read Sutton --- could not distinguish between hand-crafted symbolic AI and decision theory. They saw "mathematics that isn't deep learning" and filed it under "things the Bitter Lesson debunked."
+The [Hacker News thread](https://news.ycombinator.com/item?id=47355077) made my argument better than I did. Technically sophisticated readers --- people who understand gradient descent, who can discuss AlphaGo's architecture, who've read Sutton --- heard "mathematics that isn't deep learning" and reached for the only frame they had: the Bitter Lesson. They assumed I was arguing for Camp A.
 
-This is exactly the institutional-memory erosion my original essay described. Decision theory, Bayesian inference, and operations research are not symbolic AI. They are not expert systems. They are not hand-crafted features. They are mathematically rigorous frameworks for reasoning about uncertainty, objectives, and resource allocation. The fact that this needs to be said --- to an audience of engineers and researchers --- proves the point better than the essay itself did.
+I wasn't. I was arguing about a question the Bitter Lesson doesn't address. The mistake wasn't disagreeing with me --- it was not recognising that the argument occupied different ground entirely. One commenter noted that symbolic AI did try to handle uncertainty: MYCIN used certainty factors in the 1970s. Fair point --- but those certainty factors were ad hoc and mathematically inconsistent (as Heckerman demonstrated). Symbolic AI attempted the math and got it wrong. That's a different problem from never asking what to optimise for.
 
-Methods that aren't taught don't get used. And apparently, they can't be recognised when someone describes them.
+That distinction --- between getting the math wrong and skipping it altogether --- is precisely what vanished from the field's working memory. Methods that aren't taught don't get used. And apparently, they can't be recognised when someone describes them.
 
-The wheel turns. The ideas will come back --- they always do. Bayesian methods have gone in and out of fashion since Bayes himself declined to publish his theorem. The question is whether we'll remember them or have to rediscover them from scratch.
+The wheel turns. Bayesian methods have gone in and out of fashion since Bayes himself declined to publish his theorem. The question is whether we'll remember them or have to rediscover them from scratch.
+
+::: {.callout-note collapse="false"}
+## Editorial note
+This essay was revised on 13 March 2026 in response to [feedback on Hacker News](https://news.ycombinator.com/item?id=47355077), particularly on the false boundary I originally drew between symbolic AI and decision theory.
+:::
 
 ## Postscript: On Process
 
