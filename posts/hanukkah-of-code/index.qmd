@@ -13,22 +13,11 @@ execute:
   warning: false
 ---
 
-The creators of [VisiData](https://visidata.org), the retro-chic terminal-based data analysis tool, have built something wonderful: a data-focused alternative to Advent of Code. Instead of optimizing algorithms, you're exploring datasets. Instead of Christmas elves, you're helping Sarah find her grandmother's rug.
+The madpersons behind the retro-chic data analysis tool [VisiData](https://visidata.org) have created an alternative to the infamous "Advent of Code". Instead of programming to solve yet more optimisation puzzles, and instead of the hackneyed Christmas theme, the [Hanukkah of Data](https://hanukkah.bluebird.sh/5783/) requires data analysis to solve a ~~murder mystery~~ rug-finding mission.
 
-[Hanukkah of Data](https://hanukkah.bluebird.sh/5783/) presents eight puzzles released over the eight nights of Hanukkah. Each puzzle gives you a narrative clue and asks you to find someone's phone number in a dataset from "Noah's Market" - a fictional New York grocery store. The puzzles chain together beautifully: each person you find leads you to the next.
+I only just found out about it, so although one puzzle was released for each day of real-life Chanukah, I was able to gorge on the first 7 puzzles, needing only to wait for the last one. Each puzzle is represented by an ASCII candle in an ASCII world --- quite an impressive achievement in its own right.
 
-I discovered this challenge late and binged through the first seven puzzles in one sitting, then had to wait for the finale. Here's how I solved all eight puzzles in R.
-
-## The Data
-
-Noah's Market has provided us with four CSV files on a password-protected USB drive (the password is the year of the previous Hanukkah of Data - a nice meta-puzzle):
-
-- **customers**: Customer names, addresses, phone numbers, and birthdates
-- **orders**: Order timestamps and shipping info
-- **orders_items**: Line items linking orders to products
-- **products**: Product details including SKUs, descriptions, and pricing
-
-Let's load everything and create a denormalized view that joins orders with their items, products, and customers. This `orders_plus` table will be our workhorse for most puzzles.
+Here's how I solved all 8 puzzles in R. The data comes on a password-protected USB drive (the password being the year of the previous Hanukkah of Data, which is a nice meta-puzzle). I can probably give more details (aka make the code clearer) upon request.
 
 ```{r}
 library(tidyverse, warn.conflicts = FALSE)
@@ -56,11 +45,9 @@ orders_plus <- orders |>
 
 ## Puzzle 1: The Private Investigator
 
-Sarah needs help finding her grandmother's rug, and a cashier remembers a private investigator who once shopped at Noah's. The investigator's business card was clever: their phone number spelled out their last name using the old T9 phone keypad mapping (2=ABC, 3=DEF, etc.).
+Sarah needs help finding her grandmother's rug, and a cashier remembers a private investigator who once shopped at Noah's. His business card was clever: the phone number spelled out his surname on the old T9 phone keypad (2=ABC, 3=DEF, and so on).
 
-**The challenge**: Find a customer whose phone number, when decoded, matches their last name.
-
-This requires building a letter-to-number converter. The tricky part is that the phone keypad isn't perfectly regular - the letters S, V, Y, and Z are "pushed" to share keys with fewer letters, so they need special handling.
+So we need to build a letter-to-number converter. The mildly annoying part is that the keypad isn't perfectly regular --- S, V, Y, and Z get shunted around --- so they need special handling.
 
 ```{r}
 # Convert a single letter to its T9 phone number
@@ -100,11 +87,9 @@ customers |>
 
 ## Puzzle 2: The Rug Contractor
 
-The private investigator tells us Sarah's rug was cleaned by an outside contractor. The cleaning company's records show a claim ticket reading "2017 spec JD" - the year and the contractor's initials. These contractors would meet at Noah's to discuss jobs over coffee and bagels.
+The investigator tells us the rug was cleaned by an outside contractor. A claim ticket reads "2017 spec JD" --- the year and the contractor's initials. Apparently these contractors would meet at Noah's to discuss jobs over coffee and bagels, which is a fairly civilised way to run a business.
 
-**The challenge**: Find someone with initials "JD" who bought both coffee and bagels in 2017.
-
-We need to find orders containing multiple items from the coffee and bagel SKUs, then filter to 2017 and check for matching initials.
+We find orders containing both coffee and bagel SKUs, filter to 2017, and look for the right initials.
 
 ```{r}
 # Helper to extract initials from a name
@@ -129,11 +114,9 @@ orders_plus |>
 
 ## Puzzle 3: The Spider Hat Guy
 
-The contractor remembers giving the rug to someone they saw near the South Ozone Park subway station. The person wore a hat with a spider on it, and the contractor recalls they were an Aries born in the Year of the Dog.
+The contractor gave the rug to someone near South Ozone Park subway station. This person wore a hat with a spider on it, and --- usefully for our purposes --- was an Aries born in the Year of the Dog.
 
-**The challenge**: Find a customer in South Ozone Park, born under Aries (March 21 - April 19) in a Year of the Dog (2006, 1994, 1982, 1970, 1958...).
-
-This is pure demographic filtering. Years of the Dog repeat every 12 years.
+Pure demographic filtering. Years of the Dog cycle every 12 years, and Aries runs from late March through mid-April.
 
 ```{r}
 dog_years <- c(2006, 1994, 1982, 1970, 1958, 1946, 1934)
@@ -147,11 +130,9 @@ customers |>
 
 ## Puzzle 4: The Early Bird Baker
 
-Our spider-hat friend reveals they cleaned part of the rug, found a beautiful owl pattern, and hung it on their wall. Then they met someone on Tinder who fixed their bike at 5am and received the rug as payment. This person loved arriving at Noah's before dawn to get the first pastries out of the oven.
+Spider-hat cleaned part of the rug, found a beautiful owl pattern, hung it on his wall. Then he met someone on Tinder who fixed his bike at 5am and received the rug as payment. This person loved arriving at Noah's before dawn to get the first pastries out of the oven.
 
-**The challenge**: Find someone who ordered bakery items (BKY prefix) very early in the morning with same-day delivery.
-
-The "before dawn" detail is key. We're looking for orders placed around 4-5am.
+The "before dawn" detail is the key discriminator. We want bakery orders placed around 4--5am with same-day pickup.
 
 ```{r}
 orders_plus |>
@@ -162,7 +143,7 @@ orders_plus |>
   distinct()
 ```
 
-Looking at the results, there's one customer who fits this pattern. (I originally called this variable `tinder_girl` but that's not particularly descriptive!)
+One customer fits. (I originally called this variable `tinder_girl`, which tells you everything about my variable naming discipline.)
 
 ```{r}
 customers |>
@@ -172,11 +153,9 @@ customers |>
 
 ## Puzzle 5: The Cat Lady from Queens
 
-The early-bird baker gave away the rug on Freecycle to a woman from Queens Village. She wore a Noah's Market sweatshirt and had about ten elderly cats, all with cataracts. It was raining, and she spent twenty minutes carefully wrapping the rug in plastic.
+The early-bird baker gave the rug away on Freecycle to a woman from Queens Village who wore a Noah's Market sweatshirt and had about ten elderly cats, all with cataracts. She spent twenty minutes carefully wrapping the rug in plastic in the rain. Dedicated.
 
-**The challenge**: Find a woman in Queens who has bought cat-related products.
-
-We're looking for someone in Queens whose order history suggests cat ownership.
+We need a woman in Queens who buys cat-related products.
 
 ```{r}
 orders_plus |>
@@ -186,7 +165,7 @@ orders_plus |>
   distinct()
 ```
 
-Only one female name in the results - that's our cat lady.
+Only one female name in the results. That's her.
 
 ```{r}
 # First result is our match
@@ -199,11 +178,9 @@ orders_plus |>
 
 ## Puzzle 6: The Frugal Cousin
 
-The cat lady gave the rug to her cousin who was moving into a new apartment with wood floors. This cousin is extremely frugal - she clips every coupon and shops every sale at Noah's.
+The cat lady passed the rug to her cousin, who was moving into a new flat with wood floors. This cousin is spectacularly frugal --- clips every coupon, stalks every sale at Noah's.
 
-**The challenge**: Find someone who consistently buys items below their wholesale cost.
-
-Noah's data includes both `unit_price` (what the customer paid) and `wholesale_cost` (what Noah's paid). A truly frugal shopper would have many orders where they paid less than wholesale - taking advantage of deep discounts and coupons.
+The dataset includes both `unit_price` (what the customer paid) and `wholesale_cost` (what Noah's paid for the product). A coupon extremist would have a suspicious number of orders where they paid less than wholesale.
 
 ```{r}
 # Find customers who frequently buy below wholesale
@@ -215,7 +192,7 @@ loss_leaders <- orders_plus |>
 loss_leaders |> head(5)
 ```
 
-Customer 8342 stands out dramatically - they're the frugal cousin.
+Customer 8342 has, by far, the most loss-making orders. That's the frugal cousin.
 
 ```{r}
 customers |>
@@ -225,11 +202,9 @@ customers |>
 
 ## Puzzle 7: The Ex-Boyfriend
 
-The frugal cousin tells a romantic story: she met a man at Noah's when he handed back something she'd dropped. They'd bought nearly identical items but preferred each other's color choices, so they swapped. They dated, she moved in, but it didn't work out. She left hastily one night, leaving the rug behind.
+The frugal cousin tells a romantic story: she met a man at Noah's when he handed back something she'd dropped. They'd bought nearly identical items but preferred each other's colour choices, so they swapped. They dated, she moved in, it didn't work out. She left hastily one night and the rug stayed behind.
 
-**The challenge**: Find someone who bought the same product as the frugal cousin on the same day, but in a different color.
-
-This is the trickiest puzzle. We need to find two orders on the same day for the same product (ignoring color variants) but with different specific colors.
+This is the trickiest puzzle. We need to find two orders placed on the same day for the same product but in different colours. Essentially a self-join on colour-stripped product descriptions.
 
 ```{r}
 # Add date components and normalize product descriptions (remove color)
@@ -262,11 +237,9 @@ romantic_match |>
 
 ## Puzzle 8: The Collector
 
-The ex-boyfriend says a woman mysteriously appeared and then vanished from his life, leaving behind a rug depicting a snake hidden in branches. He gave it to his sister in Manhattan, who passed it to "an acquaintance who collects all sorts of junk" - specifically, someone who "owns an entire set of Noah's collectibles."
+The ex-boyfriend says a woman appeared and vanished from his life, leaving behind a rug depicting a snake hidden in branches. He gave it to his sister in Manhattan, who passed it to "an acquaintance who collects all sorts of junk" --- specifically, someone who owns an entire set of Noah's collectibles.
 
-**The challenge**: Find someone who has bought a large number of Noah's-branded products.
-
-Noah's Market apparently sells branded collectibles. We need to find a customer who's accumulated an impressive collection.
+Noah's Market apparently sells branded collectibles. We want whoever has accumulated the most.
 
 ```{r}
 orders_plus |>
@@ -279,8 +252,6 @@ orders_plus |>
 
 ## The Finale
 
-Entering the final phone number reveals something spectacular - but I won't spoil it here. The Hanukkah of Data team has crafted something genuinely delightful.
+Entering the final phone number reveals something quite spectacular --- but I won't spoil it. If you haven't tried the Hanukkah of Data yet, [give it a go](https://hanukkah.bluebird.sh/5783/). They've continued the tradition with new datasets and puzzles in subsequent years.
 
-What I love about this challenge is how it mirrors real data analysis work. You have messy, interconnected datasets. You have vague requirements ("find someone who shops the sales"). You have to make assumptions, explore the data, and iterate. The puzzle designers cleverly embedded multiple valid approaches for most puzzles while ensuring each has a unique solution.
-
-If you haven't tried it yet, [give it a go](https://hanukkah.bluebird.sh/5783/). And if you're looking for more years to solve, they've continued the tradition with new datasets and puzzles.
+What I particularly enjoyed is how the puzzles mirror real analytical work. You have messy, interconnected datasets. You have vague requirements ("find someone who shops the sales"). You make assumptions, poke at the data, iterate. Eight puzzles, eight phone numbers, one rug recovered. Not bad for a Christmas afternoon.

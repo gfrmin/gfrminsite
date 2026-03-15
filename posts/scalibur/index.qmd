@@ -12,30 +12,30 @@ execute:
   echo: true
 ---
 
-Body composition scales are genuinely useful devices. Step on, wait a few seconds, and you get weight, body fat percentage, muscle mass, and a handful of other metrics. The problem? Your data disappears into whatever proprietary app the manufacturer built, usually with aggressive upsells and questionable privacy practices.
+Body composition scales are, on their own terms, genuinely useful devices. Step on, wait a few seconds, receive a small dossier on your own physical form: weight, body fat percentage, muscle mass, and several other numbers whose accuracy I'm diplomatically not questioning here. The problem is what happens next. Your data vanishes into whichever proprietary app the manufacturer saw fit to build, typically bundled with aggressive upsells and privacy practices that would make a data broker wince.
 
-I bought a cheap GoodPharm TY5108 scale (it advertises itself as "tzc" over Bluetooth LE) for around £20. It works well enough, but I wanted to own my data. So I built [Scalibur](https://github.com/gfrmin/scalibur): a Raspberry Pi-based system that captures the raw BLE advertisements, decodes the measurements, calculates body composition metrics, and displays everything on a simple web dashboard.
+I bought a cheap GoodPharm TY5108 scale (it announces itself as "tzc" over Bluetooth LE) for around £20. It measures things competently enough, but I wanted to own the resulting numbers. So I built [Scalibur](https://github.com/gfrmin/scalibur): a Raspberry Pi system that captures raw BLE advertisements, decodes the measurements, calculates body composition metrics, and presents everything on a web dashboard of modest visual ambition.
 
 ::: {.callout-note}
 For a less technical take on why I built this, see [On Owning Your Data](/posts/on-owning-your-data/).
 :::
 
-This is the story of how I got there.
+Here is how the whole thing came together.
 
 ## The Hardware
 
-The setup is straightforward:
+Not much to report on this front:
 
-- **GoodPharm TY5108 scale** - A cheap body composition scale with BLE. It measures weight using load cells and impedance through electrodes on the surface (you need to stand barefoot for the full reading).
-- **Raspberry Pi** - Any model with Bluetooth LE works. I used a Pi 4, but a Pi Zero W would be fine for this.
+- **GoodPharm TY5108 scale** - A cheap body composition scale with BLE. It measures weight via load cells and impedance through electrodes on the surface (bare feet required for the full reading, which is a sentence I never expected to type in a technical specification).
+- **Raspberry Pi** - Any model with Bluetooth LE will do. I used a Pi 4, though a Pi Zero W would manage perfectly well.
 
-The scale broadcasts its measurements as BLE advertisements. Unlike connected BLE devices that require pairing and a persistent connection, advertisement-based devices just shout their data into the void. Anyone listening can pick it up.
+The scale broadcasts its measurements as BLE advertisements. Unlike connected BLE devices that require pairing and a persistent connection, advertisement-based devices simply shout their data into the surrounding air. Anyone listening can pick it up. The scale has the operational security of a man on a megaphone.
 
-## The Journey: Reverse-Engineering the Protocol
+## Reverse-Engineering the Protocol
 
-My first attempt used `bleak`, a popular Python BLE library. I could see the device advertising, but the high-level APIs abstracted away the manufacturer-specific data I needed. The scale wasn't exposing GATT services in the usual way - all the interesting data was in the advertisement packets themselves.
+My first attempt used `bleak`, a popular Python BLE library. I could see the device advertising, but the high-level APIs abstracted away the manufacturer-specific data I actually needed. The scale wasn't exposing GATT services in the conventional manner --- all the interesting data lived in the advertisement packets themselves.
 
-I switched to `aioblescan`, which gives you raw HCI (Host Controller Interface) packets. This is the low-level interface between the Bluetooth controller and the host system. Here's where it gets interesting:
+So I switched to `aioblescan`, which gives you raw HCI (Host Controller Interface) packets. This is the low-level interface between the Bluetooth controller and the host system, and it is where the fun begins, if your definition of fun accommodates hex dumps.
 
 ```python
 def parse_hci_packet(data: bytes) -> tuple[str | None, int | None, bytes | None]:
@@ -74,20 +74,20 @@ def parse_hci_packet(data: bytes) -> tuple[str | None, int | None, bytes | None]
     return device_name, manufacturer_id, manufacturer_data
 ```
 
-The BLE advertising data structure is a series of TLV (Type-Length-Value) entries. We're looking for type `0xFF` - manufacturer-specific data - which contains the actual scale reading.
+The BLE advertising data structure is a series of TLV (Type-Length-Value) entries. We want type `0xFF` --- manufacturer-specific data --- which contains the actual scale reading.
 
-### The Debugging Saga
+### The Byte Offset Saga
 
-Getting the byte offsets right took several iterations. My git history tells the story:
+Getting the byte offsets right consumed several iterations and a quantity of dignity. My git history preserves the evidence:
 
 ```
 f477996 Fix packet decoding: weight in data bytes, not manufacturer_id
 28de4a4 Fix packet decoding: weight is in manufacturer ID field
 ```
 
-I initially thought the weight was encoded in the manufacturer ID field (the first two bytes of the manufacturer-specific data). Then I thought the opposite. Both were wrong in different ways.
+I initially believed the weight was encoded in the manufacturer ID field (the first two bytes of the manufacturer-specific data). Then I believed the opposite. Both were wrong, though in interestingly different ways --- I was consistently off by exactly one byte, which is the kind of systematic error that makes you feel like you're nearly right when you're actually just consistently wrong.
 
-The actual layout, once I figured it out:
+The actual layout, once I stopped theorising and started reading correctly:
 
 | Bytes | Description |
 |-------|-------------|
@@ -97,7 +97,7 @@ The actual layout, once I figured it out:
 | 6 | Status: 0x20 = weight only, 0x21 = weight + impedance |
 | 7+ | MAC address (ignored) |
 
-The status byte was crucial. The scale first broadcasts `0x20` when it has a stable weight reading, then `0x21` once it's also measured impedance (which takes a few more seconds and requires bare feet contact with the electrodes).
+That status byte turned out to be crucial. The scale first broadcasts `0x20` when it has a stable weight reading, then `0x21` once it has also measured impedance (which takes a few more seconds and requires bare feet on the electrodes). Two phases of revelation, like a mediocre firework.
 
 ```python
 def decode_packet(manufacturer_id: int, manufacturer_data: bytes) -> ScaleReading | None:
@@ -126,11 +126,11 @@ def decode_packet(manufacturer_id: int, manufacturer_data: bytes) -> ScaleReadin
     )
 ```
 
-## Body Composition Math
+## Body Composition Mathematics
 
-Once you have weight and impedance, you can calculate body composition using BIA (Bioelectrical Impedance Analysis) formulas. These are well-documented - I used formulas compatible with [openScale](https://github.com/oliexdev/openScale), an open-source Android app for body composition scales.
+Once you have weight and impedance, body composition follows from BIA (Bioelectrical Impedance Analysis) formulae. These are well-documented --- I used formulae compatible with [openScale](https://github.com/oliexdev/openScale), an open-source Android app for body composition scales.
 
-The key insight is that lean tissue conducts electricity better than fat. By measuring the body's impedance and knowing height/age/gender, you can estimate lean body mass:
+The governing principle: lean tissue conducts electricity more readily than fat. Measure the body's impedance, combine with height, age, and gender, and you can estimate lean body mass. The word "estimate" is doing heavy lifting in that sentence, but the approach is standard.
 
 ```python
 def calculate_body_composition(
@@ -162,19 +162,19 @@ def calculate_body_composition(
     # ... plus body water, muscle mass, bone mass, BMI
 ```
 
-These formulas aren't perfectly accurate - consumer BIA scales are notoriously inconsistent - but they're good enough for tracking trends over time.
+These formulae are not perfectly accurate --- consumer BIA scales are notoriously inconsistent --- but they suffice for tracking trends over time. The numbers need not be right in absolute terms; they merely need to be wrong in the same way each morning.
 
-## The Smart ETL Challenge
+## The ETL Problem I Didn't Anticipate
 
-Here's a problem I didn't anticipate: the scale sends multiple packets per measurement. First you get weight-only packets (`0x20`), then eventually a complete packet with impedance (`0x21`). Sometimes the impedance packet arrives seconds after the weight.
+The scale sends multiple packets per measurement. First you receive weight-only packets (`0x20`), then eventually a complete packet with impedance (`0x21`). Sometimes the impedance reading arrives seconds after the weight, like a slow friend catching up at a pedestrian crossing.
 
 I needed an ETL pipeline that could:
 
 1. Group packets into "sessions" (measurements within 30 seconds of each other)
-2. Pick the best packet from each session (prefer `0x21` over `0x20`)
+2. Select the best packet from each session (prefer `0x21` over `0x20`)
 3. Detect which user profile the measurement belongs to (by weight range)
 4. Calculate body composition only if the profile has complete parameters
-5. Update existing measurements if better data arrives later
+5. Update existing measurements if superior data arrives later
 
 ```python
 def group_into_sessions(packets: list[dict], gap_seconds: int = 30) -> list[list[dict]]:
@@ -199,11 +199,11 @@ def group_into_sessions(packets: list[dict], gap_seconds: int = 30) -> list[list
     return sessions
 ```
 
-The ETL also handles the case where you step on the scale without bare feet (weight-only mode). If impedance arrives later for an existing weight measurement, it updates the record rather than creating a duplicate.
+The ETL also handles the case where you step on the scale without bare feet (weight-only mode). If impedance arrives later for an existing weight measurement, it updates the record rather than creating a duplicate. Idempotency: the quiet virtue.
 
 ## The Dashboard
 
-The web interface is a Flask app with Chart.js for visualization and HTMX for dynamic updates. It shows:
+The web interface is a Flask app with Chart.js for visualisation and HTMX for dynamic updates. It presents:
 
 - Latest measurement (weight, body fat %)
 - 30-day weight trend chart
@@ -226,19 +226,19 @@ def index():
                           profiles=profiles, selected_profile=profile_id)
 ```
 
-The ETL runs on every page load, so new measurements appear immediately. All queries are filtered by the selected profile, so each household member sees only their own data.
+The ETL runs on every page load, so new measurements appear immediately. Not the most elegant architectural decision, but elegance is a luxury for systems that have more than one user at a time. All queries filter by selected profile, so each household member sees only their own data.
 
 ## Multi-User Support
 
-After the initial version worked, I faced a new challenge: my household has multiple people who use the scale. The original design assumed a single user with hardcoded height/age/gender values. I needed a way to identify who was standing on the scale.
+After the initial version worked, I encountered a problem I should perhaps have foreseen: my household contains more than one person. The original design assumed a single user with hardcoded height, age, and gender values. Several people in my house objected to being described by my physical parameters.
 
-### Why Not Use the Scale's User ID?
+### Why Not the Scale's User ID?
 
-The BLE packets include a user ID field (bytes 4-5). My first attempt used this to identify users - but it turned out to be unreliable. The scale's internal user management didn't align with how we actually used it, and the IDs would sometimes change unexpectedly.
+The BLE packets include a user ID field (bytes 4-5). I tried using this to distinguish users. The scale's internal user management, however, proved to have its own opinions about identity --- the IDs would change unpredictably, in ways I never fully diagnosed and eventually stopped trying to.
 
-### Weight-Based Profile Detection
+### Nearest-Neighbour Classification in One Dimension
 
-The solution was simpler: identify users by their weight range. Household members typically have non-overlapping weight ranges, so a measurement of 75kg obviously belongs to a different person than one of 55kg.
+The solution was almost disappointingly simple: identify users by weight. Household members typically have non-overlapping weight ranges, so a measurement of 75kg obviously belongs to a different person than one of 55kg. No elaborate biometric scheme required.
 
 ```python
 def detect_profile(weight_kg: float, profiles: list[dict]) -> dict | None:
@@ -251,11 +251,11 @@ def detect_profile(weight_kg: float, profiles: list[dict]) -> dict | None:
     return None
 ```
 
-Each profile stores a weight range (min/max), plus the body composition parameters (height, age, gender). When a measurement comes in, the ETL matches it to the appropriate profile and calculates body composition using that profile's parameters.
+Each profile stores a weight range (min/max) plus the body composition parameters (height, age, gender). When a measurement arrives, the ETL matches it to the appropriate profile and calculates body composition accordingly. The system breaks down if two household members converge to the same weight, but at that point you have bigger problems than software architecture.
 
 ### Profile Management
 
-The dashboard includes an HTMX-powered modal for managing profiles. You can add, edit, or delete profiles without page reloads. When you update a profile's height, age, or gender, all existing measurements for that profile are automatically recalculated with the new values:
+The dashboard includes an HTMX-powered modal for managing profiles. Add, edit, or delete without page reloads. When you update a profile's height, age, or gender, all existing measurements for that profile get recalculated with the new values:
 
 ```python
 @app.route("/api/profiles/<int:profile_id>", methods=["PUT"])
@@ -266,11 +266,11 @@ def update_profile(profile_id: int):
     return jsonify({"id": profile_id})
 ```
 
-This means you can correct a profile's parameters at any time and all historical body composition metrics will be updated accordingly.
+Retroactive recalculation. Correct your age and your entire body fat history shifts accordingly, which is either reassuring or unsettling depending on temperament.
 
 ## Deployment
 
-Deployment to a Raspberry Pi is a single command:
+Getting it onto a Raspberry Pi is a single command:
 
 ```bash
 PI_USER=pi ./deploy.sh raspberrypi.local
@@ -281,16 +281,16 @@ This rsyncs the code, installs dependencies via `uv`, and sets up two systemd se
 - `scalibur-scanner.service` - The BLE scanner daemon (needs `CAP_NET_RAW` for raw socket access)
 - `scalibur-dashboard.service` - The Flask dashboard on port 5000
 
-SQLite with WAL mode handles concurrent access between the scanner writing packets and the dashboard reading measurements. The dashboard runs database migrations on startup, so existing installations are automatically upgraded when new schema changes are deployed (like the addition of the profiles table).
+SQLite with WAL mode handles concurrent access between the scanner writing packets and the dashboard reading measurements. The dashboard runs database migrations on startup, so existing installations upgrade themselves when new schema changes arrive (like the addition of the profiles table). Hopefully inside the bus rather than under it, but I won't make the perfect the enemy of the good.
 
-## Lessons Learned
+## What I Learned
 
-**Low-level BLE is tricky but rewarding.** Most BLE tutorials focus on GATT services and characteristics. Advertisement-based protocols are less common but simpler once you understand HCI packets.
+**Low-level BLE is tricky but gratifying.** Most BLE tutorials concern themselves with GATT services and characteristics. Advertisement-based protocols are less commonly documented, but simpler once you grasp HCI packets. The documentation is sparse enough that you feel like an archaeologist.
 
-**Iterative debugging with real hardware is slow.** I burned a lot of time stepping on and off the scale, waiting for packets, checking hex dumps. A good test suite with captured packets would have saved hours.
+**Iterative debugging with real hardware is slow.** I spent a lot of time stepping on and off the scale, waiting for packets, scrutinising hex dumps. A proper test suite with captured packets would have saved hours. I did not build one until far too late, because I am a human being and not a pedagogical example.
 
-**Owning your data is worth the effort.** The scale's original app is fine, but now I have a SQLite database I can query however I want. I can export to CSV, build custom visualizations, or integrate with other health tracking systems.
+**Owning your data is worth the bother.** The scale's original app functions well enough. But now I have a SQLite database I can query however I please --- export to CSV, build custom visualisations, integrate with other systems. The entire pipeline from bare feet to bar chart lives under my roof.
 
-**Weight-based identification is surprisingly robust.** When I needed multi-user support, my first instinct was to use the scale's built-in user ID field. That turned out to be unreliable. The simpler solution - identifying users by their weight range - works better in practice. Household members almost always have non-overlapping weight ranges, and the approach requires no coordination with the scale's internal state.
+**Weight-based identification is surprisingly robust.** My first instinct for multi-user support was to use the scale's built-in user ID field. That proved unreliable. The simpler approach --- identifying people by their weight range --- works better in practice and requires no coordination with the scale's internal state. Sometimes the unsophisticated solution is the correct one, which is a lesson I keep having to relearn.
 
-The code is on [GitHub](https://github.com/gfrmin/scalibur) if you want to try it with your own TY5108 scale or adapt it for similar devices. The packet parsing logic might work for other cheap BLE scales with minor tweaks - the protocol seems fairly common among generic Chinese body composition scales.
+The code is on [GitHub](https://github.com/gfrmin/scalibur) if you want to try it with your own TY5108 scale or adapt it for similar hardware. The packet parsing logic may work for other cheap BLE scales with minor adjustments --- the protocol appears fairly common among generic Chinese body composition scales, which is either a de facto standard or a shared ancestor. Hard to tell.

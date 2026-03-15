@@ -14,7 +14,7 @@ execute:
   echo: true
 ---
 
-In the [companion essay](/posts/agentic-ai/), I argued that LLM-based "agents" don't deserve the name. They have no beliefs, no uncertainty quantification, no principled way to decide whether a tool query is worth its cost. This post is the technical backing for that claim --- the mathematics and code behind [Credence](https://github.com/gfrmin/credence), the benchmark I used to test it.
+The [companion essay](/posts/agentic-ai/) argued that LLM-based "agents" don't earn the title. No beliefs, no uncertainty quantification, no principled mechanism for deciding whether a tool query justifies its cost. This post supplies the technical scaffolding for that claim --- the mathematics and code behind [Credence](https://github.com/gfrmin/credence), the benchmark I built to test it. Think of it as the receipts.
 
 ::: {.callout-note}
 For the philosophical argument, see [Agentic AI Is Neither Intelligent Nor an Agent](/posts/agentic-ai/).
@@ -22,25 +22,25 @@ For the philosophical argument, see [Agentic AI Is Neither Intelligent Nor an Ag
 
 ## The Problem: Every Query Has a Price
 
-A standard LangChain ReAct agent, faced with a question and four tools, will query most of them for most questions. It has no mechanism to reason about whether the next query is worth its cost. The prompt says "be helpful" and the agent interprets helpfulness as thoroughness.
+Hand a standard LangChain ReAct agent a question and four tools, and it will query most of them most of the time. It possesses no apparatus for reasoning about whether the next query repays its cost. The prompt says "be helpful"; the agent takes helpfulness to mean exhaustiveness.
 
-This is fine if queries are free. They are not. Every API call costs tokens, latency, and --- in a benchmark with explicit costs --- points. The question isn't "can this tool help me?" but "does the expected information gain from this tool exceed what I'm paying for it?"
+If queries were free, this would be a perfectly reasonable strategy. They are not free. Every API call costs tokens, latency, and --- in a benchmark with explicit costs --- points. The operative question is not "might this tool help me?" but "does the expected information gain from this tool exceed what I'm paying for it?"
 
-Answering that requires three things the LangChain agent lacks: a model of tool reliability that updates from experience, a way to compute the expected value of information before committing to a query, and a decision rule that compares querying against submitting or abstaining. All three are undergraduate probability theory.
+To answer that, you need three things the LangChain agent conspicuously lacks: a model of tool reliability that updates from experience, a way to compute the expected value of information before committing to a query, and a decision rule that weighs querying against submitting or walking away. All three are undergraduate probability theory. The maths has been lying around for decades; nobody thought to hand it to the agent.
 
 ## Modelling Tool Reliability with Beta Distributions
 
-Each tool has a different reliability for each question category. A calculator is perfect for numerical questions and useless for everything else. A knowledge base is excellent for factual recall but expensive. We don't know these reliabilities in advance --- we learn them.
+Each tool has a different reliability for each question category. A calculator is perfect for arithmetic and useless for everything else. A knowledge base excels at factual recall but charges accordingly. We don't know these reliabilities in advance --- we learn them, which is rather the point.
 
-The natural model is Beta-Bernoulli. For each tool-category pair, maintain a Beta distribution over the probability that the tool returns the correct answer:
+The natural model is Beta-Bernoulli. For each tool-category pair, maintain a Beta distribution over the probability the tool returns the correct answer:
 
 $$r_{t,c} \sim \text{Beta}(\alpha_{t,c},\, \beta_{t,c})$$
 
-Start with $\alpha = 1, \beta = 1$ --- a uniform prior, total ignorance. The expected reliability is the familiar ratio:
+Start with $\alpha = 1, \beta = 1$ --- a uniform prior, the formal expression of total ignorance. Expected reliability is the familiar ratio:
 
 $$\mathbb{E}[r_{t,c}] = \frac{\alpha_{t,c}}{\alpha_{t,c} + \beta_{t,c}}$$
 
-After each question, once we know ground truth, we update. If the tool gave the correct answer, increment $\alpha$; if wrong, increment $\beta$. Weighted by the category posterior, so learning is distributed across categories proportionally:
+After each question, once ground truth is revealed, we update. Correct answer: increment $\alpha$. Wrong answer: increment $\beta$. The update is weighted by the category posterior, distributing learning across categories in proportion to their plausibility:
 
 ```{python}
 def update_reliability_table(
@@ -68,13 +68,13 @@ def update_reliability_table(
     return new_table
 ```
 
-The `forgetting` parameter ($\lambda = 0.95$ in the drift experiments) implements exponential decay --- multiplying $\alpha$ and $\beta$ by $\lambda$ before each update. This prevents old observations from dominating when tool reliability changes mid-task. It's what allows the agent to notice when a tool degrades and reallocate queries to alternatives within a few questions.
+The `forgetting` parameter ($\lambda = 0.95$ in the drift experiments) implements exponential decay --- multiplying $\alpha$ and $\beta$ by $\lambda$ before each update. This prevents ancient observations from tyrannising the present when tool reliability shifts mid-task. It is what allows the agent to notice a degraded tool and quietly redirect its queries elsewhere within a handful of questions.
 
-Two features make this work well. First, the update is exact. No gradient descent, no approximation, no convergence check. Observe, update, done. Second, the Beta distribution naturally encodes both the estimate *and* the uncertainty. A tool with $\text{Beta}(2, 2)$ and one with $\text{Beta}(20, 20)$ both have expected reliability 0.5, but the agent knows it's far less certain about the first.
+Two properties make this work well. First, the update is exact. No gradient descent, no approximation, no convergence check. Observe, update, move on. Second, the Beta distribution encodes both the estimate *and* the uncertainty in a single object. A tool with $\text{Beta}(2, 2)$ and one with $\text{Beta}(20, 20)$ both have expected reliability 0.5, but the agent knows it should trust the second estimate far more than the first.
 
 ## Bayesian Updates on Answers
 
-When a tool returns answer $x_j$, we need to update our beliefs about which answer is correct. The likelihood model is simple: if the tool's effective reliability is $r$, it returns the correct answer with probability $r$ and each wrong answer with probability $\frac{1-r}{3}$:
+When a tool returns answer $x_j$, we update our beliefs about which answer is correct. The likelihood model is straightforward: if the tool's effective reliability is $r$, it returns the correct answer with probability $r$ and each wrong answer with probability $\frac{1-r}{3}$:
 
 $$P(\text{tool says } x_j \mid \text{true answer is } x_i, r) = \begin{cases} r & \text{if } i = j \\ \frac{1-r}{3} & \text{if } i \neq j \end{cases}$$
 
@@ -82,7 +82,7 @@ Bayes' rule gives us the posterior over answers:
 
 $$P(x_i \mid \text{tool says } x_j) \propto P(\text{tool says } x_j \mid x_i, r) \cdot P(x_i)$$
 
-In code, this is a few lines of NumPy:
+In code, a few lines of NumPy:
 
 ```{python}
 def update_answer_posterior(
@@ -101,19 +101,19 @@ def update_answer_posterior(
     return updated / total
 ```
 
-But the effective reliability $r$ is not known exactly --- we have a distribution over it. We marginalise over category uncertainty:
+But the effective reliability $r$ is not known exactly --- we have a distribution over it. So we marginalise over category uncertainty:
 
 $$r_{\text{eff}} = \sum_{c} P(c \mid \text{question}) \cdot \mathbb{E}[r_{t,c}]$$
 
-The agent doesn't know which category a question belongs to either, so it maintains a category posterior that updates as tools respond. A calculator returning "not applicable" eliminates the numerical category. A knowledge base returning nothing shifts probability toward categories with low coverage. Every piece of information tightens every belief simultaneously.
+The agent doesn't know which category a question belongs to either. It maintains a category posterior that updates as tools respond. A calculator returning "not applicable" eliminates the numerical category. A knowledge base returning nothing shifts probability toward categories with low coverage. Every scrap of information tightens every belief simultaneously. The whole thing is coupled, in the pleasant way that Bayesian networks tend to be.
 
 ## Expected Utility: When to Answer
 
-The scoring rule is: +10 for a correct answer, -5 for a wrong answer, 0 for abstaining. This makes the expected utility of submitting answer $x_j$:
+The scoring rule: +10 for correct, -5 for wrong, 0 for abstaining. The expected utility of submitting answer $x_j$ is therefore:
 
 $$\text{EU}_{\text{submit}}(x_j) = P(x_j) \cdot 10 + (1 - P(x_j)) \cdot (-5) = 15 \cdot P(x_j) - 5$$
 
-Setting $\text{EU}_{\text{submit}} > \text{EU}_{\text{abstain}} = 0$ gives a clean threshold: only submit when your best candidate has posterior probability above $\frac{1}{3}$. Below that, the expected cost of a wrong answer outweighs the expected gain.
+Setting $\text{EU}_{\text{submit}} > \text{EU}_{\text{abstain}} = 0$ yields a satisfyingly clean threshold: only submit when your best candidate has posterior probability above $\frac{1}{3}$. Below that, the expected cost of being wrong outweighs the expected benefit of being right. The arithmetic is indifferent to your feelings about how confident you "seem."
 
 ```{python}
 def eu_submit(answer_posterior: AnswerPosterior) -> float:
@@ -127,17 +127,17 @@ def eu_star(answer_posterior: AnswerPosterior) -> float:
     return max(eu_submit(answer_posterior), eu_abstain())
 ```
 
-This is why the Bayesian agent abstains sometimes. Not because it "doesn't know" --- that's a vibes judgement --- but because the posterior probability of its best answer falls below the decision-theoretic threshold. Abstention is a calculated choice, not a failure mode.
+This is why the Bayesian agent abstains on some questions. Not because it "doesn't know" --- that would be a vibes-based assessment --- but because the posterior probability of its best answer falls below the decision-theoretic threshold. Abstention here is a calculated act of self-preservation, not an admission of defeat.
 
 ## Value of Information: When to Query
 
-This is the heart of the system. Before querying any tool, compute whether the expected improvement in decision quality exceeds the cost.
+Here is the heart of the whole enterprise. Before querying any tool, compute whether the expected improvement in decision quality exceeds the cost.
 
 $$\text{VOI}(t) = \mathbb{E}_{\text{response}}\left[\max(\text{EU}^*_{\text{submit}},\, \text{EU}_{\text{abstain}}) \mid \text{after response}\right] - \max(\text{EU}^*_{\text{submit}},\, \text{EU}_{\text{abstain}}) \mid \text{current}$$
 
-In words: what's the expected best EU *after* getting the tool's response, minus the best EU *right now*? If this gain exceeds the tool's cost, query it. If not, don't.
+In plain language: what is the expected best EU *after* receiving the tool's response, minus the best EU *right now*? If that gain exceeds the tool's cost, make the call. Otherwise, don't. The formulation has the austere beauty of something that was always obvious once someone writes it down.
 
-Computing this requires enumerating possible responses. For each candidate answer the tool might return, compute the probability of that response, update the answer posterior, and evaluate the resulting EU:
+Computing this requires enumerating possible responses. For each candidate answer the tool might return, we compute the probability of that response, update the answer posterior, and evaluate the resulting EU:
 
 ```{python}
 def compute_voi(
@@ -176,13 +176,13 @@ def compute_voi(
     return max(expected_eu - eu_current, 0.0)
 ```
 
-VOI is always non-negative (by Jensen's inequality --- you can always ignore the information). The decision to query is `VOI(t) - cost(t) > 0`. That's it. No "should I check one more tool just in case." No "better safe than sorry." A number that either exceeds a threshold or doesn't.
+VOI is always non-negative (Jensen's inequality --- you can always ignore the information). The decision to query reduces to `VOI(t) - cost(t) > 0`. No agonising over "should I check one more tool just in case." No precautionary principle. A number that either exceeds a threshold or doesn't. The agent's emotional range on the matter is nil.
 
-This is why the Bayesian agent averaged fewer than one tool query per question while the LangChain agent averaged over three. For most questions, after zero or one queries, the VOI of further queries dropped below their cost. The agent stopped, not because it was told to be parsimonious, but because the mathematics said further queries weren't worth it.
+This is why the Bayesian agent averaged fewer than one tool query per question while the LangChain agent averaged over three. After zero or one queries, the VOI of additional queries dropped below their cost for most questions. The agent stopped --- not because it was instructed to be frugal, but because the mathematics told it further queries were a bad investment. Parsimony as a theorem rather than a suggestion.
 
 ## The Decision Loop
 
-The full loop ties these pieces together. At each step, the agent computes the EU of submitting its best answer, the EU of abstaining, and the net VOI of each unused tool. It picks the action with the highest expected utility:
+The full loop ties these components together. At each step, the agent computes the EU of submitting its best answer, the EU of abstaining, and the net VOI of each unused tool. It selects the action with the highest expected utility:
 
 ```{python}
 def select_action(state, reliability_table, tool_configs):
@@ -210,11 +210,11 @@ def select_action(state, reliability_table, tool_configs):
     return best_action
 ```
 
-The loop terminates when the best action is submitting or abstaining --- when no tool query has a net VOI exceeding the current best option. This is *convergent by construction*: each query either improves the posterior enough to justify its cost, or the agent stops. No maximum iteration count, no hardcoded "query at most N tools." The mathematics decides.
+The loop terminates when the best action is to submit or abstain --- when no tool query has a net VOI exceeding the current best option. This is *convergent by construction*: each query either improves the posterior enough to justify its cost, or the agent stops. No maximum iteration count. No hardcoded "query at most N tools." The mathematics handles termination the way mathematics handles most things: by making the alternative numerically absurd.
 
 ## What the Numbers Show
 
-The benchmark runs 50 multiple-choice questions with four tools of varying cost and reliability. The results from the essay bear repeating with the mechanism made explicit:
+The benchmark runs 50 multiple-choice questions with four tools of varying cost and reliability. The results from the essay are worth restating now that the mechanism is laid bare:
 
 | Agent | Accuracy | Score | Tools/Question |
 |-------|----------|-------|----------------|
@@ -223,24 +223,24 @@ The benchmark runs 50 multiple-choice questions with four tools of varying cost 
 | LangChain Enhanced | 66.0% | -68.2 | 3.94 |
 | Random | 25.0% | -72.5 | 2.0 |
 
-The LangChain Enhanced agent --- the one with careful prompting about being selective --- performed *worse* than basic LangChain and barely beat random. The prompt told it to be careful, and it interpreted "careful" as "thorough," querying 3.94 tools per question. More sophisticated prompting produced worse outcomes because *cost-benefit analysis is not a prompting problem*.
+The LangChain Enhanced agent --- the one given careful prompting about being selective with its tool use --- performed *worse* than vanilla LangChain and barely outscored random guessing. The prompt instructed it to be careful; it interpreted "careful" as "thorough," querying 3.94 tools per question. More elaborate prompting produced worse outcomes because *cost-benefit analysis is not a prompting problem*. You cannot prompt your way to decision theory any more than you can prompt your way to calculus.
 
-The Bayesian agent's lower accuracy is a feature, not a bug. It abstained on questions where its posterior confidence was too low to justify submission --- choosing 0 points over an expected loss. The LangChain agents submitted every time, racking up wrong-answer penalties on questions they should have skipped.
+The Bayesian agent's lower raw accuracy is a feature, not a deficiency. It abstained on questions where its posterior confidence was too low to justify the gamble --- choosing 0 points over an expected loss. The LangChain agents submitted answers to every question, cheerfully accumulating wrong-answer penalties on questions they should have declined. The confidence of the uninformed is a reliable generator of negative expected value.
 
 ## Adaptation Under Drift
 
-In the drift experiment, one tool's reliability degrades mid-task. An agent that always trusts the degraded tool sees its score collapse by 69 points. The Bayesian agent's forgetting mechanism ($\lambda = 0.95$) exponentially discounts old observations:
+In the drift experiment, one tool's reliability degrades partway through the task. An agent that continues trusting the degraded tool sees its score collapse by 69 points. The Bayesian agent's forgetting mechanism ($\lambda = 0.95$) exponentially discounts old observations:
 
 $$\alpha_{\text{new}} = 0.95 \cdot \alpha_{\text{old}} + \Delta\alpha$$
 
-Within a few questions of the degradation, the posterior shifts, the VOI calculation redirects queries to more reliable alternatives, and the score barely dips. No change-detection heuristic, no special-case logic. Just Bayes' rule with a discount factor.
+Within a few questions of the degradation, the posterior shifts, the VOI calculation redirects queries to more reliable alternatives, and the score barely notices. No change-detection heuristic, no special-case logic. Just Bayes' rule with a discount factor. The machinery does not require a memo informing it that conditions have changed; it works it out from the data, which is what machinery designed to work things out from data tends to do.
 
 ## What I Still Don't Know
 
-The benchmark has 50 questions, 4 tools, and 5 categories. The VOI calculation enumerates all possible responses for each tool --- four candidates per tool, tractable here. In a production system with hundreds of endpoints, ambiguous objectives, and continuous rather than discrete responses, this enumeration explodes. Whether you can approximate the VOI cheaply enough to preserve the advantage is an open question.
+The benchmark has 50 questions, 4 tools, and 5 categories. The VOI calculation enumerates all possible responses for each tool --- four candidates per tool, entirely tractable at this scale. In a production system with hundreds of endpoints, ambiguous objectives, and continuous rather than discrete responses, that enumeration detonates. Whether you can approximate VOI cheaply enough to preserve the advantage remains genuinely open.
 
-There's also the question of composability. The Bayesian agent treats each tool query as independent. But real tools have correlated errors --- two endpoints hitting the same upstream database will fail together. Modelling those correlations requires moving from independent Betas to something like a Dirichlet or a full joint distribution, and the computational cost scales accordingly.
+There is also the matter of composability. The Bayesian agent treats each tool query as independent. Real tools harbour correlated errors --- two endpoints hitting the same upstream database will fail in solidarity. Modelling those correlations means graduating from independent Betas to something like a Dirichlet or a full joint distribution, and the computational cost scales with enthusiasm.
 
-And perhaps the most interesting question: whether principled decision theory and the flexibility of language models are complementary rather than competing. A hybrid that uses Bayesian VOI to decide *whether* to call a tool, and an LLM to interpret the response, might combine the strengths of both. I haven't built that yet, but the interfaces are clean enough that it wouldn't be hard to try.
+And perhaps the most interesting open question: whether principled decision theory and the flexibility of language models are complementary rather than competing approaches. A hybrid that uses Bayesian VOI to decide *whether* to call a tool, and an LLM to interpret the response, might combine the strengths of both without inheriting the worst habits of either. I haven't built it yet, but the interfaces are clean enough that the attempt wouldn't require heroism.
 
 Code and full results: [github.com/gfrmin/credence](https://github.com/gfrmin/credence)
