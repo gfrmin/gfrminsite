@@ -42,6 +42,12 @@ This is the "exit of over $100 million." In 2019, ClickSoftware — the company 
 
 Hod continued as COO of Euclides within AnalytixInsight after the acquisition. The sequel was not a success. Euclides revenue [fell from $1.43 million in 2022 to $276,000 in 2023](https://www.analytixinsight.com/news/analytixinsight-reports-2023-financial-results-andprovides-mcto-status-update) — a decline of 81%. With no new contracts signed and its last remaining employee departing in March 2024, AnalytixInsight **discontinued Euclides entirely**. The parent company itself was placed under a Management Cease Trade Order by the Ontario Securities Commission, with a court-ordered inspector investigating disputed expenses.
 
+In October 2024, AnalytixInsight published a [corporate update](https://www.businesswire.com/news/home/20241007982731/en/AnalytixInsight-Provides-Corporate-Update) that included a pointed observation about its former subsidiary:
+
+> "A sizable portion of the operating costs were in conjunction with Euclides' assumed CEO whose combined annual salary and business expense account averaged roughly $0.6M per year over the past 3 years. Curiously, during the time that these costs were incurred, it appears as if said CEO was the founder and CEO of another AI company called Velotix, based in Israel."
+
+Six hundred thousand dollars a year from a division whose revenue was falling from $2.8 million to zero, whose operating margin went from 58% to negative 600%, and which had "apparently no proprietary technology or dedicated product of its own." While simultaneously founding and running Velotix. AnalytixInsight's use of the word "curiously" deserves some kind of award for understatement.
+
 A [factsheet dated May 2024](https://cdn.prod.website-files.com/6081ecbf560558a94d6326b6/663263289d4c4989a5524683_Euclides%20Factsheet%20May%202024.pdf) — two months after Euclides was discontinued — still listed "Adi Hod, COO Euclides Technologies, 617-893-0554." The phone number is the [same one](https://www.cbinsights.com/company/velotix) listed for Velotix on CBInsights.
 
 ## The Entourage
