@@ -123,6 +123,8 @@ In his official response to TheMarker, Hod blamed investors: "The company recent
 
 On Ofir Dor's [Twitter thread](https://x.com/doritsos/status/2031033087501414671), the company added that "the CEO, Dr Adi Hod, is personally financing the company's operations."
 
+In 2023, Velotix [proudly attended](https://www.linkedin.com/posts/velotix_velotix-ai-datasecurity-activity-7061385442184638464-fU2Q) the "Israel Future of Fintech Fraud & Mismanagement Event," where Hod pitched to investors. The irony requires no elaboration.
+
 The [Velotix website](https://www.velotix.ai/) remains live. "Book a Demo." The [About Us](https://www.velotix.ai/about-us/) page still shows Uriel Ekstein as co-founder. The [IBM case study](https://www.ibm.com/case-studies/velotix) still presents the company as a going concern. The [patent](https://data.uspto.gov/patent-file-wrapper/search/details/18689112/application-data) is real. The [Gartner listing](https://www.velotix.ai/velotix-recognized-in-gartner-guide-for-data-security-platforms/) is real. Somewhere beneath the inflated credentials, the fabricated exits, and the employees who worked without being paid, there was a product.
 
 But when a CEO tells his employees on March 16 that the company has $1 million in revenue and less than six months to live, and then tells a conference nine days later that the company has raised $30 million and works with major clients, the product is no longer the point.
