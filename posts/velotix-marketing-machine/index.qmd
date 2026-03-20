@@ -3,7 +3,7 @@ title: "The Velotix Files, Part 2: The Marketing Machine"
 subtitle: "How an ISA-licensed crowdfunding platform distributed false claims about a failing startup to hundreds of thousands of Israelis"
 description: "Inside the PipelBiz distribution network that marketed Velotix angel investments through lead-gen sites, real estate landing pages, and a military Telegram channel — while the company was under government enforcement for not paying employees."
 author: "Guy Freeman"
-date: 2026-03-20
+date: 2026-03-21
 draft: true
 categories: [investigation, startups, israel, cyber, regulation]
 ---
@@ -91,7 +91,7 @@ Within days of the TheMarker exposé on March 9, 2026, the marketing pages began
 | Channel | URL | Status |
 |---------|-----|--------|
 | Calcalix | /pipelbiz-velotix-ob/ | 404 — [archived by Wayback Machine](https://web.archive.org/web/20260121050014/https://calcalix.co.il/pipelbiz-velotix-ob/) |
-| channel22.co.il | /pepelz_investment/ | 404 — only [Google snippet](evidence/google-channel22-snippet.png) survives |
+| channel22.co.il | /pepelz_investment/ | 404 — only [Google snippet](google-channel22-snippet.png) survives |
 | Kore.co.il | /viewArticle/202686 | 404 — content lost entirely |
 | estates.ussl.co.il | /pipelbiz-velotix-sp/ | 404 — content lost entirely |
 | Abu Ali Express (web) | /heb112626/ | [Still live](https://abualiexpress.com/heb112626/) |

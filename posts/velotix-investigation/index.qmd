@@ -21,7 +21,7 @@ The advertisements were distributed by [PipelBiz](https://pipelbiz.com/), an equ
 
 On channel22.co.il, CEO Dr Adi Hod was described as having "registered exits of over $100 million." On the Calcalix page — labelled תוכן שיווקי (sponsored content) — the company was said to be "growing at a dizzying pace." The Calcalix page helpfully disclosed in its footer that it publishes advertising content "AS-IS, without verifying its truthfulness."
 
-All of these pages have since been deleted. The Calcalix page survives only because the [Wayback Machine captured it](https://web.archive.org/web/20260121050014/https://calcalix.co.il/pipelbiz-velotix-ob/) on January 21, 2026. The channel22.co.il page was never archived; only a [Google index snippet](evidence/google-channel22-snippet.png) survives. The Kore and estates.ussl.co.il pages are gone entirely.
+All of these pages have since been deleted. The Calcalix page survives only because the [Wayback Machine captured it](https://web.archive.org/web/20260121050014/https://calcalix.co.il/pipelbiz-velotix-ob/) on January 21, 2026. The channel22.co.il page was never archived; only a [Google index snippet](google-channel22-snippet.png) survives. The Kore and estates.ussl.co.il pages are gone entirely.
 
 What investors were not told is that five weeks earlier, the Israeli Ministry of Labour had completed an enforcement investigation into Velotix and found the company in violation of seven separate labour laws — including failing to pay minimum wage, delaying salaries, and not transferring pension deductions to employees' pension funds.
 
@@ -31,7 +31,7 @@ Dr Adi Hod presents himself, and is presented by others, as a serial entrepreneu
 
 His actual credentials are somewhat more modest.
 
-The "Technion" connection is a BSc and MSc in Industrial Engineering and Management, completed between 1994 and 2002. Not cybersecurity. Not data science. Not AI. The "MIT" credential is an Executive MBA (2016–2018) — a part-time programme for working professionals, not a research position. The "Dr" comes from a PhD at the University of Haifa in "Early Venture firms/Data Science," completed in 2020 — the same year he founded Velotix. The topic is essentially startup entrepreneurship.
+The "Technion" connection is a BSc and MSc in Industrial Engineering and Management, completed between 1994 and 2002 — a field not obviously related to cybersecurity. The "MIT" credential is an Executive MBA (2016–2018) — a part-time programme for working professionals. The "Dr" comes from a PhD at the University of Haifa in "Early Venture firms/Data Science," completed in 2020 — the same year he founded Velotix.
 
 As for the "$100 million exits": [TheOrg](https://theorg.com/org/velotix/org-chart/dr-adi-hod) records Hod's previous company as Euclides Technologies Inc., a field service management software firm based in New York, where he served as CEO from 2006 to 2017. In 2017, a company called AnalytixInsight — a micro-cap entity trading on the TSX Venture Exchange — [acquired "certain assets"](https://www.globenewswire.com/news-release/2017/03/16/1288626/0/en/AnalytixInsight-Closes-Big-Data-Acquisition-in-Field-Service-Management-Industry.html) of Euclides Technologies. The consideration, per AnalytixInsight's [own website](https://www.analytixinsight.com/media/aly-workforce-optimization), was "about US$200,000 in cash."
 
@@ -131,6 +131,8 @@ The petition (חדל"ת 60765-02-26) had actually been filed in February 2026. T
 
 Ekstein, who co-founded the company with Hod in 2020, was fired at the end of November 2025. He hadn't been paid for half a year. The third co-founder, Adam Ben Gur (CTO), had already departed — he is now CTO at the Israel Antiquities Authority. All three co-founders have left the company. Only Hod remains, still claiming the title of CEO.
 
+Avrahami, as CMO, had been the press contact on the [Barclays investment PR](https://web.archive.org/web/20240717030325/https://finance.yahoo.com/news/velotix-secures-strategic-investment-barclays-120000705.html) that described Velotix as "the premier choice for leading financial institutions." That press release, originally on Yahoo Finance, is now 404.
+
 Simultaneously, at least six lawsuits were filed by suppliers:
 
 - **Brookes Credit Financial Services** (ת"א 30924-02-26, Magistrate Court Herzliya): 187,000 NIS
@@ -153,7 +155,7 @@ Velotix was also listed on [OurCrowd](https://www.ourcrowd.com/companies/velotix
 
 The TechShield page listed three Velotix "customers": OCBC Singapore, Liquid Group Singapore, and First International Bank of Israel. During my time at Velotix, the only customer engagement I was aware of was OCBC, and that was a proof of concept — not a paying relationship. Liquid Group issued a [press release](https://financialit.net/news/security/liquid-group-selects-velotix-its-data-security-platform) in May 2023 saying they had "selected" Velotix; whether money changed hands is unclear.
 
-As for First International Bank of Israel: the [company extract](evidence/document%20(1).pdf) from the Israeli Corporations Authority reveals that FIBI is not merely a customer but Velotix's **secured creditor**. A specific charge (שעבוד ספציפי) was registered on January 29, 2024, granting FIBI a first-priority lien over Velotix's cash deposits and securities, securing 125,000 NIS. Listing your bank — the one holding a lien on your deposits — as a "customer" on an investor marketing page is a creative interpretation of the word.
+As for First International Bank of Israel: the [company extract](company-extract.pdf) from the Israeli Corporations Authority reveals that FIBI is not merely a customer but Velotix's **secured creditor**. A specific charge (שעבוד ספציפי) was registered on January 29, 2024, granting FIBI a first-priority lien over Velotix's cash deposits and securities, securing 125,000 NIS. Listing your bank — the one holding a lien on your deposits — as a "customer" on an investor marketing page is a creative interpretation of the word.
 
 ## Ghost Employees
 

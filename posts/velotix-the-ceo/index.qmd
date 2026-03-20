@@ -3,7 +3,7 @@ title: "The Velotix Files, Part 3: The Serial Entrepreneur"
 subtitle: "Exits of over $100 million, a researcher from MIT, and a LinkedIn post about sinking companies"
 description: "A profile of Dr Adi Hod, CEO of Velotix — his credentials, his previous company, and the nine days between telling employees the company was dying and telling investors it was thriving."
 author: "Guy Freeman"
-date: 2026-03-20
+date: 2026-03-22
 draft: true
 categories: [investigation, startups, israel, cyber]
 ---
@@ -20,27 +20,25 @@ Each of these claims, examined individually, reveals a gap between presentation 
 
 ## The Technion
 
-Hod holds a BSc (1994–1998) and MSc (1998–2002) from the Technion, Israel's premier technical university. The field: Industrial Engineering and Management. Not cybersecurity. Not data science. Not artificial intelligence. Industrial engineering is a respectable discipline, but it is not the background one expects from the CEO of a company marketed as "the next generation of Israeli cyber successes."
+Hod holds a BSc (1994–1998) and MSc (1998–2002) from the Technion in Industrial Engineering and Management — a field not obviously related to cybersecurity.
 
 ## MIT
 
-The "MIT" credential is an Executive MBA (2016–2018) at MIT Sloan. An EMBA is a part-time programme designed for working professionals — participants typically attend classes on weekends while maintaining their day jobs. It is not a research position. It does not make one "a researcher from MIT."
-
-Marketing materials, conference profiles, and the TheMarker article consistently present the MIT connection without specifying that it was an executive degree. The distinction matters: investors evaluating a cybersecurity startup led by "a researcher from MIT" form a different impression than investors evaluating one led by a weekend MBA graduate.
+The "MIT" credential is an Executive MBA (2016–2018) at MIT Sloan — a part-time programme for working professionals. Marketing materials, conference profiles, and the TheMarker article consistently present this as "MIT" without the "Executive MBA" qualifier.
 
 ## The PhD
 
-Hod completed a PhD at the University of Haifa in 2020 — the same year he founded Velotix. The field, per [TheOrg](https://theorg.com/org/velotix/org-chart/dr-adi-hod): "Early Venture firms/Data Science." This is a thesis about startup investing, not about data security or AI. The "Dr" prefix, used consistently in all Velotix materials, derives from this work.
+Hod completed a PhD at the University of Haifa in 2020 — the same year he founded Velotix. The [university's own page](https://cohrm.haifa.ac.il/?p=554) lists him as a doctoral student at the Centre for Research on Organizations and Human Resource Management, researching "the influence of boards of directors on success factors of startups and various aspects of startup merger and acquisition processes." His contact email was listed as adi@euclidestech.com. The PhD, in other words, was about startup corporate governance, conducted through an HR department, while he was still running a field service management company. After completing it, Hod [taught a course](https://sdg.haifa.ac.il/sdg-9-search-filter-results/?lang=en&sf_paged=10) at the university called "Startups — From Vision to Realisation" (חברות הזנק – מחזון למימוש), course number 209.4443, in the Social Sciences faculty. The "Dr" prefix, used consistently in all Velotix materials, derives from this work.
 
 ## Euclides Technologies
 
-Before Velotix, Hod was CEO of Euclides Technologies Inc. from 2006 to 2017 — an eleven-year stint running a field service management software company in New York. Euclides helped large organisations schedule and manage their field service workers. It was, by all accounts, a small but functional business. [ZoomInfo](https://www.zoominfo.com/c/euclides-technologies-inc/358864736) estimates its revenue at $5.4 million.
+Before Velotix, Hod was CEO of Euclides Technologies Inc. from 2006 to 2017 — an eleven-year stint running a field service management software company in New York. Euclides was [founded by three senior veterans of ClickSoftware](https://appexchange.salesforce.com/partners/servlet/servlet.FileDownload?file=00P3A00000VrJPFUA3), a field service solutions vendor, and served as an implementation partner for ClickSoftware and later IFS. Euclides' customers included power utilities and big-box retailers; it contributed approximately [$3.5 million to its parent company's 2019 revenue](https://www.analytixinsight.com/media/aly-workforce-optimization).
 
-In 2017, AnalytixInsight Inc. — a micro-cap company trading on the TSX Venture Exchange — [acquired](https://www.globenewswire.com/news-release/2017/03/16/1288626/0/en/AnalytixInsight-Closes-Big-Data-Acquisition-in-Field-Service-Management-Industry.html) "certain assets" of Euclides Technologies. Not the company itself — certain assets. The consideration, per AnalytixInsight's [own website](https://www.analytixinsight.com/media/aly-workforce-optimization): "about US$200,000 in cash."
+In 2017, AnalytixInsight Inc. — a micro-cap company trading on the TSX Venture Exchange — [acquired](https://www.globenewswire.com/news-release/2017/03/16/1288626/0/en/AnalytixInsight-Closes-Big-Data-Acquisition-in-Field-Service-Management-Industry.html) "certain assets" of Euclides Technologies. The consideration, per AnalytixInsight's [own report](https://www.analytixinsight.com/media/aly-workforce-optimization): "about US$200,000 in cash and approximately 5.4 million common shares" of AnalytixInsight, plus ~3.1 million warrants triggered by revenue milestones. AnalytixInsight traded on the TSX Venture Exchange at the time; the share component was denominated in a micro-cap stock.
 
-This is the "exit of over $100 million." A two-hundred-thousand-dollar asset sale. To a TSX Venture micro-cap.
+This is the "exit of over $100 million." In 2019, ClickSoftware — the company Euclides was a reseller for — was [acquired by Salesforce for $1.35 billion](https://www.salesforce.com/news/stories/clicksoftware-has-joined-the-salesforce-family/). It is possible that Hod conflated ClickSoftware's exit with his own. ClickSoftware's exit was $1.35 billion. Euclides' was $200,000 in cash plus shares in a penny stock. The distinction seems material.
 
-Hod continued as COO of Euclides within AnalytixInsight after the acquisition. A [factsheet dated November 2022](https://uploads-ssl.webflow.com/6081ecbf560558a94d6326b6/6362d27f611689021757be2d_Euclides%20Factsheet%20November%202022.pdf) — two years after founding Velotix — still listed "Adi Hod, COO Euclides Technologies, 617-893-0554." The phone number, incidentally, is the [same one](https://www.cbinsights.com/company/velotix) listed for Velotix on CBInsights.
+Hod continued as COO of Euclides within AnalytixInsight after the acquisition. A [factsheet dated May 2024](https://cdn.prod.website-files.com/6081ecbf560558a94d6326b6/663263289d4c4989a5524683_Euclides%20Factsheet%20May%202024.pdf) — four years after founding Velotix — still listed "Adi Hod, COO Euclides Technologies, 617-893-0554." The phone number is the [same one](https://www.cbinsights.com/company/velotix) listed for Velotix on CBInsights. Euclides [remains an active IFS partner](https://www.ifs.com/en/partners/find-a-partner/euclides-technologies) to this day.
 
 ## The Entourage
 
@@ -73,9 +71,11 @@ One message for the employees. Another for the investors. Nine days apart.
 
 ## The LinkedIn Post
 
-In August 2025, Hod [posted on LinkedIn](https://www.linkedin.com/posts/dr-adi-hod-0839463_ive-watched-three-brilliant-founders-sink-activity-7363079716620189696-0NKz):
+In August 2025, Hod [posted on LinkedIn](https://www.linkedin.com/posts/dr-adi-hod-0839463_ive-watched-three-brilliant-founders-sink-activity-7363079716620189696-0NKz), accompanied by the mirror selfie below:
 
 > "I've watched three brilliant founders sink a company. Not for lack of intellect. Not for lack of effort. But because they were carbon copies of each other. Same strengths. Same blind spots. Same way of thinking."
+
+![Dr Adi Hod's LinkedIn selfie, August 2025](Screenshot_20260320-235519.png)
 
 The post continued with reflections on the importance of team diversity, emotional intelligence, and "creative tension." It received 107 reactions and 8 comments. Boris Iliayev from Barclays responded: "This hits hard. The best teams I've been on felt like controlled chaos — everyone pulling different levers but toward the same goal."
 
@@ -89,7 +89,7 @@ Velotix was also marketed through Sarona Ventures' [TechShield](https://techshie
 
 Hod told his own employees on March 16, 2025 that the runway was below six months.
 
-TechShield listed three Velotix "customers": OCBC Singapore (a proof-of-concept, not a paying customer), Liquid Group Singapore (a press release from 2023; unclear if revenue followed), and First International Bank of Israel (which the [company extract](evidence/document%20(1).pdf) reveals to be Velotix's secured creditor bank, holding a first-priority charge on the company's cash deposits — not, in the conventional sense, a customer).
+TechShield listed three Velotix "customers": OCBC Singapore (a proof-of-concept, not a paying customer), Liquid Group Singapore (a press release from 2023; unclear if revenue followed), and First International Bank of Israel (which the [company extract](company-extract.pdf) reveals to be Velotix's secured creditor bank, holding a first-priority charge on the company's cash deposits — not, in the conventional sense, a customer).
 
 ## The Ghost Employees
 
