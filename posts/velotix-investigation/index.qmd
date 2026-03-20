@@ -1,0 +1,224 @@
+---
+title: "The Velotix Files: How a $30M Israeli Cyber Startup Marketed Angel Investments While Its Employees Went Unpaid"
+subtitle: "Government enforcement findings, unpaid pensions, first-class flights, and a WhatsApp message that said 'there is no company'"
+description: "An investigation into Velotix Ltd., the Israeli data security startup that raised millions, was marketed as 'the next Waze,' and is now facing insolvency after failing to pay employees, consultants, and suppliers."
+author: "Guy Freeman"
+date: 2026-03-20
+draft: true
+categories: [investigation, startups, israel, cyber]
+---
+
+::: {.callout-note}
+## Disclosure
+I am a former Velotix employee (October 2024 – May 2025). I filed the complaint with the Ministry of Labour referenced in this article. This piece is based on official government documents, court filings, archived web pages, and publicly available information. Where I draw on my own experience, I say so.
+:::
+
+## The Pitch
+
+In January 2026, advertisements appeared across Israeli websites inviting investors to join an exclusive angel round in Velotix, a "cybersecurity" startup. "Smart investors are already in," read the headline. The round was limited to just 35 investors, with a minimum buy-in of 100,000 NIS. The copy placed Velotix alongside Israel's biggest cyber exits — Wiz ($32 billion), CyberArk ($25 billion), Armis ($7.75 billion) — and promised investors early entry into "the next generation of Israeli cyber successes."
+
+The advertisements were distributed by [PipelBiz](https://pipelbiz.com/), an equity crowdfunding platform licensed by the Israel Securities Authority as a רכז הצעה (offer coordinator). PipelBiz pushed the campaign through at least six downstream channels: [Calcalix](https://web.archive.org/web/20260121050014/https://calcalix.co.il/pipelbiz-velotix-ob/) (a financial content site), [channel22.co.il](https://channel22.co.il/pepelz_investment/) (a real estate lead-generation website — not, despite the name, Channel 22 television), [Kore.co.il](https://www.kore.co.il/viewArticle/202686), [estates.ussl.co.il](https://estates.ussl.co.il/pipelbiz-velotix-sp/) (a landing page factory whose other offerings include apartments in Limassol and land plots in Kfar Saba), and the [Abu Ali Express](https://abualiexpress.com/heb112626/) Telegram channel, which has 598,000 subscribers and primarily covers Middle Eastern military affairs.
+
+On channel22.co.il, CEO Dr Adi Hod was described as having "registered exits of over $100 million." On the Calcalix page — labelled תוכן שיווקי (sponsored content) — the company was said to be "growing at a dizzying pace." The Calcalix page helpfully disclosed in its footer that it publishes advertising content "AS-IS, without verifying its truthfulness."
+
+All of these pages have since been deleted. The Calcalix page survives only because the [Wayback Machine captured it](https://web.archive.org/web/20260121050014/https://calcalix.co.il/pipelbiz-velotix-ob/) on January 21, 2026. The channel22.co.il page was never archived; only a [Google index snippet](evidence/google-channel22-snippet.png) survives. The Kore and estates.ussl.co.il pages are gone entirely.
+
+What investors were not told is that five weeks earlier, the Israeli Ministry of Labour had completed an enforcement investigation into Velotix and found the company in violation of seven separate labour laws — including failing to pay minimum wage, delaying salaries, and not transferring pension deductions to employees' pension funds.
+
+## The Man Behind the Curtain
+
+Dr Adi Hod presents himself, and is presented by others, as a serial entrepreneur and researcher from the Technion and MIT. TheMarker [described him](https://www.themarker.com/technation/2026-03-09/ty-article/.highlight/0000019c-d2b9-d8a3-a59e-defb66630000) as "a researcher from the Technion and MIT who divides his time between New York, Singapore, and Tel Aviv." The channel22.co.il marketing page stated he had "registered exits of over $100 million." The [Calcalist Dream Team profile](https://www.calcalistech.com/ctechnews/article/phxlztums) described Velotix's founders as "serial entrepreneurs with multiple successful exits."
+
+His actual credentials are somewhat more modest.
+
+The "Technion" connection is a BSc and MSc in Industrial Engineering and Management, completed between 1994 and 2002. Not cybersecurity. Not data science. Not AI. The "MIT" credential is an Executive MBA (2016–2018) — a part-time programme for working professionals, not a research position. The "Dr" comes from a PhD at the University of Haifa in "Early Venture firms/Data Science," completed in 2020 — the same year he founded Velotix. The topic is essentially startup entrepreneurship.
+
+As for the "$100 million exits": [TheOrg](https://theorg.com/org/velotix/org-chart/dr-adi-hod) records Hod's previous company as Euclides Technologies Inc., a field service management software firm based in New York, where he served as CEO from 2006 to 2017. In 2017, a company called AnalytixInsight — a micro-cap entity trading on the TSX Venture Exchange — [acquired "certain assets"](https://www.globenewswire.com/news-release/2017/03/16/1288626/0/en/AnalytixInsight-Closes-Big-Data-Acquisition-in-Field-Service-Management-Industry.html) of Euclides Technologies. The consideration, per AnalytixInsight's [own website](https://www.analytixinsight.com/media/aly-workforce-optimization), was "about US$200,000 in cash."
+
+Two hundred thousand dollars. Not one hundred million. The discrepancy is a factor of five hundred.
+
+A [November 2022 factsheet](https://uploads-ssl.webflow.com/6081ecbf560558a94d6326b6/6362d27f611689021757be2d_Euclides%20Factsheet%20November%202022.pdf) still listed "Adi Hod, COO Euclides Technologies" — two years after founding Velotix. His older [LinkedIn articles](https://www.linkedin.com/in/dr-adi-hod-0839463) are about "The Top 3 Service Scheduling Software Trends for 2016" and "The ROI of Mobile Field Service Solutions." Field service scheduling, not cybersecurity.
+
+One wonders whether PipelBiz, as an ISA-licensed offer coordinator with a [legal obligation](https://www.tgt.co.il/%D7%9E%D7%95%D7%A0%D7%97/%D7%A8%D7%9B%D7%96-%D7%94%D7%A6%D7%A2%D7%94/) to "take measures to prevent securities fraud," verified any of this before distributing the marketing.
+
+## The Government Finding
+
+On December 2, 2025, the Ministry of Labour's Enforcement Administration issued its findings regarding complaint number 61012014. The employer investigated was Velotix Ltd. (ח.פ. 516258225). Seven violations were found:
+
+1. Failure to pay minimum wage (notice of intent to fine)
+2. Failure to provide pay slips (administrative warning)
+3. **Failure to transfer deducted pension amounts to their intended recipient** (administrative warning)
+4. Failure to pay wages by the due date (administrative warning)
+5. Non-compliance with pension payment obligations under expanded enforcement (administrative warning)
+6. Personal liability of the general manager for preventing violations (warning sent to corporate manager — i.e., Adi Hod)
+7. Failure to pay vacation redemption (administrative warning)
+
+The third violation deserves particular attention. Velotix deducted pension contributions from employee salaries — as documented on their pay slips — but the money never reached the pension funds. Under Israeli law, this can constitute criminal misappropriation. The employees saw the deductions on their pay slips. They assumed the money was going where it was supposed to go. It wasn't.
+
+The finding was signed by Idit Moriyosef of the Financial Penalties Centre, Southern District.
+
+Five weeks later, the angel investment marketing campaign launched.
+
+## Nine Days
+
+On March 16, 2025, Dr Hod convened a meeting with employees to explain why their pension contributions had not been transferred for three months. He told them that the company's revenue was approximately $1 million, and that the runway was below six months.
+
+On March 25, 2025 — nine days later — Hod appeared at a Microsoft roundtable at the [Calcalist Mind the Tech New York 2025 conference](https://www.calcalistech.com/ctechnews/article/p3vn45m6q) and stated: "We founded a data security company and raised over $30 million. We work with major clients."
+
+At the same conference, the [Calcalist Dream Team profile](https://www.calcalistech.com/ctechnews/article/phxlztums) — submitted by Velotix itself — listed the company as having raised $23 million. The [original seed round announcement](https://www.velotix.ai/resources/news-events/news/velotix-announces-launch-from-stealth-with-10m-seed-round/) from October 2022 said $10 million. [Tracxn](https://tracxn.com/d/companies/velotix/__oukBb5SF4KgdT_D79EUhJjEyWGu8l3wGSUDjUBB5yyk), an independent database, records total funding as $10 million.
+
+Three numbers. One company. The same conference.
+
+The [Barclays investment](https://financialit.net/news/fundraising-news/velotix-secures-strategic-investment-barclays-bank-and-capri-ventures), announced in May 2024 with considerable fanfare, came through the bank's Rise Growth Academy — a corporate accelerator programme. Kester Keating of Barclays described Velotix as "an alumni of the bank's Rise Growth Academy." The press release did not disclose the investment amount. Barclays subsequently [shut down the Rise programme entirely](https://www.linkedin.com/pulse/barclays-shut-down-fintech-accelerator-rise-mid-2025-marcel-van-oost-3pwaf) by mid-2025.
+
+Around the time I joined Velotix in October 2024, I was told that Barclays had provided some bridge financing — the sort of short-term emergency funding that keeps a company alive until the next round closes.
+
+## "There Is No Company"
+
+A separate lawsuit, filed on March 9, 2026, provides a window into how Velotix operated behind the scenes.
+
+AI consultant Yehuda Karlinsky signed a service agreement on October 30, 2024, to work at 50% capacity for 40,000 NIS per month. He provided services through February 2025 and issued four invoices totalling 160,000 NIS. Velotix received and approved the work but did not pay.
+
+The [lawsuit](https://www.court.gov.il/) (ת"א 21105-03-26, Magistrate Court, Tel Aviv-Jaffa) includes WhatsApp messages between Karlinsky and Hod that chart the disintegration of a business relationship.
+
+When Karlinsky, frustrated by non-payment, invoked a cancellation clause in his contract on February 11, 2025, Hod responded:
+
+> "What do you mean not pay — of course we'll pay you. Don't go crazy."
+
+> "The payments are in approval processes and I apologize for the delays caused by technical issues of suppliers / manual invoices."
+
+Karlinsky persisted: "Want to cancel, I feel it's the right thing to do."
+
+Hod: "No problem! I respect and love you." ❤️
+
+Twelve days later, on February 23, Hod approved a laptop purchase for Karlinsky.
+
+Fifteen days after that, on March 10, Velotix sent Karlinsky an "Immediate and Retroactive Termination" notice, attempting to avoid paying for services already delivered.
+
+When Hod personally promised to transfer 80,000 NIS "within days," only 40,000 NIS ever arrived — four months late.
+
+Eventually, after Karlinsky sent a draft lawsuit, Hod wrote:
+
+> **"אין חברה יהודה. חבל על המאמץ. אנחנו סוגרים מכוון שמשקיעים לא הכניסו כספים."**
+
+> "There is no company, Yehuda. It's a shame about the effort. We're closing because investors didn't bring in money."
+
+This was said while Velotix was simultaneously marketing itself to angel investors as a company "growing at a dizzying pace."
+
+In a separate exchange, Hod told Karlinsky: "We've started to receive investment money. I just approved one invoice of 40K NIS." Payments to suppliers, it seems, were contingent on fundraising, not revenue.
+
+Hod told Karlinsky "you should have trusted me." Karlinsky responded: "You should have been honest with me."
+
+## The Collapse
+
+On March 9, 2026, TheMarker journalist Ofir Dor [broke the story](https://www.themarker.com/technation/2026-03-09/ty-article/.highlight/0000019c-d2b9-d8a3-a59e-defb66630000). Thirteen former employees and managers — including co-founder Uriel Ekstein — had petitioned to place Velotix into insolvency.
+
+The petition (חדל"ת 60765-02-26) had actually been filed in February 2026. The petitioners, all represented by attorney Matan Elkayam, are:
+
+1. Uriel Ekstein (co-founder, fired end of November 2025)
+2. Hili Avrahami (CMO)
+3. Katriel Kay
+4. Amir Ashkenazi (VP Sales)
+5. Gadi Dudian
+6. Miki Yosef
+7. Noga Kril
+8. Edward Schwartzman
+9. Steven Portnoy
+10. Vered Solomovitz
+11. Guy Perl
+12. Vladimir Platonov (VP R&D — promoted to the role in November 2025, departed February 2026, a tenure of four months)
+13. Yigal Mitrany
+
+Ekstein, who co-founded the company with Hod in 2020, was fired at the end of November 2025. He hadn't been paid for half a year. The third co-founder, Adam Ben Gur (CTO), had already departed — he is now CTO at the Israel Antiquities Authority. All three co-founders have left the company. Only Hod remains, still claiming the title of CEO.
+
+Simultaneously, at least six lawsuits were filed by suppliers:
+
+- **Brookes Credit Financial Services** (ת"א 30924-02-26, Magistrate Court Herzliya): 187,000 NIS
+- **Green Lamp** (תאד"מ 2774-02-26): 34,000 NIS for internet promotion services
+- **Blues Distribution** (ת"א 80969-01-26): amount unknown, against "Velotix Distribution" — a curiously named defendant
+- **Yehuda Karlinsky** (ת"א 21105-03-26): 135,833 NIS
+- Plus at least two others mentioned by TheMarker but not yet identified
+
+The known debts total approximately 1.4 million NIS — roughly $380,000. For a company that claimed to have raised $30 million, this is not an insurmountable sum. One wonders where the rest went.
+
+Two additional court cases involving Hod personally merit attention. In December 2025, Hod filed a case against the State of Israel (המ"ש 10248-12-25) — possibly challenging the Ministry of Labour's enforcement finding. And in January 2026, the State of Israel filed a case against Hod (תת"ע 15038-01-26) — what appears to be a labour court proceeding. Hod was, in other words, simultaneously fighting the government's finding of labour violations and marketing angel investments to retail investors.
+
+## The Marketing Machine
+
+The January 2026 angel round marketing was not Velotix's first use of PipelBiz. A [PipelBiz campaign page](https://pipelbiz.com/%D7%94%D7%A9%D7%A7%D7%A2%D7%95%D7%AA/%D7%A1%D7%98%D7%90%D7%A8%D7%98%D7%90%D7%A4/velotix-52909) (campaign #52909) dates from April 2022 and shows a SAFE agreement round that raised 107.33% of its target. That page described Velotix as having been "ranked in the Top 5 in Israel by Calcalist newspaper." No evidence of any such ranking exists.
+
+The 2022 PipelBiz page also listed a development team of seven people. By 2026, at least five of those seven had departed. Two — "Roi Ben Harosh" and "Nir Abrahamson" — return zero Google results in any context. A third, listed as "Steve Solen" (actually Steve Solun, a real person whose name was misspelled), has left and now works at a different AI startup.
+
+Velotix was also listed on [OurCrowd](https://www.ourcrowd.com/companies/velotix) in May 2024, and featured in Sarona Ventures' [TechShield](https://techshield.sarona.vc/) reverse-fund — a vehicle marketed to "pro-Israel investors" after October 7, positioned as supporting Israeli tech during wartime. TechShield's own criteria require portfolio companies to have "current runway of at least 6-12 months." Hod told employees on March 16, 2025 that runway was below six months.
+
+The TechShield page listed three Velotix "customers": OCBC Singapore, Liquid Group Singapore, and First International Bank of Israel. During my time at Velotix, the only customer engagement I was aware of was OCBC, and that was a proof of concept — not a paying relationship. Liquid Group issued a [press release](https://financialit.net/news/security/liquid-group-selects-velotix-its-data-security-platform) in May 2023 saying they had "selected" Velotix; whether money changed hands is unclear.
+
+As for First International Bank of Israel: the [company extract](evidence/document%20(1).pdf) from the Israeli Corporations Authority reveals that FIBI is not merely a customer but Velotix's **secured creditor**. A specific charge (שעבוד ספציפי) was registered on January 29, 2024, granting FIBI a first-priority lien over Velotix's cash deposits and securities, securing 125,000 NIS. Listing your bank — the one holding a lien on your deposits — as a "customer" on an investor marketing page is a creative interpretation of the word.
+
+## Ghost Employees
+
+The Velotix [LinkedIn company page](https://www.linkedin.com/company/velotix/) shows 28 employees. Many of these profiles belong to people who left long ago — LinkedIn does not automatically update when someone neglects to change their profile.
+
+Some of the profiles, however, appear never to have belonged to real employees at all.
+
+"Alain Tissier" is listed as "Lead Data Architect @ Velotix." His education, per LinkedIn: Institut Lyfe, formerly known as Institut Paul Bocuse — one of France's most prestigious culinary schools. A Lead Data Architect who trained as a chef.
+
+"Dhruv Soni" lists a role in "Data Governance and Risk." His LinkedIn profile ID (a13655337) indicates recent creation. ZoomInfo places him at Velotix's registered address in Wilmington, Delaware — the Corporation Trust Company shell address shared by hundreds of thousands of entities.
+
+"Savannah Kensington" is barely indexed by Google. The name is shared with a London neighbourhood. The LinkedIn profile ID (459692333) is also very recent.
+
+Investors checking Velotix's LinkedIn page to assess team size would have seen a more robust headcount than the actual skeleton crew that remained. Whether this was the intention is a question investors may wish to ask.
+
+## The Corporate Shell
+
+Velotix Ltd. (Israel, ח.פ. 516258225) is wholly owned by Velotix Inc. (Delaware, file number 6748551). Dr Adi Hod is the sole director of both entities.
+
+The Israeli entity, per the [Companies Registry](https://data.gov.il/he/datasets/ministry_of_justice/ica_companies/f004176c-b85f-4542-8901-7b3176f9a054?query=Velotix), has outstanding fee debts (חובות אגרה) of 1,338 NIS — approximately $360. Its last annual report was filed for 2023.
+
+The Delaware parent, per the [Division of Corporations](https://icis.corp.delaware.gov/ecorp/entitysearch/namesearch.aspx), has a status of "AR Delinquent, Tax Due" as of March 2, 2026. It owes $43,055.82 in franchise tax. Its annual tax assessment of $41,560 — calculated from 4,861,840 authorized shares — suggests a substantial equity structure consistent with multiple fundraising rounds and SAFE conversions.
+
+A company that claimed to have raised $30 million cannot pay $360 in Israeli registry fees or $43,000 in Delaware franchise tax. The sole shareholder of the Israeli entity — the one that owes a million shekels to its former employees — is a delinquent Delaware shell.
+
+## First Class to Bangkok, Economy via Addis Ababa
+
+While the company was failing to meet basic payroll obligations, the CEO maintained a lifestyle that contrasted with what employees experienced. Hod regularly flew first class to Thailand and Singapore for what were described as investor meetings. At least one employee was made to fly economy class with a layover in Ethiopia — in direct contradiction of the company's own employee handbook.
+
+When confronted about the discrepancy, Hod's response was: "Who cares about the handbook?"
+
+Hod also employed his daughter at the company, though her role and contributions were unclear to colleagues.
+
+In August 2025, Hod [posted on LinkedIn](https://www.linkedin.com/posts/dr-adi-hod-0839463_ive-watched-three-brilliant-founders-sink-activity-7363079716620189696-0NKz): "I've watched three brilliant founders sink a company. Not for lack of intellect. Not for lack of effort. But because they were carbon copies of each other." Boris Iliayev from Barclays commented: "This hits hard."
+
+The post received 107 reactions. At the time it was written, Velotix was not paying its employees.
+
+## Velotix's Response
+
+In response to the TheMarker story, Velotix stated:
+
+> "The company recently underwent an efficiency process after investors did not meet their commitment to inject the agreed capital. During this period, the CEO, Dr Adi Hod, is personally financing the company's operations to ensure business continuity and development. The company is in a renewed growth process and is advancing arrangements with suppliers and employees as part of a process to stabilize and strengthen business operations."
+
+The Velotix [website](https://www.velotix.ai/) remains fully live as of this writing. It presents the company as healthy: "Book a Demo," "Instant, Compliant Data Access without Compromise." The [About Us](https://www.velotix.ai/about-us/) page still lists Uriel Ekstein as "Co-founder & CBDO" — the man who was fired in November 2025 and is now petitioning to put the company into insolvency.
+
+The [IBM case study](https://www.ibm.com/case-studies/velotix) is still online. The patent ([US 12,393,718](https://data.uspto.gov/patent-file-wrapper/search/details/18689112/application-data): "System and Method for Managing Data Access Requests," inventors Adam Ben Gur and Adi Hod) is still valid. The Gartner Market Guide listing is real. There was, somewhere beneath the inflated claims and unpaid wages, an actual product.
+
+But the product was not cybersecurity. It was not "the next Waze." It was, as I experienced during my time there, a platform for managing access to databases. A useful tool, perhaps, but one whose marketing bore increasingly little resemblance to its reality.
+
+## What Remains
+
+The insolvency proceedings continue. The Karlinsky lawsuit awaits a defense that has not been filed. The supplier lawsuits are open. The Ministry of Labour's finding stands — with Hod apparently challenging it in court while simultaneously telling investors everything was fine.
+
+Some questions await answers:
+
+- Where did the money go? Even at the lower $10 million figure, the company should have had more than enough to cover 1.4 million NIS in debts.
+- Did anyone invest in the January 2026 angel round? If so, were they told about the government enforcement finding, the departures, the insolvency?
+- Did PipelBiz, as an ISA-licensed offer coordinator legally obligated to "take measures to prevent securities fraud," verify the claim that Hod had "exits of over $100 million"?
+- What is the position of Barclays, Capri Ventures, and Sarona Ventures?
+- The pension contributions that were deducted from employee salaries but never transferred to pension funds — under Israeli law, is this not a criminal matter?
+
+The Calcalix page, preserved by the Wayback Machine, remains available at [its archived URL](https://web.archive.org/web/20260121050014/https://calcalix.co.il/pipelbiz-velotix-ob/). The PipelBiz campaign page is [still live](https://pipelbiz.com/%D7%94%D7%A9%D7%A7%D7%A2%D7%95%D7%AA/%D7%A1%D7%98%D7%90%D7%A8%D7%98%D7%90%D7%A4/velotix-52909). The Abu Ali Express ad is [still online](https://abualiexpress.com/heb112626/).
+
+Documents referenced in this article — including the Ministry of Labour enforcement finding, the Karlinsky lawsuit with appendices, archived marketing materials, and the company extract — are available upon request.
+
+---
+
+*Guy Freeman is a data scientist and former Velotix employee. He blogs at [www.gfrm.in](https://www.gfrm.in). He can be reached at [guy@gfrm.in](mailto:guy@gfrm.in).*

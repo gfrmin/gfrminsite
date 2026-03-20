@@ -1,0 +1,119 @@
+---
+title: "The Velotix Files, Part 2: The Marketing Machine"
+subtitle: "How an ISA-licensed crowdfunding platform distributed false claims about a failing startup to hundreds of thousands of Israelis"
+description: "Inside the PipelBiz distribution network that marketed Velotix angel investments through lead-gen sites, real estate landing pages, and a military Telegram channel — while the company was under government enforcement for not paying employees."
+author: "Guy Freeman"
+date: 2026-03-20
+draft: true
+categories: [investigation, startups, israel, cyber, regulation]
+---
+
+::: {.callout-note}
+This is Part 2 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 3](/posts/velotix-the-ceo/) profiles the CEO.
+:::
+
+## The Plumbing
+
+When Israeli retail investors encountered advertisements for the Velotix angel round in January 2026, they saw what appeared to be independent coverage across multiple platforms. In reality, the entire campaign was a single pipe with many outlets.
+
+The pipe was [PipelBiz](https://pipelbiz.com/) (פיפלביז), an equity crowdfunding platform founded in 2015 in Netanya. PipelBiz holds a licence from the Israel Securities Authority as a רכז הצעה — an "offer coordinator" — making it the first such entity in Israel. Under the [Securities Regulations (Offering Securities Through Offer Coordinator), 2017](https://www.nevo.co.il/law_html/law01/501_624.htm), an offer coordinator must, among other obligations, "take measures to prevent securities fraud as much as possible" (ינקוט באמצעים כדי למנוע ככל האפשר תרמית בניירות ערך).
+
+The outlets were:
+
+```
+Velotix (company raising money)
+    ↓ pays
+PipelBiz (ISA-licensed offer coordinator)
+    ↓ distributes sponsored content
+    ├── Calcalix.co.il — /pipelbiz-velotix-ob/
+    ├── channel22.co.il — /pepelz_investment/
+    ├── Kore.co.il — /viewArticle/202686
+    ├── estates.ussl.co.il — /pipelbiz-velotix-sp/
+    ├── Abu Ali Express website — /heb112626/
+    └── Abu Ali Express Telegram — @abualiexpress/112616
+```
+
+The URL paths tell the story. "pipelbiz" appears in the Calcalix path. "pepelz" — a transliteration variant — appears in the channel22 path. The campaign was cookie-cutter: the same week, PipelBiz pushed an identical "Smart Investors Already In" campaign for a company called MyShop through the same channels.
+
+## What the Downstream Sites Actually Are
+
+Investors who saw the Velotix advertisement on "Channel 22" might reasonably have assumed it appeared on Channel 22 television (Keshet). It did not. The domain channel22.co.il belongs to a real estate and investment lead-generation website. Its tagline: "חדשות הנדל"ן וההשקעות בארץ בחול" (Real Estate and Investment News in Israel and Abroad). Its navigation includes sections for "Leads for Investors," "Leads for Insurance," "Leads for Mortgages," and "Leads for Investment Portfolios." It also published a [separate promotional article](https://channel22.co.il/pipelbiz-real-estate/) about PipelBiz itself.
+
+The estates.ussl.co.il domain is even more revealing. Its entire sitemap consists of sponsored landing pages for real estate projects: apartments in Limassol, land in Kfar Saba, developments in Rehovot, vacation homes in Paphos. Between the Cyprus condos and the Ashkelon waterfront properties, one finds the Velotix angel round — a cybersecurity startup investment marketed through the same infrastructure used to sell holiday flats.
+
+Abu Ali Express, at least, is what it appears to be: a popular Israeli news and commentary channel covering Middle Eastern security affairs. Its 598,000 Telegram subscribers follow it for coverage of Hamas, Hezbollah, and Iranian military developments. On January 11, 2026, between posts about the Iranian protests and Greenland sovereignty, its followers encountered a sponsored post (°תוכן שיווקי) inviting them to invest in a data security startup. The link pointed to estates.ussl.co.il.
+
+## The Claims That Were Distributed
+
+Across these channels, prospective investors encountered the following claims:
+
+**"Dr Adi Hod has registered exits of over $100 million"** (channel22.co.il). His only known prior company sold for approximately $200,000.
+
+**"Growing at a dizzying pace"** (Calcalix). The company had approximately $1 million in revenue, a burn rate exceeding that per month, and fewer than six months of runway — as Hod himself told employees on March 16, 2025.
+
+**"The next generation of Israeli cyber successes after Waze, CyberArk, and Armis"** (Calcalix). The product was a database access management tool.
+
+**"Smart investors are already in"** (all channels). The company was under government enforcement for seven labour law violations. The co-founder had been fired. Employees hadn't been paid for months.
+
+None of the downstream sites appear to have verified any of these claims. Calcalix explicitly disclaimed responsibility in its footer: "The operator may display advertising content AS-IS, without verifying its truthfulness."
+
+## The 2022 Campaign
+
+The January 2026 push was not Velotix's first rodeo with PipelBiz. Campaign [#52909](https://pipelbiz.com/%D7%94%D7%A9%D7%A7%D7%A2%D7%95%D7%AA/%D7%A1%D7%98%D7%90%D7%A8%D7%98%D7%90%D7%A4/velotix-52909), dated April 2022, offered SAFE agreements and raised 107.33% of its target. The campaign page, still live, makes claims of its own:
+
+**"Calcalist newspaper ranked the company as Top 5 in Israel"** (עיתון "כלכליסט" דירג את החברה כ-Top5 בישראל). No evidence of any such ranking exists. The only Calcalist connection to Velotix is the March 2025 Dream Team selection — one of eleven startups chosen for a conference delegation, not a "Top 5" ranking.
+
+**"Beginning global sales in 2022"** (החברה לקראת סיבוב גיוס משמעותי ותחילת מכירות בשוק הגלובלי ב-2022). As of 2025, the only customer engagement was a proof-of-concept with OCBC Singapore.
+
+**"Received a significant innovation grant from the Ministry of Economy"** (החברה קיבלה מענק חדשנות משמעותי ממשרד הכלכלה). The grant was 467,237 NIS in export assistance — useful, but "significant innovation grant" overstates what was essentially export support.
+
+The 2022 campaign page listed a development team of seven people. By 2026, at least five had departed. Two — "Roi Ben Harosh" (Head of Development) and "Nir Abrahamson" (Product Manager) — return zero results on Google in any context whatsoever.
+
+## The Regulatory Question
+
+PipelBiz is not merely a marketing platform. It is an ISA-licensed entity with [specific legal obligations](https://www.tgt.co.il/%D7%9E%D7%95%D7%A0%D7%97/%D7%A8%D7%9B%D7%96-%D7%94%D7%A6%D7%A2%D7%94/). Under the regulations, an offer coordinator must:
+
+- Verify that offerings comply with the law and regulations
+- **Take measures to prevent securities fraud** as much as possible
+- Ensure investors read information and warnings and understand the risks
+- Verify investor eligibility
+
+The "$100 million exits" claim, distributed through PipelBiz's downstream channels, traces to a $200,000 asset sale. The team shown on the 2022 campaign page included people who had already left, and at least two who appear untraceable. The 2026 marketing launched five weeks after a government enforcement finding for seven labour law violations. The company's only real customer was a proof-of-concept.
+
+Did PipelBiz verify any of this? The downstream sites — Calcalix, channel22.co.il, estates.ussl.co.il — explicitly disclaim responsibility for the truthfulness of their content. But PipelBiz's regulatory obligations do not allow for such disclaimers. An ISA-licensed offer coordinator cannot outsource due diligence to a real estate landing page factory and call it a day.
+
+The question is not whether the downstream sites failed to verify. They are marketing channels; nobody expected them to verify. The question is whether PipelBiz, the regulated entity, fulfilled its legal duty to prevent fraud before distributing marketing materials containing claims that appear to be false.
+
+## The Cleanup
+
+Within days of the TheMarker exposé on March 9, 2026, the marketing pages began disappearing:
+
+| Channel | URL | Status |
+|---------|-----|--------|
+| Calcalix | /pipelbiz-velotix-ob/ | 404 — [archived by Wayback Machine](https://web.archive.org/web/20260121050014/https://calcalix.co.il/pipelbiz-velotix-ob/) |
+| channel22.co.il | /pepelz_investment/ | 404 — only [Google snippet](evidence/google-channel22-snippet.png) survives |
+| Kore.co.il | /viewArticle/202686 | 404 — content lost entirely |
+| estates.ussl.co.il | /pipelbiz-velotix-sp/ | 404 — content lost entirely |
+| Abu Ali Express (web) | /heb112626/ | [Still live](https://abualiexpress.com/heb112626/) |
+| Abu Ali Express (Telegram) | @abualiexpress/112616 | [Still live](https://t.me/s/abualiexpress/112616) |
+| PipelBiz campaign | /velotix-52909 | [Still live](https://pipelbiz.com/%D7%94%D7%A9%D7%A7%D7%A2%D7%95%D7%AA/%D7%A1%D7%98%D7%90%D7%A8%D7%98%D7%90%D7%A4/velotix-52909) |
+
+The pages that can be taken down unilaterally — those controlled by PipelBiz's distribution partners — were taken down. The pages that require third-party action — Abu Ali Express, the PipelBiz platform itself — remain. The 2022 PipelBiz campaign page, with its fabricated "Calcalist Top 5" claim, is still live and still displays "הקמפיין גייס בהצלחה" — "The campaign raised successfully."
+
+One also notes that Velotix was marketed through [OurCrowd](https://www.ourcrowd.com/companies/velotix) (May 2024) and Sarona Ventures' [TechShield](https://techshield.sarona.vc/) reverse-fund — more reputable platforms whose investors may also wish to understand what they were told, and what was omitted.
+
+## Questions for the ISA
+
+The Israel Securities Authority licenses offer coordinators and supervises their conduct. The following questions seem relevant:
+
+1. Did PipelBiz perform due diligence on the "$100 million exits" claim before distributing it through six channels?
+2. Was PipelBiz aware of the Ministry of Labour enforcement finding (December 2, 2025) when the January 2026 marketing campaign launched?
+3. Does PipelBiz's regulatory obligation extend to the content distributed through its downstream marketing channels?
+4. Has the ISA received complaints regarding the Velotix campaign?
+5. What recourse, if any, do investors who participated in the 2022 or 2026 rounds have?
+
+The ISA has not responded to enquiries at the time of publication.
+
+---
+
+*This is Part 2 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 3](/posts/velotix-the-ceo/) profiles the CEO.*
