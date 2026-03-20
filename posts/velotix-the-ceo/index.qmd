@@ -18,6 +18,8 @@ Dr Adi Hod's marketing biography, as it appeared across investor materials, conf
 
 Each of these claims, examined individually, reveals a gap between presentation and reality. Examined together, they describe a pattern.
 
+His [Forbes Council profile](https://web.archive.org/web/20230301170112/https://councils.forbes.com/profile/Adi-Hod-CEO-Velotix/d31ce5b6-735a-4324-bff8-7290b5618d5e) — Forbes Councils being a paid membership programme — went further still, claiming he had "founded several startups in the field of optimization research and exited two of them," held "a PhD from Haifa and Philadelphia University," and was "a professional piano player and art collector." The profile has since been removed.
+
 ## The Technion
 
 Hod holds a BSc (1994–1998) and MSc (1998–2002) from the Technion in Industrial Engineering and Management — a field not obviously related to cybersecurity.
