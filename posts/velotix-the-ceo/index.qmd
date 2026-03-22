@@ -4,12 +4,14 @@ subtitle: "Exits of over $100 million, a researcher from MIT, and a LinkedIn pos
 description: "A profile of Dr Adi Hod, CEO of Velotix — his credentials, his previous company, and the nine days between telling employees the company was dying and telling investors it was thriving."
 author: "Guy Freeman"
 date: 2026-03-21
-draft: true
+draft: false
 categories: [investigation, startups, israel, cyber]
 ---
 
 ::: {.callout-note}
 This is Part 2 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine.
+
+[גרסה בעברית](/posts/velotix-the-ceo/he/)
 :::
 
 ## The CV

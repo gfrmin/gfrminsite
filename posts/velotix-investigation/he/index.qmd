@@ -6,7 +6,7 @@ author: "גיא פרימן"
 date: 2026-03-20
 lang: he
 dir: rtl
-draft: true
+draft: false
 categories: [investigation, startups, israel, cyber]
 ---
 
@@ -14,7 +14,7 @@ categories: [investigation, startups, israel, cyber]
 ## גילוי נאות
 אני עובד לשעבר של ולוטיקס (אוקטובר 2024 – מאי 2025). אני הגשתי את התלונה למשרד העבודה המוזכרת בכתבה זו. כתבה זו מבוססת על מסמכים ממשלתיים רשמיים, כתבי בי-דין, דפי אינטרנט מאורכבים ומידע זמין לציבור. כשאני מסתמך על חוויתי האישית, אני אומר זאת.
 
-זהו חלק 1 מסדרה בת שלושה חלקים. [חלק 2](/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.
+זהו חלק 1 מסדרה בת שלושה חלקים. [חלק 2](/posts/velotix-the-ceo/he/) מפרופל את המנכ"ל. [חלק 3](/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.
 
 [English version](/posts/velotix-investigation/)
 :::
@@ -167,4 +167,4 @@ categories: [investigation, startups, israel, cyber]
 
 ---
 
-*זהו חלק 1 של תיקי ולוטיקס. [חלק 2](/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.*
+*זהו חלק 1 של תיקי ולוטיקס. [חלק 2](/posts/velotix-the-ceo/he/) מפרופל את המנכ"ל. [חלק 3](/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.*
