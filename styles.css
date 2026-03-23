@@ -88,7 +88,7 @@
   /* Text */
   --text-primary: #2d3436;
   --text-secondary: #636e72;
-  --text-muted: #95a5a6;
+  --text-muted: #607475;
   --text-inverse: #ffffff;
 
   /* Borders & Dividers */
@@ -139,7 +139,7 @@
 
   --text-primary: #e8e6e1;
   --text-secondary: #a8a8a3;
-  --text-muted: #6b6b66;
+  --text-muted: #959590;
   --text-inverse: #1a1a1a;
 
   --border-subtle: #3a3a38;
@@ -686,17 +686,19 @@ pre:not(.sourceCode) {
 
 /* Syntax highlighting - warm palette */
 .sourceCode .kw { color: #0d7377; font-weight: 600; }
-.sourceCode .dt { color: #5a8a6c; }
-.sourceCode .st { color: #c55a44; }
-.sourceCode .fu { color: #6366f1; }
+.sourceCode .dt { color: #4e7a5e; }
+.sourceCode .st { color: #b3503c; }
+.sourceCode .fu { color: #5b5ee8; }
 .sourceCode .co { color: var(--text-muted); font-style: italic; }
-.sourceCode .dv, .sourceCode .fl { color: #db7093; }
+.sourceCode .dv, .sourceCode .fl { color: #b05070; }
 .sourceCode .op { color: var(--text-secondary); }
 
 [data-bs-theme="dark"] .sourceCode .kw { color: #4db8ac; }
 [data-bs-theme="dark"] .sourceCode .dt { color: #7eb890; }
 [data-bs-theme="dark"] .sourceCode .st { color: #e87a5f; }
 [data-bs-theme="dark"] .sourceCode .fu { color: #a5b4fc; }
+[data-bs-theme="dark"] .sourceCode .dv,
+[data-bs-theme="dark"] .sourceCode .fl { color: #d87a92; }
 
 /* ============================================
    CONTACT FORM
@@ -1094,6 +1096,7 @@ blockquote p:last-child {
     background: var(--bg-code);
     border-color: var(--border-subtle);
   }
+
 }
 
 /* ============================================

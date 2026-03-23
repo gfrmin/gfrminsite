@@ -81,7 +81,9 @@ format:
       - _includes/posthog.html
     theme:
       light: flatly
-      dark: darkly
+      dark:
+        - darkly
+        - theme-dark.scss
     css: styles.css
     fontsize: 1.05em
     linestretch: 1.65
