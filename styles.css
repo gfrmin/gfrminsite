@@ -878,6 +878,20 @@ pre:not(.sourceCode) {
   margin-right: auto;
 }
 
+/* Responsive images */
+main img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive tables */
+table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
 /* Service list styling */
 main ul li {
   margin-bottom: 0.75rem;
@@ -1011,6 +1025,26 @@ blockquote p:last-child {
   pre.sourceCode {
     padding: var(--space-md);
   }
+
+  /* Post listing - stack vertically */
+  .quarto-listing .quarto-post {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .quarto-post .thumbnail,
+  .quarto-post .listing-item-img-placeholder {
+    width: 100%;
+    height: 160px;
+  }
+
+  .quarto-post .listing-title {
+    font-size: 1.05rem;
+  }
+
+  .quarto-post .metadata {
+    font-size: 0.8rem;
+  }
 }
 
 /* Mobile typography */
@@ -1047,26 +1081,42 @@ blockquote p:last-child {
     width: 100%;
     padding: var(--space-md);
   }
+}
 
-  /* Post listing - stack vertically */
-  .quarto-listing .quarto-post {
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
-  }
+/* ============================================
+   RTL SUPPORT (Hebrew articles)
+   ============================================ */
 
-  .quarto-post .thumbnail,
-  .quarto-post .listing-item-img-placeholder {
-    width: 100%;
-    height: 160px;
-  }
+/* Callouts & blockquotes — border on reading-start side */
+[dir="rtl"] blockquote,
+[dir="rtl"] .callout {
+  border-left: none;
+  border-right: 4px solid var(--brand-primary);
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
 
-  .quarto-post .listing-title {
-    font-size: 1.05rem;
-  }
+/* Reading-time separator */
+[dir="rtl"] .quarto-post .listing-reading-time::before {
+  margin-right: 0;
+  margin-left: var(--space-md);
+}
 
-  .quarto-post .metadata {
-    font-size: 0.8rem;
-  }
+/* Code blocks stay LTR in RTL documents */
+[dir="rtl"] pre,
+[dir="rtl"] code {
+  direction: ltr;
+  text-align: left;
+}
+
+/* RTL tables — keep LTR for URLs/data */
+[dir="rtl"] table {
+  direction: rtl;
+}
+
+[dir="rtl"] table code,
+[dir="rtl"] table a {
+  direction: ltr;
+  unicode-bidi: embed;
 }
 
 /* ============================================
