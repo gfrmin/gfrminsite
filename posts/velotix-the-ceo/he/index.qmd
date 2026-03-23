@@ -11,7 +11,7 @@ categories: [investigation, startups, israel, cyber]
 ---
 
 ::: {.callout-note}
-זהו חלק 2 של תיקי ולוטיקס. [חלק 1](/posts/velotix-investigation/he/) מכסה את החקירה המלאה. [חלק 3](/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.
+זהו חלק 2 של תיקי ולוטיקס. [חלק 1](/posts/velotix-investigation/he/) מכסה את החקירה המלאה. [חלק 3](/posts/velotix-marketing-machine/he/) בוחן את מכונת השיווק.
 
 [English version](/posts/velotix-the-ceo/)
 :::
@@ -141,4 +141,4 @@ TechShield פירטה שלושה "לקוחות" של ולוטיקס: OCBC סינ
 
 ---
 
-*זהו חלק 2 של תיקי ולוטיקס. [חלק 1](/posts/velotix-investigation/he/) מכסה את החקירה המלאה. [חלק 3](/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.*
+*זהו חלק 2 של תיקי ולוטיקס. [חלק 1](/posts/velotix-investigation/he/) מכסה את החקירה המלאה. [חלק 3](/posts/velotix-marketing-machine/he/) בוחן את מכונת השיווק.*

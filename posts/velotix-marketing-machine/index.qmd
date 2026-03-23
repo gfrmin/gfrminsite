@@ -4,7 +4,7 @@ subtitle: "How an ISA-licensed crowdfunding platform distributed false claims ab
 description: "Inside the PipelBiz distribution network that marketed Velotix angel investments through lead-gen sites, real estate landing pages, and a military Telegram channel — while the company was under government enforcement for not paying employees."
 author: "Guy Freeman"
 date: 2026-03-22
-draft: true
+draft: false
 categories: [investigation, startups, israel, cyber, regulation]
 ---
 
