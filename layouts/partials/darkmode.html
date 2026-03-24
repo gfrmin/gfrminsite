@@ -1,0 +1,25 @@
+<script>
+(function() {
+  const key = 'color-scheme';
+  const saved = localStorage.getItem(key);
+  const toggle = document.querySelector('.darkmode-toggle');
+  const sun = toggle?.querySelector('.icon-sun');
+  const moon = toggle?.querySelector('.icon-moon');
+
+  function setTheme(dark) {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    localStorage.setItem(key, dark ? 'dark' : 'light');
+    if (sun && moon) {
+      sun.style.display = dark ? 'none' : 'block';
+      moon.style.display = dark ? 'block' : 'none';
+    }
+  }
+
+  const prefersDark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  setTheme(prefersDark);
+
+  toggle?.addEventListener('click', function() {
+    setTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
+  });
+})();
+</script>

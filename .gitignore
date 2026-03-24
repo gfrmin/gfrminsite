@@ -44,6 +44,7 @@ Thumbs.db
 *.mht
 *.html
 !_includes/*.html
+!layouts/**/*.html
 
 /.quarto/
 

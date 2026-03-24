@@ -1,0 +1,31 @@
+{{ define "main" }}
+<main class="content">
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+
+  <div class="post-listing">
+    {{ range .Pages.ByDate.Reverse }}
+    <article class="post-card">
+      {{ with .Params.image }}
+      <a href="{{ $.RelPermalink }}" class="post-card-image">
+        <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy">
+      </a>
+      {{ end }}
+      <div class="post-card-body">
+        <h3 class="listing-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        {{ with .Description }}<p class="listing-description">{{ . }}</p>{{ end }}
+        <div class="metadata">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+          <span class="reading-time">{{ .ReadingTime }} min read</span>
+        </div>
+        {{ with .Params.categories }}
+        <div class="post-categories">
+          {{ range . }}<span class="category-tag">{{ . }}</span>{{ end }}
+        </div>
+        {{ end }}
+      </div>
+    </article>
+    {{ end }}
+  </div>
+</main>
+{{ end }}

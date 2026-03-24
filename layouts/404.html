@@ -1,0 +1,11 @@
+{{ define "main" }}
+<main class="content" style="text-align: center; padding: 4em 1em;">
+  <h1>404</h1>
+  <p>The page you're looking for doesn't exist or has been moved.</p>
+  <p style="margin-top: 2em;">
+    <a href="{{ "/" | relURL }}">Back to Home</a> |
+    <a href="{{ "posts/" | relURL }}">Browse Posts</a> |
+    <a href="{{ "projects/" | relURL }}">View Projects</a>
+  </p>
+</main>
+{{ end }}

@@ -1,0 +1,37 @@
+{{ if .IsPage }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ .Title | jsonify }},
+  "description": {{ with .Description }}{{ . | jsonify }}{{ else }}""{{ end }},
+  "datePublished": "{{ .Date.Format "2006-01-02" }}",
+  {{ with .Lastmod }}"dateModified": "{{ .Format "2006-01-02" }}",{{ end }}
+  "wordCount": {{ .WordCount }},
+  "author": {
+    "@type": "Person",
+    "name": "Guy Freeman"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Guy Freeman"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ .Permalink | jsonify }}
+  }{{ with .Params.image }},
+  "image": {{ . | absURL | jsonify }}{{ end }}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ .Site.BaseURL }}" },
+    { "@type": "ListItem", "position": 2, "name": "Posts", "item": "{{ "posts/" | absURL }}" },
+    { "@type": "ListItem", "position": 3, "name": {{ .Title | jsonify }} }
+  ]
+}
+</script>
+{{ end }}
