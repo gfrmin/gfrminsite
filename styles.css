@@ -1087,13 +1087,13 @@ blockquote p:last-child {
    RTL SUPPORT (Hebrew articles via lang="he")
    ============================================ */
 
-/* Article content and TOC sidebar — RTL text direction */
-[lang="he"] main.content {
+/* Target children of content, not the grid item itself */
+[lang="he"] main.content > * {
   direction: rtl;
   text-align: right;
 }
 
-[lang="he"] .margin-sidebar {
+[lang="he"] .margin-sidebar nav {
   direction: rtl;
   text-align: right;
 }
