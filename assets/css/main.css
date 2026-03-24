@@ -746,12 +746,14 @@ main li a:hover {
 .translation-link a {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-xs);
-  padding: var(--space-xs) var(--space-sm);
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-md);
   background: var(--bg-code);
-  border: 1px solid var(--border-subtle);
-  font-size: 0.85rem;
+  border: 1px solid var(--brand-primary);
+  font-size: 0.9rem;
+  color: var(--brand-primary);
+  font-weight: 500;
 }
 
 .translation-link a:hover {
@@ -1243,29 +1245,34 @@ blockquote p:last-child {
 }
 
 /* ============================================
-   RTL SUPPORT (Hugo templates set dir="rtl")
+   RTL SUPPORT (scoped via .rtl-content class)
    ============================================ */
-[dir="rtl"] .content {
+.rtl-content {
   direction: rtl;
   text-align: right;
 }
 
-[dir="rtl"] .toc-sidebar nav {
-  direction: rtl;
-  text-align: right;
-}
-
-[dir="rtl"] blockquote,
-[dir="rtl"] .callout {
+.rtl-content blockquote,
+.rtl-content .callout {
   border-left: none;
   border-right: 4px solid var(--brand-primary);
   border-radius: var(--radius-md) 0 0 var(--radius-md);
 }
 
-[dir="rtl"] pre,
-[dir="rtl"] code {
+.rtl-content pre,
+.rtl-content code {
   direction: ltr;
   text-align: left;
+}
+
+.rtl-content table {
+  direction: rtl;
+}
+
+.rtl-content table code,
+.rtl-content table a {
+  direction: ltr;
+  unicode-bidi: embed;
 }
 
 /* ============================================

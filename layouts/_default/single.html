@@ -1,5 +1,5 @@
 {{ define "main" }}
-<main class="content">
+<main class="content {{ if eq .Language.LanguageDirection "rtl" }}rtl-content{{ end }}">
   <article class="post">
     <header class="post-header">
       <h1>{{ .Title }}</h1>
@@ -32,7 +32,7 @@
 </main>
 
 {{ if .TableOfContents }}
-<aside class="toc-sidebar">
+<aside class="toc-sidebar {{ if eq .Language.LanguageDirection "rtl" }}rtl-content{{ end }}">
   <nav class="toc">
     <h2>On this page</h2>
     {{ .TableOfContents }}

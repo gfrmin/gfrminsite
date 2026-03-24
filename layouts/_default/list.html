@@ -1,5 +1,5 @@
 {{ define "main" }}
-<main class="content">
+<main class="content {{ if eq .Language.LanguageDirection "rtl" }}rtl-content{{ end }}">
   <h1>{{ .Title }}</h1>
   {{ .Content }}
 
