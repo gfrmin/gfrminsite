@@ -1,37 +1,26 @@
 {{ if .IsPage }}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": {{ .Title | jsonify }},
-  "description": {{ with .Description }}{{ . | jsonify }}{{ else }}""{{ end }},
-  "datePublished": "{{ .Date.Format "2006-01-02" }}",
-  {{ with .Lastmod }}"dateModified": "{{ .Format "2006-01-02" }}",{{ end }}
-  "wordCount": {{ .WordCount }},
-  "author": {
-    "@type": "Person",
-    "name": "Guy Freeman"
-  },
-  "publisher": {
-    "@type": "Person",
-    "name": "Guy Freeman"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": {{ .Permalink | jsonify }}
-  }{{ with .Params.image }},
-  "image": {{ printf "%s%s" $.RelPermalink . | absURL | jsonify }}{{ end }}
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ .Site.BaseURL }}" },
-    { "@type": "ListItem", "position": 2, "name": "Posts", "item": "{{ "posts/" | absURL }}" },
-    { "@type": "ListItem", "position": 3, "name": {{ .Title | jsonify }} }
-  ]
-}
-</script>
+{{ $schema := dict
+  "@context" "https://schema.org"
+  "@type" "BlogPosting"
+  "headline" .Title
+  "description" (or .Description "")
+  "datePublished" (.Date.Format "2006-01-02")
+  "wordCount" .WordCount
+  "author" (dict "@type" "Person" "name" "Guy Freeman")
+  "publisher" (dict "@type" "Person" "name" "Guy Freeman")
+  "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+}}
+{{ with .Lastmod }}{{ $schema = merge $schema (dict "dateModified" (.Format "2006-01-02")) }}{{ end }}
+{{ with $.Params.image }}{{ $schema = merge $schema (dict "image" (printf "%s%s" $.RelPermalink . | absURL)) }}{{ end }}
+<script type="application/ld+json">{{ $schema | jsonify | safeJS }}</script>
+{{ $breadcrumb := dict
+  "@context" "https://schema.org"
+  "@type" "BreadcrumbList"
+  "itemListElement" (slice
+    (dict "@type" "ListItem" "position" 1 "name" "Home" "item" .Site.BaseURL)
+    (dict "@type" "ListItem" "position" 2 "name" "Posts" "item" ("posts/" | absURL))
+    (dict "@type" "ListItem" "position" 3 "name" .Title)
+  )
+}}
+<script type="application/ld+json">{{ $breadcrumb | jsonify | safeHTML }}</script>
 {{ end }}

@@ -67,3 +67,7 @@ defaultContentLanguage = "en"
   [minify.tdewolff]
     [minify.tdewolff.html]
       keepEndTags = false
+    [minify.tdewolff.js]
+      keepVarNames = true
+      precision = 0
+      version = 0
