@@ -5,10 +5,11 @@
 
   <div class="post-listing">
     {{ range .Pages.ByDate.Reverse }}
+    {{ $post := . }}
     <article class="post-card">
       {{ with .Params.image }}
-      <a href="{{ $.RelPermalink }}" class="post-card-image">
-        <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy">
+      <a href="{{ $post.RelPermalink }}" class="post-card-image">
+        <img src="{{ $post.RelPermalink }}{{ . }}" alt="{{ $post.Title }}" loading="lazy">
       </a>
       {{ end }}
       <div class="post-card-body">

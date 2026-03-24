@@ -14,7 +14,7 @@
   <meta property="og:url" content="{{ .Permalink }}">
   <meta property="og:site_name" content="{{ .Site.Title }}">
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
-  {{ with .Params.image }}<meta property="og:image" content="{{ . | absURL }}">{{ else }}<meta property="og:image" content="{{ .Site.Params.ogImage | absURL }}">{{ end }}
+  {{ with .Params.image }}<meta property="og:image" content="{{ printf "%s%s" $.RelPermalink . | absURL }}">{{ else }}<meta property="og:image" content="{{ .Site.Params.ogImage | absURL }}">{{ end }}
 
   {{/* Twitter */}}
   <meta name="twitter:card" content="summary_large_image">

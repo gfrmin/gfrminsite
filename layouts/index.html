@@ -25,10 +25,11 @@
   <h2>Recent Posts</h2>
   <div class="post-listing">
     {{ range (where .Site.RegularPages "Section" "posts" | first 5) }}
+    {{ $post := . }}
     <article class="post-card">
       {{ with .Params.image }}
-      <a href="{{ $.RelPermalink }}" class="post-card-image">
-        <img src="{{ . | relURL }}" alt="{{ $.Title }}" loading="lazy">
+      <a href="{{ $post.RelPermalink }}" class="post-card-image">
+        <img src="{{ $post.RelPermalink }}{{ . }}" alt="{{ $post.Title }}" loading="lazy">
       </a>
       {{ end }}
       <div class="post-card-body">

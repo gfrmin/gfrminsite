@@ -20,7 +20,7 @@
     "@type": "WebPage",
     "@id": {{ .Permalink | jsonify }}
   }{{ with .Params.image }},
-  "image": {{ . | absURL | jsonify }}{{ end }}
+  "image": {{ printf "%s%s" $.RelPermalink . | absURL | jsonify }}{{ end }}
 }
 </script>
 <script type="application/ld+json">
