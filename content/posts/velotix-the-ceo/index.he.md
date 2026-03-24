@@ -9,7 +9,7 @@ categories: [investigation, startups, israel, cyber]
 ---
 
 {{< callout type="note" >}}
-זהו חלק 2 של תיקי ולוטיקס. [חלק 1](/posts/velotix-investigation/he/) מכסה את החקירה המלאה. [חלק 3](/posts/velotix-marketing-machine/he/) בוחן את מכונת השיווק.
+זהו חלק 2 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.
 
 [English version](/posts/velotix-the-ceo/)
 {{< /callout >}}
@@ -73,7 +73,7 @@ categories: [investigation, startups, israel, cyber]
 
 ## תשעה ימים
 
-הפער בין מה שהוד אמר לעובדים למה שאמר למשקיעים מכוסה בפירוט ב[חלק 1](/posts/velotix-investigation/he/#תשעה-ימים). ב-16 במרץ 2025 הוא אמר לעובדים שההכנסות הן מיליון דולר והמסלול קצר משישה חודשים. תשעה ימים לאחר מכן, הוא אמר בכנס כלכליסט שגייס מעל 30 מיליון דולר ועובד עם לקוחות גדולים.
+הפער בין מה שהוד אמר לעובדים למה שאמר למשקיעים מכוסה בפירוט ב[חלק 1](/he/posts/velotix-investigation/#תשעה-ימים). ב-16 במרץ 2025 הוא אמר לעובדים שההכנסות הן מיליון דולר והמסלול קצר משישה חודשים. תשעה ימים לאחר מכן, הוא אמר בכנס כלכליסט שגייס מעל 30 מיליון דולר ועובד עם לקוחות גדולים.
 
 מסר אחד לעובדים. מסר אחר למשקיעים.
 
@@ -139,4 +139,4 @@ TechShield פירטה שלושה "לקוחות" של ולוטיקס: OCBC סינ
 
 ---
 
-*זהו חלק 2 של תיקי ולוטיקס. [חלק 1](/posts/velotix-investigation/he/) מכסה את החקירה המלאה. [חלק 3](/posts/velotix-marketing-machine/he/) בוחן את מכונת השיווק.*
+*זהו חלק 2 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.*

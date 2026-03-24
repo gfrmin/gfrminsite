@@ -14,7 +14,7 @@ I am a former Velotix employee (October 2024 – May 2025). I filed the complain
 
 This is Part 1 of a three-part series. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine.
 
-[גרסה בעברית](/posts/velotix-investigation/he/)
+[גרסה בעברית](/he/posts/velotix-investigation/)
 {{< /callout >}}
 
 ## The Pitch
