@@ -17,29 +17,20 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: rocker/verse:4.4.1
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Quarto
-        run: |
-          apt-get update && apt-get install -y curl
-          curl -LO https://github.com/quarto-dev/quarto-cli/releases/download/v1.8.27/quarto-1.8.27-linux-amd64.deb
-          dpkg -i quarto-1.8.27-linux-amd64.deb
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.157.0'
+          extended: true
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Render Quarto site
-        run: quarto render
-
-      - name: Install Node.js (for PurgeCSS)
-        run: |
-          curl -fsSL https://nodejs.org/dist/v22.14.0/node-v22.14.0-linux-x64.tar.gz | tar -xz -C /usr/local --strip-components=1
-
-      - name: Optimize HTML for performance
-        run: bash _scripts/optimize-html.sh
+      - name: Build site
+        run: hugo --minify
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
