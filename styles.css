@@ -1084,58 +1084,42 @@ blockquote p:last-child {
 }
 
 /* ============================================
-   RTL SUPPORT (Hebrew articles)
+   RTL SUPPORT (Hebrew articles via lang="he")
    ============================================ */
 
-/* Keep Quarto grid layout LTR so sidebar/content columns stay in place */
-[dir="rtl"] .page-columns {
-  direction: ltr;
-}
-
-/* Restore RTL on the actual content and sidebar */
-[dir="rtl"] .page-columns > main.content,
-[dir="rtl"] .page-columns > .margin-sidebar {
+/* Article content and TOC sidebar — RTL text direction */
+[lang="he"] main.content {
   direction: rtl;
+  text-align: right;
 }
 
-/* Navbar stays LTR (site-wide navigation) */
-[dir="rtl"] .navbar {
-  direction: ltr;
-}
-
-/* Footer stays LTR */
-[dir="rtl"] .nav-footer {
-  direction: ltr;
+[lang="he"] .margin-sidebar {
+  direction: rtl;
+  text-align: right;
 }
 
 /* Callouts & blockquotes — border on reading-start side */
-[dir="rtl"] blockquote,
-[dir="rtl"] .callout {
+[lang="he"] blockquote,
+[lang="he"] .callout {
   border-left: none;
   border-right: 4px solid var(--brand-primary);
   border-radius: var(--radius-md) 0 0 var(--radius-md);
 }
 
-/* Reading-time separator */
-[dir="rtl"] .quarto-post .listing-reading-time::before {
-  margin-right: 0;
-  margin-left: var(--space-md);
-}
-
-/* Code blocks stay LTR in RTL documents */
-[dir="rtl"] pre,
-[dir="rtl"] code {
+/* Code blocks stay LTR */
+[lang="he"] pre,
+[lang="he"] code {
   direction: ltr;
   text-align: left;
 }
 
-/* RTL tables — keep LTR for URLs/data */
-[dir="rtl"] table {
+/* Tables: headers/text RTL, URLs/code LTR */
+[lang="he"] table {
   direction: rtl;
 }
 
-[dir="rtl"] table code,
-[dir="rtl"] table a {
+[lang="he"] table code,
+[lang="he"] table a {
   direction: ltr;
   unicode-bidi: embed;
 }

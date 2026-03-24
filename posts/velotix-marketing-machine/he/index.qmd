@@ -5,7 +5,6 @@ description: "בתוך רשת ההפצה של PipelBiz ששיווקה השקעו
 author: "גיא פרימן"
 date: 2026-03-22
 lang: he
-dir: rtl
 draft: false
 categories: [investigation, startups, israel, cyber, regulation]
 ---

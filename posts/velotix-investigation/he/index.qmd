@@ -5,7 +5,6 @@ description: "חקירה על ולוטיקס בע\"מ, סטארטאפ אבטחת
 author: "גיא פרימן"
 date: 2026-03-20
 lang: he
-dir: rtl
 draft: false
 categories: [investigation, startups, israel, cyber]
 ---

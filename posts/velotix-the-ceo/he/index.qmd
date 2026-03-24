@@ -5,7 +5,6 @@ description: "פרופיל של ד\"ר עדי הוד, מנכ\"ל ולוטיקס 
 author: "גיא פרימן"
 date: 2026-03-21
 lang: he
-dir: rtl
 draft: false
 categories: [investigation, startups, israel, cyber]
 ---
