@@ -1087,6 +1087,27 @@ blockquote p:last-child {
    RTL SUPPORT (Hebrew articles)
    ============================================ */
 
+/* Keep Quarto grid layout LTR so sidebar/content columns stay in place */
+[dir="rtl"] .page-columns {
+  direction: ltr;
+}
+
+/* Restore RTL on the actual content and sidebar */
+[dir="rtl"] .page-columns > main.content,
+[dir="rtl"] .page-columns > .margin-sidebar {
+  direction: rtl;
+}
+
+/* Navbar stays LTR (site-wide navigation) */
+[dir="rtl"] .navbar {
+  direction: ltr;
+}
+
+/* Footer stays LTR */
+[dir="rtl"] .nav-footer {
+  direction: ltr;
+}
+
 /* Callouts & blockquotes — border on reading-start side */
 [dir="rtl"] blockquote,
 [dir="rtl"] .callout {
