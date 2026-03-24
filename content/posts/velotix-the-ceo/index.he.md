@@ -11,7 +11,6 @@ categories: [investigation, startups, israel, cyber]
 {{< callout type="note" >}}
 זהו חלק 2 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.
 
-[English version](/posts/velotix-the-ceo/)
 {{< /callout >}}
 
 ## קורות החיים

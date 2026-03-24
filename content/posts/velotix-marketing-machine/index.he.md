@@ -11,7 +11,6 @@ categories: [investigation, startups, israel, cyber, regulation]
 {{< callout type="note" >}}
 זהו חלק 3 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל.
 
-[English version](/posts/velotix-marketing-machine/)
 {{< /callout >}}
 
 ## האינסטלציה

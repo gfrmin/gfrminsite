@@ -11,7 +11,6 @@ categories: [investigation, startups, israel, cyber]
 {{< callout type="note" >}}
 This is Part 2 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine.
 
-[גרסה בעברית](/he/posts/velotix-the-ceo/)
 {{< /callout >}}
 
 ## The CV

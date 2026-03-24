@@ -14,7 +14,6 @@ categories: [investigation, startups, israel, cyber]
 
 זהו חלק 1 מסדרה בת שלושה חלקים. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.
 
-[English version](/posts/velotix-investigation/)
 {{< /callout >}}
 
 ## ההצעה
