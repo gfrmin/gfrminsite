@@ -25,8 +25,8 @@ jobs:
       - name: Install Quarto
         run: |
           apt-get update && apt-get install -y curl
-          curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
-          dpkg -i quarto-linux-amd64.deb
+          curl -LO https://github.com/quarto-dev/quarto-cli/releases/download/v1.8.27/quarto-1.8.27-linux-amd64.deb
+          dpkg -i quarto-1.8.27-linux-amd64.deb
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
