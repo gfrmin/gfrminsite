@@ -1,0 +1,69 @@
+baseURL = "https://gfrm.in"
+title = "Guy Freeman"
+languageCode = "en"
+defaultContentLanguage = "en"
+
+[params]
+  description = "Guy Freeman's personal blog on data science, software engineering, and building with AI."
+  author = "Guy Freeman"
+  ogImage = "images/og-default.png"
+  twitterHandle = "gfrm_in"
+  formspreeId = "mgeqrkaq"
+
+[params.social]
+  twitter = "https://twitter.com/gfrm_in"
+  mastodon = "https://defcon.social/@gfrmin"
+  github = "https://github.com/gfrmin"
+  linkedin = "https://linkedin.com/in/guyfreemanstat"
+
+[languages]
+  [languages.en]
+    weight = 1
+    languageDirection = "ltr"
+  [languages.he]
+    weight = 2
+    languageDirection = "rtl"
+    title = "גיא פרימן"
+
+[taxonomies]
+  category = "categories"
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "Posts"
+    url = "/posts/"
+    weight = 2
+  [[menu.main]]
+    name = "Projects"
+    url = "/projects/"
+    weight = 3
+  [[menu.main]]
+    name = "Contact"
+    url = "/contact/"
+    weight = 4
+
+[markup]
+  [markup.highlight]
+    style = "monokailight"
+    noClasses = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[outputFormats]
+  [outputFormats.RSS]
+    mediaType = "application/rss+xml"
+    baseName = "index"
+
+[minify]
+  [minify.tdewolff]
+    [minify.tdewolff.html]
+      keepEndTags = false

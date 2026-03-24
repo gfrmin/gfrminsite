@@ -1,0 +1,144 @@
+---
+title: "The Velotix Files, Part 2: The Serial Entrepreneur"
+subtitle: "Exits of over $100 million, a researcher from MIT, and a LinkedIn post about sinking companies"
+description: "A profile of Dr Adi Hod, CEO of Velotix — his credentials, his previous company, and the nine days between telling employees the company was dying and telling investors it was thriving."
+author: "Guy Freeman"
+date: 2026-03-21
+draft: false
+categories: [investigation, startups, israel, cyber]
+---
+
+{{< callout type="note" >}}
+This is Part 2 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine.
+
+[גרסה בעברית](/posts/velotix-the-ceo/he/)
+{{< /callout >}}
+
+## The CV
+
+Dr Adi Hod's marketing biography, as it appeared across investor materials, conference profiles, and press coverage, describes a figure of considerable accomplishment. A researcher from the Technion and MIT. A serial entrepreneur with multiple successful exits. A CEO who raised over $30 million. A leader who divides his time between New York, Singapore, and Tel Aviv.
+
+His [Forbes Council profile](https://web.archive.org/web/20230301170112/https://councils.forbes.com/profile/Adi-Hod-CEO-Velotix/d31ce5b6-735a-4324-bff8-7290b5618d5e) — Forbes Councils being a paid membership programme — went further still, claiming he had "founded several startups in the field of optimization research and exited two of them," held "a PhD from Haifa and Philadelphia University," and was "a professional piano player and art collector." The profile has since been removed.
+
+## The Technion
+
+Hod holds a BSc (1994–1998) and MSc (1998–2002) from the Technion in Industrial Engineering and Management.
+
+## MIT
+
+The "MIT" credential is an Executive MBA (2016–2018) at MIT Sloan — a part-time programme for working professionals. Marketing materials, conference profiles, and the TheMarker article consistently present this as "MIT" without the "Executive MBA" qualifier.
+
+## The PhD
+
+Hod completed a PhD at the University of Haifa in 2020 — the same year he founded Velotix. The [university's own page](https://cohrm.haifa.ac.il/?p=554) lists him as a doctoral student at the Centre for Research on Organizations and Human Resource Management, researching "the influence of boards of directors on success factors of startups and various aspects of startup merger and acquisition processes." His contact email was listed as adi@euclidestech.com. The PhD, in other words, was about startup corporate governance, conducted through an HR department, while he was still running a field service management company. Other sources describe the same degree differently: the Forbes Council profile said "PhD from Haifa and Philadelphia University"; a [CDOIQ 2024 conference bio](https://cdoiq2024.org/2024/05/dr-adi-hod-velotix/) claimed "PhD from MIT, in engineering, operations research and algorithms." Three venues, three institutions, three fields, one degree. After completing it, Hod [taught a course](https://sdg.haifa.ac.il/sdg-9-search-filter-results/?lang=en&sf_paged=10) at the university called "Startups — From Vision to Realisation" (חברות הזנק – מחזון למימוש), course number 209.4443, in the Social Sciences faculty. The "Dr" prefix, used consistently in all Velotix materials, derives from this work.
+
+## Euclides Technologies
+
+Before Velotix, Hod was CEO of Euclides Technologies Inc. from 2006 to 2017 — an eleven-year stint running a field service management software company in New York. Euclides was [founded by three senior veterans of ClickSoftware](https://appexchange.salesforce.com/partners/servlet/servlet.FileDownload?file=00P3A00000VrJPFUA3), a field service solutions vendor, and served as an implementation partner for ClickSoftware and later IFS. The purchase agreement reveals a company of twelve employees across three jurisdictions (Delaware, Israel, and the UK), whose financial statements, per Section 3.10, "have not been prepared in accordance with generally accepted accounting principles, international financial reporting standards or other regulatory standards." The excluded assets carved out of the sale included artwork and a 2015 Mercedes-Benz E550A — not the typical carve-outs of a small systems integration firm. Euclides' customers included power utilities and big-box retailers; it contributed approximately [$3.5 million to its parent company's 2019 revenue](https://www.analytixinsight.com/media/aly-workforce-optimization).
+
+In November 2016, the three shareholders signed two agreements with AnalytixInsight Inc., a micro-cap company trading on the TSX Venture Exchange. The first, an Asset and Share Purchase Agreement, sold Euclides' assets for US $200,000 in cash, plus ALY shares worth US $800,000, plus warrants worth up to US $500,000 contingent on revenue milestones. The second, a Share Purchase Agreement, sold a 20% stake in a related Israeli entity called Fixify Ltd. for US $1,000,000 in cash. Total consideration across both agreements: a maximum of US $2.5 million, split three ways among Hod, Liron Prestelnik, and Erez Glinansky. Hod's personal share: roughly $830,000 at most. The majority of the Euclides component was denominated in a penny stock that subsequently lost most of its value.
+
+There was also a UK entity: [EUC Holdings UK Limited](https://find-and-update.company-information.service.gov.uk/company/08554039) (formerly Euclides Technologies UK Limited, company 08554039), incorporated June 2013, with Hod, Prestelnik, and Glinansky as persons of significant control. It was [dissolved on September 22, 2020](https://find-and-update.company-information.service.gov.uk/company/08554039). Velotix Ltd. was incorporated in Israel on September 23, 2020.
+
+This is the "exit of over $100 million." The Forbes Council profile's claim of having "exited two" companies appears to refer to two line items in a single transaction. In 2019, ClickSoftware — the company Euclides was a reseller for — was [acquired by Salesforce for $1.35 billion](https://www.salesforce.com/news/stories/clicksoftware-has-joined-the-salesforce-family/). It is possible that Hod conflated ClickSoftware's exit with his own. ClickSoftware's exit was $1.35 billion. Euclides' was $200,000 in cash plus shares in a penny stock. The distinction seems material.
+
+Hod continued as COO of Euclides within AnalytixInsight after the acquisition. The sequel was not a success. Euclides revenue [fell from $1.43 million in 2022 to $276,000 in 2023](https://www.analytixinsight.com/news/analytixinsight-reports-2023-financial-results-andprovides-mcto-status-update) — a decline of 81%. With no new contracts signed and its last remaining employee departing in March 2024, AnalytixInsight **discontinued Euclides entirely**. The parent company itself was placed under a Management Cease Trade Order by the Ontario Securities Commission, with a court-ordered inspector investigating disputed expenses.
+
+In October 2024, AnalytixInsight published a [corporate update](https://www.businesswire.com/news/home/20241007982731/en/AnalytixInsight-Provides-Corporate-Update) that included a pointed observation about its former subsidiary:
+
+> "A sizable portion of the operating costs were in conjunction with Euclides' assumed CEO whose combined annual salary and business expense account averaged roughly $0.6M per year over the past 3 years. Curiously, during the time that these costs were incurred, it appears as if said CEO was the founder and CEO of another AI company called Velotix, based in Israel."
+
+Six hundred thousand dollars a year from a division whose revenue was falling from $2.8 million to zero, whose operating margin went from 58% to negative 600%, and which had "apparently no proprietary technology or dedicated product of its own." While simultaneously founding and running Velotix.
+
+A [factsheet dated May 2024](https://cdn.prod.website-files.com/6081ecbf560558a94d6326b6/663263289d4c4989a5524683_Euclides%20Factsheet%20May%202024.pdf) — two months after Euclides was discontinued — still listed "Adi Hod, COO Euclides Technologies, 617-893-0554." The phone number is the [same one](https://www.cbinsights.com/company/velotix) listed for Velotix on CBInsights.
+
+## The Entourage
+
+Hod did not come to Velotix alone. Rashi Gujral, who served as VP of Finance and then Director of Finance at Euclides Technologies from 2012 to 2019, joined Velotix in January 2023 — first as COO, later as CFO. Per [TheOrg](https://theorg.com/org/velotix/org-chart/rashi-gujral), she "led due diligence and integration efforts for a major merger" at Euclides — the same $200,000 asset sale that became "$100 million in exits."
+
+As Velotix's CFO, Gujral had access to the company's financial records — including the inability to pay employees, the pension contributions deducted but not transferred, and the revenue of $1 million against a burn rate exceeding that per month.
+
+## The Numbers
+
+The fundraising story shifted depending on the audience and the occasion.
+
+| Source | Amount | Date |
+|--------|--------|------|
+| Velotix seed round [announcement](https://www.velotix.ai/resources/news-events/news/velotix-announces-launch-from-stealth-with-10m-seed-round/) | $10M | October 2022 |
+| [Tracxn](https://tracxn.com/d/companies/velotix/__oukBb5SF4KgdT_D79EUhJjEyWGu8l3wGSUDjUBB5yyk) (independent database) | $10M total | February 2026 |
+| [Calcalist Dream Team](https://www.calcalistech.com/ctechnews/article/phxlztums) profile (submitted by Velotix) | $23M | March 2025 |
+| Hod at [Calcalist NY conference](https://www.calcalistech.com/ctechnews/article/p3vn45m6q) | "$30 million+" | March 2025 |
+
+The $23 million figure and the $30 million figure appeared at the same conference, two weeks apart. The $23 million was in a written profile submitted by Velotix. The $30 million was spoken by Hod at a panel. No independent source confirms either number.
+
+## Nine Days
+
+The gap between what Hod told employees and what he told investors is covered in detail in [Part 1](/posts/velotix-investigation/#nine-days). On March 16, 2025, he told employees the revenue was $1 million and the runway was under six months. Nine days later, he told a Calcalist conference he had raised over $30 million and worked with major clients.
+
+One message for the employees. Another for the investors.
+
+## The LinkedIn Post
+
+In August 2025, Hod [posted on LinkedIn](https://www.linkedin.com/posts/dr-adi-hod-0839463_ive-watched-three-brilliant-founders-sink-activity-7363079716620189696-0NKz), accompanied by the mirror selfie below:
+
+> "I've watched three brilliant founders sink a company. Not for lack of intellect. Not for lack of effort. But because they were carbon copies of each other. Same strengths. Same blind spots. Same way of thinking."
+
+![Dr Adi Hod's LinkedIn selfie, August 2025](Screenshot_20260320-235519.png)
+
+The post continued with reflections on the importance of team diversity, emotional intelligence, and "creative tension." It received 107 reactions and 8 comments. Boris Iliayev from Barclays responded: "This hits hard. The best teams I've been on felt like controlled chaos — everyone pulling different levers but toward the same goal."
+
+At the time Hod wrote this post about the perils of poor leadership, Velotix had not paid its employees' pensions for months. Within three months, co-founder Uriel Ekstein would be fired. Within four months, the Ministry of Labour would find seven violations. Within six months, thirteen employees would petition for insolvency.
+
+One wonders which three founders he had in mind.
+
+## The Other Companies
+
+Velotix was also marketed through Sarona Ventures' [TechShield](https://techshield.sarona.vc/) programme — a "reverse fund" for pro-Israel investors, launched after October 7 and positioned as supporting Israeli tech during wartime. TechShield's investment criteria include "current runway of at least 6-12 months" and "burn rate of up to $500k per month."
+
+Hod told his own employees on March 16, 2025 that the runway was below six months.
+
+TechShield listed three Velotix "customers": OCBC Singapore, Liquid Group Singapore (announced in a [press release](https://www.velotix.ai/resources/news-events/news/) in 2023; unclear if revenue followed), and First International Bank of Israel. The [company extract](company-extract.pdf) reveals that First International Bank also holds a first-priority security charge on Velotix's cash deposits.
+
+The Deutsche Bank "partnership" listed on the Velotix website since 2022 traces to [one advisory relationship](https://www.linkedin.com/posts/velotix_ai-velotix-datagovernance-activity-6976436904690876418-FUGO) with Dr Shivaji Dasgupta, described as a "board advisor." A single advisor became a logo on the partners page.
+
+## The Ghost Employees
+
+The Velotix LinkedIn page shows 28 employees. Many are stale profiles of people who left long ago. Some raise questions about their authenticity.
+
+"Alain Tissier" — "Lead Data Architect @ Velotix." Education: Institut Lyfe, formerly Institut Paul Bocuse. This is a French culinary school. One of Europe's finest, in fact. A school for chefs, not data architects.
+
+"Dhruv Soni" — "Data Governance and Risk." LinkedIn profile ID: a13655337 (recently created). ZoomInfo lists his location as Wilmington, Delaware — the Corporation Trust Company address used by hundreds of thousands of shell entities.
+
+"Savannah Kensington" — barely indexed by Google. LinkedIn profile ID: 459692333 (recently created). The surname belongs to a London neighbourhood.
+
+Investors who checked the Velotix LinkedIn page to gauge team size would have seen a more populated company than actually existed.
+
+## The Screaming
+
+I joined Velotix on October 27, 2024. I resigned on May 19, 2025.
+
+My resignation came after a phone call in which Hod screamed at me — his word against mine, except that my resignation email, sent immediately afterwards to Hod with Ekaterina Baru, Noam Biran, and Leah Hutman on copy, documented what happened:
+
+> "We just had a phone call where you were screaming and extremely abusive to me, including bringing up my talking to lawyers due to you not paying me (nor, as far as I understand it, anyone else in the company) as agreed in our contract and according to law as an example of my 'poor attitude' and 'lack of respect' for the company. In my entire career I have never been treated so unprofessionally."
+
+I also noted: "Just like the discussions about the unpaid pension, this was done verbally." Discussions about unpaid pensions were conducted verbally, not in writing.
+
+The response from Nathalie Gunnarsson, Office Manager, arrived seventy minutes later. It confirmed my last day as May 25, corrected my start date from October 21 to October 27, and wished me well.
+
+I filed a complaint with the Ministry of Labour. Six months later, it found seven violations.
+
+## The Response
+
+In his official response to TheMarker, Hod blamed investors: "The company recently underwent an efficiency process after investors did not meet their commitment to inject the agreed capital."
+
+On Ofir Dor's [Twitter thread](https://x.com/doritsos/status/2031033087501414671), the company added that "the CEO, Dr Adi Hod, is personally financing the company's operations."
+
+In 2023, Velotix [attended](https://www.linkedin.com/posts/velotix_velotix-ai-datasecurity-activity-7061385442184638464-fU2Q) the "Israel Future of Fintech Fraud & Mismanagement Event," organised by the Ministry of Economy and Industry, where Hod pitched to investors.
+
+The [Velotix website](https://www.velotix.ai/) remains live. "Book a Demo." The [About Us](https://www.velotix.ai/about-us/) page still shows Uriel Ekstein as co-founder. The [IBM case study](https://www.ibm.com/case-studies/velotix) still presents the company as a going concern. The [patent](https://data.uspto.gov/patent-file-wrapper/search/details/18689112/application-data) is real. The [Gartner listing](https://www.velotix.ai/velotix-recognized-in-gartner-guide-for-data-security-platforms/) is real. Somewhere beneath the inflated credentials, the fabricated exits, and the employees who worked without being paid, there was a product.
+
+But when a CEO tells his employees on March 16 that the company has $1 million in revenue and less than six months to live, and then tells a conference nine days later that the company has raised $30 million and works with major clients, the question is whether anyone — PipelBiz, Barclays, Sarona Ventures, the ISA — was paying attention.
+
+---
+
+*This is Part 2 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine.*

@@ -1,0 +1,154 @@
+---
+title: "The Loop Problem"
+subtitle: "98.5% fewer loops, 0% more intelligence — just better state representation"
+description: "Every RL agent that has played a text adventure has tried to take the lantern fifty times in a row. The fix is not better exploration heuristics. The fix is representing state properly."
+author: "Guy Freeman"
+date: 2026-03-24
+draft: true
+categories: [julia, bayesian, machine-learning, ai, reinforcement-learning]
+---
+
+{{< callout type="note" >}}
+This is Part 3 of a series. For the axiomatic foundation, see [Part 1: Three Types and a Funeral](/posts/three-types/). For the VOI-gated text adventure agent, see [Part 2: Teaching Zork to a Bayesian](/posts/teaching-zork/).
+{{< /callout >}}
+
+Every reinforcement learning agent that has ever played a text adventure has, at some point, tried to take the lantern fifty times in a row.
+
+Not because it's stupid. Because its state representation makes "Shack with book" and "Shack with lantern" look like different states, so the learned futility of "take lantern" in one state doesn't transfer to the other. The agent is doing exactly what its architecture tells it to do: each state-action pair is independent, and it hasn't yet learned that *this particular* pair is useless. It will learn, eventually, after wasting 39 steps per episode on actions it has already tried.
+
+The fix is not better exploration heuristics. Not epsilon-greedy. Not curiosity bonuses. Not "try something different when you're stuck." The fix is representing state properly.
+
+## The Hash-State Problem
+
+The baseline agent in my [Bayesian Julia framework](https://github.com/gfrmin/bayesian-julia) uses a tabular world model with hash-based state abstraction. The game state gets compressed into a string like this:
+
+```
+state = "Kitchen|a3f2b1c8"
+```
+
+Location on the left, opaque hash of everything else on the right. The hash combines inventory, door states, light conditions, and any other mutable state into a single hexadecimal token. Every combination produces a different hash:
+
+- Shack with book: `"Shack|hash1"`
+- Shack with lantern: `"Shack|hash2"`
+- Shack with book and lantern: `"Shack|hash3"`
+
+These are three different states. When the agent learns that `("Shack|hash1", "take book")` produces no state change, it marks this as a null action. Useful information. But `("Shack|hash2", "take book")` is a *different state*, so the model tries it again. And `("Shack|hash3", "take book")` is yet another state. The insight --- that "take book" doesn't change your location regardless of what else you're carrying --- cannot transfer, because the representation has destroyed the structure that would enable it.
+
+The benchmark results from five episodes of Enchanter confirm the damage:
+
+| Metric | Baseline (Hash State) |
+|--------|----------------------|
+| Score | 20.0 ± 0.0 |
+| Loops | 39.0 ± 5.0 |
+| Unique states | 15.2 ± 2.2 |
+| Steps/episode | 87.6 |
+
+Thirty-nine repeated state-action pairs per episode. The agent scores 20 points --- it does find rewarding actions eventually --- but wastes nearly half its steps on actions it has, in some meaningful sense, already tried. The opaque hash means "already tried" only applies to the exact combination of inventory items present when the action was first attempted. Different items, different hash, different state, try again.
+
+This is the kind of problem that makes you want to add an exploration bonus or a "don't repeat yourself" heuristic. Resist the urge. Part 1 explains why: adding a second mechanism outside of Bayesian updating is a mathematical error, not a design choice. The correct response is to fix the representation so that the *existing* mechanism can work properly.
+
+## Factored State
+
+The fix is to represent state as what it is: a collection of independent variables.
+
+```julia
+MinimalState("Kitchen", {"book", "lantern"})
+```
+
+Location and inventory as separate variables, not concatenated into a hash. The world model now learns conditional probability distributions (CPDs) over each variable independently, conditioned on the action taken:
+
+```julia
+mutable struct FactoredWorldModel <: WorldModel
+    # CPDs per action: cpds[action][variable] = DirichletCategorical
+    cpds::Dict{String, Dict{String, DirichletCategorical}}
+    ...
+end
+```
+
+For each action, for each state variable, a Dirichlet-Categorical distribution models the transition. `P(location' | location, "take book")` gets its own distribution. `P(book ∈ inventory' | book ∈ inventory, "take book")` gets another. They learn independently.
+
+After one observation of "take book" in the Kitchen, the model learns:
+
+- `P(location' | location, "take book")` = no change. The Kitchen stays the Kitchen.
+- `P(book ∈ inventory' | book ∈ inventory, "take book")` = the book is now in inventory.
+
+The first CPD --- location doesn't change when you take something --- applies to every "take X" action in every location. The agent doesn't need to learn this for each item separately. It learns once, from one observation, that "take" actions don't move you. This generalisation is not programmed. It falls out of the factored representation: since location and inventory are separate variables with separate CPDs, the model *cannot* learn location-dependent take behaviour unless the data supports it.
+
+The benchmark results:
+
+| Metric | Baseline | Factored | Change |
+|--------|----------|----------|--------|
+| Score | 20.0 | 0.0 | -100% (expected) |
+| Loops | 39.0 | 0.6 | **-98.5%** |
+| Unique states | 15.2 | 19.2 | +26.3% |
+| Steps/episode | 87.6 | 103.0 | +17.4% |
+
+Thirty-nine loops reduced to 0.6. The agent discovers more unique states (19.2 vs 15.2) because it's not wasting steps on repetition. It runs longer episodes (103 vs 87.6) because it's actually exploring instead of circling.
+
+## The Score Regression
+
+The factored model scores zero. The baseline scores 20. This looks like a regression and isn't.
+
+The factored model doesn't have reward learning implemented yet. Its `FactoredWorldModel` tracks transition dynamics (where do I end up, what changes in my inventory) but doesn't yet learn `P(reward | state, action)`. The MCTS planner, unable to evaluate which states are rewarding, falls back to random rollouts --- which can't find rewards by chance in a game as large as Enchanter.
+
+This is incomplete integration, not failure. The agent stops doing stupid things. It doesn't yet know what smart things look like. I present this straightforwardly because the alternative --- cherry-picking the metric that improved while eliding the one that regressed --- is the kind of benchmarking that makes machine learning papers unreliable. The looping elimination is the result. The scoring is future work. Both facts matter.
+
+## Thompson MCTS
+
+The planning algorithm is Monte Carlo Tree Search with Thompson Sampling. Instead of UCB for exploration --- which is a hard-coded exploration bonus, forbidden by Part 1's axioms --- the agent samples a world model from its posterior and plans optimally under that sample.
+
+```julia
+mutable struct MCTSNode
+    state::Any
+    parent::Union{Nothing, MCTSNode}
+    parent_action::Any
+    children::Dict{Any, MCTSNode}
+    visit_count::Int
+    value_sum::Float64
+    is_terminal::Bool
+end
+```
+
+At each planning step:
+
+1. Sample dynamics parameters from the posterior. Each Dirichlet-Categorical CPD produces a concrete transition table.
+2. Build a search tree using these sampled dynamics. The tree is up to 8 actions deep, exploring 60 trajectories.
+3. Select the action at the root with the highest mean value.
+
+No exploration bonus. No UCB formula. No temperature parameter. Thompson Sampling naturally balances exploration and exploitation: uncertain transitions produce diverse sampled dynamics, which produce diverse search trees, which produce diverse action recommendations. As the posterior concentrates around the true dynamics, the sampled dynamics converge, the search trees converge, and the agent exploits.
+
+This is the same principle as the Thompson Sampling in [Part 1 of the Bayesian agent series](/posts/bayesian-agent/), applied to planning rather than to action selection. There, the agent sampled from its posterior over food energy values. Here, the agent samples from its posterior over world dynamics. The mechanism is identical: `draw` from a posterior, `argmax` over the result. Two timescales, one mathematics.
+
+## Why Factored State Eliminates Loops
+
+The elimination is mechanical, not heuristic. Consider what happens when the agent tries "take book" in the Kitchen with hash-state versus factored state.
+
+**Hash state:** The agent has tried "take book" in state `"Kitchen|hash1"`. The current state is `"Kitchen|hash2"` (different inventory → different hash). The model checks: have I tried `("Kitchen|hash2", "take book")`? No. Try it.
+
+**Factored state:** The agent has tried "take book" in state `MinimalState("Kitchen", {...})`. The location CPD for "take book" has been updated: `P(location' | "Kitchen", "take book") = [1.0 for "Kitchen"]`. The location doesn't change. The MCTS planner, sampling from this CPD, gets "Kitchen" → "Kitchen" for every rollout. The value of "take book" is identical to the value of doing nothing. The agent moves on.
+
+The key insight is that the factored CPD shares parameters across states. All "take X" actions share the same location CPD, because the location variable is independent of which specific item is being taken. The hash state has no mechanism for this sharing. Every combination is its own entry in the table.
+
+This is the representation counterpart to Part 1's prohibition on opaque likelihood functions. A hash state is an opaque dynamics model. It compresses structure into a token that the learning algorithm cannot decompose. A factored state is a typed kernel: it declares which variables it operates on, enabling the model to learn the right abstraction. The lesson is the same in both cases: if you can't inspect the structure, you can't learn the structure.
+
+## The Bayes-Adaptive POMDP
+
+The full framework is a Bayes-Adaptive Partially Observable Markov Decision Process. This is a mouthful that means: the agent maintains uncertainty over both the world state (where am I? what's in my inventory?) and the world dynamics (what happens when I go north? what happens when I take the book?). Both are probability distributions. Both are updated by conditioning on observations. Both influence planning.
+
+This is the four-axiom thesis from Part 1 in its most ambitious form. The agent doesn't just not know where it is. It doesn't know how the world works. Its beliefs about dynamics are Dirichlet priors that update with every transition it observes. Its beliefs about state are maintained by the MCTS tree, which marginalises over sampled dynamics. The entire system is uncertainty quantification, applied to every layer of the problem.
+
+The factored state representation makes this tractable. With hash states, the dynamics table has $|S| \times |A| \times |S|$ entries --- states times actions times successor states. Since $|S|$ grows combinatorially with the number of objects, this table explodes. With factored state, the dynamics decompose into per-variable CPDs: $|A| \times \sum_i |V_i|^2$ entries, where $|V_i|$ is the number of values for variable $i$. The growth is additive, not multiplicative.
+
+For Enchanter with 20 locations and 10 objects, the difference is between a table with millions of entries (most never observed) and a collection of small CPDs that each get updated with every relevant transition. The factored model learns faster because each observation updates only the relevant CPDs --- and those CPDs are shared across all states that differ only in irrelevant variables.
+
+## What Remains
+
+The scoring regression is the obvious gap. Once the reward model learns `P(reward | state, action)` --- which is a Normal-Gamma conjugate update, well-understood mathematics --- the factored model should match or exceed the baseline's score while maintaining the looping benefits. The MCTS planner, given access to learned rewards, will direct rollouts toward rewarding states instead of wandering randomly.
+
+Beyond that, the fixed state representation --- location and inventory --- is still designed, not learned. Phase 2 of the project introduces variable discovery: the agent infers new state variables (door states, light conditions, NPC attitudes) from observation text, expanding its `MinimalState` as it discovers what matters. Phase 3 introduces structure learning: rather than assuming all variables are independent given the action, the agent learns which variables depend on which. Phase 4 introduces action schemas: clustering "take book" and "take lantern" as instances of a "take" schema with shared parameters.
+
+Each phase extends the representation while preserving the axioms. Variable discovery adds columns to the factored model. Structure learning adds edges to the Bayesian network. Schemas share parameters across action instances. In every case, the learning mechanism is `condition` and the decision mechanism is EU maximisation. The constitution from Part 1 holds.
+
+The loop problem is a case study in a broader lesson: most agent failures are not failures of intelligence. They are failures of representation. The hash-state agent is doing perfect Bayesian inference over a representation that has thrown away the structure it needs. The fix is not more sophisticated inference. The fix is more transparent state. The mathematics was always adequate. The representation needed to let it work.
+
+Code: [github.com/gfrmin/bayesian-julia](https://github.com/gfrmin/bayesian-julia)

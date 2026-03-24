@@ -1,0 +1,350 @@
+---
+title: "Hanukkah of Data 5783"
+subtitle: "Solving the data version of Advent of Code in R"
+description: "Step-by-step R solutions to all 8 Hanukkah of Data puzzles - a data-focused alternative to Advent of Code with a delightful narrative twist."
+author: "Guy Freeman"
+date: 2022-12-25
+categories: [data, analysis, fun]
+image: og-image.png
+---
+
+The madpersons behind the retro-chic data analysis tool [VisiData](https://visidata.org) have created an alternative to the infamous "Advent of Code". Instead of programming to solve yet more optimisation puzzles, and instead of the hackneyed Christmas theme, the [Hanukkah of Data](https://hanukkah.bluebird.sh/5783/) requires data analysis to solve a ~~murder mystery~~ rug-finding mission.
+
+I only just found out about it, so although one puzzle was released for each day of real-life Chanukah, I was able to gorge on the first 7 puzzles, needing only to wait for the last one. Each puzzle is represented by an ASCII candle in an ASCII world --- quite an impressive achievement in its own right.
+
+Here's how I solved all 8 puzzles in R. The data comes on a password-protected USB drive (the password being the year of the previous Hanukkah of Data, which is a nice meta-puzzle). I can probably give more details (aka make the code clearer) upon request.
+
+
+```r
+library(tidyverse, warn.conflicts = FALSE)
+library(lubridate, warn.conflicts = FALSE)
+
+# Download and extract the data
+download.file(
+  url = "https://hanukkah.bluebird.sh/5783/noahs-csv.zip",
+  destfile = "noahs-csv.zip"
+)
+system("unzip -P 5777 -o noahs-csv.zip")
+
+# Load the four tables
+customers <- read_csv("noahs-customers.csv")
+orders <- read_csv("noahs-orders.csv")
+items <- read_csv("noahs-orders_items.csv")
+products <- read_csv("noahs-products.csv")
+
+# Create a denormalized view for analysis
+orders_plus <- orders |>
+  inner_join(items, by = "orderid") |>
+  inner_join(products, by = "sku") |>
+  inner_join(customers, by = "customerid")
+```
+
+
+## Puzzle 1: The Private Investigator
+
+Sarah needs help finding her grandmother's rug, and a cashier remembers a private investigator who once shopped at Noah's. His business card was clever: the phone number spelled out his surname on the old T9 phone keypad (2=ABC, 3=DEF, and so on).
+
+So we need to build a letter-to-number converter. The mildly annoying part is that the keypad isn't perfectly regular --- S, V, Y, and Z get shunted around --- so they need special handling.
+
+
+```r
+# Convert a single letter to its T9 phone number
+letter_to_phone_digit <- function(letter) {
+  letter_index <- which(letters == letter)
+  digit <- floor(((letter_index - 1) / 3) + 2)
+  # Handle irregular keys: S(7), V(8), Y(9), Z(9)
+  if (letter %in% c("s", "v", "y", "z")) {
+    return(as.character(digit - 1))
+  }
+  return(as.character(digit))
+}
+
+# Convert a full name to its phone number equivalent
+name_to_phone <- function(name) {
+  # Extract last name, lowercase, remove non-letters
+  surname <- (strsplit(name, " ") |> unlist())[-1]
+  surname_clean <- str_to_lower(surname) |> str_replace_all("[^a-z]", "")
+  surname_short <- str_sub(surname_clean, end = 10)  # Phone numbers are 10 digits
+
+  surname_short |>
+    strsplit("") |>
+    unlist() |>
+    map_chr(letter_to_phone_digit) |>
+    paste0(collapse = "")
+}
+
+# Find customers where phone matches name
+customers |>
+  mutate(
+    name_as_phone = map_chr(name, name_to_phone),
+    phone_digits = str_replace_all(phone, "-", "")
+  ) |>
+  filter(phone_digits == name_as_phone) |>
+  pull(phone)
+```
+
+
+```
+[1] "488-836-2374"
+```
+
+
+## Puzzle 2: The Rug Contractor
+
+The investigator tells us the rug was cleaned by an outside contractor. A claim ticket reads "2017 spec JD" --- the year and the contractor's initials. Apparently these contractors would meet at Noah's to discuss jobs over coffee and bagels, which is a fairly civilised way to run a business.
+
+We find orders containing both coffee and bagel SKUs, filter to 2017, and look for the right initials.
+
+
+```r
+# Helper to extract initials from a name
+get_initials <- function(name) {
+  str_extract_all(name, "[A-Z]") |> unlist() |> paste0(collapse = "")
+}
+
+# Coffee and bagel SKUs (found by exploring the products table)
+coffee_bagel_skus <- c("DLI1464", "BKY4234", "BKY5887")
+
+orders_plus |>
+  filter(sku %in% coffee_bagel_skus) |>
+  group_by(orderid) |>
+  filter(n() > 1) |>  # Must have bought multiple items
+  ungroup() |>
+  filter(year(shipped) == 2017) |>
+  mutate(initials = map_chr(name, get_initials)) |>
+  filter(initials == "JD") |>
+  pull(phone) |>
+  unique()
+```
+
+
+```
+[1] "212-771-8924"
+```
+
+
+## Puzzle 3: The Spider Hat Guy
+
+The contractor gave the rug to someone near South Ozone Park subway station. This person wore a hat with a spider on it, and --- usefully for our purposes --- was an Aries born in the Year of the Dog.
+
+Pure demographic filtering. Years of the Dog cycle every 12 years, and Aries runs from late March through mid-April.
+
+
+```r
+dog_years <- c(2006, 1994, 1982, 1970, 1958, 1946, 1934)
+
+customers |>
+  filter(year(birthdate) %in% dog_years) |>
+  filter(month(birthdate) %in% c(3, 4)) |>  # March or April for Aries
+  filter(citystatezip == "South Ozone Park, NY 11420") |>
+  pull(phone)
+```
+
+
+```
+[1] "516-636-7397"
+```
+
+
+## Puzzle 4: The Early Bird Baker
+
+Spider-hat cleaned part of the rug, found a beautiful owl pattern, hung it on his wall. Then he met someone on Tinder who fixed his bike at 5am and received the rug as payment. This person loved arriving at Noah's before dawn to get the first pastries out of the oven.
+
+The "before dawn" detail is the key discriminator. We want bakery orders placed around 4--5am with same-day pickup.
+
+
+```r
+orders_plus |>
+  filter(hour(ordered) == 4) |>        # 4am orders
+  filter(ordered == shipped) |>         # Same-day delivery (pickup)
+  filter(str_detect(sku, "BKY")) |>     # Bakery items
+  select(customerid, name, phone) |>
+  distinct()
+```
+
+
+```
+# A tibble: 2 × 3
+  customerid name             phone       
+       <dbl> <chr>            <chr>       
+1       5105 Heather Brown    929-518-7269
+2       5375 Christina Booker 718-649-9036
+```
+
+
+One customer fits. (I originally called this variable `tinder_girl`, which tells you everything about my variable naming discipline.)
+
+
+```r
+customers |>
+  filter(customerid == 5375) |>
+  pull(phone)
+```
+
+
+```
+[1] "718-649-9036"
+```
+
+
+## Puzzle 5: The Cat Lady from Queens
+
+The early-bird baker gave the rug away on Freecycle to a woman from Queens Village who wore a Noah's Market sweatshirt and had about ten elderly cats, all with cataracts. She spent twenty minutes carefully wrapping the rug in plastic in the rain. Dedicated.
+
+We need a woman in Queens who buys cat-related products.
+
+
+```r
+orders_plus |>
+  filter(str_detect(citystatezip, "Queens")) |>
+  filter(str_detect(desc, "Cat")) |>
+  select(customerid, name, phone) |>
+  distinct()
+```
+
+
+```
+# A tibble: 6 × 3
+  customerid name           phone       
+       <dbl> <chr>          <chr>       
+1       7675 Anita Koch     315-492-7411
+2       6560 Joseph Weaver  680-839-3746
+3      11780 Joshua White   914-632-0184
+4       3335 Jose Cook      516-745-9461
+5       5486 Sam House      607-836-2966
+6       6905 Justin Cochran 716-525-5173
+```
+
+
+Only one female name in the results. That's her.
+
+
+```r
+# First result is our match
+orders_plus |>
+  filter(str_detect(citystatezip, "Queens")) |>
+  filter(str_detect(desc, "Cat")) |>
+  slice(1) |>
+  pull(phone)
+```
+
+
+```
+[1] "315-492-7411"
+```
+
+
+## Puzzle 6: The Frugal Cousin
+
+The cat lady passed the rug to her cousin, who was moving into a new flat with wood floors. This cousin is spectacularly frugal --- clips every coupon, stalks every sale at Noah's.
+
+The dataset includes both `unit_price` (what the customer paid) and `wholesale_cost` (what Noah's paid for the product). A coupon extremist would have a suspicious number of orders where they paid less than wholesale.
+
+
+```r
+# Find customers who frequently buy below wholesale
+loss_leaders <- orders_plus |>
+  filter(wholesale_cost > unit_price) |>
+  count(customerid, name, phone, sort = TRUE)
+
+# The top customer has far more loss-leader purchases than anyone else
+loss_leaders |> head(5)
+```
+
+
+```
+# A tibble: 5 × 4
+  customerid name              phone            n
+       <dbl> <chr>             <chr>        <int>
+1       8342 Emily Randolph    914-868-0316    26
+2       4308 Travis Bartlett   929-906-5980     8
+3       2956 Jonathan Williams 332-668-0158     6
+4       5788 Joshua Hansen     680-511-5677     6
+5       1422 Morgan Smith      585-689-9118     5
+```
+
+
+Customer 8342 has, by far, the most loss-making orders. That's the frugal cousin.
+
+
+```r
+customers |>
+  filter(customerid == 8342) |>
+  pull(phone)
+```
+
+
+```
+[1] "914-868-0316"
+```
+
+
+## Puzzle 7: The Ex-Boyfriend
+
+The frugal cousin tells a romantic story: she met a man at Noah's when he handed back something she'd dropped. They'd bought nearly identical items but preferred each other's colour choices, so they swapped. They dated, she moved in, it didn't work out. She left hastily one night and the rug stayed behind.
+
+This is the trickiest puzzle. We need to find two orders placed on the same day for the same product but in different colours. Essentially a self-join on colour-stripped product descriptions.
+
+
+```r
+# Add date components and normalize product descriptions (remove color)
+orders_with_dates <- orders_plus |>
+  mutate(
+    order_day = day(ordered),
+    order_month = month(ordered),
+    order_year = year(ordered),
+    product_base = str_replace(desc, "\\([a-z]+\\)", "") |> str_squish()
+  )
+
+# Get the frugal cousin's orders
+cousin_orders <- orders_with_dates |>
+  filter(customerid == 8342)
+
+# Find matching orders: same base product, same date, different color
+romantic_match <- cousin_orders |>
+  inner_join(
+    orders_with_dates,
+    by = c("product_base", "order_day", "order_month", "order_year")
+  ) |>
+  filter(customerid.y != 8342) |>       # Not the cousin herself
+  filter(desc.x != desc.y) |>            # Different color variant
+  arrange(abs(ordered.x - ordered.y))    # Orders closest in time
+
+romantic_match |>
+  slice(1) |>
+  pull(phone.y)
+```
+
+
+```
+[1] "315-618-5263"
+```
+
+
+## Puzzle 8: The Collector
+
+The ex-boyfriend says a woman appeared and vanished from his life, leaving behind a rug depicting a snake hidden in branches. He gave it to his sister in Manhattan, who passed it to "an acquaintance who collects all sorts of junk" --- specifically, someone who owns an entire set of Noah's collectibles.
+
+Noah's Market apparently sells branded collectibles. We want whoever has accumulated the most.
+
+
+```r
+orders_plus |>
+  filter(str_detect(desc, "^Noah")) |>    # Products starting with "Noah"
+  group_by(customerid, name, phone) |>
+  summarise(noah_items = n(), .groups = "drop") |>
+  filter(noah_items > 200) |>              # Serious collector
+  pull(phone)
+```
+
+
+```
+[1] "929-906-5980"
+```
+
+
+## The Finale
+
+Entering the final phone number reveals something quite spectacular --- but I won't spoil it. If you haven't tried the Hanukkah of Data yet, [give it a go](https://hanukkah.bluebird.sh/5783/). They've continued the tradition with new datasets and puzzles in subsequent years.
+
+What I particularly enjoyed is how the puzzles mirror real analytical work. You have messy, interconnected datasets. You have vague requirements ("find someone who shops the sales"). You make assumptions, poke at the data, iterate. Eight puzzles, eight phone numbers, one rug recovered. Not bad for a Christmas afternoon.
