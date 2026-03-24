@@ -655,9 +655,13 @@ main li a:hover {
   padding: var(--space-lg) 0;
   border-bottom: 1px solid var(--border-subtle);
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 1fr;
   gap: var(--space-lg);
   align-items: start;
+}
+
+.post-card:has(.post-card-image) {
+  grid-template-columns: 200px 1fr;
 }
 
 .post-card:last-child {
