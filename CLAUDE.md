@@ -4,53 +4,72 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal data science blog built with Quarto. The site uses R as the primary analysis language with Python for supporting data processing. Posts are written in Quarto markdown (`.qmd` files) combining narrative text with executable code.
+Personal blog at [gfrm.in](https://gfrm.in), built with **Hugo**. Prose-first (essays on data, AI, Bayesian decision theory, investigations); only one legacy post uses executable code. Bilingual — English default, Hebrew translations with RTL.
+
+**Migrated from Quarto to Hugo in March 2026.** Many legacy Quarto artefacts are still physically present at the repo root but are no longer wired into any build: `_quarto.yml`, `*.qmd` (e.g. `index.qmd`, `projects.qmd`, `404.qmd`), `_freeze/`, `_filters/`, `_includes/`, `_scripts/`, `_site/`, `.R/`, `.Rprofile`, `pyproject.toml`, `uv.lock`, `.venv/`, `styles.css`, `theme-dark.scss`. Treat all of them as inert — do not edit them, do not base patterns on them. The live site is everything the Hugo config and `layouts/` tree touches.
 
 ## Common Commands
 
 ```bash
-# Development server with live reload
-quarto preview
+# Dev server with live reload, including drafts
+hugo server -D
 
-# Build the site for production
-quarto render
+# Production build (what CI runs)
+hugo --minify
 
-# Render a specific post
-quarto render posts/hanukkah-of-code/index.qmd
-
-# Install Python dependencies
-uv sync
-
-# Install R package to project-local library
-R -e "install.packages('packagename')"
+# Pin to the CI-matching Hugo version if the `hugo` on $PATH is newer/older
+# CI uses peaceiris/actions-hugo@v3 with hugo-version 0.157.0 extended
 ```
 
 ## Architecture
 
-- **`_quarto.yml`**: Main site configuration (theme, navbar, site URL)
-- **`posts/`**: Blog posts, each in its own subdirectory with an `index.qmd` file
-- **`posts/_metadata.yml`**: Default settings for all posts (freeze enabled, code-fold on)
-- **`projects/`**: Project showcases (similar structure to posts)
-- **`public/`**: Generated output for GitLab Pages (gitignored)
-- **`.gitlab-ci.yml`**: CI/CD pipeline for GitLab Pages deployment
-- **`.Rprofile`**: Configures project-local R library at `.R/library/`
+### Content layout
 
-## Key Conventions
+- `content/posts/<slug>/index.md` — one directory per post, with `index.md` holding frontmatter and body. Per-post assets (images, `og-image.png`, demo gifs) live alongside in the same directory — Hugo page bundles, so `image: og-image.png` in frontmatter resolves relative to the post.
+- `content/posts/<slug>/index.he.md` — Hebrew translation of a post (Hugo translation-by-filename). The English `index.md` and the Hebrew `index.he.md` are siblings; Hugo links them as translations automatically.
+- `content/he/` — Hebrew-language top-level sections (`_index.md`, `posts/`, `projects/`, `contact/`). Translated **posts** use the `index.he.md` sibling pattern above, not a duplicate tree here.
+- `content/projects/`, `content/contact/` — non-post sections.
+- `drafts/` at the **repo root** (not inside `content/`) is gitignored and used as a staging area for work-in-progress drafts before they're moved into `content/posts/`. This is separate from Hugo's own `draft: true` frontmatter mechanism, which is also used for in-tree posts that aren't yet public.
 
-- Posts use `freeze: true` by default - computational output is cached and not re-run unless explicitly requested
-- Code blocks have `code-fold: true` (collapsible) and `code-tools: true` (copy button)
-- Data files (CSV, xlsx, rds) are gitignored but stored locally in post directories
-- Python managed via `uv` with dependencies in `pyproject.toml`
-- R packages installed to project-local `.R/library/` directory (tidyverse, ggplot2, dplyr, readr commonly used)
+### URL shape (non-obvious)
 
-## Writing New Posts
+Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent fix (commit ceb1c3c) corrected this in internal links; preserve the pattern when adding navigation or language-switcher code.
 
-Create a new directory under `posts/` with:
-1. `index.qmd` - the post content with YAML frontmatter (title, date, categories)
-2. Any data files needed for the analysis
+### Templates & styling
+
+- `hugo.toml` — site config (baseURL, languages, taxonomies, menus, markup, outputs, minify).
+- `layouts/_default/{baseof,list,single}.html` — base chrome plus list and single-page templates.
+- `layouts/partials/` — `header.html`, `footer.html`, `schema.html` (JSON-LD), `share-buttons.html`, `darkmode.html`, `posthog.html`, `skip-link.html`.
+- `layouts/shortcodes/callout.html` — callout shortcode.
+- `layouts/index.html`, `layouts/404.html` — homepage and 404 overrides.
+- `assets/css/main.css` — active stylesheet (Hugo asset pipeline). `styles.css` at the repo root is a Quarto leftover.
+- `static/` — served verbatim at the site root (includes `CNAME`, `favicon.ico`, `robots.txt`, `images/` for non-post-bundle images).
+
+### Post frontmatter conventions
+
+Standard keys seen across current posts:
+
+```yaml
+---
+title: "..."
+subtitle: "..."                     # optional, rendered under title
+description: "..."                  # used for <meta name="description"> and og:description
+author: "Guy Freeman"
+date: YYYY-MM-DD
+draft: true                         # work-in-progress; hide from production build
+categories: [essays, bayesian, ...] # taxonomy; renders at /categories/<cat>/
+image: og-image.png                 # optional, relative to page bundle; falls back to site default (layouts/_default/baseof.html:19)
+---
+```
+
+The site default OG image is configured in `hugo.toml` under `params.ogImage`; omitting `image:` from a post's frontmatter is fine — the template falls back gracefully. The recent batch of April 2026 drafts (`accuracy-paradox`, `alignment-axiom`, etc.) omit `image:` entirely and are a good pattern to copy.
+
+### RTL
+
+Don't set `dir="rtl"` on `<html>`. RTL is scoped to content via CSS class, not the root element — a prior attempt to flip the whole page broke layout (commit af3013e). If touching language/direction code, preserve this.
 
 ## Deployment
 
-Site deploys to GitHub Pages with custom domain `www.gfrm.in`:
-- Push to `master` triggers automatic deployment
-- DNS managed via Cloudflare (CNAME to gfrmin.github.io)
+- Push to `master` → `.github/workflows/publish.yml` runs Hugo and deploys to GitHub Pages.
+- Custom domain `www.gfrm.in`, DNS via Cloudflare (CNAME to `gfrmin.github.io`).
+- **Cloudflare caches aggressively** — a deploy is not visible until the cache is purged. After confirming the GitHub Actions run succeeds, purge the Cloudflare cache for zone `gfrm.in` (zone ID `a8f9ffe2e792e663242e5e5e7c03d5ff`).
