@@ -1,61 +1,54 @@
 ---
 title: "Guy Freeman"
-description: "Guy Freeman — data systems architect with 10+ years in fintech, insurance, and AI. PhD in Statistics from Warwick. Blog on Bayesian inference, production ML, and building with LLMs."
+description: "Guy Freeman — Bayesian statistician and ML researcher working on principled agent architecture. PhD in Statistics (Warwick). 1,750+ citations. Production AI at scale."
 ---
 
-I'm an end-to-end data specialist with 10+ years building production systems across fintech, insurance, HR tech, and data governance. I've led teams, architected pipelines, and shipped products—from document AI systems processing thousands of files to ML models that identified startups before they went public.
+I'm a Bayesian statistician working on principled AI agent architecture. My PhD work on Chain Event Graphs (Warwick, 2010, supervised by Jim Smith) established foundational methods for Bayesian structure learning that have been [cited over 1,750 times](https://scholar.google.com/citations?hl=en&user=H422hdkAAAAJ). My current research — [Credence](https://github.com/gfrmin/credence) — applies Value of Information theory to tool-using LLM agents, replacing prompt engineering heuristics with decision-theoretic optimality. The core question is the same one that matters for alignment: how do you build agents that know what they don't know, and act accordingly?
 
-My academic work on Bayesian methods and causal inference has been [cited over 1,750 times](https://scholar.google.com/citations?hl=en&user=H422hdkAAAAJ). I hold a PhD in Statistics from Warwick and a BA in Mathematical Sciences from Oxford.
+I also build production AI systems. Currently designing agentic flows at Booking.com. Previously: document AI, startup detection models, data governance systems across fintech, insurance, and VC.
 
-Based in Tel Aviv. Loves data, coffee, and the Oxford comma.
+Oxford mathematics. Warwick PhD. Based in Tel Aviv.
 
 <div class="availability-box">
-<p><strong>Open to contract, consulting, part-time, and full-time opportunities.</strong></p>
-<p>Whether you're building something new or have a stuck project that needs rescuing, <a href="/contact/">get in touch</a>.</p>
+<p><strong>Open to applied research and senior ML roles</strong>, particularly in agent architecture, decision-theoretic AI, and production ML systems. Also available for contract and consulting work.</p>
+<p>If you're working on agent reliability, tool use, or evaluation — <a href="/contact/">let's talk</a>.</p>
 </div>
 
 ## What I Do
 
-I help organisations build and fix production data systems—from initial architecture through to deployment and handover.
-
 <div class="service-grid">
 <div class="service-card">
 <div class="service-card-icon">&#x1F4CA;</div>
-<h3>Data Pipeline Architecture</h3>
-<p>Python, SQL, dbt, Airflow, Snowflake, Databricks. I've built document AI systems that process 500+ files in 20 minutes with 95%+ accuracy.</p>
+<h3>Bayesian Agent Research</h3>
+<p>Value of Information, conjugate Bayesian models, principled uncertainty quantification. Building agents that maintain beliefs, update from evidence, and decide rather than guess. See <a href="https://github.com/gfrmin/credence">Credence</a>.</p>
 </div>
 <div class="service-card">
 <div class="service-card-icon">&#x1F916;</div>
-<h3>Machine Learning in Production</h3>
-<p>From startup detection models for VC deal sourcing to anomaly detection for enterprise data governance.</p>
+<h3>Production AI Systems</h3>
+<p>From 27-pipeline document AI processing 500+ files in 20 minutes to agentic flow design at scale. I build things that run in production, not just benchmarks.</p>
 </div>
 <div class="service-card">
 <div class="service-card-icon">&#x1F4AC;</div>
-<h3>LLM Integration</h3>
-<p>Claude, GPT, Gemini. Early adopter (GPT-3 era) with production deployments across multiple industries.</p>
+<h3>LLM Integration & Evaluation</h3>
+<p>Early adopter (GPT-3 era). Production deployments across multiple industries. Particular focus on evaluating agent reliability — including <a href="/posts/agentic-ai/">why accuracy metrics alone mislead</a>.</p>
 </div>
 <div class="service-card">
 <div class="service-card-icon">&#x1F465;</div>
-<h3>Team Leadership & Mentoring</h3>
-<p>Hiring, architecture decisions, code review, unblocking stuck projects.</p>
+<h3>Research & Writing</h3>
+<p>1,750+ citations in Bayesian graphical models. Active blog on decision theory and agent architecture. Investigative journalism on startup governance. I write for technical audiences who care about getting things right.</p>
 </div>
 </div>
-
-I've worked across fintech, insurance, HR tech, venture capital, and civic tech—so I'm comfortable translating between business stakeholders and technical implementation.
 
 ## Featured Project
 
 <div class="featured-project">
-<div class="featured-project-image">
-<img src="/images/scalibur.png" alt="Scalibur — Python tool for reading body composition data from Bluetooth scales">
-</div>
 <div class="featured-project-content">
 
-### Scalibur
+### Credence
 
-Python tool for reading body composition data from cheap Bluetooth scales. Reverse-engineered BLE protocol, handles impedance measurements, and calculates body fat, muscle mass, and metabolic metrics.
+A Bayesian agent framework using Value of Information for principled tool selection. Benchmarked against LangChain ReAct on a tool-use task: LangChain scored -8, Credence scored +112, despite LangChain achieving higher raw accuracy. The accuracy paradox: knowing more answers isn't the same as knowing which answers are worth finding.
 
-<a href="https://github.com/gfrmin/scalibur" target="_blank" class="featured-project-link">View on GitHub →</a>
+<a href="https://github.com/gfrmin/credence" target="_blank" class="featured-project-link">View on GitHub →</a>
 
 </div>
 </div>

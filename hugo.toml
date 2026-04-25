@@ -4,7 +4,7 @@ languageCode = "en"
 defaultContentLanguage = "en"
 
 [params]
-  description = "Guy Freeman's personal blog on data science, software engineering, and building with AI."
+  description = "Guy Freeman — Bayesian statistician and ML researcher working on principled agent architecture. PhD in Statistics (Warwick). 1,750+ citations. Production AI at scale."
   author = "Guy Freeman"
   ogImage = "images/og-default.png"
   twitterHandle = "gfrm_in"
@@ -15,6 +15,7 @@ defaultContentLanguage = "en"
   mastodon = "https://defcon.social/@gfrmin"
   github = "https://github.com/gfrmin"
   linkedin = "https://linkedin.com/in/guyfreemanstat"
+  scholar = "https://scholar.google.com/citations?hl=en&user=H422hdkAAAAJ"
 
 [languages]
   [languages.en]
@@ -38,13 +39,17 @@ defaultContentLanguage = "en"
     url = "/posts/"
     weight = 2
   [[menu.main]]
+    name = "Research"
+    url = "/research/"
+    weight = 3
+  [[menu.main]]
     name = "Projects"
     url = "/projects/"
-    weight = 3
+    weight = 4
   [[menu.main]]
     name = "Contact"
     url = "/contact/"
-    weight = 4
+    weight = 5
 
 [markup]
   [markup.highlight]

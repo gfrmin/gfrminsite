@@ -2,7 +2,12 @@
 title: "Projects"
 ---
 
-A selection of open source projects and civic tech initiatives.
+A selection of research tools, open source projects, and civic tech initiatives.
+
+<div class="project-card">
+<h3><a href="https://github.com/gfrmin/credence" target="_blank">Credence</a></h3>
+<p>Bayesian agent framework for principled LLM tool selection. Maintains Beta posteriors over tool reliability, computes expected value of information before each query, and maximises expected utility across a coherent objective function. Benchmarked against LangChain ReAct: scored +112 vs -8 despite lower raw accuracy. Written in Python with NumPy and SciPy.</p>
+</div>
 
 <div class="project-card">
 <h3><a href="https://accessinfo.hk" target="_blank">accessinfo.hk</a></h3>
