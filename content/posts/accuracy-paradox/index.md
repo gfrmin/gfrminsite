@@ -4,7 +4,7 @@ subtitle: "What happens when you add a utility function to a question-answering 
 description: "A Bayesian decision-theoretic agent scores lower on accuracy than every LLM variant it competes against --- and beats the best of them by 120 points. The explanation requires thinking about something that LLM benchmarks typically refuse to think about."
 author: "Guy Freeman"
 date: 2026-04-01
-publishDate: 2026-05-07
+publishDate: 2026-04-30
 categories: [essays, bayesian, machine-learning, ai]
 ---
 

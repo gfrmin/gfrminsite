@@ -4,7 +4,7 @@ subtitle: "A drop-in OpenAI-compatible proxy that decides which model to call by
 description: "Credence-proxy sits between an agent and its LLM providers, learns which model is good for which category, and routes accordingly. On an OpenClaw benchmark it cut cost by 96% and latency by 52% while raising quality by 1.24 points. The mechanism is one equation."
 author: "Guy Freeman"
 date: 2026-04-14
-publishDate: 2026-05-07
+publishDate: 2026-04-30
 categories: [essays, bayesian, machine-learning, ai]
 ---
 

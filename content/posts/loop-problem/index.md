@@ -4,7 +4,7 @@ subtitle: "98.5% fewer loops, 0% more intelligence — just better state represe
 description: "Every RL agent that has played a text adventure has tried to take the lantern fifty times in a row. The fix is not better exploration heuristics. The fix is representing state properly."
 author: "Guy Freeman"
 date: 2026-03-24
-publishDate: 2026-04-30
+publishDate: 2026-04-28
 categories: [julia, bayesian, machine-learning, ai, reinforcement-learning]
 ---
 
