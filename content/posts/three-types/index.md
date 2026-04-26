@@ -3,12 +3,12 @@ title: "Three Types and a Funeral for Your Inference Library"
 subtitle: "The axioms, the types, and the forbidden patterns behind an agent that learns and decides from first principles"
 description: "What would it take to build an agent whose behaviour is derived from a few fundamentals the way physics is derived from conservation laws? Three types, four axioms, and a refusal to add anything else."
 author: "Guy Freeman"
-date: 2026-03-22
+date: 2026-04-26
 categories: [julia, bayesian, machine-learning, ai, essays]
 ---
 
 {{< callout type="note" >}}
-This is Part 1 of a series. For what these principles produce in practice, see [Part 2: Teaching Zork to a Bayesian](/posts/teaching-zork/) and [Part 3: The Loop Problem](/posts/loop-problem/).
+This is Part 1 of a series on Bayesian decision-theoretic agents.
 {{< /callout >}}
 
 {{< callout type="note" >}}
@@ -213,11 +213,11 @@ The VOI computation in [How Decision Theory Cuts Your API Bill in Half](/posts/d
 
 Three types. Four axioms. Seventy-four lines of stdlib. Everything else these posts described falls out of the mathematics. Not because the mathematics is clever, but because the mathematics is correct, and the alternative --- adding special-case mechanisms for exploration, for tool selection, for when to stop querying --- is provably worse.
 
-The next two posts in this series apply these principles to domains where the consequences are visceral. [Part 2](/posts/teaching-zork/) puts a Bayesian agent in a text adventure, where over-querying is impossible and the LLM is explicitly a sensor, not a commander. [Part 3](/posts/loop-problem/) confronts the most universal failure mode of RL agents --- the loop --- and eliminates 98.5% of them by representing state properly. Both are applications. This post is the reason they work.
+The next posts in this series apply these principles to domains where the consequences are visceral: a text adventure where over-querying is impossible and the LLM is explicitly a sensor, not a commander, and the most universal failure mode of RL agents --- the loop --- eliminated by representing state properly. Those are applications. This post is the reason they work.
 
 ## What Came Next: The Funeral in the Title
 
-The architecture described above works. The applications in Parts 2 and 3 demonstrate it. The benchmark in [the accuracy paradox post](/posts/accuracy-paradox/) validates it. But building on it revealed three operational pains that traced to the same root cause: taking Measure as the foundational type.
+The architecture described above works. But building on it revealed three operational pains that traced to the same root cause: taking Measure as the foundational type.
 
 **Pain 1: Conjugate dispatch scattered across case branches.** Adding a new conjugate pair --- say, Normal-Gamma --- required editing `condition` methods across multiple Measure subtypes, each with nested case analysis on the kernel's `likelihood_family`. The dispatch logic was $N \times M$ branches: $N$ measure types times $M$ likelihood families. Every new pair touched code it shouldn't need to know about.
 
@@ -243,7 +243,7 @@ The three types became four --- Space, **Prevision**, Event, Kernel --- and the 
 
 3. Exchangeability became a first-class type. `ExchangeablePrevision` carries de Finetti's representation theorem as a `decompose` method --- it returns the mixture-of-ergodic-components structure that the email agent previously assembled by hand.
 
-The reconstruction is operationally equivalent to the measure-theoretic implementation it replaced --- bit-exact under seeded RNG for particle paths, bit-exact for closed-form conjugate updates, and tighter-than-reassociation tolerances everywhere else. The axioms did not change. The four frozen functions did not change. The applications described in [Part 2](/posts/teaching-zork/) and [Part 3](/posts/loop-problem/) work identically. What changed is which type appears at the bottom, and therefore which invariants the type system can enforce.
+The reconstruction is operationally equivalent to the measure-theoretic implementation it replaced --- bit-exact under seeded RNG for particle paths, bit-exact for closed-form conjugate updates, and tighter-than-reassociation tolerances everywhere else. The axioms did not change. The four frozen functions did not change. The applications work identically. What changed is which type appears at the bottom, and therefore which invariants the type system can enforce.
 
 The funeral in the title was meant for inference libraries that add special-case mechanisms instead of deriving behaviour from axioms. It turned out to apply, in the end, to the Measure type itself.
 
