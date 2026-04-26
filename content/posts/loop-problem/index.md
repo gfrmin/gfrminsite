@@ -4,7 +4,7 @@ subtitle: "98.5% fewer loops, 0% more intelligence — just better state represe
 description: "Every RL agent that has played a text adventure has tried to take the lantern fifty times in a row. The fix is not better exploration heuristics. The fix is representing state properly."
 author: "Guy Freeman"
 date: 2026-03-24
-draft: true
+publishDate: 2026-04-30
 categories: [julia, bayesian, machine-learning, ai, reinforcement-learning]
 ---
 
@@ -89,7 +89,7 @@ Thirty-nine loops reduced to 0.6. The agent discovers more unique states (19.2 v
 
 The factored model scores zero. The baseline scores 20. This looks like a regression and isn't.
 
-The factored model doesn't have reward learning implemented yet. Its `FactoredWorldModel` tracks transition dynamics (where do I end up, what changes in my inventory) but doesn't yet learn `P(reward | state, action)`. The MCTS planner, unable to evaluate which states are rewarding, falls back to random rollouts --- which can't find rewards by chance in a game as large as Enchanter.
+The factored model has reward learning infrastructure --- a Normal-Gamma posterior over `P(reward | state, action)` that updates via conjugate conditioning --- but it is not yet effective. The `FactoredWorldModel` tracks transition dynamics well (where do I end up, what changes in my inventory), and the reward posteriors update correctly, but the MCTS planner cannot yet find rewarding states reliably enough to learn from them. Random rollouts in a game as large as Enchanter rarely stumble into rewards, so the reward posteriors remain too diffuse to guide planning.
 
 This is incomplete integration, not failure. The agent stops doing stupid things. It doesn't yet know what smart things look like. I present this straightforwardly because the alternative --- cherry-picking the metric that improved while eliding the one that regressed --- is the kind of benchmarking that makes machine learning papers unreliable. The looping elimination is the result. The scoring is future work. Both facts matter.
 
@@ -115,7 +115,7 @@ At each planning step:
 2. Build a search tree using these sampled dynamics. The tree is up to 8 actions deep, exploring 60 trajectories.
 3. Select the action at the root with the highest mean value.
 
-No exploration bonus. No UCB formula. No temperature parameter. Thompson Sampling naturally balances exploration and exploitation: uncertain transitions produce diverse sampled dynamics, which produce diverse search trees, which produce diverse action recommendations. As the posterior concentrates around the true dynamics, the sampled dynamics converge, the search trees converge, and the agent exploits.
+No exploration bonus. No temperature parameter. Within each sampled tree, the planner uses UCB to traverse nodes efficiently --- but this is not the exploration mechanism. The exploration comes from Thompson Sampling: uncertain transitions produce diverse sampled dynamics, which produce diverse search trees, which produce diverse action recommendations. The UCB within a single sample is just efficient tree search under known (sampled) dynamics. The inter-sample diversity is what drives exploration. As the posterior concentrates around the true dynamics, the sampled dynamics converge, the search trees converge, and the agent exploits.
 
 This is the same principle as the Thompson Sampling in [Part 1 of the Bayesian agent series](/posts/bayesian-agent/), applied to planning rather than to action selection. There, the agent sampled from its posterior over food energy values. Here, the agent samples from its posterior over world dynamics. The mechanism is identical: `draw` from a posterior, `argmax` over the result. Two timescales, one mathematics.
 

@@ -4,12 +4,15 @@ subtitle: "The axioms, the types, and the forbidden patterns behind an agent tha
 description: "What would it take to build an agent whose behaviour is derived from a few fundamentals the way physics is derived from conservation laws? Three types, four axioms, and a refusal to add anything else."
 author: "Guy Freeman"
 date: 2026-03-22
-draft: true
 categories: [julia, bayesian, machine-learning, ai, essays]
 ---
 
 {{< callout type="note" >}}
 This is Part 1 of a series. For what these principles produce in practice, see [Part 2: Teaching Zork to a Bayesian](/posts/teaching-zork/) and [Part 3: The Loop Problem](/posts/loop-problem/).
+{{< /callout >}}
+
+{{< callout type="note" >}}
+This post describes the Credence architecture as it stood in March 2026, when the system used the standard Kolmogorov definition of probability --- measures over sample spaces. Since then, the foundation has been reconstructed around de Finetti's definition, where expectation (the *prevision*) is the primitive and probability is derived from it. The three types described here were the right starting point; [what came next](#what-came-next-the-funeral-in-the-title) is at the end.
 {{< /callout >}}
 
 What would it take to build an agent that genuinely learns and decides --- not one that pattern-matches its way through tool calls, but one whose behaviour is *derived* from a few fundamentals the way physics is derived from conservation laws?
@@ -44,8 +47,11 @@ abstract type Measure end  # a probability distribution over a space
 struct Kernel              # a conditional distribution between two spaces
     source::Space
     target::Space
-    generate::Function     # h → distribution spec
-    log_density::Function  # (h, o) → log P(o|h)
+    generate::Function          # h → distribution spec
+    log_density::Function       # (h, o) → log P(o|h)
+    factor_selector             # optional: selects subcomponents
+    params                      # optional: metadata
+    likelihood_family           # controls conjugate dispatch
 end
 ```
 
@@ -65,15 +71,14 @@ Four functions implement the axioms. Their *behaviour* is frozen. Their interfac
 
 $$P(h \mid o) \propto P(o \mid h) \cdot P(h)$$
 
-In code, `condition` dispatches on the types of its arguments. When a Beta measure meets a Bernoulli kernel, it recognises conjugate structure and returns a new Beta with incremented parameters --- exact, closed-form, no approximation:
+In code, `condition` dispatches on the types of its arguments. When a Beta measure meets a Bernoulli kernel, it first checks for conjugate structure --- and when it finds it, the update is exact, closed-form, no approximation. The conjugate path for Beta-Bernoulli reduces to:
 
 ```julia
-function condition(m::BetaMeasure, k::Kernel, observation)
-    if observation == true
-        BetaMeasure(m.space, m.alpha + 1.0, m.beta)
-    else
-        BetaMeasure(m.space, m.alpha, m.beta + 1.0)
-    end
+# after conjugate dispatch, the core update is:
+if observation == true
+    BetaMeasure(m.space, m.alpha + 1.0, m.beta)
+else
+    BetaMeasure(m.space, m.alpha, m.beta + 1.0)
 end
 ```
 
@@ -209,5 +214,37 @@ The VOI computation in [How Decision Theory Cuts Your API Bill in Half](/posts/d
 Three types. Four axioms. Seventy-four lines of stdlib. Everything else these posts described falls out of the mathematics. Not because the mathematics is clever, but because the mathematics is correct, and the alternative --- adding special-case mechanisms for exploration, for tool selection, for when to stop querying --- is provably worse.
 
 The next two posts in this series apply these principles to domains where the consequences are visceral. [Part 2](/posts/teaching-zork/) puts a Bayesian agent in a text adventure, where over-querying is impossible and the LLM is explicitly a sensor, not a commander. [Part 3](/posts/loop-problem/) confronts the most universal failure mode of RL agents --- the loop --- and eliminates 98.5% of them by representing state properly. Both are applications. This post is the reason they work.
+
+## What Came Next: The Funeral in the Title
+
+The architecture described above works. The applications in Parts 2 and 3 demonstrate it. The benchmark in [the accuracy paradox post](/posts/accuracy-paradox/) validates it. But building on it revealed three operational pains that traced to the same root cause: taking Measure as the foundational type.
+
+**Pain 1: Conjugate dispatch scattered across case branches.** Adding a new conjugate pair --- say, Normal-Gamma --- required editing `condition` methods across multiple Measure subtypes, each with nested case analysis on the kernel's `likelihood_family`. The dispatch logic was $N \times M$ branches: $N$ measure types times $M$ likelihood families. Every new pair touched code it shouldn't need to know about.
+
+**Pain 2: Mixture conditioning duct-taped across two layers.** The email agent maintained a belief over 22 candidate programs as a mixture. Conditioning that mixture on evidence required a `FiringByTag` routing helper on the kernel side, a `_predictive_ll` flattening loop on the measure side, and application code manually reweighting components. Per-component routing semantics lived in one place; mixture flattening in another. Each extension was fragile.
+
+**Pain 3: Exchangeability inexpressible in the type system.** Those 22 programs were exchangeable within their tag class --- the agent's belief was symmetric in programs of the same type, which is the mathematical structure that justifies de Finetti's representation theorem. But the type system had no way to say this. Exchangeability was a comment in the code. A comment is a promise to future programmers that the runtime cannot enforce.
+
+All three pains share a cause. The Kolmogorov foundation takes the **measure** as primitive and derives expectation as integration against it. But the agent's coherence --- the Dutch-book argument that justifies Bayesian updating in the first place --- doesn't require a measure at all.
+
+De Finetti's *Theory of Probability* (1974, vol. 1, ch. 3) makes the alternative explicit. A **prevision** $\mathbf{P}(X)$ is the certain gain you consider equivalent to a random gain $X$ --- the price at which you would be indifferent between holding the uncertain quantity and accepting the sure thing. Coherence --- the impossibility of a combination of bets that guarantees loss --- forces $\mathbf{P}$ to be additive and bounded. These two properties are, as de Finetti puts it, "not only necessary but also sufficient" for the entire theory. Probability is the special case: the prevision of an indicator. Whittle's *Probability via Expectation* (2000, ch. 2) reaches the same conclusion from the other direction, axiomatising the expectation operator directly --- positivity, linearity, normalisation, continuity --- and deriving $P(A) = E[\mathbf{1}_A]$ as a consequence. In both treatments, the measure is not a foundation. It is a derived quantity.
+
+The reconstruction follows this inversion. The primitive type is now a prevision --- a coherent linear functional on a declared test function space. `expect` is not derived by integration; it IS the definition of what a prevision does. A measure is recovered as the restriction of a prevision to indicator functions:
+
+$$\mu(A) = \text{expect}(p, \mathbf{1}_A)$$
+
+Mean is `expect(p, Identity())`. Probability of an event is `expect(p, Indicator(e))`. Variance is `expect(p, CenteredSquare(mean))`. Every numerical query routes through `expect`. The measure was never needed as a primitive; it was a historical convenience that became a structural liability.
+
+The three types became four --- Space, **Prevision**, Event, Kernel --- and the three pains dissolved:
+
+1. Conjugate dispatch became a type-structural registry. `ConjugatePrevision{Prior, Likelihood}` pairs are dispatched on parametric type, not likelihood-family case analysis. Adding a new pair adds a row, not a branch.
+
+2. Mixture conditioning became a coherent operation. `MixturePrevision` owns both component-wise update and per-component routing as a single primitive. No dual residency, no duct tape.
+
+3. Exchangeability became a first-class type. `ExchangeablePrevision` carries de Finetti's representation theorem as a `decompose` method --- it returns the mixture-of-ergodic-components structure that the email agent previously assembled by hand.
+
+The reconstruction is operationally equivalent to the measure-theoretic implementation it replaced --- bit-exact under seeded RNG for particle paths, bit-exact for closed-form conjugate updates, and tighter-than-reassociation tolerances everywhere else. The axioms did not change. The four frozen functions did not change. The applications described in [Part 2](/posts/teaching-zork/) and [Part 3](/posts/loop-problem/) work identically. What changed is which type appears at the bottom, and therefore which invariants the type system can enforce.
+
+The funeral in the title was meant for inference libraries that add special-case mechanisms instead of deriving behaviour from axioms. It turned out to apply, in the end, to the Measure type itself.
 
 Code: [github.com/gfrmin/credence](https://github.com/gfrmin/credence)
