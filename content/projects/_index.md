@@ -10,6 +10,11 @@ A selection of research tools, open source projects, and civic tech initiatives.
 </div>
 
 <div class="project-card">
+<h3><a href="https://docavivplus.gfrm.in" target="_blank">docaviv+</a></h3>
+<p>A faster, mobile-friendly discovery frontend for the Tel Aviv International Documentary Film Festival (docaviv.co.il). Bilingual Hebrew/English with RTL support, fuzzy search, day-by-day schedule grid, and per-screening ticket links. Built as a static Astro site that ingests the festival's WordPress REST API plus a small cheerio scraper that recovers metadata (synopses, runtime, trailers, ticket URLs) only exposed in the rendered HTML. Hosted on Cloudflare Pages.</p>
+</div>
+
+<div class="project-card">
 <h3><a href="https://accessinfo.hk" target="_blank">accessinfo.hk</a></h3>
 <p>Hong Kong's Freedom of Information request platform. Makes it easier for citizens to submit and track FOI requests to government bodies. Built on the Alaveteli platform.</p>
 </div>
