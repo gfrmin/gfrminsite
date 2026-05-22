@@ -1,0 +1,187 @@
+Return-Path: <msprvs1=20598lPyGtDX-=bounces-265094@notify.cloudflare.com>
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	 by slotpi10m04 (Cyrus 3.13.4-114-g218aec1ff-fm-20260513.001-g218aec1f) with LMTPA;
+	 Mon, 18 May 2026 15:43:26 -0400
+X-Cyrus-Session-Id: slotpi10m04-1779133406-2796569-2-1750260405359192421
+X-Sieve: CMU Sieve 3.0
+X-Spam-known-sender: no
+X-Spam-sender-reputation: 1000 (domain)
+X-Spam-score: 0.0
+X-Spam-hits: BAYES_00 -1.9, DCC_REPUT_70_89 0.1, ME_SC_SENDERREP -100,
+  ME_SENDERREP_ALLOW -4, RCVD_IN_MSPIKE_H3 0.001, RCVD_IN_MSPIKE_WL 0.001,
+  SHORTCIRCUIT -0.0001, SPF_HELO_NONE 0.001, SPF_PASS -0.001, LANGUAGES en,
+  BAYES_USED user, SA_VERSION 4.0.1
+X-Spam-source: IP='192.174.87.157', Host='mta-87-157.sparkpostmail.com', Country='US',
+  FromHeader='com', MailFrom='com'
+X-Spam-charsets: plain='UTF-8'
+X-Resolved-to: [redacted]
+X-Delivered-to: [redacted]
+X-Mail-from: msprvs1=20598lPyGtDX-=bounces-265094@notify.cloudflare.com
+Received: from phl-mx-03 ([10.202.2.202])
+  by phl-compute-05.internal (LMTPProxy); Mon, 18 May 2026 15:43:26 -0400
+Received: from phl-mx-03.messagingengine.com (localhost [127.0.0.1])
+	by mailmx.phl.internal (Postfix) with ESMTP id 1E01D4BA3A20
+	for <[redacted]>; Mon, 18 May 2026 15:43:26 -0400 (EDT)
+Received: from mailmx.phl.internal (localhost [127.0.0.1])
+    by phl-mx-03.messagingengine.com (Authentication Milter) with ESMTP
+    id B1329FCC355.69ECC4BA3A0E;
+    Mon, 18 May 2026 15:43:25 -0400
+ARC-Seal: i=1; a=rsa-sha256; cv=none; d=messagingengine.com; s=fm3; t=
+    1779133405; b=eggRYjc6sy3qebobPwaVoIGgWaoTeGnwh1+e7zfFaQI1WpSOM7
+    e+AWGikl2Esda8YMxFpnjDKDLj8ldskGD6OVDTPAqGh2v03ZytbVZ6dgj4vMovI1
+    DchUtKvI1y8rwTMWMRG51QygskXTVdeyPIbZelYM0ox3FgTIUBWf2U/NGNMMiEHk
+    36bBuZGxXBrYH5cmPf5/p2qQIj45XKWjSALEQChHWQND/5rZ8gr9s1inoDYAhnRK
+    UK1yNqice7Eo8H5pgoddd9O0m8anhATu6xe0WOxus4nS0FRdybIgUHE1m95O7FgD
+    l1V5R47RwKbsT7iJJ/5oHKXZnQezhQWr+Qqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=
+    messagingengine.com; h=content-transfer-encoding:content-type
+    :subject:message-id:to:date:mime-version:reply-to:from; s=fm3;
+    t=1779133405; bh=dto2PdHZMZF2yV5XcCMwNyJXeLSIK82ad4t/83VIsrI=; b=
+    bnbqCgMRrzgProMJLXGyXX/XP8sOB0ul6gMx0RKUZryKdWyBiwdWcGMXq70PXVJI
+    /cxVFU00nIRNZWMua/ZEkNRuTNxxb/VHhfhQZQbjGySvhl8AkgKAMnVvHg+DFmwV
+    rdHa0dyLQ7L8FuBMfo2eKHUG89T0qUpS5VD1/beVKUUIA22Ea2DKFx6An5XL8n5X
+    LiyPn3v4GtwG3K32GFuFkMWpVgJaIKy6jeOVLHtpCJ1hG2UFkxuxVkXVU0cOBrKk
+    lvvqdGUCooqjyl3+C2to8ugANLpmdK/XzIjeWcaKZjJ5MzshN7g7PchWasTaHpVr
+    GizCm3ZyhYRHG2YxWyPHpQ==
+ARC-Authentication-Results: i=1; phl-mx-03.messagingengine.com;
+    x-csa=none;
+    x-me-sender=none;
+    x-ptr=pass smtp.helo=mta-87-157.sparkpostmail.com
+    policy.ptr=mta-87-157.sparkpostmail.com;
+    bimi=fail (VMC has expired) policy.authority=fail
+    policy.mark-type="Registered Mark"
+    policy.authority-uri=
+    https://www.cloudflare.com/cloudflare_1171114652.pem;
+    arc=none (no signatures found);
+    dkim=pass (2048-bit rsa key sha256) header.d=notify.cloudflare.com
+    header.i=@notify.cloudflare.com header.b=GC/m6ZLs header.a=rsa-sha256
+    header.s=sparkpostus2026;
+    dmarc=pass policy.published-domain-policy=reject
+    policy.applied-disposition=none policy.evaluated-disposition=none
+    (p=reject,d=none,d.eval=none) policy.policy-from=p
+    header.from=notify.cloudflare.com;
+    iprev=pass smtp.remote-ip=192.174.87.157 (mta-87-157.sparkpostmail.com);
+    spf=pass
+    smtp.mailfrom=
+    "msprvs1=20598lPyGtDX-=bounces-265094@notify.cloudflare.com"
+    smtp.helo=mta-87-157.sparkpostmail.com
+X-ME-Authentication-Results: phl-mx-03.messagingengine.com;
+    x-tls=pass smtp.version=TLSv1.2 smtp.cipher=ECDHE-RSA-AES256-GCM-SHA384
+      smtp.bits=256/256;
+    x-vs=clean score=50 state=0
+Authentication-Results: phl-mx-03.messagingengine.com;
+    x-csa=none;
+    x-me-sender=none;
+    x-ptr=pass smtp.helo=mta-87-157.sparkpostmail.com
+      policy.ptr=mta-87-157.sparkpostmail.com
+Authentication-Results: phl-mx-03.messagingengine.com;
+    bimi=fail (VMC has expired) policy.authority=fail
+      policy.mark-type="Registered Mark"
+      policy.authority-uri=
+      https://www.cloudflare.com/cloudflare_1171114652.pem
+Authentication-Results: phl-mx-03.messagingengine.com;
+    arc=none (no signatures found)
+Authentication-Results: phl-mx-03.messagingengine.com;
+    dkim=pass (2048-bit rsa key sha256) header.d=notify.cloudflare.com
+      header.i=@notify.cloudflare.com header.b=GC/m6ZLs header.a=rsa-sha256
+      header.s=sparkpostus2026;
+    dmarc=pass policy.published-domain-policy=reject
+      policy.applied-disposition=none policy.evaluated-disposition=none
+      (p=reject,d=none,d.eval=none) policy.policy-from=p
+      header.from=notify.cloudflare.com;
+    iprev=pass smtp.remote-ip=192.174.87.157 (mta-87-157.sparkpostmail.com);
+    spf=pass
+      smtp.mailfrom=
+      "msprvs1=20598lPyGtDX-=bounces-265094@notify.cloudflare.com"
+      smtp.helo=mta-87-157.sparkpostmail.com
+X-ME-VSCause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeeljeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucgovfgvgihtqfhnlhihqddqteefjeefqddtgeculdehtd
+    dmnecujfgurhepgfgtuffkvfffgghrhfesthejtddttddtjeenucfhrhhomhepfdevlhho
+    uhgufhhlrghrvgcuvfhruhhsthcujdcuufgrfhgvthihfdcuoegrsghushgvsehnohhtih
+    hfhidrtghlohhuughflhgrrhgvrdgtohhmqeenucggtffrrghtthgvrhhnpefhfeefhfei
+    ffehueekhfelgffhveelvdevhffftdefudduhfegteeghfelhffgfeenucffohhmrghinh
+    epghhfrhhmrdhinhdpthhhvghmrghrkhgvrhdrtghomhenucfkphepudelvddrudejgedr
+    keejrdduheejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepud
+    elvddrudejgedrkeejrdduheejpdhhvghlohepmhhtrgdqkeejqdduheejrdhsphgrrhhk
+    phhoshhtmhgrihhlrdgtohhmpdhmrghilhhfrhhomhepoehmshhprhhvshdupedvtdehle
+    eklhfrhifithffigdqpegsohhunhgtvghsqddvieehtdelgeesnhhothhifhihrdgtlhho
+    uhgufhhlrghrvgdrtghomheqpdhnsggprhgtphhtthhopedupdhrtghpthhtohepoegrsg
+    hushgvsehpuhgslhhitggurghtrghmrghrkhgvthdrtghomheq
+X-ME-VSScore: 50
+X-ME-VSCategory: clean
+X-ME-CSA: none
+X-ME-Received: <xmx:3WsLarrnLwk9lpv763EIgqcazLfMiSenlT7gatRmao3K8t-rx9yW4A>
+X-ME-Received: <xmx:3WsLakF-VV7g_eLZ2HysrXuIwJDEKKaB22GRyBBEbstunJSDdLAvCw>
+Received-SPF: pass
+    (notify.cloudflare.com: Sender is authorized to use 'msprvs1=20598lPyGtDX-=bounces-265094@notify.cloudflare.com' in 'mfrom' identity (mechanism 'include:_spf.sparkpostmail.com' matched))
+    receiver=phl-mx-03.messagingengine.com;
+    identity=mailfrom;
+    envelope-from="msprvs1=20598lPyGtDX-=bounces-265094@notify.cloudflare.com";
+    helo=mta-87-157.sparkpostmail.com;
+    client-ip=192.174.87.157
+Received: from mta-87-157.sparkpostmail.com (mta-87-157.sparkpostmail.com [192.174.87.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by phl-mx-03.messagingengine.com (Postfix) with ESMTPS id 69ECC4BA3A0E
+	for <[redacted]>; Mon, 18 May 2026 15:43:25 -0400 (EDT)
+X-MSFBL: [redacted - SparkPost feedback loop token encoding recipient address]
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=notify.cloudflare.com; s=sparkpostus2026; t=1779133403;
+	i=@notify.cloudflare.com;
+	bh=dto2PdHZMZF2yV5XcCMwNyJXeLSIK82ad4t/83VIsrI=;
+	h=Content-Type:Subject:Message-ID:To:Date:From:From:To:Cc:Subject;
+	b=GC/m6ZLs4ye7dbc/UGQkEWU+dAtfKRAYY6We0BtKDLmXroPqM59E0nrSyj5q13QNp
+	 P1dCw8eEZbohFDk/ua47Jp7PPB+hiqDGE3i8JSxF1erZqsM1SNP1s1wRYf08VGf6Ol
+	 nLbkEO1RzU2Kjj7J09DxWRYJycKBlnBR/kRZQEhhaek3fO8xfo5p2CINmZsLnwhv0K
+	 pN0lPTjVR6jtk4j4lQeWi03pEvK/HCLBKr0wLFYIdSAlY8g9CmyVyUtyMB91DQ/Rxz
+	 zW6jJOWVvUpxoX3caZPuC4KVtCL+/P0t0ljpiqsWvLHimWvOPwf+TDSxsxG67OLMUi
+	 i0jR9qQ12SUow==
+Received: from [10.90.12.149] ([10.90.12.149])
+	by i-0dfa16ae91a10fb5f.mta1vrest.sd.prd.sparkpost (ecelerity 5.2.0.75738 r(msys-ecelerity:tags/5.2.0.21)) with REST
+	id 3E/82-62701-BDB6B0A6; Mon, 18 May 2026 19:43:23 +0000
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
+Subject: [8582385eacc6ebe8]: DMCA copyright infringement complaint received regarding your site
+Message-ID: <3E.82.62701.BDB6B0A6@i-0dfa16ae91a10fb5f.mta1vrest.sd.prd.sparkpost>
+To: [redacted]
+Date: Mon, 18 May 2026 19:43:23 +0000
+MIME-Version: 1.0
+Reply-To: noreply@notify.cloudflare.com
+From: "Cloudflare Trust & Safety" <abuse@notify.cloudflare.com>
+
+Hello,
+
+Cloudflare received an DMCA copyright infringement complaint regarding: gfrm[.]in.
+
+We have forwarded this complaint to your hosting provider.
+
+If you have questions about this abuse report, please send an email to abusereply@cloudflare.com with the following details:
+- The report identification number included in the subject line
+- Any additional details, context or evidence you can provide regarding the content that was reported.
+
+Below is the report we received:
+
+Report ID: 8582385eacc6ebe8
+Logs or other evidence of abuse:  
+
+Reported URLs:
+hxxps://gfrm[.]in/posts/velotix-investigation/
+
+Original Work Description:
+https://www.themarker.com/news/internal-info/2026-05-18/ty-article/.premium/0000019e-3a86-d394-addf-fbbee3e00000 
+
+Below are the report submitter's details:
+
+Submitter's Name: Akash Ahmed
+Copyright Holder's Name: themarker.com
+Submitter's Email Address: akash723@mail4.uk
+Submitter's Address: Chittagong , Bangladesh
+Chittagong
+Chittagong
+BD
+
+This report was handled automatically and this email is an automated reply.
+
+Cloudflare Trust & Safety
+

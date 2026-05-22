@@ -12,7 +12,7 @@ categories: [investigation, startups, israel, cyber]
 ## גילוי נאות
 אני עובד לשעבר של ולוטיקס (אוקטובר 2024 – מאי 2025). אני הגשתי את התלונה למשרד העבודה המוזכרת בכתבה זו. כתבה זו מבוססת על מסמכים ממשלתיים רשמיים, כתבי בי-דין, דפי אינטרנט מאורכבים ומידע זמין לציבור. כשאני מסתמך על חוויתי האישית, אני אומר זאת.
 
-זהו חלק 1 מסדרה בת שלושה חלקים. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.
+זהו חלק 1 של תיקי ולוטיקס. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק. [חלק 4](/he/posts/velotix-the-takedown/) מתעד את הודעת ההסרה (DMCA) שהוגשה נגד הפוסט הזה.
 
 {{< /callout >}}
 
@@ -164,4 +164,4 @@ categories: [investigation, startups, israel, cyber]
 
 ---
 
-*זהו חלק 1 של תיקי ולוטיקס. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.*
+*זהו חלק 1 של תיקי ולוטיקס. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק. [חלק 4](/he/posts/velotix-the-takedown/) מתעד את הודעת ההסרה (DMCA) שהוגשה נגד הפוסט הזה.*

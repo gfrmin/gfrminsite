@@ -9,7 +9,7 @@ categories: [investigation, startups, israel, cyber, regulation]
 ---
 
 {{< callout type="note" >}}
-This is Part 3 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO.
+This is Part 3 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against Part 1.
 {{< /callout >}}
 
 ## The Plumbing
@@ -122,4 +122,4 @@ The ISA has not responded to enquiries at the time of publication.
 
 ---
 
-*This is Part 3 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO.*
+*This is Part 3 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against Part 1.*
