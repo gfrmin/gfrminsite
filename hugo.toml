@@ -1,6 +1,6 @@
 baseURL = "https://gfrm.in"
 title = "Guy Freeman"
-languageCode = "en"
+locale = "en"
 defaultContentLanguage = "en"
 
 [params]
@@ -20,10 +20,10 @@ defaultContentLanguage = "en"
 [languages]
   [languages.en]
     weight = 1
-    languageDirection = "ltr"
+    direction = "ltr"
   [languages.he]
     weight = 2
-    languageDirection = "rtl"
+    direction = "rtl"
     title = "גיא פרימן"
 
 [taxonomies]

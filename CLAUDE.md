@@ -18,7 +18,7 @@ hugo server -D
 hugo --minify
 
 # Pin to the CI-matching Hugo version if the `hugo` on $PATH is newer/older
-# CI uses peaceiris/actions-hugo@v3 with hugo-version 0.157.0 extended
+# CI uses peaceiris/actions-hugo@v3 with hugo-version 0.161.1 extended
 ```
 
 ## Architecture
