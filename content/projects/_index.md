@@ -5,6 +5,14 @@ title: "Projects"
 A selection of research tools, open source projects, and civic tech initiatives.
 
 <div class="project-card">
+<a href="https://kana.gfrm.in" target="_blank"><div class="project-card-image"><img src="/images/kana.png" alt="Kana derivation chart showing hiragana and katakana with their source kanji"></div></a>
+<div class="project-card-body">
+<h3><a href="https://kana.gfrm.in" target="_blank">Kana Derivation Chart</a></h3>
+<p>Interactive visualization of how the two Japanese phonetic alphabets — hiragana and katakana — were each derived from kanji. All 46 basic syllables laid out by consonant and vowel, colour-coded by writing system; click any cell to see the cursive-simplification (hiragana) and component-extraction (katakana) paths from the shared source kanji, plus notes on archaic kana and voiced/semi-voiced (dakuten) variants. Built with React and Vite, hosted on Cloudflare Pages.</p>
+</div>
+</div>
+
+<div class="project-card">
 <a href="https://github.com/gfrmin/credence" target="_blank"><div class="project-card-image placeholder"></div></a>
 <div class="project-card-body">
 <h3><a href="https://github.com/gfrmin/credence" target="_blank">Credence</a></h3>
