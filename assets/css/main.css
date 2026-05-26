@@ -1306,24 +1306,20 @@ blockquote p:last-child {
 }
 
 /* ============================================
-   PROJECT GRID (projects page)
+   PROJECT GRID (homepage + projects page)
    ============================================ */
-main.content:has(> .project-card) {
+.project-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-xl);
 }
 
-main.content:has(> .project-card) > :not(.project-card) {
-  grid-column: 1 / -1;
-}
-
-main.content:has(> .project-card) > .project-card {
+.project-grid > .project-card {
   margin-bottom: 0;
 }
 
 @media (max-width: 767.98px) {
-  main.content:has(> .project-card) {
+  .project-grid {
     grid-template-columns: 1fr;
   }
 }

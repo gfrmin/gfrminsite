@@ -1,0 +1,91 @@
+# Single source of truth for projects.
+# Rendered by layouts/partials/project-card.html into:
+#   - the homepage (layouts/index.html): `hero: true` -> big feature; `featured: true` -> grid
+#   - /projects/ (layouts/projects/list.html): all entries, ordered by `weight`
+# Omit `image` to render a placeholder card. English-only (no content/he tree yet).
+
+- title: "Kana Derivation Chart"
+  url: "https://kana.gfrm.in"
+  image: "/images/kana.png"
+  alt: "Kana derivation chart showing hiragana and katakana with their source kanji"
+  description: "An interactive map of how Japan's two phonetic alphabets grew out of kanji. All 46 basic syllables sit in a grid by consonant and vowel, colour-coded by script; click any cell to trace both descents from the shared source character — the cursive simplification that produced hiragana and the component extraction that produced katakana — with notes on archaic kana and the voiced dakuten variants. React and Vite, hosted on Cloudflare Pages."
+  weight: 10
+  featured: true
+  hero: false
+
+- title: "Credence"
+  url: "https://github.com/gfrmin/credence"
+  description: "A Bayesian agent framework that treats tool selection as a decision problem rather than a prompt-engineering one. It keeps a Beta posterior over each tool's reliability and, before every call, computes the expected value of the information that call would buy — acting only when the expected utility justifies it. On a tool-use benchmark it scored +112 against LangChain ReAct's -8 while answering fewer questions correctly: the accuracy paradox, where knowing more answers is not the same as knowing which answers are worth finding. Python, NumPy, and SciPy."
+  weight: 20
+  featured: false
+  hero: true
+
+- title: "credence-pi"
+  url: "https://github.com/gfrmin/credence-pi"
+  description: "A Bayesian governance layer that decides which of a coding agent's tool calls to allow, block, or pause for human approval — and learns where the line sits from the agent's own behaviour. The design splits into a body and a brain: a TypeScript body hooks the agent's tool_call event and reports a handful of declared features, while a Julia brain holds a Beta posterior over P(approve) and chooses an action by expected value of information, so asking the human wins exactly when the uncertainty is worth the interruption. The wire between them carries only observations and named actions, leaving the brain free to grow more sophisticated without the body ever needing to change. Julia (BDSL) and TypeScript."
+  weight: 25
+  featured: true
+  hero: false
+
+- title: "docaviv+"
+  url: "https://docavivplus.gfrm.in"
+  image: "/images/docavivplus.png"
+  alt: "docaviv+ home page showing upcoming festival screenings"
+  description: "A faster, phone-friendly way to browse the Tel Aviv International Documentary Film Festival than its official site. Bilingual Hebrew/English with full RTL, fuzzy search, a day-by-day schedule grid, and direct per-screening ticket links. Built as a static Astro site fed by the festival's WordPress API, with a small cheerio scraper that recovers the synopses, runtimes, trailers, and ticket URLs that exist only in the rendered HTML. Hosted on Cloudflare Pages."
+  weight: 30
+  featured: true
+  hero: false
+
+- title: "accessinfo.hk"
+  url: "https://accessinfo.hk"
+  image: "/images/accessinfo-hk.png"
+  alt: "accessinfo.hk screenshot"
+  description: "Hong Kong's Freedom of Information platform: citizens file requests to government bodies and track the replies in the open. Every exchange stays on the public record, accreting a searchable archive of what officials will and won't disclose. Built on Alaveteli."
+  weight: 40
+  featured: true
+  hero: false
+
+- title: "Webb Data"
+  url: "https://webbsite.renavon.com"
+  image: "/images/webb-data.png"
+  alt: "Webb Data screenshot"
+  description: "An open archive of 35 years of Hong Kong corporate data — directors, board memberships, CCASS shareholdings, and company-registry filings — cross-linked so you can follow who sits on which boards and who owns what. Corporate transparency as a queryable dataset."
+  weight: 50
+  featured: true
+  hero: false
+
+- title: "Scalibur"
+  url: "https://github.com/gfrmin/scalibur"
+  image: "/images/scalibur.png"
+  alt: "Scalibur screenshot"
+  description: "A Python tool that frees your weight data from cheap Bluetooth bathroom scales. It reverse-engineers the BLE protocol, reads the raw impedance measurement, and derives the body-fat, muscle-mass, and metabolic figures the vendor app keeps behind its own walls — built to sit on a Raspberry Pi and log every weigh-in automatically."
+  weight: 60
+  featured: false
+  hero: false
+
+- title: "Jarvis Lite"
+  url: "https://github.com/gfrmin/jarvis-lite"
+  image: "/images/jarvis-lite.png"
+  alt: "Jarvis Lite screenshot"
+  description: "A Getting Things Done bot for Telegram that accepts tasks in plain language. Claude Haiku reads the intent, PostgreSQL holds the list, and APScheduler sends a daily digest by email. Self-hostable, with nothing to install."
+  weight: 70
+  featured: false
+  hero: false
+
+- title: "GTD Lite Bot"
+  url: "https://t.me/gtdlitebot"
+  image: "/images/gtd-lite-bot.png"
+  alt: "GTD Lite Bot screenshot"
+  description: "A live, hosted instance of Jarvis Lite — open it in Telegram and try it without deploying anything yourself."
+  weight: 80
+  featured: false
+  hero: false
+
+- title: "bayesian-agent"
+  url: "https://github.com/gfrmin/bayesian-agent"
+  image: "/images/bayesian-agent.png"
+  alt: "bayesian-agent screenshot"
+  description: "A simulation framework for agents that learn to navigate an unknown environment by reasoning about their own uncertainty. It pairs Bayesian inference with Thompson sampling to balance exploration against exploitation — a compact demonstration of online probabilistic learning."
+  weight: 90
+  featured: false
+  hero: false

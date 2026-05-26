@@ -23,6 +23,23 @@
     {{ .Content }}
   </div>
 
+  <h2>Projects</h2>
+  {{ range where hugo.Data.projects "hero" true }}
+  <div class="featured-project">
+    <div class="featured-project-content">
+      <h3>{{ .title }}</h3>
+      <p>{{ .description }}</p>
+      <a href="{{ .url }}" target="_blank" class="featured-project-link">View on GitHub &rarr;</a>
+    </div>
+  </div>
+  {{ end }}
+  <div class="project-grid">
+    {{ range sort (where hugo.Data.projects "featured" true) "weight" }}
+    {{ partial "project-card.html" . }}
+    {{ end }}
+  </div>
+  <a href="{{ "projects/" | relURL }}" class="cta-pill">See all projects &rarr;</a>
+
   <h2>Recent Posts</h2>
   <div class="post-listing">
     {{ range ((where .Site.RegularPages "Section" "posts").ByDate.Reverse | first 5) }}

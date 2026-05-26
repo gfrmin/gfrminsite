@@ -1,0 +1,11 @@
+{{ define "main" }}
+<main class="content {{ if eq .Language.Direction "rtl" }}rtl-content{{ end }}">
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+  <div class="project-grid">
+    {{ range sort hugo.Data.projects "weight" }}
+    {{ partial "project-card.html" . }}
+    {{ end }}
+  </div>
+</main>
+{{ end }}

@@ -1,0 +1,14 @@
+{{- /* Renders one project card from a data/projects.yaml entry passed as the context. */ -}}
+<div class="project-card">
+  <a href="{{ .url }}" target="_blank">
+    {{- with .image }}
+    <div class="project-card-image"><img src="{{ . }}" alt="{{ $.alt }}"></div>
+    {{- else }}
+    <div class="project-card-image placeholder"></div>
+    {{- end }}
+  </a>
+  <div class="project-card-body">
+    <h3><a href="{{ .url }}" target="_blank">{{ .title }}</a></h3>
+    <p>{{ .description }}</p>
+  </div>
+</div>

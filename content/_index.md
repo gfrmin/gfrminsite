@@ -39,18 +39,3 @@ Oxford mathematics. Warwick PhD. Based in Tel Aviv.
 </div>
 </div>
 
-## Featured Project
-
-<div class="featured-project">
-<div class="featured-project-content">
-
-### Credence
-
-A Bayesian agent framework using Value of Information for principled tool selection. Benchmarked against LangChain ReAct on a tool-use task: LangChain scored -8, Credence scored +112, despite LangChain achieving higher raw accuracy. The accuracy paradox: knowing more answers isn't the same as knowing which answers are worth finding.
-
-<a href="https://github.com/gfrmin/credence" target="_blank" class="featured-project-link">View on GitHub →</a>
-
-</div>
-</div>
-
-<a href="/projects/" class="cta-pill">See all projects &rarr;</a>
