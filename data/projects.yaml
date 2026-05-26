@@ -21,7 +21,7 @@
   hero: true
 
 - title: "credence-pi"
-  url: "https://github.com/gfrmin/credence-pi"
+  url: "https://github.com/gfrmin/credence/tree/master/apps/credence-pi"
   description: "A Bayesian governance layer that decides which of a coding agent's tool calls to allow, block, or pause for human approval — and learns where the line sits from the agent's own behaviour. The design splits into a body and a brain: a TypeScript body hooks the agent's tool_call event and reports a handful of declared features, while a Julia brain holds a Beta posterior over P(approve) and chooses an action by expected value of information, so asking the human wins exactly when the uncertainty is worth the interruption. The wire between them carries only observations and named actions, leaving the brain free to grow more sophisticated without the body ever needing to change. Julia (BDSL) and TypeScript."
   weight: 25
   featured: true
