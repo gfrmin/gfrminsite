@@ -20,10 +20,24 @@
   featured: false
   hero: true
 
+- title: "life-agent"
+  url: "https://github.com/gfrmin/life-agent"
+  description: "The composition root for a personal life-management agent — an assistant that remembers your whole digital life, reasons under uncertainty, and acts across your tools. It reinvents nothing: every capability is wired in as an MCP server, so memory (pkm), the Bayesian governor (credence-pi), the agent runtime (pi-mono), and GTD tasks (jarvis-lite) compose into a single application, leaving the interface a swappable detail. Ask a question and it answers from your own corpus, with citations — and nothing personal ever enters the repo. TypeScript over a polyglot TS/Python/Julia stack."
+  weight: 22
+  featured: true
+  hero: false
+
 - title: "credence-pi"
   url: "https://github.com/gfrmin/credence/tree/master/apps/credence-pi"
   description: "A Bayesian governance layer that decides which of a coding agent's tool calls to allow, block, or pause for human approval — and learns where the line sits from the agent's own behaviour. The design splits into a body and a brain: a TypeScript body hooks the agent's tool_call event and reports a handful of declared features, while a Julia brain holds a Beta posterior over P(approve) and chooses an action by expected value of information, so asking the human wins exactly when the uncertainty is worth the interruption. The wire between them carries only observations and named actions, leaving the brain free to grow more sophisticated without the body ever needing to change. Julia (BDSL) and TypeScript."
   weight: 25
+  featured: true
+  hero: false
+
+- title: "pkm"
+  url: "https://github.com/gfrmin/pkm"
+  description: "A content-addressed extraction cache and catalogue for personal knowledge management. It ingests documents, routes each through a format-appropriate extractor — pandoc, docling, unstructured — and writes the results to an append-only content-addressed store indexed by DuckDB. Cache keys are derived deterministically from the input hash and the producer's name, version, and config, so re-running is a no-op and every artifact stays reproducible and reconstructible. Python; the retrieval substrate beneath life-agent."
+  weight: 27
   featured: true
   hero: false
 
