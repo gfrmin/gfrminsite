@@ -35,8 +35,8 @@
   hero: false
 
 - title: "pkm"
-  url: "https://github.com/gfrmin/pkm"
-  description: "A content-addressed extraction cache and catalogue for personal knowledge management. It ingests documents, routes each through a format-appropriate extractor — pandoc, docling, unstructured — and writes the results to an append-only content-addressed store indexed by DuckDB. Cache keys are derived deterministically from the input hash and the producer's name, version, and config, so re-running is a no-op and every artifact stays reproducible and reconstructible. Python; the retrieval substrate beneath life-agent."
+  url: "https://github.com/gfrmin/life-agent/tree/master/src/pkm"
+  description: "A content-addressed extraction cache and catalogue for personal knowledge management. It ingests documents, routes each through a format-appropriate extractor — pandoc, docling, unstructured — and writes the results to an append-only content-addressed store indexed by DuckDB. Cache keys are derived deterministically from the input hash and the producer's name, version, and config, so re-running is a no-op and every artifact stays reproducible and reconstructible. Python; the retrieval substrate beneath life-agent, now developed inside the life-agent monorepo as src/pkm."
   weight: 27
   featured: true
   hero: false

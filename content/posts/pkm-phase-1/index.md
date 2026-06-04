@@ -119,4 +119,4 @@ Phase 2 is more speculative than Phase 1. The foundations worked because the inv
 
 But I'll be doing it on a foundation that's strict, rigorous, and debuggable from first principles. The cache holds the corpus in a form I can query with `duckdb` and `jq`. The catalogue tells me what's in it, where it came from, and what it cost to produce. Nothing is hidden. Nothing silently degrades. When something breaks — and in Phase 2 things will break — I'll be able to trace exactly what went wrong by reading files on disk with standard tools.
 
-Code: [github.com/gfrmin/pkm](https://github.com/gfrmin/pkm). The `SPEC.md` and `CLAUDE.md` at the root are the contract and the behavioural rules; the `PHASE1.md` retrospective is the handoff document.
+Code: pkm now lives in the [life-agent monorepo](https://github.com/gfrmin/life-agent) as `src/pkm`. The contract and behavioural rules are `docs/pkm/SPEC.md` and `src/pkm/CLAUDE.md`; the `docs/pkm/PHASE1.md` retrospective is the handoff document.
