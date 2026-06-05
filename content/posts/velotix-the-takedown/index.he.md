@@ -9,7 +9,7 @@ categories: [investigation, startups, israel, cyber, dmca]
 ---
 
 {{< callout type="note" >}}
-זהו חלק 4 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.
+זהו חלק 4 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק. [חלק 5](/he/posts/velotix-the-comeback/) עוקב אחר החזרה.
 {{< /callout >}}
 
 ## ההודעה
@@ -91,4 +91,4 @@ Cloudflare העבירה את ההודעה ל-GitHub Pages. נכון לכתיבת
 
 ---
 
-*זהו חלק 4 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק.*
+*זהו חלק 4 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק. [חלק 5](/he/posts/velotix-the-comeback/) עוקב אחר החזרה.*

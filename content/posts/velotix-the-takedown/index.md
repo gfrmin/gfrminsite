@@ -9,7 +9,7 @@ categories: [investigation, startups, israel, cyber, dmca]
 ---
 
 {{< callout type="note" >}}
-This is Part 4 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine.
+This is Part 4 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 5](/posts/velotix-the-comeback/) covers the comeback.
 {{< /callout >}}
 
 ## The Notice
@@ -93,4 +93,4 @@ The complete notice, with all mail headers preserved, can be [viewed as text](ve
 
 ---
 
-*This is Part 4 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine.*
+*This is Part 4 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 5](/posts/velotix-the-comeback/) covers the comeback.*

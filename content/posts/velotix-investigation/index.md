@@ -12,7 +12,7 @@ categories: [investigation, startups, israel, cyber]
 ## Disclosure
 I am a former Velotix employee (October 2024 – May 2025). I filed the complaint with the Ministry of Labour referenced in this article. This piece is based on official government documents, court filings, archived web pages, and publicly available information. Where I draw on my own experience, I say so.
 
-This is Part 1 of the Velotix Files. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against this post.
+This is Part 1 of the Velotix Files. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against this post. [Part 5](/posts/velotix-the-comeback/) covers the comeback.
 
 {{< /callout >}}
 
@@ -166,4 +166,4 @@ Documents referenced in this article — including the Ministry of Labour enforc
 
 ---
 
-*This is Part 1 of the Velotix Files. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against this post.*
+*This is Part 1 of the Velotix Files. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against this post. [Part 5](/posts/velotix-the-comeback/) covers the comeback.*

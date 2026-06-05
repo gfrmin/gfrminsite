@@ -9,7 +9,7 @@ categories: [investigation, startups, israel, cyber, regulation]
 ---
 
 {{< callout type="note" >}}
-זהו חלק 3 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 4](/he/posts/velotix-the-takedown/) מתעד את הודעת ההסרה (DMCA) שהוגשה נגד חלק 1.
+זהו חלק 3 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 4](/he/posts/velotix-the-takedown/) מתעד את הודעת ההסרה (DMCA) שהוגשה נגד חלק 1. [חלק 5](/he/posts/velotix-the-comeback/) עוקב אחר החזרה.
 
 {{< /callout >}}
 
@@ -123,4 +123,4 @@ PipelBiz אינה פלטפורמת שיווק גרידא. היא גוף מורש
 
 ---
 
-*זהו חלק 3 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 4](/he/posts/velotix-the-takedown/) מתעד את הודעת ההסרה (DMCA) שהוגשה נגד חלק 1.*
+*זהו חלק 3 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 4](/he/posts/velotix-the-takedown/) מתעד את הודעת ההסרה (DMCA) שהוגשה נגד חלק 1. [חלק 5](/he/posts/velotix-the-comeback/) עוקב אחר החזרה.*

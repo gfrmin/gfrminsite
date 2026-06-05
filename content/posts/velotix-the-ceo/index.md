@@ -9,7 +9,7 @@ categories: [investigation, startups, israel, cyber]
 ---
 
 {{< callout type="note" >}}
-This is Part 2 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against Part 1.
+This is Part 2 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against Part 1. [Part 5](/posts/velotix-the-comeback/) covers the comeback.
 
 {{< /callout >}}
 
@@ -140,4 +140,4 @@ But when a CEO tells his employees on March 16 that the company has $1 million i
 
 ---
 
-*This is Part 2 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against Part 1.*
+*This is Part 2 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against Part 1. [Part 5](/posts/velotix-the-comeback/) covers the comeback.*
