@@ -6,5 +6,7 @@
       disable_session_recording: true,
       disable_surveys: true
     })
+    // Tag every event with the page language so all insights split EN vs HE.
+    posthog.register({ site_lang: document.documentElement.lang || 'en' })
   });
 </script>

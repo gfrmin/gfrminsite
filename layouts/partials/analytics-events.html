@@ -1,0 +1,97 @@
+{{/*
+  First-party analytics events for PostHog — the one thing autocapture can't give
+  (read-completion) plus a few high-value interactions, all via a single delegated
+  listener against CSS classes that already exist in the markup. No per-element
+  template edits. Session replay / surveys stay off (configured in posthog.html).
+
+  Events emitted:
+    post_progress    {depth: 25|50|75|100, slug}   — how far posts are actually read
+    outbound_click   {href, link_text, location}   — social / project / scholar links
+    cta_click        {label, location}             — "See all posts/projects" pills
+    share_click      {network, slug}               — share buttons
+    lang_switch      {to, href}                    — EN <-> HE translation link
+    contact_submitted{location}                    — Formspree contact form submit
+  Every event also carries the `site_lang` super-property registered in posthog.html.
+*/}}
+<script>
+(function () {
+  function cap(event, props) {
+    if (window.posthog && posthog.capture) posthog.capture(event, props);
+  }
+  function path() { return location.pathname; }
+
+  /* ---- Read depth / completion (posts only) ---- */
+  var body = document.querySelector('.post-body');
+  if (body) {
+    var fired = {}, marks = [25, 50, 75, 100], ticking = false;
+    function check() {
+      var rect = body.getBoundingClientRect();
+      var total = body.offsetHeight;
+      var seen = Math.min(total, Math.max(0, window.innerHeight - rect.top));
+      var pct = total > 0 ? (seen / total) * 100 : 100;
+      marks.forEach(function (m) {
+        if (!fired[m] && pct >= m) {
+          fired[m] = true;
+          cap('post_progress', { depth: m, slug: path() });
+        }
+      });
+      if (fired[100]) window.removeEventListener('scroll', onScroll);
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { check(); ticking = false; });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('load', check);
+    check();
+  }
+
+  /* ---- Delegated clicks ---- */
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || !t.closest) return;
+
+    var share = t.closest('.share-btn');
+    if (share) {
+      var net = (Array.prototype.find.call(share.classList, function (c) {
+        return c.indexOf('share-') === 0 && c !== 'share-btn';
+      }) || 'share-unknown').replace('share-', '');
+      cap('share_click', { network: net, slug: path() });
+      return;
+    }
+
+    var lang = t.closest('.translation-link a');
+    if (lang) {
+      cap('lang_switch', { to: (lang.textContent || '').trim(), href: lang.getAttribute('href') });
+      return;
+    }
+
+    var cta = t.closest('.cta-pill');
+    if (cta) {
+      cap('cta_click', { label: (cta.textContent || '').trim(), location: path() });
+      return;
+    }
+
+    var a = t.closest('a[href]');
+    if (a) {
+      var href = a.getAttribute('href') || '';
+      var external = a.target === '_blank' || (/^https?:\/\//.test(href) && a.host !== location.host);
+      if (external) {
+        cap('outbound_click', {
+          href: a.href,
+          link_text: (a.textContent || '').trim().slice(0, 80),
+          location: path()
+        });
+      }
+    }
+  }, true);
+
+  /* ---- Contact form submit ---- */
+  document.addEventListener('submit', function (e) {
+    if (e.target && e.target.matches && e.target.matches('form.contact-form')) {
+      cap('contact_submitted', { location: path() });
+    }
+  }, true);
+})();
+</script>
