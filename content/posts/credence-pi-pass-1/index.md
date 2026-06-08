@@ -1,14 +1,14 @@
 ---
 title: "The Brain is Opaque to the Body"
 subtitle: "Building a Bayesian governance layer for a coding agent's tool calls, and the discipline that keeps it honest"
-description: "A first-pass body-brain architecture for governing the pi tool_call hook with a Bayesian decision-theoretic brain. The wire schema is fixed by what Pass 1 ships; Pass 2 swaps the posterior representation without disturbing it. Plus what credence-lint and a precedent system caught at the eleventh hour."
+description: "A first-pass body-brain architecture for governing the OpenClaw tool_call hook with a Bayesian decision-theoretic brain. The wire schema is fixed by what Pass 1 ships; Pass 2 swaps the posterior representation without disturbing it. Plus what credence-lint and a precedent system caught at the eleventh hour."
 author: "Guy Freeman"
 date: 2026-05-05
 draft: true
 categories: [essays, bayesian, ai, decision-theory]
 ---
 
-There is a coding agent — the AI tool I use to write code, *pi* — and it makes tool calls all day. It runs `bash`, edits files, opens HTTP requests, queries databases. Most of what it wants to do is fine. Some of it isn't. The question I have been circling for months is: who decides which is which, and how, and on what basis?
+There is a coding agent — the AI tool I use to write code, *OpenClaw* — and it makes tool calls all day. It runs `bash`, edits files, opens HTTP requests, queries databases. Most of what it wants to do is fine. Some of it isn't. The question I have been circling for months is: who decides which is which, and how, and on what basis?
 
 The current answers are unsatisfying. The agent's own RLHF disposition decides — but I have no visibility into the function it's optimising. A static rules file decides — but a static file cannot improve from observation. A human (me) decides — but a human cannot stay in the loop on every tool call without becoming the bottleneck. None of these are *learning* about the agent's behaviour from the agent's behaviour. None of them treat the question as what it actually is: a sequential decision problem under uncertainty about the agent's intent and its capacity to do harm.
 
@@ -18,7 +18,7 @@ What I built in this past round of work is a first-pass governance layer that do
 
 The architecture has a body and a brain.
 
-The **body** is a TypeScript extension that hooks into pi's `tool_call` event. When pi proposes to run a tool, the body extracts a small number of declared features — what tool, working directory relative to the project, parent tool call name, recent repetition count, time since the user spoke last — and posts an event to the brain. When the brain emits a signal back, the body dispatches it: ask the user, allow the call to proceed, refuse it. The body has tentacles, and the tentacles are exactly what pi's hook surface plus the SDK's UI permit. That's it. Three of them.
+The **body** is a TypeScript extension that hooks into OpenClaw's `tool_call` event. When OpenClaw proposes to run a tool, the body extracts a small number of declared features — what tool, working directory relative to the project, parent tool call name, recent repetition count, time since the user spoke last — and posts an event to the brain. When the brain emits a signal back, the body dispatches it: ask the user, allow the call to proceed, refuse it. The body has tentacles, and the tentacles are exactly what OpenClaw's hook surface plus the SDK's UI permit. That's it. Three of them.
 
 The **brain** is a Julia daemon that loads five small BDSL files at startup. BDSL is the credence-project's S-expression DSL, designed to do mathematical computation over declared spaces and nothing else. The five files declare: the body's effector manifest (the three tentacles); the brain's sensory vocabulary (the five features); a Beta(2,2) prior over P(approve); a Bernoulli observation kernel; and a decision program. The decision program calls `optimise` over the action-space under preferences over (action, observation-of-approval); the value of asking is computed inline from the textbook EVPI formula, with no magic numbers. At cold-start the posterior is uninformative, EVPI is positive and exceeds the symmetric expected utilities of proceed and block, so *ask* wins by computation. As observations accumulate, the posterior concentrates and proceed or block become live by the same computation. The behaviour falls out of the maths.
 
@@ -31,7 +31,7 @@ It also happens to be the architecture you would draw on a whiteboard if you ima
 The deliverable, in numbers:
 
 - **Brain side:** five BDSL files, two Julia daemon files (a HTTP server with `POST /sensor` and `GET /signals` SSE endpoints, plus an append-only JSONL observation log with replay-on-startup and `fsync`-after-each-append durability), four test files with 54 assertions covering closed-form Bayesian correctness, log round-trip, and end-to-end HTTP/SSE flow.
-- **Body side:** a TypeScript pi extension with five test files, 42 tests covering manifest parsing, feature bucketing, SSE+POST behaviours, per-effector dispatch, and the full hook flow under mocked pi and daemon.
+- **Body side:** a TypeScript OpenClaw extension with five test files, 42 tests covering manifest parsing, feature bucketing, SSE+POST behaviours, per-effector dispatch, and the full hook flow under mocked OpenClaw and daemon.
 - **Architectural commitments held:** zero pragma escapes in production code; six pragmas in tests, all asserting closed-form Bayesian correctness against an analytical oracle.
 - **Forward compatibility:** the observation log already collects `tool-completed` events that Pass 1's BDSL doesn't read, so the secondary-signal observation model lands without a data backfill in Pass 2. The five features are kebab-case strings whose values are members of declared Finite spaces, so the moment the brain replaces its global Beta with a CEG over features, the body needs no change.
 
