@@ -1,7 +1,7 @@
 ---
 title: "Make Your OpenClaw Cheaper and Harder to Fool"
 subtitle: "A governor that learns your agent, blocks the tool calls it wastes, and asks you first about the ones that smell of injection. Two commands to install."
-description: "credence-pi is an OpenClaw plugin plus a local daemon that learns your agent's behaviour and governs its tool calls: exact-repeat waste blocked at precision and recall 1.0, an injected exfiltration surfaced as a confirmation at 0.94 precision. Research-stage, local-first, installable today."
+description: "credence-pi is an OpenClaw plugin plus a local daemon that learns your agent's behaviour and governs its tool calls by expected utility: it blocks the calls your agent wastes, flags injected exfiltration as a confirmation at 0.94 precision on a public benchmark, and makes ask-or-proceed decisions a fixed rule provably can't reproduce. Research-stage, local-first, installable today."
 author: "Guy Freeman"
 date: 2026-06-09
 categories: [essays, bayesian, ai, decision-theory]
@@ -13,8 +13,10 @@ I built a governor for OpenClaw that addresses both. **credence-pi** is a plugin
 
 The numbers, measured on real OpenClaw sessions rather than demos built to be caught:
 
-- **Waste:** exact-repeat tool calls blocked at precision 1.0 and recall 1.0 on held-out sessions — 0.7% of all calls, and nothing else touched.
-- **Injection:** an injected exfiltration surfaced to you as a confirmation at 0.94 precision, while interrupting 1.2% of safe sessions.
+- **Waste:** exact-repeat tool calls blocked at precision 1.0 and recall 1.0 on held-out sessions, 0.7% of all calls and nothing else touched. The obvious thing first: this is the floor, not the reason for the machinery. A hash set catches an exact repeat too, and the eval concedes it out loud.
+- **Injection:** taint-flow features reach 0.82 to 0.97 precision on a public benchmark against a regex baseline's 0.67, which is barely above the 0.59 base rate. Run through the brain, an injected exfiltration surfaces to you as a confirmation at 0.94 precision while interrupting 1.2% of safe sessions.
+
+The reason for the machinery is the part no fixed rule can reach. At one byte-identical input the governor can *ask* or *proceed* depending on the variance of its belief, not its mean, and a context it has never seen inherits an informed answer instead of a default. [What a Regex Can't Do](/posts/credence-pi-pass-2/) is that argument in full, with a reproducible red-team of every claim.
 
 Installation is two commands — the daemon, then the plugin:
 
