@@ -22,20 +22,34 @@ You do not have to trust any of this on faith, and you should not. Run credence-
 
 ## Try it now
 
-Two commands. The daemon, then the plugin:
+You need OpenClaw and Docker. Then it is three steps.
+
+**Start the brain.** A local daemon on `127.0.0.1:8787`, restart-resilient:
 
 ```sh
-# the brain: a local daemon on 127.0.0.1:8787, restart-resilient
 docker run -d --name credence-pi --restart unless-stopped \
   -p 127.0.0.1:8787:8787 -v ~/.credence-pi:/root/.credence-pi \
   ghcr.io/gfrmin/credence-pi-daemon
-
-# the body: governance and routing, both on by default
-openclaw plugins install @gfrmin/credence-pi-openclaw
-openclaw plugins enable credence-pi
 ```
 
-Both artifacts are published and public, so this works as written today. Want the audit first? Set `shadowMode: true` in the plugin config and read the report from the daemon with `curl http://127.0.0.1:8787/report`. Everything runs locally: the daemon keeps an append-only log of every observation and decision on your machine, and no raw data leaves it. Routing is fail-open, so if the daemon is slow or down OpenClaw simply uses its configured model and your agent keeps working.
+**Install the body, then restart OpenClaw.** Governance and routing are both on by default:
+
+```sh
+openclaw plugins install @gfrmin/credence-pi-openclaw
+openclaw plugins enable credence-pi
+# restart the OpenClaw gateway so it loads the plugin, then confirm:
+openclaw plugins list   # credence-pi should read "loaded"
+```
+
+That is the whole install, and both artifacts are published and public, so it works as written today.
+
+**Audit before you enforce.** This step is optional, but it is the one I would actually do first. Set `shadowMode: true` in the plugin config so credence-pi observes without changing anything, use your agent normally for a while, then read back what it would have done:
+
+```sh
+curl http://127.0.0.1:8787/report
+```
+
+Everything runs locally: the daemon keeps an append-only log of every observation and decision on your machine, and no raw data leaves it. Routing is fail-open, so if the daemon is slow or down OpenClaw simply uses its configured model and your agent keeps working. The full install notes, a from-source path for the daemon if you would rather not run Docker, and every config key are in [the plugin README](https://github.com/gfrmin/credence/tree/master/apps/credence-pi/openclaw-plugin).
 
 ## What it actually does, measured
 
