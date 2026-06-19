@@ -7,6 +7,8 @@ date: 2026-06-09
 categories: [essays, bayesian, ai, decision-theory]
 ---
 
+*Update (June 2026): a lot has shipped since this post. Routing each call to the cheapest capable model is now on by default, and shadow mode will audit the savings on your own traffic before it changes anything. The current announcement is [Make Your OpenClaw Agent Cheaper, and Measure It Yourself](/posts/openclaw-cheaper-measure-it-yourself/); this one stays as a point-in-time record.*
+
 [OpenClaw](https://github.com/openclaw/openclaw) makes tool calls all day, and two kinds of them deserve more scrutiny than they get. The first merely costs money: the agent runs a call it has already run — same tool, same arguments, same session — because nothing in its loop is keeping score. The second is worse: a prompt injection in something the agent read persuades it to carry untrusted data into a consequential action, and an address that arrived inside a document it was summarising turns up as the recipient of a forward.
 
 I built a governor for OpenClaw that addresses both. **credence-pi** is a plugin that watches the `tool_call` hook, plus a local daemon that holds a Bayesian belief about *your* agent's behaviour — learned from your approvals and refusals, updated continuously — and decides, call by call, between ask, proceed, and block by maximising expected utility.

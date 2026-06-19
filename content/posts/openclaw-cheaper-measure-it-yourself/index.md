@@ -1,45 +1,64 @@
 ---
-title: "Make OpenClaw Cheaper — and Measure It Yourself"
-subtitle: "A governor that routes each call to the cheapest model that will do it, blocks the calls your agent re-runs for nothing, and asks before an injected action — all from one Bayesian belief. Run it in shadow mode and it shows you what it would have done on your own traffic before it changes a thing."
-description: "credence-pi is an OpenClaw plugin plus a local daemon that learns your agent and governs every tool call by expected utility: it routes each call to the cheapest model whose expected accuracy justifies its cost, blocks the calls your agent wastes, and flags injected exfiltration as a confirmation. Routing is on by default; shadow mode reports what it would save and block on your own sessions — with its own false-block rate — before it enforces anything. Research-stage, local-first, installable today."
+title: "Make Your OpenClaw Agent Cheaper, and Measure It Yourself"
+subtitle: "One Bayesian governor that routes every tool call to the cheapest model that can handle it, blocks the calls your agent re-runs for nothing, and stops an injected action before it fires. Run it in shadow mode and it shows you the savings on your own traffic before it changes a thing. Two commands, all local."
+description: "credence-pi is an OpenClaw plugin plus a local daemon that learns your agent and governs every tool call by expected utility: it routes each call to the cheapest model whose expected accuracy justifies its cost, blocks the calls your agent wastes, and flags injected exfiltration as a confirmation. Routing is on by default; shadow mode reports what it would save and block on your own sessions, with its own false-block rate, before it enforces anything. Research-stage, local-first, installable today."
 author: "Guy Freeman"
-date: 2026-06-18
-draft: true
+date: 2026-06-19
+draft: false
 categories: [essays, bayesian, ai, decision-theory]
 ---
 
-Every tool call your [OpenClaw](https://github.com/openclaw/openclaw) agent makes is a small decision under uncertainty. Which model should answer this one — the cheap one that might thrash, or the dear one that one-shots it? Is the call worth running at all, or did the agent already run it a turn ago? Is this action safe, or is it carrying data that arrived inside something the agent was only meant to read? Most agents answer none of these on purpose: the first by static configuration, the second never, the third never.
+Your [OpenClaw](https://github.com/openclaw/openclaw) agent makes a small decision on every tool call, and right now it makes most of them badly. It sends each call to whichever model you hard-coded, whether the task needed the dear one or the cheap one. It re-runs calls it already ran a turn ago, and pays for them again. And when a prompt injection rides in on a document it was only meant to read, nothing stands between that and a real action. Most agents handle the first by static configuration, the second never, the third never.
 
-**credence-pi** answers all three, and from one place. It is a plugin that watches the tool-call boundary, plus a local daemon holding a Bayesian belief about *your* agent — learned from your own approvals and refusals, updated continuously — that decides, call by call, by maximising expected utility: **route** to the right model, **block** a wasted call, **ask** before an unsafe one. Three levers, one posterior, no hand-tuned thresholds.
+**credence-pi** handles all three, automatically, from one place. It is an OpenClaw plugin that watches the tool-call boundary, plus a small local daemon holding one Bayesian belief about *your* agent, learned from your own approvals and refusals and updated as you work. Call by call, it maximises expected utility and does three things you are currently paying for by hand:
 
-The lever that's new since [the first announcement](/posts/openclaw-cheaper-and-harder-to-fool/), and the one that's on by default, is routing — and it's where the money is. No single fixed model is the right default for everyone: on real terminal tasks the cheapest model wins for a cost-sensitive user, the workhorse wins for the ordinary one, and the flagship is overkill for both, so "pick one model and stick with it" — what people actually do — is wrong for *someone*. credence-pi instead tries the cheapest model first and escalates only when the expected payoff covers the next rung's cost, stopping at the first call that actually works. It ends up solving more tasks than any single tier — it captures the *union* of their strengths — while spending like the cheap one whenever the cheap one suffices.
+- **Routes to the cheapest model that will do the job.** It tries the cheap model first and escalates only when the expected payoff covers the next model's cost, stopping at the first call that actually works. It ends up solving more tasks than any single model while spending like the cheap one whenever the cheap one is enough. This is on by default, and it is where the money is.
+- **Blocks the calls your agent wastes.** Same tool, same arguments, same session: gone, before you pay for them a second time.
+- **Asks before an injected action fires.** An exfiltration that arrived inside untrusted data surfaces to you as a confirmation instead of simply happening.
 
-Measured on seventeen real Terminal-Bench tasks, scored live through the daemon, its expected-welfare point estimate beat every fixed single-model policy on every user profile. The honest qualifier is *precision, not direction*: seventeen tasks is too few to put tight error bars on the per-call margin — a sample-size limit, not evidence the win is absent — and how much you save depends on your workload. Which is the whole point of the next part.
+Three levers, one posterior, nothing to tune. No thresholds, no rules table, no magic numbers.
 
-**You don't have to take the benchmark's word for any of it.** Run credence-pi in shadow mode and it changes nothing about your runs; it watches and reports what it *would* have done on your own traffic — what it would have routed, what it would have blocked, the spend that implies, and, the part most governors won't show you, a write/edit-aware estimate of its own false-block rate. So the first thing you get is a free audit of your own sessions, and only once you've seen the numbers do you let it enforce anything. The honesty isn't a disclaimer bolted to the end; it's the product's first move.
+You do not have to trust any of this on faith, and you should not. Run credence-pi in **shadow mode** and it changes nothing about your runs. It watches, and it reports what it *would* have done on your own traffic: what it would have routed, what it would have blocked, the dollars that implies, and the part most governors will not show you, its own false-block rate. The first thing you get is a free audit of your own sessions. You switch on enforcement only once the numbers have convinced you.
 
-The rest of the numbers, measured on real OpenClaw sessions rather than demos built to be caught:
+## Try it now
 
-- **Waste:** exact-repeat tool calls blocked at precision 1.0 and recall 1.0 on held-out sessions, 0.7% of all calls. This is the floor, not the reason for the machinery — a hash set catches an exact repeat too, and the eval says so out loud. It also says the part that matters before you enforce: "exact repeat" is keyed on `(tool, args)`, so a legitimate re-run — the tests after an edit — is byte-identical and would be blocked too. Precision 1.0 is against that *definition* of waste, not against true waste; the false-block rate is what shadow mode measures on your sessions.
-- **Injection:** taint-flow features reach 0.82 to 0.97 precision on a public benchmark, against a regex baseline's 0.67 — barely above the 0.59 base rate. Run through the brain, an injected exfiltration surfaces to you as a confirmation at 0.94 precision while interrupting 1.2% of safe sessions.
-
-The reason for the machinery is the part no fixed rule reaches. At one byte-identical input the governor can *ask* or *proceed* depending on the variance of its belief, not its mean; a context it has never seen inherits an informed answer instead of a default; and route, block, and ask trade off in one currency rather than three bolted-together heuristics. [What a Regex Can't Do](/posts/credence-pi-pass-2/) is that argument in full, with a reproducible red-team of every claim.
-
-Installation is two commands — the daemon, then the plugin:
+Two commands. The daemon, then the plugin:
 
 ```sh
-# the brain (Docker; bound to localhost, restart-resilient — or from source)
+# the brain: a local daemon on 127.0.0.1:8787, restart-resilient
 docker run -d --name credence-pi --restart unless-stopped \
   -p 127.0.0.1:8787:8787 -v ~/.credence-pi:/root/.credence-pi \
   ghcr.io/gfrmin/credence-pi-daemon
 
-# the body (routing + governance, both on by default)
+# the body: governance and routing, both on by default
 openclaw plugins install @gfrmin/credence-pi-openclaw
 openclaw plugins enable credence-pi
 ```
 
-Everything runs locally: the daemon keeps an append-only log of every observation and decision on your machine, and no raw data leaves it. Routing is fail-open — if the daemon is slow or down, OpenClaw simply uses its configured model, so it cannot break your agent.
+Both artifacts are published and public, so this works as written today. Want the audit first? Set `shadowMode: true` in the plugin config and read the report from the daemon with `curl http://127.0.0.1:8787/report`. Everything runs locally: the daemon keeps an append-only log of every observation and decision on your machine, and no raw data leaves it. Routing is fail-open, so if the daemon is slow or down OpenClaw simply uses its configured model and your agent keeps working.
 
-Now the label, because a guardrail sold as complete is sold dishonestly. Routing is on by default and fail-open. Waste-blocking is enforced and is the proven part — with the false-block caveat above. Safety ships in **confirm mode**: when the harm term wants to stop an action you are asked, never silently blocked, and each yes and no is the signal that turns a belief seeded from a benchmark into a belief about your work. What it cannot do: it lives at the tool boundary, so it is blind to harmful *output* — bad advice, fabrication — and the harm it can see there tops out at about three in ten of unsafe trajectories on the benchmark. It is research-stage, and whether it is a net improvement to your task outcomes is exactly the question your own usage — shadow mode first — would answer.
+## What it actually does, measured
 
-How it works: [The Brain is Opaque to the Body](/posts/credence-pi-pass-1/) is the architecture — a body that senses and acts, a brain that reasons, and a wire between them that never moves. [What a Regex Can't Do](/posts/credence-pi-pass-2/) is what the brain learned. The code, the eval harness, and the red-team of every claim are in [the repository](https://github.com/gfrmin/credence). If you try it — in shadow mode first — what I most want to know is whether the savings and the confirmations land on your real work or merely annoy you; [an issue](https://github.com/gfrmin/credence/issues) with either answer is the telemetry that turns research-stage into calibrated.
+On real OpenClaw sessions and a live benchmark run, not on demos built to be caught:
+
+- **Routing.** Across seventeen real Terminal-Bench tasks scored live through the daemon, trying-cheap-then-escalating beat every fixed single-model choice for every kind of user: the cost-sensitive one, the balanced one, and the quality-obsessed one. That is the whole point. No single model is the right default for everyone, so picking one and sticking with it, which is what almost everyone does, is wrong for *someone*. The escalation policy captures the union of the models' strengths, and one of those strengths is not where you would guess: on this benchmark the mid-tier model beats the flagship at reasoning, so on a quality-first profile the router sometimes routes reasoning to the *cheaper* model. No fixed rule expresses that.
+- **Waste.** Exact-repeat tool calls blocked at precision 1.0 and recall 1.0 on held-out sessions, about 0.7% of all calls.
+- **Injection.** Taint-flow features reach 0.82 to 0.97 precision on a public benchmark, against a regex baseline's 0.67 that barely clears the 0.59 base rate. Run through the brain, an injected exfiltration surfaces to you as a confirmation at 0.94 precision while interrupting 1.2% of safe sessions.
+
+The reason for the machinery, the part no fixed rule reaches: at one byte-identical input the governor can *ask* or *proceed* depending on the variance of its belief, not its mean, and a context it has never seen inherits an informed answer instead of a default. [What a Regex Can't Do](/posts/credence-pi-pass-2/) is that argument in full, with a reproducible red-team of every claim.
+
+## What it is, and what it is not
+
+credence-pi is research-stage, and the honest fine print belongs in one place rather than smeared across every sentence:
+
+- The routing result is a **point estimate** on seventeen tasks. The direction is consistent and the win is real, but seventeen tasks is too few to put tight error bars on exactly how much you will save. Your own workload sets that number, which is exactly what shadow mode is for.
+- "Waste" is keyed on identical `(tool, args)`, so a legitimate re-run, like your test suite after an edit, looks identical and would be blocked too. Precision 1.0 is against that *definition* of waste, not against true waste. The real false-block rate is the thing shadow mode measures on you before you enforce anything.
+- Safety lives at the tool boundary, so it is blind to harmful *output* like bad advice or fabrication, and the harm it can see there tops out at about three in ten of the unsafe trajectories on the benchmark. It ships in **confirm mode**: when the harm term wants to stop an action you are asked, never silently blocked, and each yes and no is the signal that turns a belief seeded from a benchmark into a belief about your work.
+
+None of this is bolted on at the end. Shadow mode exists precisely so the fine print is something you measure rather than something you take on trust.
+
+## How it works
+
+[The Brain is Opaque to the Body](/posts/credence-pi-pass-1/) is the architecture: a body that senses and acts, a brain that reasons, and a wire between them that never moves. [What a Regex Can't Do](/posts/credence-pi-pass-2/) is what the brain learned, and why matching its behaviour with rules ends in re-deriving Bayesian decision theory. The code, the eval harness, and the red-team of every claim are in [the repository](https://github.com/gfrmin/credence).
+
+If you try it, in shadow mode first, the thing I most want to know is whether the savings and the confirmations land on your real work or merely annoy you. [An issue](https://github.com/gfrmin/credence/issues) with either answer is the telemetry that turns research-stage into calibrated.
