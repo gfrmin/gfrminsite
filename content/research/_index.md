@@ -11,9 +11,7 @@ The result is four nouns (Space, Prevision, Event, Kernel), three verbs (push, c
 
 This is the same move Rust makes against C++ and TypeScript against JavaScript — make the illegal state unrepresentable — with one turn of the screw those languages cannot make: because the alphabet doubles as the prior, soundness and good epistemics become the same property, and minimality acquires a deletion test that is actually executable.
 
-- [GitHub](https://github.com/gfrmin/proplang) — the frozen artifact: research brief, language design, reference implementation, and the signed custody chain
-
-A series of essays on the design — cornering as enforcement, the deletion audit, adaptation dissolved, the frozen-oracle protocol, and metareasoning that terminates in the clock — is in progress.
+[**proplang on GitHub →**](https://github.com/gfrmin/proplang) — the frozen artifact: research brief, language design, reference implementation, and the signed custody chain.
 
 ## Credence: The Decision-Theoretic Predecessor
 
@@ -21,11 +19,7 @@ Before proplang there was Credence — a framework for LLM tool-using agents gro
 
 That result stands. proplang supersedes Credence's *foundation*, not its findings. Credence reached the right ontology first — it, too, rebuilt itself on de Finetti's prevision, arriving at the same four nouns. What it could not do was *enforce* its own architecture. Credence's rules live in 1,300 lines of constitutional prose, and where prose was the only guard, the source drifted: an opaque-closure escape hatch its own constitution forbids; a Measure type it announced it no longer needed, still carrying eighty-odd live methods. Its inference verbs are things a program can call but its meta-actions are not — the agent changes what it thinks about, never how it thinks. And its alphabet, declared four types and then opened, has grown to over a hundred. proplang's answer to all of this is the same answer: put the rule in the grammar, where a model — or a tired author — physically cannot write around it.
 
-- [GitHub](https://github.com/gfrmin/credence)
-- [Agentic AI Is Neither Intelligent Nor an Agent](/posts/agentic-ai/) — the benchmark result
-- [How Decision Theory Cuts Your AI Agent's API Bill in Half](/posts/decision-theory-agents/) — the implementation
-- [The Bitter Lesson Has No Utility Function](/posts/bitter-lesson-missing-half/) — why scale alone doesn't solve the decision problem
-- [Three Types, Four Axioms, and a Funeral](/posts/three-types/) — the prevision reconstruction that got the nouns right
+[**Credence on GitHub →**](https://github.com/gfrmin/credence)
 
 ## Published Work
 

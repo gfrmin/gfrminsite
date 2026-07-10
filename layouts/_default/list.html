@@ -14,7 +14,7 @@
       {{ end }}
       <div class="post-card-body">
         <h3 class="listing-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-        {{ with .Description }}<p class="listing-description">{{ . }}</p>{{ end }}
+        {{ with .Description }}<p class="listing-description">{{ . | truncate 160 }}</p>{{ end }}
         <div class="metadata">
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
           <span class="reading-time">{{ .ReadingTime }} min read</span>
