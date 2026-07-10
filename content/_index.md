@@ -3,7 +3,7 @@ title: "Guy Freeman"
 description: "Guy Freeman — Bayesian statistician and ML researcher working on principled agent architecture. PhD in Statistics (Warwick). 1,750+ citations. Production AI at scale."
 ---
 
-I'm a Bayesian statistician working on principled AI agent architecture. My PhD work on Chain Event Graphs (Warwick, 2010, supervised by Jim Smith) established foundational methods for Bayesian structure learning that have been [cited over 1,750 times](https://scholar.google.com/citations?hl=en&user=H422hdkAAAAJ). My current research — [Credence](https://github.com/gfrmin/credence) — applies Value of Information theory to tool-using LLM agents, replacing prompt engineering heuristics with decision-theoretic optimality. The core question is the same one that matters for alignment: how do you build agents that know what they don't know, and act accordingly?
+I'm a Bayesian statistician working on principled AI agent architecture. My PhD work on Chain Event Graphs (Warwick, 2010, supervised by Jim Smith) established foundational methods for Bayesian structure learning that have been [cited over 1,750 times](https://scholar.google.com/citations?hl=en&user=H422hdkAAAAJ). My current research — [proplang](https://github.com/gfrmin/proplang) — is a small language in which a Bayesian decision-theoretic agent is a program, cornered so tightly that its architecture is enforced by the grammar rather than by good intentions. It is the successor to [Credence](https://github.com/gfrmin/credence), which brought Value of Information theory to tool-using LLM agents. The core question is the same one that matters for alignment: how do you build agents that know what they don't know, and act accordingly?
 
 I also build production AI systems. Currently designing agentic flows at Booking.com. Previously: document AI, startup detection models, data governance systems across fintech, insurance, and VC.
 
@@ -20,7 +20,7 @@ Oxford mathematics. Warwick PhD. Based in Tel Aviv.
 <div class="service-card">
 <div class="service-card-icon">&#x1F4CA;</div>
 <h3>Bayesian Agent Research</h3>
-<p>Value of Information, conjugate Bayesian models, principled uncertainty quantification. Building agents that maintain beliefs, update from evidence, and decide rather than guess. See <a href="https://github.com/gfrmin/credence">Credence</a>.</p>
+<p>Value of Information, conjugate Bayesian models, principled uncertainty quantification. Building agents that maintain beliefs, update from evidence, and decide rather than guess. See <a href="https://github.com/gfrmin/proplang">proplang</a> and its predecessor <a href="https://github.com/gfrmin/credence">Credence</a>.</p>
 </div>
 <div class="service-card">
 <div class="service-card-icon">&#x1F916;</div>

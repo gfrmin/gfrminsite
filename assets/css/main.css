@@ -792,8 +792,9 @@ code:not(.sourceCode) {
   border: 1px solid var(--border-subtle);
 }
 
-/* Prevent KaTeX display math from overflowing content width */
-.katex-display {
+/* Prevent display math (MathML, rendered at build time) from overflowing */
+math[display="block"] {
+  display: block;
   overflow-x: auto;
   overflow-y: hidden;
   max-width: 100%;

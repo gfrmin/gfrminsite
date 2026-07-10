@@ -30,11 +30,11 @@ The natural model is Beta-Bernoulli. For each tool-category pair, maintain a Bet
 
 $$r_{t,c} \sim \text{Beta}(\alpha_{t,c},\, \beta_{t,c})$$
 
-Start with $\alpha = 1, \beta = 1$ --- a uniform prior, the formal expression of total ignorance. Expected reliability is the familiar ratio:
+Start with \(\alpha = 1, \beta = 1\) --- a uniform prior, the formal expression of total ignorance. Expected reliability is the familiar ratio:
 
 $$\mathbb{E}[r_{t,c}] = \frac{\alpha_{t,c}}{\alpha_{t,c} + \beta_{t,c}}$$
 
-After each question, once ground truth is revealed, we update. Correct answer: increment $\alpha$. Wrong answer: increment $\beta$. The update is weighted by the category posterior, distributing learning across categories in proportion to their plausibility:
+After each question, once ground truth is revealed, we update. Correct answer: increment \(\alpha\). Wrong answer: increment \(\beta\). The update is weighted by the category posterior, distributing learning across categories in proportion to their plausibility:
 
 ```python
 def update_reliability_table(
@@ -62,13 +62,13 @@ def update_reliability_table(
     return new_table
 ```
 
-The `forgetting` parameter ($\lambda = 0.95$ in the drift experiments) implements exponential decay --- multiplying $\alpha$ and $\beta$ by $\lambda$ before each update. This prevents ancient observations from tyrannising the present when tool reliability shifts mid-task. It is what allows the agent to notice a degraded tool and quietly redirect its queries elsewhere within a handful of questions.
+The `forgetting` parameter (\(\lambda = 0.95\) in the drift experiments) implements exponential decay --- multiplying \(\alpha\) and \(\beta\) by \(\lambda\) before each update. This prevents ancient observations from tyrannising the present when tool reliability shifts mid-task. It is what allows the agent to notice a degraded tool and quietly redirect its queries elsewhere within a handful of questions.
 
-Two properties make this work well. First, the update is exact. No gradient descent, no approximation, no convergence check. Observe, update, move on. Second, the Beta distribution encodes both the estimate *and* the uncertainty in a single object. A tool with $\text{Beta}(2, 2)$ and one with $\text{Beta}(20, 20)$ both have expected reliability 0.5, but the agent knows it should trust the second estimate far more than the first.
+Two properties make this work well. First, the update is exact. No gradient descent, no approximation, no convergence check. Observe, update, move on. Second, the Beta distribution encodes both the estimate *and* the uncertainty in a single object. A tool with \(\text{Beta}(2, 2)\) and one with \(\text{Beta}(20, 20)\) both have expected reliability 0.5, but the agent knows it should trust the second estimate far more than the first.
 
 ## Bayesian Updates on Answers
 
-When a tool returns answer $x_j$, we update our beliefs about which answer is correct. The likelihood model is straightforward: if the tool's effective reliability is $r$, it returns the correct answer with probability $r$ and each wrong answer with probability $\frac{1-r}{3}$:
+When a tool returns answer \(x_j\), we update our beliefs about which answer is correct. The likelihood model is straightforward: if the tool's effective reliability is \(r\), it returns the correct answer with probability \(r\) and each wrong answer with probability \(\frac{1-r}{3}\):
 
 $$P(\text{tool says } x_j \mid \text{true answer is } x_i, r) = \begin{cases} r & \text{if } i = j \\ \frac{1-r}{3} & \text{if } i \neq j \end{cases}$$
 
@@ -95,7 +95,7 @@ def update_answer_posterior(
     return updated / total
 ```
 
-But the effective reliability $r$ is not known exactly --- we have a distribution over it. So we marginalise over category uncertainty:
+But the effective reliability \(r\) is not known exactly --- we have a distribution over it. So we marginalise over category uncertainty:
 
 $$r_{\text{eff}} = \sum_{c} P(c \mid \text{question}) \cdot \mathbb{E}[r_{t,c}]$$
 
@@ -103,11 +103,11 @@ The agent doesn't know which category a question belongs to either. It maintains
 
 ## Expected Utility: When to Answer
 
-The scoring rule: +10 for correct, -5 for wrong, 0 for abstaining. The expected utility of submitting answer $x_j$ is therefore:
+The scoring rule: +10 for correct, -5 for wrong, 0 for abstaining. The expected utility of submitting answer \(x_j\) is therefore:
 
 $$\text{EU}_{\text{submit}}(x_j) = P(x_j) \cdot 10 + (1 - P(x_j)) \cdot (-5) = 15 \cdot P(x_j) - 5$$
 
-Setting $\text{EU}_{\text{submit}} > \text{EU}_{\text{abstain}} = 0$ yields a satisfyingly clean threshold: only submit when your best candidate has posterior probability above $\frac{1}{3}$. Below that, the expected cost of being wrong outweighs the expected benefit of being right. The arithmetic is indifferent to your feelings about how confident you "seem."
+Setting \(\text{EU}_{\text{submit}} > \text{EU}_{\text{abstain}} = 0\) yields a satisfyingly clean threshold: only submit when your best candidate has posterior probability above \(\frac{1}{3}\). Below that, the expected cost of being wrong outweighs the expected benefit of being right. The arithmetic is indifferent to your feelings about how confident you "seem."
 
 ```python
 def eu_submit(answer_posterior: AnswerPosterior) -> float:
@@ -223,7 +223,7 @@ The Bayesian agent's lower raw accuracy is a feature, not a deficiency. It absta
 
 ## Adaptation Under Drift
 
-In the drift experiment, one tool's reliability degrades partway through the task. An agent that continues trusting the degraded tool sees its score collapse by 69 points. The Bayesian agent's forgetting mechanism ($\lambda = 0.95$) exponentially discounts old observations:
+In the drift experiment, one tool's reliability degrades partway through the task. An agent that continues trusting the degraded tool sees its score collapse by 69 points. The Bayesian agent's forgetting mechanism (\(\lambda = 0.95\)) exponentially discounts old observations:
 
 $$\alpha_{\text{new}} = 0.95 \cdot \alpha_{\text{old}} + \Delta\alpha$$
 

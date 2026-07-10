@@ -58,6 +58,13 @@ defaultContentLanguage = "en"
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+    # Mathematics. A bare `$` is deliberately NOT an inline delimiter: the prose
+    # is full of dollar amounts ($200,000 and the like). Inline math is \(...\).
+    [markup.goldmark.extensions.passthrough]
+      enable = true
+      [markup.goldmark.extensions.passthrough.delimiters]
+        block  = [['\[', '\]'], ['$$', '$$']]
+        inline = [['\(', '\)']]
 
 [outputs]
   home = ["HTML", "RSS"]

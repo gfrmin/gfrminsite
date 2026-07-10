@@ -195,7 +195,7 @@ LangChain has no learning mechanism at all, which is a different kind of violati
 
 **Heuristics are EU maximisation, not approximations.** When computational cost enters the utility function, a faster approximate strategy may have higher EU than the exact Bayesian computation. This is not an approximation of the correct answer. It IS the correct answer. The right framing is not "we approximated inference for speed" but "we maximised expected utility over a decision space that includes computational strategy." The DSL specification doesn't change. The Julia execution layer implements alternative strategies; the agent selects among them by the same mechanism it uses for everything else.
 
-**Indifference implies exploration.** When the EU of interacting equals the EU of waiting (both zero), interact. Indifference means the VOI from the interaction outcome is positive --- you'll learn something. The threshold is $\geq 0$, not $> 0$. This is a theorem, not a tie-breaking rule. Do not "fix" it to strict inequality.
+**Indifference implies exploration.** When the EU of interacting equals the EU of waiting (both zero), interact. Indifference means the VOI from the interaction outcome is positive --- you'll learn something. The threshold is \(\geq 0\), not \(> 0\). This is a theorem, not a tie-breaking rule. Do not "fix" it to strict inequality.
 
 ## The Host Boundary
 
@@ -219,7 +219,7 @@ The next posts in this series apply these principles to domains where the conseq
 
 The architecture described above works. But building on it revealed three operational pains that traced to the same root cause: taking Measure as the foundational type.
 
-**Pain 1: Conjugate dispatch scattered across case branches.** Adding a new conjugate pair --- say, Normal-Gamma --- required editing `condition` methods across multiple Measure subtypes, each with nested case analysis on the kernel's `likelihood_family`. The dispatch logic was $N \times M$ branches: $N$ measure types times $M$ likelihood families. Every new pair touched code it shouldn't need to know about.
+**Pain 1: Conjugate dispatch scattered across case branches.** Adding a new conjugate pair --- say, Normal-Gamma --- required editing `condition` methods across multiple Measure subtypes, each with nested case analysis on the kernel's `likelihood_family`. The dispatch logic was \(N \times M\) branches: \(N\) measure types times \(M\) likelihood families. Every new pair touched code it shouldn't need to know about.
 
 **Pain 2: Mixture conditioning duct-taped across two layers.** The email agent maintained a belief over 22 candidate programs as a mixture. Conditioning that mixture on evidence required a `FiringByTag` routing helper on the kernel side, a `_predictive_ll` flattening loop on the measure side, and application code manually reweighting components. Per-component routing semantics lived in one place; mixture flattening in another. Each extension was fragile.
 
@@ -227,7 +227,7 @@ The architecture described above works. But building on it revealed three operat
 
 All three pains share a cause. The Kolmogorov foundation takes the **measure** as primitive and derives expectation as integration against it. But the agent's coherence --- the Dutch-book argument that justifies Bayesian updating in the first place --- doesn't require a measure at all.
 
-De Finetti's *Theory of Probability* (1974, vol. 1, ch. 3) makes the alternative explicit. A **prevision** $\mathbf{P}(X)$ is the certain gain you consider equivalent to a random gain $X$ --- the price at which you would be indifferent between holding the uncertain quantity and accepting the sure thing. Coherence --- the impossibility of a combination of bets that guarantees loss --- forces $\mathbf{P}$ to be additive and bounded. These two properties are, as de Finetti puts it, "not only necessary but also sufficient" for the entire theory. Probability is the special case: the prevision of an indicator. Whittle's *Probability via Expectation* (2000, ch. 2) reaches the same conclusion from the other direction, axiomatising the expectation operator directly --- positivity, linearity, normalisation, continuity --- and deriving $P(A) = E[\mathbf{1}_A]$ as a consequence. In both treatments, the measure is not a foundation. It is a derived quantity.
+De Finetti's *Theory of Probability* (1974, vol. 1, ch. 3) makes the alternative explicit. A **prevision** \(\mathbf{P}(X)\) is the certain gain you consider equivalent to a random gain \(X\) --- the price at which you would be indifferent between holding the uncertain quantity and accepting the sure thing. Coherence --- the impossibility of a combination of bets that guarantees loss --- forces \(\mathbf{P}\) to be additive and bounded. These two properties are, as de Finetti puts it, "not only necessary but also sufficient" for the entire theory. Probability is the special case: the prevision of an indicator. Whittle's *Probability via Expectation* (2000, ch. 2) reaches the same conclusion from the other direction, axiomatising the expectation operator directly --- positivity, linearity, normalisation, continuity --- and deriving \(P(A) = E[\mathbf{1}_A]\) as a consequence. In both treatments, the measure is not a foundation. It is a derived quantity.
 
 The reconstruction follows this inversion. The primitive type is now a prevision --- a coherent linear functional on a declared test function space. `expect` is not derived by integration; it IS the definition of what a prevision does. A measure is recovered as the restriction of a prevision to indicator functions:
 
@@ -246,5 +246,9 @@ The three types became four --- Space, **Prevision**, Event, Kernel --- and the 
 The reconstruction is operationally equivalent to the measure-theoretic implementation it replaced --- bit-exact under seeded RNG for particle paths, bit-exact for closed-form conjugate updates, and tighter-than-reassociation tolerances everywhere else. The axioms did not change. The four frozen functions did not change. The applications work identically. What changed is which type appears at the bottom, and therefore which invariants the type system can enforce.
 
 The funeral in the title was meant for inference libraries that add special-case mechanisms instead of deriving behaviour from axioms. It turned out to apply, in the end, to the Measure type itself.
+
+{{< callout type="note" >}}
+The reconstruction did not stop here. Getting the *nouns* right — prevision at the bottom, four types instead of three — was half the job. The other half was getting the *verbs* right, and it happened in a different repository. A successor project, [proplang](https://github.com/gfrmin/proplang), cornered the whole language: it demoted the prior from an object to an accounting property of the grammar, made `condition` and `argmax` terminals a program can utter rather than host functions it can only call, and — the part Credence never managed — made its own architectural rules unwriteable rather than merely written down. That story, including where *this* system quietly drifted from its own constitution, is told in [What You Cannot Say, You Cannot Get Wrong](/posts/make-it-unsayable/).
+{{< /callout >}}
 
 Code: [github.com/gfrmin/credence](https://github.com/gfrmin/credence)

@@ -26,7 +26,7 @@ The hypothesis space is generated bottom-up, in three phases.
 
 **Phase 3: Programs.** Predicates are inserted into decision rules: IF *predicate* THEN *action* ELSE *action*. A complete program is a mapping from situations to actions, structured as a tree of conditional tests. A program containing a single predicate has depth 2. Nesting conditionals raises depth --- and complexity --- further.
 
-The prior probability of each program is $2^{-k}$ where $k$ is the program's complexity. This is Solomonoff's universal prior: a maximum-entropy distribution over the terminal alphabet, where each symbol costs one bit regardless of what it does. Simpler programs are exponentially more probable under this prior. A program of complexity 10 is 32 times less likely than one of complexity 5, before any data is seen.
+The prior probability of each program is \(2^{-k}\) where \(k\) is the program's complexity. This is Solomonoff's universal prior: a maximum-entropy distribution over the terminal alphabet, where each symbol costs one bit regardless of what it does. Simpler programs are exponentially more probable under this prior. A program of complexity 10 is 32 times less likely than one of complexity 5, before any data is seen.
 
 ## The Tautology Filter
 
@@ -52,7 +52,7 @@ The obvious comparison is to methods that learn model structure --- neural archi
 
 The distinction is in the search criterion. Gradient descent, evolutionary fitness, and cross-validation accuracy are all surrogates for a quantity you actually care about. They can be gamed. A program that achieves high training accuracy by memorising will score well under cross-validation if the training set is large enough. An evolved architecture that overfits will dominate a population in short episodes.
 
-The Bayesian criterion --- posterior probability --- cannot be similarly gamed, because it integrates fit and complexity simultaneously. The complexity penalty (the prior $2^{-k}$) is not a regularisation coefficient tuned by hand. It is the prior probability of the program's existence under a maximum-entropy distribution over programs. The posterior is the uniquely correct update of this prior given the observed data. There is no hyperparameter to tune and no threshold to set.
+The Bayesian criterion --- posterior probability --- cannot be similarly gamed, because it integrates fit and complexity simultaneously. The complexity penalty (the prior \(2^{-k}\)) is not a regularisation coefficient tuned by hand. It is the prior probability of the program's existence under a maximum-entropy distribution over programs. The posterior is the uniquely correct update of this prior given the observed data. There is no hyperparameter to tune and no threshold to set.
 
 This is the same argument that applies to [Credence's Tier 1](/posts/three-types/): the mathematics forces a unique answer. You do not choose the Solomonoff prior because it has nice properties. You use it because it is the maximum-entropy distribution over descriptions, and any other prior either assumes more structure than you have or violates Cox's consistency axioms.
 
@@ -65,3 +65,7 @@ The agent was not told that spatial reasoning matters. It was given raw sensor f
 This is, in miniature, the argument for learning over hard-coding. Not because hard-coded rules are wrong --- they may be exactly right --- but because a system that derives its rules from data can adapt when the rules change. The grid world occasionally changes its dynamics. When it does, the programs that predicted well stop predicting well. Their posterior weights fall. The grammar loses the nonterminals they contributed. New structures, appropriate to the new regime, rise.
 
 No change-detection algorithm is running. No flag is set when a regime change occurs. The posterior dynamics handle it automatically. This is what it means to have a [principled learning mechanism](/posts/three-types/) rather than a collection of heuristics.
+
+{{< callout type="note" >}}
+A later correction, in the interest of not smuggling. Everything above about Tier 1 holds: at the object level, no change-detector runs, and the posterior does the work. But the Tier-2 loop this post describes --- `analyse_posterior_subtrees`, the grammar perturbation that promotes frequent subtrees to nonterminals --- is *host-side machinery*. It is an imperative loop the runtime executes, not a sentence the agent's own program space contains. The agent changes what it thinks about; it does not, in this design, reason about *how* it thinks, because the meta-actions that reshape the grammar are not terminals it can utter. A successor language, [proplang](https://github.com/gfrmin/proplang), makes exactly this the dividing line between a decision-theory *calculator* and an *agent*: its inference verbs are grammar terminals, so "enumerate deeper, then decide" is a costed sentence the program writes for itself. Whether that fully closes the loop --- it does not; the closure is quoting-level, not compositional --- is taken up in [What You Cannot Say, You Cannot Get Wrong](/posts/make-it-unsayable/).
+{{< /callout >}}

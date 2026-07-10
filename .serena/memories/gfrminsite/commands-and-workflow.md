@@ -2,28 +2,22 @@
 
 ## Development Commands
 
-### Quarto Commands
-- **quarto preview** - Start local development server with hot reload (primary development command)
-- **quarto render** - Full production build, outputs to public/ directory
-- **quarto check** - Validate Quarto setup and installation
-
-### Python Dependency Management
-- **uv sync** - Install/sync Python dependencies from pyproject.toml
+- **`hugo server -D`** — local dev server with live reload, drafts included (primary development command)
+- **`hugo --minify`** — full production build (exactly what CI runs); outputs to `public/`
+- Pin the local `hugo` to the CI-matching extended version if `hugo` on `$PATH` differs (see `.github/workflows/publish.yml`).
 
 ## Development Workflow
 
-1. **Edit Content**: Modify .qmd files in posts/, projects/, or other content directories
-2. **Preview**: Run `quarto preview` to view changes locally
-3. **Test**: Use Python dependencies (jupyter, matplotlib, plotly) as needed
-4. **Render**: Run `quarto render` for production build
-5. **Deploy**: Commit to GitHub, automatic deployment to GitHub Pages (gfrm.in)
+1. **Edit Content**: modify `content/posts/<slug>/index.md` (or `_index.md` section files). Work-in-progress posts carry `draft: true`, or stage them under the gitignored `drafts/` at the repo root.
+2. **Preview**: run `hugo server -D` to view changes (including drafts) locally.
+3. **Build**: run `hugo --minify` to confirm a clean production build before pushing.
+4. **Deploy**: commit and push to `master`; `.github/workflows/publish.yml` builds with Hugo and deploys to GitHub Pages.
+5. **Purge**: after a green Actions run, purge the Cloudflare cache for zone gfrm.in — the deploy is not visible until then.
 
 ## Build Output
-- All rendered HTML output goes to: public/ directory
-- Static site is deployed from public/ to GitHub Pages
-- Custom domain configured: https://gfrm.in
+- Rendered HTML goes to `public/` (gitignored), deployed to GitHub Pages.
+- Custom domain: https://gfrm.in (Cloudflare in front, caches aggressively).
 
-## Freeze/Cache Strategy
-- freeze: auto enables automatic cache management
-- cache: true caches code execution results
-- These settings ensure reproducible research patterns and faster rebuilds
+## Mathematics
+- Rendered to MathML at build time; no JS. Inline is `\(…\)`, display is `$$…$$` or `\[…\]`.
+- A bare `$` is deliberately not a math delimiter (prose contains dollar amounts).

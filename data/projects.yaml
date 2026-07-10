@@ -13,12 +13,19 @@
   featured: true
   hero: false
 
-- title: "Credence"
-  url: "https://github.com/gfrmin/credence"
-  description: "A Bayesian agent framework that treats tool selection as a decision problem rather than a prompt-engineering one. It keeps a Beta posterior over each tool's reliability and, before every call, computes the expected value of the information that call would buy — acting only when the expected utility justifies it. On a tool-use benchmark it scored +112 against LangChain ReAct's -8 while answering fewer questions correctly: the accuracy paradox, where knowing more answers is not the same as knowing which answers are worth finding. Python, NumPy, and SciPy."
-  weight: 20
+- title: "proplang"
+  url: "https://github.com/gfrmin/proplang"
+  description: "A small language built on one claim: an adaptive Bayesian decision-theoretic agent needs no adaptation machinery. If hypotheses are programs and the prior is 2^-|program| under a grammar, then adaptivity, bounded rationality, and inductive bias stop being modules and become posterior dynamics — so the alphabet of the language is the prior, and the design method is to delete every terminal whose removal costs no capability. Ten terminals survived an executed deletion audit; one failed its own proof and is recorded as a standing bug rather than quietly kept. The repository is a closed, frozen artifact: the acceptance tests were written and cryptographically signed before any implementation existed, and the reference implementation and its Haskell port were built against that frozen oracle by an agent that could not change the tests. Python and Haskell."
+  weight: 15
   featured: false
   hero: true
+
+- title: "Credence"
+  url: "https://github.com/gfrmin/credence"
+  description: "A Bayesian agent framework that treats tool selection as a decision problem rather than a prompt-engineering one. It keeps a Beta posterior over each tool's reliability and, before every call, computes the expected value of the information that call would buy — acting only when the expected utility justifies it. On a tool-use benchmark it scored +112 against LangChain ReAct's -8 while answering fewer questions correctly: the accuracy paradox, where knowing more answers is not the same as knowing which answers are worth finding. The predecessor to proplang, which cornered its foundation. Python, NumPy, and SciPy."
+  weight: 20
+  featured: false
+  hero: false
 
 - title: "life-agent"
   url: "https://github.com/gfrmin/life-agent"

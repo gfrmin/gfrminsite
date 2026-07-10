@@ -1,103 +1,45 @@
-# Guy Freeman's Data Science Blog
+# gfrm.in
 
-A personal blog showcasing data analysis projects, statistical insights, and coding adventures. Built with Quarto for reproducible research and beautiful presentations.
+Source for my personal blog at [gfrm.in](https://gfrm.in) — essays on data, AI, Bayesian decision theory, and the occasional investigation. Built with [Hugo](https://gohugo.io). Bilingual: English by default, Hebrew translations with RTL.
 
-## About
+## Local development
 
-This repository contains the source code for my personal data science blog. I'm a data scientist with a PhD in statistics who has worked across various domains and locations (Israel, England, Hong Kong).
+Requires Hugo **extended** (CI pins the version used for production builds — see `.github/workflows/publish.yml`).
 
-## Features
+```bash
+git clone git@github.com:gfrmin/gfrminsite.git
+cd gfrminsite
 
-- **Quarto-powered**: Modern, reproducible research with R and Python
-- **Data Analysis Posts**: Election analysis, puzzle solutions, and statistical insights
-- **Interactive Elements**: Code folding, data tables, and dynamic visualizations
-- **Responsive Design**: Clean, professional layout that works on all devices
-
-## Recent Posts
-
-- **Israel's Election for the 25th Knesset**: Analysis of the 2022 Israeli election results
-- **Hanukkah of Data 5783**: Solving data puzzles in R (alternative to Advent of Code)
-
-## Technology Stack
-
-- **Quarto**: Static site generator for technical content
-- **R**: Primary language for data analysis and visualization
-- **Python**: Supporting language for data processing
-- **CSS**: Custom styling for enhanced presentation
-
-## Local Development
-
-To run this blog locally:
-
-1. **Install Quarto**: Download from https://quarto.org/docs/get-started/
-2. **Install R**: Download from https://cran.r-project.org/
-3. **Install Python dependencies**: This project uses `uv` for Python package management
-   ```bash
-   uv sync
-   ```
-4. **Clone this repository**:
-   ```bash
-   git clone git@gitlab.com:gfrmin/blog-quarto.git
-   cd blog-quarto
-   ```
-5. **Start the development server**:
-   ```bash
-   quarto preview
-   ```
-6. **Build the site**:
-   ```bash
-   quarto render
-   ```
-
-## Project Structure
-
-```
-blog-quarto/
-├── _quarto.yml           # Quarto configuration file
-├── index.qmd             # Homepage content
-├── about.qmd             # About page redirect
-├── projects.qmd          # Projects page redirect
-├── posts/                # Blog posts directory
-│   ├── _metadata.yml     # Posts metadata
-│   └── hanukkah-of-code/ # Data puzzles post
-├── projects/             # Project showcases
-├── styles.css            # Custom CSS styling
-├── profile.jpg           # Profile image
-├── pyproject.toml        # Python project configuration
-├── uv.lock               # Python dependency lock file
-├── _freeze/              # Quarto cache (tracked for reproducibility)
+hugo server -D    # dev server with live reload, drafts included
+hugo --minify     # production build, exactly what CI runs
 ```
 
-## Dependencies
+## Structure
 
-### Python Dependencies
-Managed via `pyproject.toml` and `uv`:
-- `jupyter>=1.1.1` - Jupyter notebook support
-- `matplotlib>=3.10.3` - Plotting library
-- `plotly>=6.1.2` - Interactive visualizations
-
-### R Dependencies
-Install required R packages:
-```r
-install.packages(c("tidyverse", "ggplot2", "dplyr", "readr"))
+```
+content/posts/<slug>/index.md      one directory per post (Hugo page bundle);
+                                   images and og-image.png live alongside it
+content/posts/<slug>/index.he.md   Hebrew translation of that post
+content/he/                        Hebrew top-level sections
+content/research/, projects/, contact/
+data/projects.yaml                 single source of truth for project cards
+layouts/                           templates, partials, shortcodes
+assets/css/main.css                the stylesheet (Hugo asset pipeline)
+static/                            served verbatim at the site root
+drafts/                            gitignored staging area for work in progress
 ```
 
-## Contributing
+Posts carry `draft: true` until they're ready. Mathematics is written as `\(inline\)` and `$$display$$`, rendered to MathML at build time — note that a bare `$` is *not* a math delimiter, since the prose is full of dollar amounts.
 
-This is a personal blog, but suggestions and feedback are welcome! Feel free to:
-- Open issues for bugs or suggestions
-- Submit pull requests for improvements
-- Reach out with questions about the analysis
+## Deployment
+
+Push to `master`; `.github/workflows/publish.yml` builds with Hugo and deploys to GitHub Pages. The custom domain `www.gfrm.in` resolves via Cloudflare, which caches aggressively — a deploy is not visible until the cache is purged.
 
 ## License
 
-This work is licensed under [CC BY SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
+Prose is licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0).
 
 ## Contact
 
-- **GitHub**: [@gfrmin](https://github.com/gfrmin)
-- **Twitter**: [@gfrmin](https://twitter.com/gfrmin)
-
----
-
-*Built with ❤️ using Quarto*
+- GitHub: [@gfrmin](https://github.com/gfrmin)
+- Twitter: [@gfrm_in](https://twitter.com/gfrm_in)

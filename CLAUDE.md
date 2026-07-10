@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Personal blog at [gfrm.in](https://gfrm.in), built with **Hugo**. Prose-first (essays on data, AI, Bayesian decision theory, investigations); only one legacy post uses executable code. Bilingual — English default, Hebrew translations with RTL.
 
-**Migrated from Quarto to Hugo in March 2026.** Many legacy Quarto artefacts are still physically present at the repo root but are no longer wired into any build: `_quarto.yml`, `*.qmd` (e.g. `index.qmd`, `projects.qmd`, `404.qmd`), `_freeze/`, `_filters/`, `_includes/`, `_scripts/`, `_site/`, `.R/`, `.Rprofile`, `pyproject.toml`, `uv.lock`, `.venv/`, `styles.css`, `theme-dark.scss`. Treat all of them as inert — do not edit them, do not base patterns on them. The live site is everything the Hugo config and `layouts/` tree touches.
+Migrated from Quarto to Hugo in March 2026; the Quarto artefacts were removed from the tree in July 2026. If you find a reference to `_quarto.yml`, `*.qmd`, `_freeze/`, R, or `uv`/`pyproject.toml` anywhere, it is stale — the live site is entirely Hugo (`hugo.toml` plus the `layouts/` tree).
 
 ## Common Commands
 
@@ -18,8 +18,12 @@ hugo server -D
 hugo --minify
 
 # Pin to the CI-matching Hugo version if the `hugo` on $PATH is newer/older
-# CI uses peaceiris/actions-hugo@v3 with hugo-version 0.161.1 extended
+# CI uses peaceiris/actions-hugo@v3 with hugo-version 0.163.3 extended
 ```
+
+### Mathematics
+
+Math is rendered to **MathML at build time** via goldmark's passthrough extension and `transform.ToMath` (`layouts/_default/_markup/render-passthrough.html`) — no KaTeX, no JS, no CDN. Delimiters: display is `$$…$$` or `\[…\]`; **inline is `\(…\)` only**. A bare `$` is deliberately *not* an inline delimiter, because the prose is full of dollar amounts (`$200,000`); enabling `$…$` inline would silently turn money into math. When writing math in a post, always use `\(…\)` for inline.
 
 ## Architecture
 
@@ -42,7 +46,7 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
 - `layouts/partials/` — `header.html`, `footer.html`, `schema.html` (JSON-LD), `share-buttons.html`, `darkmode.html`, `posthog.html`, `skip-link.html`.
 - `layouts/shortcodes/callout.html` — callout shortcode.
 - `layouts/index.html`, `layouts/404.html` — homepage and 404 overrides.
-- `assets/css/main.css` — active stylesheet (Hugo asset pipeline). `styles.css` at the repo root is a Quarto leftover.
+- `assets/css/main.css` — active stylesheet (Hugo asset pipeline).
 - `static/` — served verbatim at the site root (includes `CNAME`, `favicon.ico`, `robots.txt`, `images/` for non-post-bundle images).
 
 ### Post frontmatter conventions

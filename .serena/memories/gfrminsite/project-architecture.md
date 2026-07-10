@@ -3,51 +3,38 @@
 ## Directory Structure
 
 ### Root Configuration Files
-- `_quarto.yml` - Main site configuration (project type, output, theme, navigation)
-- `pyproject.toml` - Python project configuration and dependencies
-- `CLAUDE.md` - Development guidelines and conventions
-- `README.md` - Project description and overview
-- `.Rprofile` - R configuration file for project-local library at .R/library/
+- `hugo.toml` — site config (baseURL, languages, taxonomies, menus, markup, outputs, minify)
+- `CLAUDE.md` — development guidelines and conventions
+- `README.md` — project description and overview
 
-### Content Directories
-- `posts/` - Blog posts (uses freeze: true convention)
-- `projects/` - Project showcases
-- `contact/` - Contact page
-- Other potential content directories following similar structure
+### Content
+- `content/posts/<slug>/index.md` — one directory per post (Hugo page bundle); frontmatter + body, with per-post assets (images, `og-image.png`) alongside.
+- `content/posts/<slug>/index.he.md` — Hebrew translation (Hugo translation-by-filename); sibling of the English `index.md`.
+- `content/he/` — Hebrew top-level sections (`_index.md`, `posts/`, `projects/`, `contact/`).
+- `content/research/`, `content/projects/`, `content/contact/` — non-post sections (`_index.md` prose pages).
+- `data/projects.yaml` — single source of truth for project cards.
+- `drafts/` at the repo root — gitignored staging area for work-in-progress drafts (separate from Hugo's `draft: true`).
 
-### System Directories
-- `layouts/` - Custom Quarto layouts
-- `_filters/` - Quarto filters for custom processing
-- `_includes/` - Reusable HTML/template includes
-- `_scripts/` - Build/utility scripts
-- `.R/` - R configuration directory (library subdirectory for packages)
+### Templates & Layouts
+- `layouts/_default/{baseof,list,single}.html` — base chrome, list and single-page templates.
+- `layouts/index.html`, `layouts/404.html` — homepage and 404 overrides.
+- `layouts/partials/` — `header`, `footer`, `schema` (JSON-LD), `share-buttons`, `darkmode`, `posthog`, `skip-link`.
+- `layouts/shortcodes/callout.html` — the callout shortcode (`{{< callout type="note" >}}`).
+- `layouts/partials/project-card.html` — renders one `data/projects.yaml` entry.
+- `layouts/_default/_markup/render-passthrough.html` — math → MathML at build time.
+
+### Assets & Static
+- `assets/css/main.css` — the stylesheet (Hugo asset pipeline).
+- `static/` — served verbatim at the site root (`CNAME`, `favicon.ico`, `robots.txt`, `images/`).
 
 ### Build Output
-- `public/` - Generated static site (GitHub Pages deployment source)
-
-## Configuration Files Explained
-
-### _quarto.yml
-Specifies:
-- Project type: website
-- Output directory: public/
-- Website title and metadata
-- Navigation menu structure
-- Theme configuration
-- Execute settings (freeze, cache)
-- HTML format with custom CSS (styles.css)
-- Filter plugins
-
-### pyproject.toml
-Specifies:
-- Project metadata (name: blog-quarto, version: 0.1.0)
-- Python version requirement: >=3.13
-- Dependencies for data science and visualization
-- Uses uv as dependency manager
+- `public/` — generated static site (gitignored; GitHub Pages deployment source).
 
 ## Deployment Architecture
-- Source: GitHub repository
-- Build: Quarto render to public/
-- Deployment: GitHub Pages
-- Custom Domain: gfrm.in
-- Framework: Static site (no backend)
+- Source: GitHub repository (`master` branch).
+- Build: `.github/workflows/publish.yml` runs Hugo (extended, pinned version) → `public/`.
+- Deployment: GitHub Pages; custom domain gfrm.in via Cloudflare (which caches aggressively — purge after deploy).
+- Framework: static site, no backend.
+
+## History
+Migrated from Quarto to Hugo (March 2026); Quarto artefacts removed from the tree July 2026.

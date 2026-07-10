@@ -1,29 +1,28 @@
 # gfrminsite Code Style and Conventions
 
-## Quarto Code Block Conventions
+## Post Frontmatter
+Standard YAML keys across current posts:
+- `title`, `subtitle` (optional, rendered under the title), `description` (used for `<meta name="description">` and `og:description`)
+- `author: "Guy Freeman"`, `date: YYYY-MM-DD`
+- `draft: true` — work-in-progress; hidden from the production build
+- `categories: [essays, bayesian, ...]` — taxonomy; renders at `/categories/<cat>/`. Reuse existing terms rather than inventing new ones.
+- `image: og-image.png` — optional, relative to the page bundle; falls back to `params.ogImage` in `hugo.toml` if omitted.
 
-### Posts Configuration
-- **freeze: true** - Ensures posts render with fixed/cached output for reproducibility
-- **code-fold: true** - Code blocks are folded by default, user can expand to read
-- **code-tools: true** - Enables code tools like copying and viewing source
+## Content Conventions
+- One directory per post: `content/posts/<slug>/index.md`, assets alongside (page bundle).
+- Hebrew translation is a sibling `index.he.md`; Hebrew posts resolve to `/he/posts/<slug>/`.
+- RTL is scoped to content via a CSS class — never set `dir="rtl"` on `<html>`.
+- The only custom shortcode is `{{< callout type="note" >}} … {{< /callout >}}`.
 
-### Execute Settings
-- freeze: auto (automatic freeze management in root _quarto.yml)
-- cache: true (enable caching for faster re-renders)
+## Mathematics
+- Rendered to MathML at build time (goldmark passthrough + `transform.ToMath`); no KaTeX/JS.
+- Inline: `\(…\)`. Display: `$$…$$` or `\[…\]`.
+- A bare `$` is NOT a delimiter — prose contains dollar amounts (`$200,000`). Always use `\(…\)` for inline math.
 
-## R/Data Analysis Conventions
-- Project-local R library at `.R/library/` (configured via .Rprofile)
-- Uses Quarto's native R support for code chunks
-- Reproducible research patterns with cache/freeze
+## Styling
+- Single stylesheet: `assets/css/main.css` (Hugo asset pipeline).
+- Light/dark mode via `layouts/partials/darkmode.html` + CSS custom properties.
 
-## Python Conventions
-- Managed via uv dependency manager
-- Dependencies specified in pyproject.toml
-- Python >=3.13 required
-- Jupyter notebooks supported via jupyter and jupyter-cache
-
-## CSS Styling
-- Custom styles defined in styles.css
-- Integrated with Quarto's theme system
-- Light theme: flatly
-- Dark theme: darkly + custom dark theme CSS
+## Project Cards
+- Edit `data/projects.yaml`; each entry is rendered by `layouts/partials/project-card.html`.
+- Descriptions are plain prose (not markdown-parsed), conventionally ending with the tech stack. `hero: true` = homepage feature (exactly one), `featured: true` = homepage grid, `weight` orders `/projects/`.

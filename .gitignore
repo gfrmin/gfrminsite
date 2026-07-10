@@ -1,6 +1,9 @@
 # Hugo
 .hugo_build.lock
 
+# Hugo build output
+public/
+
 # Python
 __pycache__/
 *.py[oc]
@@ -11,26 +14,9 @@ wheels/
 .venv/
 .env/
 
-# R
-.R/
-.Rhistory
-.RData
-.Ruserdata
-*.Rproj.user
-
-# Quarto
-.quarto/
-_site/
-public/
-*_cache/
-**/*.quarto_ipynb
-.luarc.json
-
-# Data files (downloaded at render time)
+# Data files
 *.csv
 *.xlsx
-*.rds
-*.rda
 *.zip
 
 # OS/IDE
@@ -46,10 +32,7 @@ Thumbs.db
 *.tmp
 *.mht
 *.html
-!_includes/*.html
 !layouts/**/*.html
-
-/.quarto/
 
 # Playwright test screenshots
 .playwright-mcp/
