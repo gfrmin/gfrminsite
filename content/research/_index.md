@@ -11,18 +11,15 @@ The result is four nouns (Space, Prevision, Event, Kernel), three verbs (push, c
 
 This is the same move Rust makes against C++ and TypeScript against JavaScript — make the illegal state unrepresentable — with one turn of the screw those languages cannot make: because the alphabet doubles as the prior, soundness and good epistemics become the same property, and minimality acquires a deletion test that is actually executable.
 
-- [GitHub](https://github.com/gfrmin/proplang)
-- [What You Cannot Say, You Cannot Get Wrong](/posts/make-it-unsayable/) — cornering as enforcement, and why it matters when the implementer is a model
-- [The Alphabet Is the Prior](/posts/the-alphabet-is-the-prior/) — minimality as a correctness property, and the deletion audit
-- [There Is No Forgetting](/posts/there-is-no-forgetting/) — adaptation dissolved into posterior dynamics
-- [Signed Before the Code Existed](/posts/signed-before-the-code-existed/) — the frozen-oracle protocol
-- [Think More, or Act Now](/posts/think-more-or-act-now/) — metareasoning that terminates in the clock, not a threshold
+- [GitHub](https://github.com/gfrmin/proplang) — the frozen artifact: research brief, language design, reference implementation, and the signed custody chain
+
+A series of essays on the design — cornering as enforcement, the deletion audit, adaptation dissolved, the frozen-oracle protocol, and metareasoning that terminates in the clock — is in progress.
 
 ## Credence: The Decision-Theoretic Predecessor
 
 Before proplang there was Credence — a framework for LLM tool-using agents grounded in decision theory rather than prompt engineering. Its core insight: whether to query a tool is a decision problem, solvable with Value of Information. Its core finding: optimising for accuracy alone is counterproductive when queries have costs. Credence maintains Beta posteriors over tool reliability and computes expected value of information before each query; on a benchmark task, LangChain ReAct scored −8 (63.7% accuracy) while Credence scored +112 (59.6% accuracy). The agent that answered fewer questions correctly won decisively, because it knew which questions were worth asking.
 
-That result stands. proplang supersedes Credence's *foundation*, not its findings. Credence reached the right ontology first — it, too, rebuilt itself on de Finetti's prevision, arriving at the same four nouns. What it could not do was *enforce* its own architecture. Credence's rules live in 1,300 lines of constitutional prose, and where prose was the only guard, the source drifted: an opaque-closure escape hatch its own constitution forbids; a Measure type it announced it no longer needed, still carrying eighty-odd live methods. Its inference verbs are things a program can call but its meta-actions are not — the agent changes what it thinks about, never how it thinks. And its alphabet, declared four types and then opened, has grown to over a hundred. proplang's answer to all of this is the same answer: put the rule in the grammar, where a model — or a tired author — physically cannot write around it. The [essays above](/posts/make-it-unsayable/) trace exactly how.
+That result stands. proplang supersedes Credence's *foundation*, not its findings. Credence reached the right ontology first — it, too, rebuilt itself on de Finetti's prevision, arriving at the same four nouns. What it could not do was *enforce* its own architecture. Credence's rules live in 1,300 lines of constitutional prose, and where prose was the only guard, the source drifted: an opaque-closure escape hatch its own constitution forbids; a Measure type it announced it no longer needed, still carrying eighty-odd live methods. Its inference verbs are things a program can call but its meta-actions are not — the agent changes what it thinks about, never how it thinks. And its alphabet, declared four types and then opened, has grown to over a hundred. proplang's answer to all of this is the same answer: put the rule in the grammar, where a model — or a tired author — physically cannot write around it.
 
 - [GitHub](https://github.com/gfrmin/credence)
 - [Agentic AI Is Neither Intelligent Nor an Agent](/posts/agentic-ai/) — the benchmark result
@@ -36,6 +33,6 @@ That result stands. proplang supersedes Credence's *foundation*, not its finding
 Chain Event Graphs — a class of graphical models more expressive than Bayesian networks for asymmetric problems — and Bayesian model selection over them. Foundational paper in the CEG literature; subsequent work on dynamic CEGs, causal algebras, and software builds on these methods.
 
 **Freeman, G. & Smith, J.Q. (2011).** A Bayesian approach to event trees. *Bayesian Analysis*, 6(4).
-Non-stationary sequential models with conjugate Bayesian updates, using an exponential forgetting mechanism to track regime change. Fifteen years later, that forgetting factor is the thing [proplang deletes](/posts/there-is-no-forgetting/): a latent drift-rate the update rule infers matches the oracle-tuned forgetter to within a hair, and forgetting turns out to have been content smuggled in as machinery all along.
+Non-stationary sequential models with conjugate Bayesian updates, using an exponential forgetting mechanism to track regime change. Fifteen years later, that forgetting factor is the thing [proplang](https://github.com/gfrmin/proplang) deletes: a latent drift-rate the update rule infers matches the oracle-tuned forgetter to within a hair, and forgetting turns out to have been content smuggled in as machinery all along.
 
 [Google Scholar →](https://scholar.google.com/citations?hl=en&user=H422hdkAAAAJ)
