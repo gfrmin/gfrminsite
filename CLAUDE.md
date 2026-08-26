@@ -47,9 +47,12 @@ Math is rendered to **MathML at build time** via goldmark's passthrough extensio
 - **There is no `content/he/` tree.** Every Hebrew page is an `.he.md` sibling of its English
   counterpart — `content/_index.he.md` (homepage), `content/posts/<slug>/index.he.md` (posts),
   `content/series/<slug>/_index.he.md` and `content/categories/<slug>/_index.he.md` (taxonomy
-  display titles). Hugo pairs them by filename. Hebrew currently covers the homepage, the five
-  Velotix posts, and the taxonomy titles those posts use; `/research/`, `/projects/` and
-  `/contact/` are English-only and deliberately absent from the Hebrew menu.
+  display titles) and `content/posts/_index.he.md` (the posts index — without it `/he/posts/`,
+  the Hebrew menu's second item, rendered `<h1>Posts</h1>` and the English site bio for its
+  meta description, because Hugo falls back to the section name). Hugo pairs them by filename.
+  Hebrew currently covers the homepage, the posts index, the five Velotix posts, and the
+  taxonomy titles those posts use; `/research/`, `/projects/` and `/contact/` are English-only
+  and deliberately absent from the Hebrew menu.
 - `content/projects/`, `content/contact/` — non-post sections.
 - `drafts/` at the **repo root** (not inside `content/`) is gitignored and used as a staging area for work-in-progress drafts before they're moved into `content/posts/`. This is separate from Hugo's own `draft: true` frontmatter mechanism, which is also used for in-tree posts that aren't yet public.
 
@@ -113,6 +116,15 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   whether `alt` is empty, so the three real screenshots (kana, docaviv+, Scalibur) keep
   their descriptive alt and stay exposed. **Do not "fix" an empty `alt` by describing the
   image** — for those five there is nothing to describe that the heading does not say.
+- `layouts/partials/project-row.html` — the same data as a full-width row: thumbnail beside
+  the prose, or prose alone at a 68ch measure when there is no image. `/projects/` uses it for
+  all thirteen entries at full length, and the homepage uses it for the single `hero: true`
+  entry clipped to 420. The card grid could not carry that page: the descriptions run from 108
+  characters to 862, so half of it was ragged and the longest sat in a 45-character column.
+  The row links only its title — a separate "View on GitHub" CTA was a second link to the same
+  URL, and it was wrong for the five entries that are not on GitHub at all.
+- The homepage order is bio, what I do, series, recent posts, **projects last**. Projects used
+  to run third, which put roughly 2,000px of grid between the bio and any of the writing.
 - `layouts/partials/darkmode-init.html` — sets `data-theme` from a blocking script in
   `<head>`. It has to run before the first paint; when this lived with the toggle wiring at
   the end of `<body>`, dark-mode readers saw the whole page render light and then flip.
@@ -167,6 +179,16 @@ per-post `translation-link` was removed as a duplicate of it.
 Dates use `time.Format ":date_medium"`, not `.Date.Format "Jan 2, 2006"` — the latter is a literal
 Go layout and printed English month names on Hebrew pages.
 
+`[languages.he.params]` in `hugo.toml` carries a Hebrew `description`. Without it every Hebrew
+page that has no description of its own fell back to the English bio, because a top-level
+`[params]` block is shared across languages.
+
+`layouts/_default/rss.xml` exists for one reason: Hugo's internal feed template hardcodes the
+channel description as the English string "Recent content on <site title>", which shipped
+untranslated inside the Hebrew feed. It reproduces the internal template field for field and
+takes the description from the page or the site instead. If you touch it, re-validate every
+feed parses — `public/index.xml`, `public/he/index.xml` and each section's.
+
 ### CSS: theme-aware alpha colours, logical directions
 
 `--brand-primary` is a different teal per theme, so any `rgba()` built from it must read
@@ -193,6 +215,23 @@ and its `margin: 0 auto` would otherwise shrink it to fit its content.
 ### RTL
 
 Don't set `dir="rtl"` on `<html>`. RTL is scoped to content via CSS class, not the root element — a prior attempt to flip the whole page broke layout (commit af3013e). If touching language/direction code, preserve this.
+
+The navbar and the footer sit **outside** `.rtl-content`, so they need their own handling and
+get it from `html:lang(he) .navbar-container, html:lang(he) .footer-container { direction: rtl }`.
+Two things depended on it: a flex row follows `direction`, so the brand moves to the top right
+and the copyright to the bottom right without a second `row-reverse` rule; and the footer line
+mixes scripts (`© 2026 <name>. <licence> CC BY-SA 4.0`), which in an LTR paragraph the bidi
+algorithm reordered into nonsense. Note the nav **links** never needed this — they are inline
+boxes of Hebrew text in one bidi run, so the browser already reversed them. Below 768px
+`.navbar-menu` is `flex-direction: column`, which `direction` does not disturb.
+
+Type stacks live in `--font-sans` / `--font-serif` rather than as literals, because
+`html:lang(he)` overrides them to name real Hebrew faces. Neither Fraunces nor Georgia nor the
+Latin subset of IBM Plex Sans carries Hebrew, so every Hebrew glyph used to fall through to
+whatever the browser calls `serif`/`sans-serif`. The Latin names stay **first** in the Hebrew
+stacks — fallback is per-glyph, so digits and Latin words still set in them. For the same
+reason `baseof.html` preloads `fraunces-latin.woff2` on English pages only: Fraunces draws
+only headings, and on a Hebrew page the headings are Hebrew.
 
 ## Deployment
 
