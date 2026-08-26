@@ -1,0 +1,166 @@
+/* Syntax highlighting -- GENERATED, do not hand-edit.
+ *
+ * hugo.toml sets `noClasses = false`, so Hugo emits <span class="k">, <span
+ * class="nf"> and friends. Nothing in the stylesheet defined those classes, so
+ * every code block on the site rendered as flat unhighlighted text and the
+ * `style = "monokailight"` setting was inert. This file supplies them.
+ *
+ * Light is chroma's `xcode`, dark is `github-dark`. Both have their background
+ * and base colour stripped, so a code block takes --bg-code and --text-primary
+ * from the palette instead of carrying a third set of colours. Any token that
+ * fell below 4.5:1 against --bg-code was walked down (or up) in oklch until it
+ * cleared, preserving hue and chroma.
+ *
+ * Regenerate with the script in the commit that introduced this file, or by
+ * hand: `hugo gen chromastyles --style=xcode`.
+ */
+
+/* ---- light ---- */
+.chroma { -webkit-text-size-adjust:none }
+.chroma .err { color:#000 }
+.chroma .lnlinks { outline:none;text-decoration:none;color:inherit }
+.chroma .lntd { vertical-align:top;padding:0;margin:0;border:0 }
+.chroma .lntable { border-spacing:0;padding:0;margin:0;border:0 }
+.chroma .lnt { white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f }
+.chroma .ln { white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f }
+.chroma .line { display:flex }
+.chroma .k { color:#a90d91 }
+.chroma .kc { color:#a90d91 }
+.chroma .kd { color:#a90d91 }
+.chroma .kn { color:#a90d91 }
+.chroma .kp { color:#a90d91 }
+.chroma .kr { color:#a90d91 }
+.chroma .kt { color:#a90d91 }
+.chroma .n { color:#000 }
+.chroma .na { color:#77601a }
+.chroma .nc { color:#39686f }
+.chroma .no { color:#000 }
+.chroma .nd { color:#000 }
+.chroma .ni { color:#000 }
+.chroma .ne { color:#000 }
+.chroma .nl { color:#000 }
+.chroma .nn { color:#000 }
+.chroma .nx { color:#000 }
+.chroma .py { color:#000 }
+.chroma .nt { color:#000 }
+.chroma .nb { color:#a90d91 }
+.chroma .bp { color:#5b269a }
+.chroma .nv { color:#000 }
+.chroma .vc { color:#000 }
+.chroma .vg { color:#000 }
+.chroma .vi { color:#000 }
+.chroma .vm { color:#000 }
+.chroma .nf { color:#000 }
+.chroma .fm { color:#000 }
+.chroma .l { color:#1c01ce }
+.chroma .ld { color:#1c01ce }
+.chroma .s { color:#c01412 }
+.chroma .sa { color:#c01412 }
+.chroma .sb { color:#c01412 }
+.chroma .sc { color:#2300ce }
+.chroma .dl { color:#c01412 }
+.chroma .sd { color:#c01412 }
+.chroma .s2 { color:#c01412 }
+.chroma .se { color:#c01412 }
+.chroma .sh { color:#c01412 }
+.chroma .si { color:#c01412 }
+.chroma .sx { color:#c01412 }
+.chroma .sr { color:#c01412 }
+.chroma .s1 { color:#c01412 }
+.chroma .ss { color:#c01412 }
+.chroma .m { color:#1c01ce }
+.chroma .mb { color:#1c01ce }
+.chroma .mf { color:#1c01ce }
+.chroma .mh { color:#1c01ce }
+.chroma .mi { color:#1c01ce }
+.chroma .il { color:#1c01ce }
+.chroma .mo { color:#1c01ce }
+.chroma .o { color:#000 }
+.chroma .ow { color:#000 }
+.chroma .or { color:#000 }
+.chroma .c { color:#127200 }
+.chroma .ch { color:#127200 }
+.chroma .cm { color:#127200 }
+.chroma .c1 { color:#127200 }
+.chroma .cs { color:#127200 }
+.chroma .cp { color:#633820 }
+.chroma .cpf { color:#633820 }
+
+/* ---- dark ---- */
+[data-theme="dark"] .chroma { -webkit-text-size-adjust:none }
+[data-theme="dark"] .chroma .err { color:#f85149 }
+[data-theme="dark"] .chroma .lnlinks { outline:none;text-decoration:none;color:inherit }
+[data-theme="dark"] .chroma .lntd { vertical-align:top;padding:0;margin:0;border:0 }
+[data-theme="dark"] .chroma .lntable { border-spacing:0;padding:0;margin:0;border:0 }
+[data-theme="dark"] .chroma .lnt { white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679 }
+[data-theme="dark"] .chroma .ln { white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6e7681 }
+[data-theme="dark"] .chroma .line { display:flex }
+[data-theme="dark"] .chroma .k { color:#ff7b72 }
+[data-theme="dark"] .chroma .kc { color:#79c0ff }
+[data-theme="dark"] .chroma .kd { color:#ff7b72 }
+[data-theme="dark"] .chroma .kn { color:#ff7b72 }
+[data-theme="dark"] .chroma .kp { color:#79c0ff }
+[data-theme="dark"] .chroma .kr { color:#ff7b72 }
+[data-theme="dark"] .chroma .kt { color:#ff7b72 }
+[data-theme="dark"] .chroma .nc { color:#f0883e;font-weight:600 }
+[data-theme="dark"] .chroma .no { color:#79c0ff;font-weight:600 }
+[data-theme="dark"] .chroma .nd { color:#d2a8ff;font-weight:600 }
+[data-theme="dark"] .chroma .ni { color:#ffa657 }
+[data-theme="dark"] .chroma .ne { color:#f0883e;font-weight:600 }
+[data-theme="dark"] .chroma .nl { color:#79c0ff;font-weight:600 }
+[data-theme="dark"] .chroma .nn { color:#ff7b72 }
+[data-theme="dark"] .chroma .nx { color:#e6edf3 }
+[data-theme="dark"] .chroma .py { color:#79c0ff }
+[data-theme="dark"] .chroma .nt { color:#7ee787 }
+[data-theme="dark"] .chroma .nv { color:#79c0ff }
+[data-theme="dark"] .chroma .vc { color:#79c0ff }
+[data-theme="dark"] .chroma .vg { color:#79c0ff }
+[data-theme="dark"] .chroma .vi { color:#79c0ff }
+[data-theme="dark"] .chroma .vm { color:#79c0ff }
+[data-theme="dark"] .chroma .nf { color:#d2a8ff;font-weight:600 }
+[data-theme="dark"] .chroma .fm { color:#d2a8ff;font-weight:600 }
+[data-theme="dark"] .chroma .l { color:#a5d6ff }
+[data-theme="dark"] .chroma .ld { color:#79c0ff }
+[data-theme="dark"] .chroma .s { color:#a5d6ff }
+[data-theme="dark"] .chroma .sa { color:#79c0ff }
+[data-theme="dark"] .chroma .sb { color:#a5d6ff }
+[data-theme="dark"] .chroma .sc { color:#a5d6ff }
+[data-theme="dark"] .chroma .dl { color:#79c0ff }
+[data-theme="dark"] .chroma .sd { color:#a5d6ff }
+[data-theme="dark"] .chroma .s2 { color:#a5d6ff }
+[data-theme="dark"] .chroma .se { color:#79c0ff }
+[data-theme="dark"] .chroma .sh { color:#79c0ff }
+[data-theme="dark"] .chroma .si { color:#a5d6ff }
+[data-theme="dark"] .chroma .sx { color:#a5d6ff }
+[data-theme="dark"] .chroma .sr { color:#79c0ff }
+[data-theme="dark"] .chroma .s1 { color:#a5d6ff }
+[data-theme="dark"] .chroma .ss { color:#a5d6ff }
+[data-theme="dark"] .chroma .m { color:#a5d6ff }
+[data-theme="dark"] .chroma .mb { color:#a5d6ff }
+[data-theme="dark"] .chroma .mf { color:#a5d6ff }
+[data-theme="dark"] .chroma .mh { color:#a5d6ff }
+[data-theme="dark"] .chroma .mi { color:#a5d6ff }
+[data-theme="dark"] .chroma .il { color:#a5d6ff }
+[data-theme="dark"] .chroma .mo { color:#a5d6ff }
+[data-theme="dark"] .chroma .o { color:#ff7b72;font-weight:600 }
+[data-theme="dark"] .chroma .ow { color:#ff7b72;font-weight:600 }
+[data-theme="dark"] .chroma .or { color:#ff7b72;font-weight:600 }
+[data-theme="dark"] .chroma .c { color:#8b949e;font-style:italic }
+[data-theme="dark"] .chroma .ch { color:#8b949e;font-style:italic }
+[data-theme="dark"] .chroma .cm { color:#8b949e;font-style:italic }
+[data-theme="dark"] .chroma .c1 { color:#8b949e;font-style:italic }
+[data-theme="dark"] .chroma .cs { color:#8b949e;font-weight:600;font-style:italic }
+[data-theme="dark"] .chroma .cp { color:#8b949e;font-weight:600;font-style:italic }
+[data-theme="dark"] .chroma .cpf { color:#8b949e;font-weight:600;font-style:italic }
+[data-theme="dark"] .chroma .gd { color:#ffa198 }
+[data-theme="dark"] .chroma .ge { font-style:italic }
+[data-theme="dark"] .chroma .gr { color:#ffa198 }
+[data-theme="dark"] .chroma .gh { color:#79c0ff;font-weight:600 }
+[data-theme="dark"] .chroma .gi { color:#56d364 }
+[data-theme="dark"] .chroma .go { color:#8b949e }
+[data-theme="dark"] .chroma .gp { color:#8b949e }
+[data-theme="dark"] .chroma .gs { font-weight:600 }
+[data-theme="dark"] .chroma .gu { color:#79c0ff }
+[data-theme="dark"] .chroma .gt { color:#ff7b72 }
+[data-theme="dark"] .chroma .gl { text-decoration:underline }
+[data-theme="dark"] .chroma .w { color:#6e7681 }

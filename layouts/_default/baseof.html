@@ -46,15 +46,17 @@
   {{ with $en }}<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">{{ end }}
   {{ end }}
 
-  {{/* Fonts. The sans is preloaded everywhere — Hebrew pages still set every digit,
-       date and Latin word in it. Fraunces only ever draws headings, which on a Hebrew
-       page are Hebrew, so preloading its 67KB Latin subset there buys nothing and
-       competes for bandwidth with the stylesheet. */}}
+  {{/* Fonts. Both are preloaded in both languages, unlike the Fraunces era: Fraunces
+       drew only headings, which on a Hebrew page are Hebrew glyphs it does not carry,
+       so preloading it there bought nothing. Literata is the BODY face, and Hebrew
+       prose is full of Latin — dates, digits, proplang, Booking.com — so it earns its
+       place on both sides. The UI face sets the nav and every metadata line. */}}
+  <link rel="preload" href="{{ "fonts/literata-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ "fonts/ibm-plex-sans-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
-  {{ if eq .Language.Lang "en" }}<link rel="preload" href="{{ "fonts/fraunces-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>{{ end }}
 
-  {{/* CSS */}}
-  {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
+  {{/* CSS. syntax.css is generated (see its header) and concatenated rather than
+       linked separately, so the page still makes one stylesheet request. */}}
+  {{ $css := slice (resources.Get "css/main.css") (resources.Get "css/syntax.css") | resources.Concat "css/bundle.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}">
 
   {{/* RSS */}}

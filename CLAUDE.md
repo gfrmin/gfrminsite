@@ -10,9 +10,13 @@ Migrated from Quarto to Hugo in March 2026. The July 2026 cleanup missed the rep
 root, which kept `contact/index.qmd`, `projects/index.qmd`, `.python-version`, a
 `CNAME` contradicting the published one, and byte-identical copies of `static/`'s
 `images/`, `fonts/`, `favicon.ico`, `og-default.png` and `profile.jpg`; all of it
-was deleted in Aug 2026 and none of it was ever served. If you find a reference to
-`_quarto.yml`, `*.qmd`, `_freeze/`, R, or `uv`/`pyproject.toml` anywhere, it is
-stale — the live site is entirely Hugo (`hugo.toml` plus the `layouts/` tree).
+was deleted in Aug 2026 and none of it was ever served. The last Quarto remnant was in the stylesheet and outlived both cleanups:
+`div.sourceCode`, `pre.sourceCode`, `code:not(.sourceCode)` and a hand-written
+`.sourceCode .kw/.dt/.st/.fu/.co` palette — Pandoc's token classes, which no
+Hugo-built page has ever carried. Removed Aug 2026. If you find a reference to
+`_quarto.yml`, `*.qmd`, `_freeze/`, `.sourceCode`, R, or `uv`/`pyproject.toml`
+anywhere, it is stale — the live site is entirely Hugo (`hugo.toml` plus the
+`layouts/` tree).
 
 The published domain comes from `static/CNAME` (`www.gfrm.in`), because the
 workflow uploads only `public/`. Note this disagrees with `baseURL` and every
@@ -174,7 +178,14 @@ link and the RSS link use `.Site.Home.RelPermalink`, not `"/" | relURL`.
 
 The header carries a permanent language toggle: it resolves to the current page's translation when
 one exists and to the other language's homepage otherwise, so it is never a dead link. The old
-per-post `translation-link` was removed as a duplicate of it.
+per-post `translation-link` was removed as a duplicate of it (its CSS lingered until Aug 2026).
+
+The nav marks the current section by **comparing paths in the template, not with
+`.IsMenuCurrent`** — that only matches entries Hugo can resolve to a `Page`, and these are
+defined by literal `url` (see above), so it never matched and `.nav-link.active` was an
+unreachable rule for as long as it existed. The comparison is exact for the home entry and
+a prefix for the rest, so a post lights up Posts; home has to be exact because `/` and
+`/he/` are prefixes of every page in their language. It also sets `aria-current="page"`.
 
 Dates use `time.Format ":date_medium"`, not `.Date.Format "Jan 2, 2006"` — the latter is a literal
 Go layout and printed English month names on Hebrew pages.
@@ -189,12 +200,55 @@ untranslated inside the Hebrew feed. It reproduces the internal template field f
 takes the description from the page or the site instead. If you touch it, re-validate every
 feed parses — `public/index.xml`, `public/he/index.xml` and each section's.
 
-### CSS: theme-aware alpha colours, logical directions
+### The design system: Ink & ochre, and one type scale
+
+Both were reworked in Aug 2026 after the old palette read "too bright and dull" and the
+type had drifted. **Colours are authored in oklch and converted to hex**, so lightness
+and chroma stay comparable across tokens; the previous palette put a cool grey ink
+(hue ~200) on a warm cream ground (hue ~85), which is most of why the greys read muddy.
+The ground is parchment `#efe7d9`, the ink a warm near-black, and there are **two
+accents at matched oklch lightness and chroma differing only in hue** — teal
+`--brand-primary` for links, ochre `--brand-secondary` for structure. The ochre is
+load-bearing, not decorative: it takes the `h2` rules and the availability box, and it
+is the only colour on a page that otherwise has none. Dark mode is a *warm* dark; a
+neutral grey dark under a parchment light theme reads as two unrelated sites.
+
+**Every token clears 4.5:1 against the surface it sits on.** `--text-muted` is the one
+that nearly didn't — it is used for metadata at 13px, which is normal-size text, so it
+needs the full ratio, not the large-text 3:1. Re-check with a contrast calculation
+before moving any of these, and note the old availability box was white on `#c55a44`
+at 4.3:1, i.e. under AA — that is what the new ochre fixed.
 
 `--brand-primary` is a different teal per theme, so any `rgba()` built from it must read
-`--brand-primary-rgb`, which is defined in both `:root` and `[data-theme="dark"]`. Two
-rules were written as a literal `rgba(13, 115, 119, …)` and kept the light-mode teal on
-dark backgrounds. Keep the hex and the triple in step when either moves.
+`--brand-primary-rgb`, defined in both `:root` and `[data-theme="dark"]`. Keep the hex
+and the triple in step when either moves.
+
+**Type is four roles and one scale.** `--font-display` (titles), `--font-body` (prose),
+`--font-ui` (anything you *scan* rather than read — nav, metadata, chips, counts,
+buttons, forms, footer), `--font-mono` (code). Display and body are both Literata;
+that is deliberate, and the contrast between a heading and its prose comes from size
+and weight, not from a second family.
+
+The scale is **eight steps** (`--fs-h1` … `--fs-micro`) and **three line-heights**
+(`--lh-tight/snug/loose`). It replaced twenty distinct font sizes — five of which sat
+between 16.8px and 20px, and seven between 11px and 15px — and six line-heights on a
+continuum. **Do not add a step without deleting one**; that drift is exactly what this
+replaced. The mobile block overrides `--fs-h1/h2/h3` on `:root` rather than restating
+each heading, so there is one place to look.
+
+Two sizes are deliberately *off* the scale, and both must stay off it:
+`:not(pre) > code` uses `0.9em` because inline code should track whatever it sits in;
+and the contact form's inputs are `16px` absolute at ≤575px because iOS Safari zooms
+the viewport when a focused control is under 16px.
+
+Fonts are **self-hosted woff2 subsets — the site makes no external requests**, and
+that is worth preserving. Literata (variable, opsz + wght) replaced Fraunces, which
+was a display face being asked to set both 38px headings and body prose. `baseof.html`
+preloads the body face and the UI face **in both languages**: this revises an earlier
+note that preloaded Fraunces on English only, and the reasoning changed with the face —
+Fraunces drew only headings, which on a Hebrew page are Hebrew glyphs it does not
+carry, whereas Literata is the body face and Hebrew prose is full of Latin (dates,
+digits, proplang, Booking.com).
 
 RTL is handled by paired `.rtl-content` overrides for physical `margin-`/`padding-`/
 `border-left|right`, and every such rule has its pair — except where a **logical**
@@ -204,6 +258,29 @@ the logical property in anything new; it needs no pair.
 `@media (prefers-reduced-motion: reduce)` must cover `transition-duration` and
 `scroll-behavior`, not only `animation-duration` — the stylesheet has 19 transitions
 including card lifts and an image zoom, and they all kept running when it did not.
+
+### Code blocks and syntax highlighting
+
+`hugo.toml` sets `noClasses = false`, so Hugo emits
+`<div class="highlight"><pre class="chroma"><code class="language-x">` with
+`<span class="k">`-style tokens inside. **Nothing in the stylesheet defined those
+classes**, so until Aug 2026 every code block on the site rendered as flat,
+unhighlighted text and the `style = "monokailight"` setting was inert. Worse, no
+`font-family` ever named a monospace, so code fell to the browser default — Courier,
+Menlo or Consolas depending on the reader's machine.
+
+`assets/css/syntax.css` supplies the token colours and is **generated — do not
+hand-edit**. Light is chroma's `xcode`, dark is `github-dark`; both have their
+background and base colour stripped so a block takes `--bg-code` and `--text-primary`
+from the palette rather than carrying a third set of colours, and every token that fell
+below 4.5:1 against `--bg-code` was walked in oklch until it cleared. It is
+concatenated with `main.css` via `resources.Concat` in `baseof.html`, so the page still
+makes one stylesheet request.
+
+`main.css` owns the container (`.highlight`, `.highlight pre`) and the mono face.
+Inline code is `:not(pre) > code` — the old `code:not(.sourceCode)` also matched the
+`<code>` *inside* a highlighted `<pre>`, so every block got a second background, a
+border and the link colour on top of its own.
 
 ### CSS gotcha: no border-box reset
 
