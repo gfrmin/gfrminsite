@@ -1,25 +1,34 @@
+{{/* Toggle wiring only. data-theme is already set by darkmode-init.html in <head>;
+     this runs at the end of <body> because it needs the button in the DOM. */}}
 <script>
 (function() {
-  const key = 'color-scheme';
-  const saved = localStorage.getItem(key);
+  const root = document.documentElement;
   const toggle = document.querySelector('.darkmode-toggle');
-  const sun = toggle?.querySelector('.icon-sun');
-  const moon = toggle?.querySelector('.icon-moon');
-
-  function setTheme(dark) {
-    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-    localStorage.setItem(key, dark ? 'dark' : 'light');
-    if (sun && moon) {
-      sun.style.display = dark ? 'none' : 'block';
-      moon.style.display = dark ? 'block' : 'none';
-    }
+  if (!toggle) return;
+  {{/* Which icon shows is decided in CSS from data-theme, which <head> has already
+       set — so the icon never flashes the wrong way round either. */}}
+  function paintIcon(dark) {
+    toggle.setAttribute('aria-pressed', dark ? 'true' : 'false');
   }
 
-  const prefersDark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  setTheme(prefersDark);
+  paintIcon(root.getAttribute('data-theme') === 'dark');
 
-  toggle?.addEventListener('click', function() {
-    setTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
+  toggle.addEventListener('click', function() {
+    const dark = root.getAttribute('data-theme') !== 'dark';
+    root.setAttribute('data-theme', dark ? 'dark' : 'light');
+    paintIcon(dark);
+    {{/* Written only on a real click, so a reader who has never chosen keeps
+         following their OS setting instead of being pinned by a first visit. */}}
+    try { localStorage.setItem('color-scheme', dark ? 'dark' : 'light'); } catch (e) {}
+  });
+
+  {{/* Someone who has not chosen should follow the OS if it changes mid-session. */}}
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+    let saved = null;
+    try { saved = localStorage.getItem('color-scheme'); } catch (err) {}
+    if (saved) return;
+    root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+    paintIcon(e.matches);
   });
 })();
 </script>

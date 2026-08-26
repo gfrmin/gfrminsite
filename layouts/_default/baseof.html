@@ -8,6 +8,8 @@
   <meta name="author" content="{{ .Site.Params.author }}">
   <link rel="canonical" href="{{ .Permalink }}">
   <link rel="icon" href="{{ "favicon.ico" | relURL }}">
+
+  {{ partial "darkmode-init.html" . }}
   {{ if or (eq .Kind "taxonomy") (eq .Kind "term") }}<meta name="robots" content="noindex, follow">{{ end }}
 
   {{/* Open Graph */}}

@@ -1,0 +1,20 @@
+{{/* Sets data-theme before the first paint.
+
+     This has to be a blocking script in <head>. The toggle wiring in
+     darkmode.html runs at the end of <body> because it needs the button to
+     exist, and when it also owned the theme decision every dark-mode reader
+     watched the whole page render light and then flip.
+
+     localStorage throws outright in some privacy modes, which would take the
+     rest of the script — and so the theme — down with it. */}}
+<script>
+(function () {
+  var saved = null;
+  try { saved = localStorage.getItem('color-scheme'); } catch (e) {}
+  {{/* Only an explicit choice is honoured. Absent one, follow the OS every time
+       rather than freezing whatever it happened to say on the first visit. */}}
+  var dark = saved === 'dark' ||
+    (saved !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+})();
+</script>
