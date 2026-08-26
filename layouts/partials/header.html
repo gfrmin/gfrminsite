@@ -7,8 +7,18 @@
     </button>
     <div class="navbar-menu" id="navbar-menu">
       <div class="navbar-nav">
+        {{/* `.IsMenuCurrent` only matches entries Hugo can resolve to a Page, and
+             these are defined by literal `url` in hugo.toml (deliberately -- see the
+             Bilingual navigation note in CLAUDE.md). So it never matched, and the
+             `.nav-link.active` rule in the stylesheet was unreachable. Compare paths
+             instead: exact for the home entry, prefix for the rest, so a post lights
+             up Posts. The home URL differs per language (`/` vs `/he/`) and is a
+             prefix of every page in that language, which is why it is exact-only. */}}
+        {{- $cur := .RelPermalink }}
+        {{- $home := .Site.Home.RelPermalink }}
         {{ range .Site.Menus.main }}
-        <a href="{{ .URL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}">{{ .Name }}</a>
+        {{- $on := cond (eq .URL $home) (eq $cur .URL) (hasPrefix $cur .URL) }}
+        <a href="{{ .URL }}" class="nav-link{{ if $on }} active{{ end }}"{{ if $on }} aria-current="page"{{ end }}>{{ .Name }}</a>
         {{ end }}
       </div>
       <div class="navbar-social">
