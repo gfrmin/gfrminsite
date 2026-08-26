@@ -4,7 +4,7 @@ subtitle: "Solving the data version of Advent of Code in R"
 description: "Step-by-step R solutions to all 8 Hanukkah of Data puzzles - a data-focused alternative to Advent of Code with a delightful narrative twist."
 author: "Guy Freeman"
 date: 2022-12-25
-categories: [data, analysis, fun]
+categories: [data]
 image: og-image.png
 ---
 

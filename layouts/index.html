@@ -40,6 +40,19 @@
   </div>
   <a href="{{ "projects/" | relURL }}" class="cta-pill">See all projects &rarr;</a>
 
+  {{ with site.GetPage "/series" }}
+  <h2>Series</h2>
+  <ul class="home-series">
+    {{ range .Pages.ByDate.Reverse }}
+    <li>
+      <a href="{{ .RelPermalink }}" class="home-series-name">{{ .Title }}</a>
+      <span class="home-series-count">{{ i18n "seriesPostCount" (len .Pages) }}</span>
+    </li>
+    {{ end }}
+  </ul>
+  <a href="{{ "series/" | relURL }}" class="cta-pill">See all series &rarr;</a>
+  {{ end }}
+
   <h2>Recent Posts</h2>
   <div class="post-listing">
     {{ range ((where .Site.RegularPages "Section" "posts").ByDate.Reverse | first 5) }}

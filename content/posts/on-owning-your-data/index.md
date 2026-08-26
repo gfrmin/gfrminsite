@@ -4,7 +4,7 @@ subtitle: "A bathroom scale, a Raspberry Pi, and the quiet satisfaction of knowi
 description: "Why I reverse-engineered a cheap Bluetooth scale to keep my health data out of the cloud"
 author: "Guy Freeman"
 date: 2025-12-31
-categories: [essays, privacy, data]
+categories: [essays, data, policy]
 image: dashboard.png
 ---
 

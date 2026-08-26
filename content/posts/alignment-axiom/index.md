@@ -1,9 +1,11 @@
 ---
 title: "The Agent That Prefers to Be Wrong"
-subtitle: "How uncertainty about user preferences produces corrigibility without any safety training --- and why that corrigibility expires at exactly the moment the learning succeeds"
-description: "The off-switch theorem says an agent uncertain about what the user wants will prefer to defer rather than act unilaterally. That is not a design choice --- it follows from expected utility maximisation under a prior over user preferences. This is also the third of proplang's three named residues, the pointer: whose utility is the agent serving? And it carries a consequence the project records against itself. Corrigibility earned this way vanishes at convergence, because a posterior that has concentrated no longer pays for deference. The theorem is not repealed; it is satisfied, and returns zero."
+subtitle: "How uncertainty about user preferences produces corrigibility without any safety training — and why that corrigibility expires at exactly the moment the learning succeeds"
+description: "The off-switch theorem says an agent uncertain about what the user wants will prefer to defer rather than act unilaterally. That is not a design choice — it follows from expected utility maximisation under a prior over user preferences. This is also the third of proplang's three named residues, the pointer: whose utility is the agent serving? And it carries a consequence the project records against itself. Corrigibility earned this way vanishes at convergence, because a posterior that has concentrated no longer pays for deference. The theorem is not repealed; it is satisfied, and returns zero."
 author: "Guy Freeman"
 date: 2026-07-26
+series: [proplang]
+series_order: 5
 categories: [essays, bayesian, machine-learning, ai]
 ---
 

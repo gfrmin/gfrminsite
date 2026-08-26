@@ -1,0 +1,25 @@
+{{/* Related posts, excluding anything already listed by the series nav —
+     otherwise a series member's "related" is just its own series again. */}}
+{{ $here := . }}
+{{ $series := "" }}{{ with .Params.series }}{{ $series = index . 0 }}{{ end }}
+{{ $out := slice }}
+{{ range first 16 (.Site.RegularPages.Related .) }}
+  {{ $s := "" }}{{ with .Params.series }}{{ $s = index . 0 }}{{ end }}
+  {{ if or (eq $series "") (ne $s $series) }}{{ $out = $out | append . }}{{ end }}
+{{ end }}
+{{ with first 3 $out }}
+<aside class="related-posts" aria-label="{{ i18n "relatedTitle" }}">
+  <h2 class="related-posts-title">{{ i18n "relatedTitle" }}</h2>
+  <ul class="related-posts-list">
+    {{ range . }}
+    <li>
+      <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      {{ with .Params.series }}
+        {{ $t := $here.Site.GetPage (printf "/series/%s" (index . 0)) }}
+        {{ with $t }}<span class="related-posts-series">{{ .Title }}</span>{{ end }}
+      {{ end }}
+    </li>
+    {{ end }}
+  </ul>
+</aside>
+{{ end }}

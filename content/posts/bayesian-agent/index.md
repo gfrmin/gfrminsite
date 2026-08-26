@@ -4,7 +4,9 @@ subtitle: "Watching conjugate priors converge in real-time through Thompson Samp
 description: "A visual demonstration of Bayesian inference and the exploration-exploitation tradeoff. An agent navigates a grid world, learning which foods are safe through exact conjugate updates."
 author: "Guy Freeman"
 date: 2025-12-26
-categories: [python, bayesian, machine-learning, simulation, education]
+series: [first-principles]
+series_order: 1
+categories: [python, bayesian, machine-learning, simulation]
 image: og-image.png
 ---
 

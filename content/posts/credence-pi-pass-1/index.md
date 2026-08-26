@@ -4,6 +4,8 @@ subtitle: "Building a Bayesian governance layer for a coding agent's tool calls,
 description: "A first-pass body-brain architecture for governing a coding agent's tool_call hook with a Bayesian decision-theoretic brain. The wire schema is fixed by what Pass 1 ships; Pass 2 swaps the posterior representation without disturbing it. Plus what credence-lint and a precedent system caught at the eleventh hour."
 author: "Guy Freeman"
 date: 2026-05-05
+series: [tool-call-governor]
+series_order: 1
 categories: [essays, bayesian, ai, decision-theory]
 ---
 

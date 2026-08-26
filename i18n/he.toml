@@ -1,0 +1,31 @@
+[seriesPart]
+other = "חלק {{ .Count }} מתוך {{ .Total }}"
+
+[seriesIn]
+other = "בסדרה"
+
+[seriesInThis]
+other = "בסדרה זו"
+
+[seriesHere]
+other = "אתם כאן"
+
+[seriesPrev]
+other = "הקודם"
+
+[seriesNext]
+other = "הבא"
+
+[seriesPostCount]
+one = "פוסט אחד"
+other = "{{ . }} פוסטים"
+
+[categoryPostCount]
+one = "פוסט אחד"
+other = "{{ . }} פוסטים"
+
+[relatedTitle]
+other = "קריאה נוספת"
+
+[allSeries]
+other = "כל הסדרות"

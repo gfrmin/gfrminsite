@@ -1,9 +1,11 @@
 ---
 title: "The Alphabet Is the Prior"
 subtitle: "Minimality as a correctness property, and the executed deletion audit that proves it"
-description: "In a language where hypotheses are programs, description length is the prior --- so every terminal you admit is a bit charged against every belief. Minimality stops being taste and becomes correctness, provable only by an audit that tries to delete each word and measures what capability leaves with it. The full accounting, including the one terminal that failed its own proof and was kept in the open."
+description: "In a language where hypotheses are programs, description length is the prior — so every terminal you admit is a bit charged against every belief. Minimality stops being taste and becomes correctness, provable only by an audit that tries to delete each word and measures what capability leaves with it. The full accounting, including the one terminal that failed its own proof and was kept in the open."
 author: "Guy Freeman"
 date: 2026-07-14
+series: [proplang]
+series_order: 2
 categories: [bayesian, ai, essays, decision-theory]
 ---
 

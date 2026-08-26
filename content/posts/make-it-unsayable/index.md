@@ -4,6 +4,8 @@ subtitle: "Cornering a language so that its architecture is enforced by the gram
 description: "Rust makes illegal states unrepresentable; proplang makes axiom violations unsayable. The difference is that in a Bayesian agent language the alphabet is also the prior — so soundness and good epistemics become the same property, with a deletion test you can actually run. A comparison with its own predecessor, which wrote its rules down instead."
 author: "Guy Freeman"
 date: 2026-07-10
+series: [proplang]
+series_order: 1
 categories: [bayesian, ai, essays, decision-theory]
 ---
 

@@ -1,0 +1,41 @@
+{{/* Full ordered series list rendered below the post body, with prev/next. */}}
+{{ with .Params.series }}
+  {{ $term := $.Site.GetPage (printf "/series/%s" (index . 0)) }}
+  {{ with $term }}
+    {{ $pages := .Pages.ByParam "series_order" }}
+    {{ $here := $.RelPermalink }}
+    {{ if gt (len $pages) 1 }}
+    {{ $prev := false }}{{ $next := false }}{{ $seen := false }}
+    {{ range $pages }}
+      {{ if $seen }}{{ if not $next }}{{ $next = . }}{{ end }}
+      {{ else if eq .RelPermalink $here }}{{ $seen = true }}
+      {{ else }}{{ $prev = . }}{{ end }}
+    {{ end }}
+    <nav class="series-nav" aria-label="Series navigation">
+      <div class="series-nav-head">
+        <span class="series-nav-label">{{ i18n "seriesInThis" }}</span>
+        <a href="{{ .RelPermalink }}" class="series-nav-title">{{ .Title }}</a>
+      </div>
+      <ol class="series-nav-list">
+        {{ range $pages }}
+        <li{{ if eq .RelPermalink $here }} class="is-current" aria-current="true"{{ end }}>
+          {{ if eq .RelPermalink $here }}
+            <span class="series-nav-current">{{ .LinkTitle }}</span>
+            <span class="series-nav-here">{{ i18n "seriesHere" }}</span>
+          {{ else }}
+            <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+          {{ end }}
+        </li>
+        {{ end }}
+      </ol>
+      {{ if or $prev $next }}
+      {{ $rtl := eq $.Language.Direction "rtl" }}
+      <div class="series-nav-steps">
+        {{ with $prev }}<a href="{{ .RelPermalink }}" class="series-step series-step-prev"><span class="series-step-label">{{ if $rtl }}&rarr;{{ else }}&larr;{{ end }} {{ i18n "seriesPrev" }}</span><span class="series-step-title">{{ .LinkTitle }}</span></a>{{ else }}<span></span>{{ end }}
+        {{ with $next }}<a href="{{ .RelPermalink }}" class="series-step series-step-next"><span class="series-step-label">{{ i18n "seriesNext" }} {{ if $rtl }}&larr;{{ else }}&rarr;{{ end }}</span><span class="series-step-title">{{ .LinkTitle }}</span></a>{{ else }}<span></span>{{ end }}
+      </div>
+      {{ end }}
+    </nav>
+    {{ end }}
+  {{ end }}
+{{ end }}

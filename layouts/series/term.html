@@ -1,0 +1,26 @@
+{{/* One series, in reading order rather than by date. */}}
+{{ define "main" }}
+<main class="content {{ if eq .Language.Direction "rtl" }}rtl-content{{ end }}">
+  {{ $ordered := .Pages.ByParam "series_order" }}
+  <header class="series-header">
+    <p class="series-eyebrow"><a href="{{ "series/" | relURL }}">{{ i18n "allSeries" }}</a></p>
+    <h1>{{ .Title }}</h1>
+    <p class="series-meta">{{ i18n "seriesPostCount" (len $ordered) }}</p>
+  </header>
+
+  {{ with .Content }}<div class="series-intro">{{ . }}</div>{{ end }}
+
+  <ol class="series-listing">
+    {{ range $ordered }}
+    <li class="series-listing-item">
+      <h2 class="listing-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+      {{ with .Description }}<p class="listing-description">{{ . | truncate 220 }}</p>{{ end }}
+      <div class="metadata">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+        <span class="reading-time">{{ .ReadingTime }} min read</span>
+      </div>
+    </li>
+    {{ end }}
+  </ol>
+</main>
+{{ end }}

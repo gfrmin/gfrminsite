@@ -4,6 +4,8 @@ subtitle: "Bottom-up enumeration, posterior subtrees, and the grammar that rewri
 description: "Most agents are given a fixed set of decision rules. Credence's second tier generates candidate rules from sensor features, scores them by complexity, and lets the posterior decide which structures are worth keeping. This is program synthesis as Bayesian inference."
 author: "Guy Freeman"
 date: 2026-04-01
+series: [credence]
+series_order: 5
 publishDate: 2026-04-28
 categories: [julia, essays, bayesian, machine-learning, ai]
 ---

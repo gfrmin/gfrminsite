@@ -1,16 +1,15 @@
 ---
 title: "תיקי ולוטיקס, חלק 4: ההסרה"
+linkTitle: "חלק 4: ההסרה"
 subtitle: "איך הודעת הסרה (DMCA) כוזבת שהוגשה מבנגלדש, המצטטת כתבה לא קשורה בעיתון ישראלי, ניסתה להסיר את חלק 1 של הסדרה הזו"
 description: "ב-18 במאי 2026 העבירה Cloudflare תלונת הפרת זכויות יוצרים (DMCA) שכוונה נגד חקירת ולוטיקס. מגיש התלונה השתמש בכתובת אימייל חד-פעמית, בכתובת בצ'יטגונג, ובכתבה בעיתון ישראלי על משה כחלון שאין לה דבר וחצי דבר עם ולוטיקס."
 author: "גיא פרימן"
 date: 2026-05-19
+series: [velotix]
+series_order: 4
 draft: false
-categories: [investigation, startups, israel, cyber, dmca]
+categories: [investigation, startups, israel, cyber, policy]
 ---
-
-{{< callout type="note" >}}
-זהו חלק 4 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק. [חלק 5](/he/posts/velotix-the-comeback/) עוקב אחר החזרה.
-{{< /callout >}}
 
 ## ההודעה
 
@@ -89,6 +88,3 @@ Cloudflare העבירה את ההודעה ל-GitHub Pages. נכון לכתיבת
 
 את ההודעה המלאה, על כל כותרותיה, ניתן [לצפות כטקסט](velotix-dmca.txt) או [להוריד כקובץ `.eml`](velotix-dmca.eml).
 
----
-
-*זהו חלק 4 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק. [חלק 5](/he/posts/velotix-the-comeback/) עוקב אחר החזרה.*

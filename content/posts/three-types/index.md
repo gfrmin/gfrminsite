@@ -4,6 +4,8 @@ subtitle: "The axioms, the types, and the forbidden patterns behind an agent tha
 description: "What would it take to build an agent whose behaviour is derived from a few fundamentals the way physics is derived from conservation laws? Three types, four axioms, and a refusal to add anything else."
 author: "Guy Freeman"
 date: 2026-04-26
+series: [first-principles]
+series_order: 5
 categories: [julia, bayesian, machine-learning, ai, essays]
 ---
 

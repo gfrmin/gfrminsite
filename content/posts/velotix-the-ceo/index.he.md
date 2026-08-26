@@ -1,17 +1,15 @@
 ---
 title: "תיקי ולוטיקס, חלק 2: היזם הסדרתי"
+linkTitle: "חלק 2: היזם הסדרתי"
 subtitle: "אקזיטים של מעל 100 מיליון דולר, חוקר מ-MIT, ופוסט בלינקדאין על הטבעת חברות"
 description: "פרופיל של ד\"ר עדי הוד, מנכ\"ל ולוטיקס — האישורים שלו, החברה הקודמת שלו, ותשעת הימים בין מה שאמר לעובדים למה שאמר למשקיעים."
 author: "גיא פרימן"
 date: 2026-03-21
+series: [velotix]
+series_order: 2
 draft: false
 categories: [investigation, startups, israel, cyber]
 ---
-
-{{< callout type="note" >}}
-זהו חלק 2 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק. [חלק 4](/he/posts/velotix-the-takedown/) מתעד את הודעת ההסרה (DMCA) שהוגשה נגד חלק 1. [חלק 5](/he/posts/velotix-the-comeback/) עוקב אחר החזרה.
-
-{{< /callout >}}
 
 ## קורות החיים
 
@@ -136,6 +134,3 @@ TechShield פירטה שלושה "לקוחות" של ולוטיקס: OCBC סינ
 
 אבל כשמנכ"ל אומר לעובדיו ב-16 במרץ שלחברה יש הכנסות של מיליון דולר ופחות משישה חודשים לחיות, ותשעה ימים לאחר מכן אומר בכנס שהחברה גייסה 30 מיליון דולר ועובדת עם לקוחות גדולים, השאלה היא האם מישהו — PipelBiz, ברקליס, שרונה ונצ'רס, רשות ניירות ערך — שם לב.
 
----
-
-*זהו חלק 2 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק. [חלק 4](/he/posts/velotix-the-takedown/) מתעד את הודעת ההסרה (DMCA) שהוגשה נגד חלק 1. [חלק 5](/he/posts/velotix-the-comeback/) עוקב אחר החזרה.*

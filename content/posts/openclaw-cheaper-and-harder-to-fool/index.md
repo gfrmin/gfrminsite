@@ -4,6 +4,8 @@ subtitle: "A governor that learns your agent, blocks the tool calls it wastes, a
 description: "credence-pi is an OpenClaw plugin plus a local daemon that learns your agent's behaviour and governs its tool calls by expected utility: it blocks the calls your agent wastes, flags injected exfiltration as a confirmation at 0.94 precision on a public benchmark, and makes ask-or-proceed decisions a fixed rule provably can't reproduce. Research-stage, local-first, installable today."
 author: "Guy Freeman"
 date: 2026-06-09
+series: [tool-call-governor]
+series_order: 3
 categories: [essays, bayesian, ai, decision-theory]
 ---
 

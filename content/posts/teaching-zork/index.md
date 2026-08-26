@@ -4,8 +4,10 @@ subtitle: "What happens when your LLM is a sensor, not a commander"
 description: "A Bayesian agent plays text adventures with four information sources and a VOI gate on every query. The LLM recommends actions. The mathematics decides whether to listen."
 author: "Guy Freeman"
 date: 2026-03-23
+series: [first-principles]
+series_order: 3
 publishDate: 2026-04-28
-categories: [python, bayesian, machine-learning, ai, interactive-fiction]
+categories: [python, bayesian, machine-learning, ai]
 ---
 
 {{< callout type="note" >}}

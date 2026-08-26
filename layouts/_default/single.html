@@ -22,10 +22,14 @@
       {{ end }}
     </header>
 
+    {{ partial "series-banner.html" . }}
+
     <div class="post-body">
       {{ .Content }}
     </div>
 
+    {{ partial "series-nav.html" . }}
+    {{ partial "related-posts.html" . }}
     {{ partial "share-buttons.html" . }}
   </article>
   {{ partial "schema.html" . }}

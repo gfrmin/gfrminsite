@@ -5,7 +5,7 @@ description: "How I built a Raspberry Pi dashboard to capture and visualize body
 author: "Guy Freeman"
 date: 2025-12-22
 lastmod: 2025-12-31
-categories: [python, iot, raspberry-pi, health, data, ble, hardware]
+categories: [python, hardware, data]
 image: og-image.png
 ---
 

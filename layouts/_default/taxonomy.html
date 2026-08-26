@@ -1,0 +1,17 @@
+{{/* Index of terms (e.g. /categories/). Terms are not posts: show counts, not
+     reading times. Ordered by how much has actually been written under each. */}}
+{{ define "main" }}
+<main class="content {{ if eq .Language.Direction "rtl" }}rtl-content{{ end }}">
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+
+  <ul class="term-cloud">
+    {{ range .Data.Terms.ByCount }}
+    <li class="term-cloud-item">
+      <a href="{{ .Page.RelPermalink }}" class="term-cloud-link">{{ .Page.Title }}</a>
+      <span class="term-cloud-count">{{ i18n "categoryPostCount" .Count }}</span>
+    </li>
+    {{ end }}
+  </ul>
+</main>
+{{ end }}

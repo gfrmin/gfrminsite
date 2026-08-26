@@ -1399,3 +1399,360 @@ blockquote p:last-child {
      document.querySelector('.navbar-menu').classList.toggle('active');
    });
 */
+
+/* ============================================
+   SERIES
+   ============================================ */
+
+/* Orientation strip above the post body */
+.series-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-xs);
+  margin: 0 0 var(--space-xl);
+  padding: var(--space-sm) var(--space-md);
+  border-left: 3px solid var(--brand-primary);
+  background: var(--bg-code);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.series-banner-pos {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.series-banner-name {
+  font-weight: 600;
+  color: var(--brand-primary);
+}
+
+/* Full ordered list below the post body */
+.series-nav {
+  margin: var(--space-2xl) 0 var(--space-xl);
+  padding: var(--space-lg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+}
+
+.series-nav-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.series-nav-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.series-nav-title {
+  font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.series-nav-list {
+  margin: 0;
+  padding-left: 1.4em;
+  font-size: 0.95rem;
+}
+
+.rtl-content .series-nav-list {
+  padding-left: 0;
+  padding-right: 1.4em;
+}
+
+.series-nav-list li {
+  margin-bottom: var(--space-xs);
+  line-height: 1.5;
+}
+
+.series-nav-list li::marker {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.series-nav-list li.is-current::marker {
+  color: var(--brand-primary);
+  font-weight: 700;
+}
+
+.series-nav-current {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.series-nav-here {
+  margin-left: var(--space-sm);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.rtl-content .series-nav-here {
+  margin-left: 0;
+  margin-right: var(--space-sm);
+}
+
+.series-nav-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.series-step {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-decoration: none;
+}
+
+.series-step-next { text-align: right; }
+.rtl-content .series-step-next { text-align: left; }
+
+.series-step-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.series-step-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--brand-primary);
+  line-height: 1.35;
+}
+
+.series-step:hover .series-step-title { text-decoration: underline; }
+
+@media (max-width: 575.98px) {
+  .series-nav-steps { grid-template-columns: 1fr; }
+  .series-step-next, .rtl-content .series-step-next { text-align: inherit; }
+}
+
+/* /series/ — the hub */
+.series-index-item {
+  padding: var(--space-xl) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.series-index-item:last-child { border-bottom: none; }
+
+.series-index-title {
+  font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+  margin-bottom: var(--space-xs);
+}
+
+.series-index-meta {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.series-index-desc {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.series-index-list {
+  margin: 0;
+  padding-left: 1.4em;
+  font-size: 0.95rem;
+}
+
+.rtl-content .series-index-list { padding-left: 0; padding-right: 1.4em; }
+
+.series-index-list li { margin-bottom: var(--space-xs); }
+.series-index-list li::marker { color: var(--text-muted); }
+
+/* One series */
+.series-header { margin-bottom: var(--space-lg); }
+
+.series-eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-sm);
+}
+
+.series-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.series-intro {
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.series-listing {
+  margin: 0;
+  padding-left: 1.6em;
+  counter-reset: none;
+}
+
+.rtl-content .series-listing { padding-left: 0; padding-right: 1.6em; }
+
+.series-listing-item {
+  padding: var(--space-lg) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.series-listing-item:last-child { border-bottom: none; }
+.series-listing-item::marker {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.series-listing-item .listing-description {
+  color: var(--text-secondary);
+  margin: var(--space-xs) 0 var(--space-sm);
+}
+
+/* ============================================
+   RELATED POSTS
+   ============================================ */
+.related-posts {
+  margin: var(--space-xl) 0;
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.related-posts-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.related-posts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.related-posts-list li {
+  margin-bottom: var(--space-xs);
+  line-height: 1.5;
+}
+
+.related-posts-series {
+  margin-left: var(--space-sm);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.rtl-content .related-posts-series { margin-left: 0; margin-right: var(--space-sm); }
+
+/* ============================================
+   TERM INDEX (/categories/)
+   ============================================ */
+.term-cloud {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-lg) 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-sm) var(--space-lg);
+}
+
+.term-cloud-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.term-cloud-link { font-weight: 600; }
+
+.term-cloud-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The global h2 rule adds a 4rem top margin and an underline, which is right
+   for headings inside prose and wrong for headings used as list furniture. */
+.series-listing-item .listing-title,
+.related-posts-title,
+.series-index-title,
+.series-nav-title {
+  margin-top: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.series-listing-item .listing-title {
+  font-size: 1.2rem;
+  margin-bottom: var(--space-xs);
+}
+
+.series-index-title { margin-bottom: var(--space-xs); }
+
+.series-index-item { padding: var(--space-lg) 0 var(--space-xl); }
+
+.series-listing-item { padding: var(--space-md) 0 var(--space-lg); }
+
+/* RTL: the accent rail moves to the reading edge, matching .callout */
+.rtl-content .series-banner {
+  border-left: none;
+  border-right: 3px solid var(--brand-primary);
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+/* Homepage series block */
+.home-series {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-lg);
+}
+
+.home-series li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.home-series-name {
+  font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.home-series-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}

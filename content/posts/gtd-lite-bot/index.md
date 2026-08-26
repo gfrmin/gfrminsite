@@ -4,7 +4,7 @@ subtitle: "Using Claude Haiku for natural language task parsing"
 description: "How I built a Getting Things Done Telegram bot with natural language parsing using Claude Haiku, Python, and PostgreSQL - all in under an hour with Claude Code."
 author: "Guy Freeman"
 date: 2025-12-20
-categories: [telegram, ai, productivity, python]
+categories: [ai, python]
 image: og-image.png
 ---
 

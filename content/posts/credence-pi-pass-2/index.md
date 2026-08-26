@@ -4,6 +4,8 @@ subtitle: "Catching a wasted tool call is a hash set's job. A governor that lear
 description: "The governor from 'The Brain is Opaque to the Body' now ships as an OpenClaw plugin: wasted tool calls blocked at precision and recall 1.0 on real sessions, injected exfiltration surfaced as a confirmation at 0.94 precision. And an argument: several of these behaviours are beyond any hand-tuned heuristic, because matching them re-derives Bayesian decision theory."
 author: "Guy Freeman"
 date: 2026-06-08
+series: [tool-call-governor]
+series_order: 2
 categories: [essays, bayesian, ai, decision-theory]
 ---
 

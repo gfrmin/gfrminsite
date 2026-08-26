@@ -1,9 +1,11 @@
 ---
 title: "The Prompting Gradient"
 subtitle: "Three LLM variants, three layers of sophistication, and the ceiling they cannot reach"
-description: "Each prompting technique helps. Reasoning traces, strategy guidance, cross-question history --- each one improves accuracy and score. None of them closes the gap with a Bayesian agent that does not use language at all. The ceiling exists because descriptions of calculations are not calculations."
+description: "Each prompting technique helps. Reasoning traces, strategy guidance, cross-question history — each one improves accuracy and score. None of them closes the gap with a Bayesian agent that does not use language at all. The ceiling exists because descriptions of calculations are not calculations."
 author: "Guy Freeman"
 date: 2026-04-01
+series: [credence]
+series_order: 4
 publishDate: 2026-04-30
 categories: [essays, bayesian, machine-learning, ai]
 ---

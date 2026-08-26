@@ -35,6 +35,27 @@ Math is rendered to **MathML at build time** via goldmark's passthrough extensio
 - `content/projects/`, `content/contact/` — non-post sections.
 - `drafts/` at the **repo root** (not inside `content/`) is gitignored and used as a staging area for work-in-progress drafts before they're moved into `content/posts/`. This is separate from Hugo's own `draft: true` frontmatter mechanism, which is also used for in-tree posts that aren't yet public.
 
+### Series (post sequences)
+
+Most posts belong to a sequence. Series are a **Hugo taxonomy** (`series` in `hugo.toml`), one value per post, ordered by a separate `series_order` integer:
+
+```yaml
+series: [coding-agents]
+series_order: 3
+```
+
+The frontmatter value is the **slug**; the display title comes from `content/series/<slug>/_index.md` (which also holds the series' intro prose, shown on `/series/<slug>/` and as the description on the `/series/` hub). Hebrew titles go in a sibling `_index.he.md`.
+
+Templates: `layouts/series/taxonomy.html` (the `/series/` hub), `layouts/series/term.html` (one series), and two partials rendered by `single.html` — `series-banner.html` above the body ("Part 3 of 4 in ...") and `series-nav.html` below it (full ordered list plus prev/next).
+
+**Do not hand-maintain cross-links between parts of a series.** Every Velotix post used to carry a "This is Part 3, see Parts 1/2/4/5" callout *and* a trailing italic copy of the same list, in both languages — twenty hand-maintained link sets that had to be edited whenever a part was added. Those were removed in favour of the generated nav. Contextual references inside the prose ("as covered in [Part 1](...)") are fine and were kept.
+
+A post with no `series` simply renders no nav. Seven posts are deliberately standalone.
+
+### Related posts
+
+`layouts/partials/related-posts.html` uses Hugo's built-in `.Site.RegularPages.Related`, configured under `[related]` in `hugo.toml` (categories + date; **series is deliberately not an index**). It then filters out any post in the *same* series, because the series nav already lists those — related exists to reach *across* series. Posts whose only related pages are same-series render nothing, which is correct.
+
 ### URL shape (non-obvious)
 
 Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent fix (commit ceb1c3c) corrected this in internal links; preserve the pattern when adding navigation or language-switcher code.
@@ -45,6 +66,8 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
 - `layouts/_default/{baseof,list,single}.html` — base chrome plus list and single-page templates.
 - `layouts/partials/` — `header.html`, `footer.html`, `schema.html` (JSON-LD), `share-buttons.html`, `darkmode.html`, `posthog.html`, `skip-link.html`.
 - `layouts/shortcodes/callout.html` — callout shortcode.
+- `layouts/_default/taxonomy.html` — term index (`/categories/`). Terms are not posts; before this existed they fell through to `list.html` and rendered as post cards with a bogus date and "0 min read".
+- `i18n/{en,he}.toml` — UI strings for the series/related chrome. Anything user-facing added to a template needs an entry in both.
 - `layouts/index.html`, `layouts/404.html` — homepage and 404 overrides.
 - `assets/css/main.css` — active stylesheet (Hugo asset pipeline).
 - `static/` — served verbatim at the site root (includes `CNAME`, `favicon.ico`, `robots.txt`, `images/` for non-post-bundle images).
@@ -62,9 +85,18 @@ author: "Guy Freeman"
 date: YYYY-MM-DD
 draft: true                         # work-in-progress; hide from production build
 categories: [essays, bayesian, ...] # taxonomy; renders at /categories/<cat>/
+series: [coding-agents]             # optional; slug, not display title (see Series above)
+series_order: 3                     # required whenever series is set
+linkTitle: "Part 3: The Takedown"   # optional; short form used in series nav and related lists
 image: og-image.png                 # optional, relative to page bundle; falls back to site default (layouts/_default/baseof.html:19)
 ---
 ```
+
+**Frontmatter text is not markdown.** `title`, `subtitle` and `description` are emitted raw into `<h1>`/`<p>`/`<meta>`, so goldmark's typographer never sees them and a literal `---` stays three hyphens on the page and in the OG card. Body prose may use `---`; frontmatter must use a real em-dash (`—`). Ten files were fixed for this in Aug 2026 — do not reintroduce it.
+
+**Categories are kept above a floor of roughly two posts each.** A one-post category is a tag on one thing, not a navigation aid. In Aug 2026 the set was consolidated 30 → 15: near-synonyms were folded into one label (`iot`/`raspberry-pi`/`ble`/`health` → `hardware`) and `regulation`/`dmca`/`privacy` were merged into a single `policy` category rather than deleted. `hardware` is the one deliberate singleton. Category pages are `noindex, follow`, so renaming them carries no SEO cost.
+
+Display titles for categories whose slug reads badly in title case (`ai` → "AI", `machine-learning` → "Machine Learning") come from `content/categories/<slug>/_index.md`.
 
 The site default OG image is configured in `hugo.toml` under `params.ogImage`; omitting `image:` from a post's frontmatter is fine — the template falls back gracefully. The recent batch of April 2026 drafts (`accuracy-paradox`, `alignment-axiom`, etc.) omit `image:` entirely and are a good pattern to copy.
 

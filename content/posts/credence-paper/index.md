@@ -1,9 +1,11 @@
 ---
 title: "The Ablation That Beat the Agent"
 subtitle: "A paper re-framed itself three times. The third time, the thing doing the re-framing was its own benchmark, telling me the headline number had been measuring the benchmark's asymmetries rather than the architecture"
-description: "I said a Credence paper was going to arXiv. It never went. Each of its three framings was killed by a specific measurement: frontier-LLM dominance, then a one-line greedy ablation that beat the full Bayesian agent under fair conditions, robustly, under every credit-assignment rule tested. What survived is narrower, conditional, and better --- an exploration-attribution contingency law --- and the experience is the direct origin of the pre-registration discipline everything I have built since runs under."
+description: "I said a Credence paper was going to arXiv. It never went. Each of its three framings was killed by a specific measurement: frontier-LLM dominance, then a one-line greedy ablation that beat the full Bayesian agent under fair conditions, robustly, under every credit-assignment rule tested. What survived is narrower, conditional, and better — an exploration-attribution contingency law — and the experience is the direct origin of the pre-registration discipline everything I have built since runs under."
 author: "Guy Freeman"
 date: 2026-08-03
+series: [credence]
+series_order: 7
 categories: [essays, bayesian, machine-learning, ai]
 ---
 

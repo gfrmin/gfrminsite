@@ -1,16 +1,15 @@
 ---
 title: "The Velotix Files, Part 5: The Comeback"
+linkTitle: "Part 5: The Comeback"
 subtitle: "Eleven million shekels of the founder's own money, an unnamed investor in Singapore, and an insolvency case quietly closed — the rehabilitation of Velotix, as told to Maariv"
 description: "On 3 June 2026, Maariv reported that Dr Adi Hod had personally injected over 11 million shekels into Velotix, settled with the former employees who had petitioned to wind it up, and was courting a new Singapore investor. A look at what the comeback story leaves out."
 author: "Guy Freeman"
 date: 2026-06-03
+series: [velotix]
+series_order: 5
 draft: false
 categories: [investigation, startups, israel, cyber]
 ---
-
-{{< callout type="note" >}}
-This is Part 5 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice.
-{{< /callout >}}
 
 ## The Comeback
 
@@ -108,6 +107,3 @@ The product, as Part 1 noted, was real enough: a tool for managing database acce
 
 The full *Maariv* article is preserved [as text](maariv-article.txt) and [as a screenshot](maariv-comeback.png) in this post, against the day it too is quietly deleted.
 
----
-
-*This is Part 5 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice.*

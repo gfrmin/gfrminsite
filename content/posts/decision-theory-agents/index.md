@@ -4,6 +4,8 @@ subtitle: "Beta posteriors, value of information, and why your LangChain agent q
 description: "Most LLM agents use tools like a tourist uses a phrasebook. A few lines of probability theory can fix it."
 author: "Guy Freeman"
 date: 2026-02-23
+series: [credence]
+series_order: 2
 categories: [python, bayesian, machine-learning, ai]
 image: og-image.png
 ---

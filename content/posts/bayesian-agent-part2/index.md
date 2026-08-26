@@ -4,7 +4,9 @@ subtitle: "What if the cognitive architecture itself could evolve?"
 description: "Part 2 of the Bayesian agent series. We confront the question of what should be designed versus what should be allowed to emerge, and discover that it's agents all the way up and all the way down."
 author: "Guy Freeman"
 date: 2026-01-31
-categories: [python, bayesian, evolution, simulation, philosophy]
+series: [first-principles]
+series_order: 2
+categories: [python, bayesian, simulation, essays]
 image: og-image.png
 ---
 

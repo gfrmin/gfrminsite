@@ -1,16 +1,15 @@
 ---
 title: "The Velotix Files, Part 4: The Takedown"
+linkTitle: "Part 4: The Takedown"
 subtitle: "How a fraudulent DMCA notice filed from Bangladesh, citing an unrelated Israeli newspaper article, tried to take down Part 1 of this series"
 description: "On 18 May 2026, Cloudflare forwarded a DMCA copyright complaint targeting the Velotix investigation. The submitter used a disposable email, a Chittagong address, and an Israeli newspaper article about Moshe Kahlon that has nothing to do with Velotix."
 author: "Guy Freeman"
 date: 2026-05-19
+series: [velotix]
+series_order: 4
 draft: false
-categories: [investigation, startups, israel, cyber, dmca]
+categories: [investigation, startups, israel, cyber, policy]
 ---
-
-{{< callout type="note" >}}
-This is Part 4 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 5](/posts/velotix-the-comeback/) covers the comeback.
-{{< /callout >}}
 
 ## The Notice
 
@@ -91,6 +90,3 @@ As of writing, no DMCA notices have been filed in respect of [Part 2](/posts/vel
 
 The complete notice, with all mail headers preserved, can be [viewed as text](velotix-dmca.txt) or [downloaded as a `.eml` file](velotix-dmca.eml).
 
----
-
-*This is Part 4 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 5](/posts/velotix-the-comeback/) covers the comeback.*

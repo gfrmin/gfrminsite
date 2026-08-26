@@ -1,0 +1,25 @@
+{{/* /series/ — the hub. Each series in full, newest series first. A term page's
+     .Date is the date of its most recent page, so ByDate.Reverse orders by
+     recency of the series rather than by name. */}}
+{{ define "main" }}
+<main class="content {{ if eq .Language.Direction "rtl" }}rtl-content{{ end }}">
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+
+  <div class="series-index">
+    {{ range .Pages.ByDate.Reverse }}
+    {{ $ordered := .Pages.ByParam "series_order" }}
+    <section class="series-index-item">
+      <h2 class="series-index-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+      <p class="series-index-meta">{{ i18n "seriesPostCount" (len $ordered) }}</p>
+      {{ with .Description }}<p class="series-index-desc">{{ . }}</p>{{ end }}
+      <ol class="series-index-list">
+        {{ range $ordered }}
+        <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+        {{ end }}
+      </ol>
+    </section>
+    {{ end }}
+  </div>
+</main>
+{{ end }}

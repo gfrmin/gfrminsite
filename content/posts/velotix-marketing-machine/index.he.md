@@ -1,17 +1,15 @@
 ---
 title: "תיקי ולוטיקס, חלק 3: מכונת השיווק"
+linkTitle: "חלק 3: מכונת השיווק"
 subtitle: "איך פלטפורמת מימון המונים מורשית רשות ניירות ערך הפיצה טענות שווא על סטארטאפ כושל למאות אלפי ישראלים"
 description: "בתוך רשת ההפצה של PipelBiz ששיווקה השקעות אנג'ל בולוטיקס דרך אתרי לידים, דפי נחיתה של נדל\"ן וערוץ טלגרם צבאי — בזמן שהחברה הייתה תחת אכיפה ממשלתית על אי-תשלום לעובדים."
 author: "גיא פרימן"
 date: 2026-03-22
+series: [velotix]
+series_order: 3
 draft: false
-categories: [investigation, startups, israel, cyber, regulation]
+categories: [investigation, startups, israel, cyber, policy]
 ---
-
-{{< callout type="note" >}}
-זהו חלק 3 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 4](/he/posts/velotix-the-takedown/) מתעד את הודעת ההסרה (DMCA) שהוגשה נגד חלק 1. [חלק 5](/he/posts/velotix-the-comeback/) עוקב אחר החזרה.
-
-{{< /callout >}}
 
 ## האינסטלציה
 
@@ -121,6 +119,3 @@ PipelBiz אינה פלטפורמת שיווק גרידא. היא גוף מורש
 
 רשות ניירות ערך לא הגיבה לפניות במועד הפרסום.
 
----
-
-*זהו חלק 3 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 4](/he/posts/velotix-the-takedown/) מתעד את הודעת ההסרה (DMCA) שהוגשה נגד חלק 1. [חלק 5](/he/posts/velotix-the-comeback/) עוקב אחר החזרה.*

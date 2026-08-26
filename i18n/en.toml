@@ -1,0 +1,31 @@
+[seriesPart]
+other = "Part {{ .Count }} of {{ .Total }}"
+
+[seriesIn]
+other = "in"
+
+[seriesInThis]
+other = "In this series"
+
+[seriesHere]
+other = "you are here"
+
+[seriesPrev]
+other = "Previous"
+
+[seriesNext]
+other = "Next"
+
+[seriesPostCount]
+one = "1 post"
+other = "{{ . }} posts"
+
+[categoryPostCount]
+one = "1 post"
+other = "{{ . }} posts"
+
+[relatedTitle]
+other = "Related reading"
+
+[allSeries]
+other = "All series"

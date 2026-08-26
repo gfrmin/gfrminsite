@@ -4,6 +4,8 @@ subtitle: "One Bayesian governor for OpenClaw that does two things from a single
 description: "credence-pi is an OpenClaw plugin plus a local daemon that learns your agent and acts at two points by expected utility: it routes each turn to the cheapest model whose expected accuracy justifies its cost, and it governs each tool call your agent proposes, blocking the wasted ones and flagging injected exfiltration as a confirmation. Routing is on by default; shadow mode reports what it would save and block on your own sessions, with its own false-block rate, before it enforces anything. Early-stage research that wants the community's help; local-first, installable today."
 author: "Guy Freeman"
 date: 2026-06-19
+series: [tool-call-governor]
+series_order: 4
 draft: false
 categories: [essays, bayesian, ai, decision-theory]
 ---

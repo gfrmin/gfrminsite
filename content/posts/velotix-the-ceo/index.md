@@ -1,17 +1,15 @@
 ---
 title: "The Velotix Files, Part 2: The Serial Entrepreneur"
+linkTitle: "Part 2: The Serial Entrepreneur"
 subtitle: "Exits of over $100 million, a researcher from MIT, and a LinkedIn post about sinking companies"
 description: "A profile of Dr Adi Hod, CEO of Velotix — his credentials, his previous company, and the nine days between telling employees the company was dying and telling investors it was thriving."
 author: "Guy Freeman"
 date: 2026-03-21
+series: [velotix]
+series_order: 2
 draft: false
 categories: [investigation, startups, israel, cyber]
 ---
-
-{{< callout type="note" >}}
-This is Part 2 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against Part 1. [Part 5](/posts/velotix-the-comeback/) covers the comeback.
-
-{{< /callout >}}
 
 ## The CV
 
@@ -138,6 +136,3 @@ The [Velotix website](https://www.velotix.ai/) remains live. "Book a Demo." The 
 
 But when a CEO tells his employees on March 16 that the company has $1 million in revenue and less than six months to live, and then tells a conference nine days later that the company has raised $30 million and works with major clients, the question is whether anyone — PipelBiz, Barclays, Sarona Ventures, the ISA — was paying attention.
 
----
-
-*This is Part 2 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 3](/posts/velotix-marketing-machine/) examines the marketing machine. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against Part 1. [Part 5](/posts/velotix-the-comeback/) covers the comeback.*

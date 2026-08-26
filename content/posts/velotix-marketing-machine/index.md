@@ -1,16 +1,15 @@
 ---
 title: "The Velotix Files, Part 3: The Marketing Machine"
+linkTitle: "Part 3: The Marketing Machine"
 subtitle: "How an ISA-licensed crowdfunding platform distributed false claims about a failing startup to hundreds of thousands of Israelis"
 description: "Inside the PipelBiz distribution network that marketed Velotix angel investments through lead-gen sites, real estate landing pages, and a military Telegram channel — while the company was under government enforcement for not paying employees."
 author: "Guy Freeman"
 date: 2026-03-22
+series: [velotix]
+series_order: 3
 draft: false
-categories: [investigation, startups, israel, cyber, regulation]
+categories: [investigation, startups, israel, cyber, policy]
 ---
-
-{{< callout type="note" >}}
-This is Part 3 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against Part 1. [Part 5](/posts/velotix-the-comeback/) covers the comeback.
-{{< /callout >}}
 
 ## The Plumbing
 
@@ -120,6 +119,3 @@ The Israel Securities Authority licenses offer coordinators and supervises their
 
 The ISA has not responded to enquiries at the time of publication.
 
----
-
-*This is Part 3 of the Velotix Files. [Part 1](/posts/velotix-investigation/) covers the full investigation. [Part 2](/posts/velotix-the-ceo/) profiles the CEO. [Part 4](/posts/velotix-the-takedown/) documents the DMCA takedown notice filed against Part 1. [Part 5](/posts/velotix-the-comeback/) covers the comeback.*

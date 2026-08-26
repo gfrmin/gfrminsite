@@ -4,6 +4,8 @@ subtitle: "What a Bayesian benchmark reveals about the gap between tool-calling 
 description: "I built a Bayesian agent and set it against LangChain on a tool-use benchmark. LangChain got more answers right and still lost — by 120 points."
 author: "Guy Freeman"
 date: 2026-02-23
+series: [credence]
+series_order: 1
 categories: [python, bayesian, machine-learning, ai, essays]
 image: og-image.png
 ---

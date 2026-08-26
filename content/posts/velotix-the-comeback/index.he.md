@@ -1,16 +1,15 @@
 ---
 title: "תיקי ולוטיקס, חלק 5: החזרה"
+linkTitle: "חלק 5: החזרה"
 subtitle: "אחת-עשרה מיליון שקל מכספו של המייסד, משקיע אלמוני בסינגפור, ותיק חדלות פירעון שנסגר בשקט — שיקומה של ולוטיקס, כפי שסופר ל\"מעריב\""
 description: "ב-3 ביוני 2026 דיווח \"מעריב\" כי ד\"ר עדי הוד הזרים מכספו האישי יותר מ-11 מיליון שקל לוולוטיקס, הגיע להסדר עם העובדים לשעבר שעתרו לפרק אותה, ומחזר אחר משקיע חדש מסינגפור. מבט על מה שסיפור החזרה מותיר בחוץ."
 author: "גיא פרימן"
 date: 2026-06-03
+series: [velotix]
+series_order: 5
 draft: false
 categories: [investigation, startups, israel, cyber]
 ---
-
-{{< callout type="note" >}}
-זהו חלק 5 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק. [חלק 4](/he/posts/velotix-the-takedown/) מתעד את הודעת ההסרה (DMCA).
-{{< /callout >}}
 
 ## החזרה
 
@@ -108,6 +107,3 @@ categories: [investigation, startups, israel, cyber]
 
 הכתבה המלאה של *מעריב* נשמרת [כטקסט](maariv-article.txt) ו[כצילום מסך](maariv-comeback.png) בפוסט הזה, ליום שבו גם היא תימחק בשקט.
 
----
-
-*זהו חלק 5 של תיקי ולוטיקס. [חלק 1](/he/posts/velotix-investigation/) מכסה את החקירה המלאה. [חלק 2](/he/posts/velotix-the-ceo/) מפרופל את המנכ"ל. [חלק 3](/he/posts/velotix-marketing-machine/) בוחן את מכונת השיווק. [חלק 4](/he/posts/velotix-the-takedown/) מתעד את הודעת ההסרה (DMCA).*

@@ -4,6 +4,8 @@ subtitle: "Adopting your own work is a decision, not a comparison. So I built a 
 description: "Whether to adopt a tool you built is itself a decision under uncertainty, so it deserves a decision rule, not a leaderboard. I built a pre-committed, frozen-blind adoption gate over a posterior on the utility difference between two ways of answering questions about my own documents: a model that always answers, and Bayesian machinery that abstains when it is not sure. The gate refused adoption despite a clearly positive mean, because the choice hinges on a number I cannot honestly introspect: how much a confident wrong answer actually costs me. Then I built the abstaining machine and ran it, and it answered almost nothing, withholding even the values it had read faithfully. Not a failure of the decision math but its honest consequence. The silence pulled apart into three separable beliefs (can I find the fact, did I read it faithfully, is it still true), only one of which is my utility talking, and a wrong answer turned out to be, more often than not, a faithful read of a fact that has since gone stale. The gate moves only as the missing number is earned from behaviour, never from a hand on the prior."
 author: "Guy Freeman"
 date: 2026-06-19
+series: [coding-agents]
+series_order: 2
 draft: false
 categories: [essays, bayesian, ai, decision-theory]
 ---

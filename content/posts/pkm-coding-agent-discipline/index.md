@@ -4,6 +4,8 @@ subtitle: "How SPEC.md and CLAUDE.md held a 'pragmatic' coding agent to foundati
 description: "A companion to the PKM Phase 1 post. The foundation was built by two AIs — Claude.ai for design, Claude Code for implementation — with a spec as the contract between them. Ten SPEC revisions in four days, and what the rules caught that 'pragmatic' would have missed."
 author: "Guy Freeman"
 date: 2026-04-22
+series: [coding-agents]
+series_order: 1
 draft: false
 categories: [essays, ai, python]
 ---

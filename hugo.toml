@@ -28,6 +28,7 @@ defaultContentLanguage = "en"
 
 [taxonomies]
   category = "categories"
+  series = "series"
 
 [menu]
   [[menu.main]]
@@ -39,17 +40,32 @@ defaultContentLanguage = "en"
     url = "/posts/"
     weight = 2
   [[menu.main]]
+    name = "Series"
+    url = "/series/"
+    weight = 3
+  [[menu.main]]
     name = "Research"
     url = "/research/"
-    weight = 3
+    weight = 4
   [[menu.main]]
     name = "Projects"
     url = "/projects/"
-    weight = 4
+    weight = 5
   [[menu.main]]
     name = "Contact"
     url = "/contact/"
-    weight = 5
+    weight = 6
+
+[related]
+  includeNewer = true
+  threshold = 30
+  toLower = true
+  [[related.indices]]
+    name = "categories"
+    weight = 100
+  [[related.indices]]
+    name = "date"
+    weight = 10
 
 [markup]
   [markup.highlight]

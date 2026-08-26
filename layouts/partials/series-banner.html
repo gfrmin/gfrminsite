@@ -1,0 +1,16 @@
+{{/* Compact orientation strip rendered above the post body. */}}
+{{ with .Params.series }}
+  {{ $term := $.Site.GetPage (printf "/series/%s" (index . 0)) }}
+  {{ with $term }}
+    {{ $pages := .Pages.ByParam "series_order" }}
+    {{ $total := len $pages }}
+    {{ $pos := $.Params.series_order }}
+    {{ if and $pos (gt $total 1) }}
+    <nav class="series-banner" aria-label="Series">
+      <span class="series-banner-pos">{{ i18n "seriesPart" (dict "Count" $pos "Total" $total) }}</span>
+      <span class="series-banner-sep">{{ i18n "seriesIn" }}</span>
+      <a href="{{ .RelPermalink }}" class="series-banner-name">{{ .Title }}</a>
+    </nav>
+    {{ end }}
+  {{ end }}
+{{ end }}

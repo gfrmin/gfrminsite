@@ -1,9 +1,11 @@
 ---
 title: "Fifteen Ways Past My Own Gate"
-subtitle: "Freezing a test makes it unmovable. It does not make it alive. The only evidence that a guard still works is a violation you planted yourself, watching it die --- so the last job of a coding agent on a project is to attack the thing it just helped build"
-description: "A fresh agent session was pointed at a governance repo with one question: can the repo's own rules be broken while the verification gate stays green? It found fifteen ways, three of them without touching anything the custody floor watches. On what to do with findings like that --- convert them into poison fixtures and seeded kills, so a guard is required to fail --- and on the failure mode the method reproduces inside its own instrument."
+subtitle: "Freezing a test makes it unmovable. It does not make it alive. The only evidence that a guard still works is a violation you planted yourself, watching it die — so the last job of a coding agent on a project is to attack the thing it just helped build"
+description: "A fresh agent session was pointed at a governance repo with one question: can the repo's own rules be broken while the verification gate stays green? It found fifteen ways, three of them without touching anything the custody floor watches. On what to do with findings like that — convert them into poison fixtures and seeded kills, so a guard is required to fail — and on the failure mode the method reproduces inside its own instrument."
 author: "Guy Freeman"
 date: 2026-08-26
+series: [coding-agents]
+series_order: 4
 categories: [essays, ai]
 ---
 

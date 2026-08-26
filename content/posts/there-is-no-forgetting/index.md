@@ -4,6 +4,8 @@ subtitle: "I built an exponential forgetting mechanism in 2011. A cleaner idea d
 description: "My own 2011 paper gave old evidence a way to decay: multiply the conjugate parameters by a forgetting factor before each update. A successor language throws that machinery away and beats an oracle-tuned forgetter on a drifting world — 339.8 bits against 340.9 — by putting the drift-rate in the hypothesis space and letting the one Bayesian update infer it. Forgetting turns out to be a second learning mechanism, and a second mechanism is a first mechanism mistrusted. Non-stationarity is content, not machinery."
 author: "Guy Freeman"
 date: 2026-07-18
+series: [proplang]
+series_order: 3
 categories: [bayesian, ai, essays, decision-theory]
 ---
 

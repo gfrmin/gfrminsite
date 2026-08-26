@@ -1,9 +1,11 @@
 ---
 title: "Sixty-Two Percent Correct and Winning by a Hundred and Twenty Points"
 subtitle: "What happens when you add a utility function to a question-answering benchmark"
-description: "A Bayesian decision-theoretic agent scores lower on accuracy than every LLM variant it competes against --- and beats the best of them by 120 points. The explanation requires thinking about something that LLM benchmarks typically refuse to think about."
+description: "A Bayesian decision-theoretic agent scores lower on accuracy than every LLM variant it competes against — and beats the best of them by 120 points. The explanation requires thinking about something that LLM benchmarks typically refuse to think about."
 author: "Guy Freeman"
 date: 2026-04-01
+series: [credence]
+series_order: 3
 publishDate: 2026-04-30
 categories: [essays, bayesian, machine-learning, ai]
 ---
