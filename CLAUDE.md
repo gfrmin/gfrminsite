@@ -6,7 +6,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Personal blog at [gfrm.in](https://gfrm.in), built with **Hugo**. Prose-first (essays on data, AI, Bayesian decision theory, investigations); only one legacy post uses executable code. Bilingual — English default, Hebrew translations with RTL.
 
-Migrated from Quarto to Hugo in March 2026; the Quarto artefacts were removed from the tree in July 2026. If you find a reference to `_quarto.yml`, `*.qmd`, `_freeze/`, R, or `uv`/`pyproject.toml` anywhere, it is stale — the live site is entirely Hugo (`hugo.toml` plus the `layouts/` tree).
+Migrated from Quarto to Hugo in March 2026. The July 2026 cleanup missed the repo
+root, which kept `contact/index.qmd`, `projects/index.qmd`, `.python-version`, a
+`CNAME` contradicting the published one, and byte-identical copies of `static/`'s
+`images/`, `fonts/`, `favicon.ico`, `og-default.png` and `profile.jpg`; all of it
+was deleted in Aug 2026 and none of it was ever served. If you find a reference to
+`_quarto.yml`, `*.qmd`, `_freeze/`, R, or `uv`/`pyproject.toml` anywhere, it is
+stale — the live site is entirely Hugo (`hugo.toml` plus the `layouts/` tree).
+
+The published domain comes from `static/CNAME` (`www.gfrm.in`), because the
+workflow uploads only `public/`. Note this disagrees with `baseURL` and every
+canonical, which say `gfrm.in`; it works because Cloudflare 301s www to the apex.
+Changing it is a live GitHub Pages action, not an edit.
 
 ## Common Commands
 
@@ -86,6 +97,29 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
 - `layouts/_default/_markup/render-image.html` — markdown image render hook, adding
   `loading="lazy" decoding="async"` and resolving the destination against the page bundle so `src`
   is an absolute `RelPermalink` rather than a bare filename.
+- `layouts/partials/post-card.html`, `layouts/partials/project-card.html` — the two card
+  types. Both take a `level` in their dict context which sets the heading tag, because the
+  same card renders under a page `<h1>` on a listing (h2) and under a section `<h2>` on the
+  homepage (h3). Note that `<{{ $h }}>` does **not** work — Go's contextual autoescaping
+  emits a literal `&lt;h2`; the open and close tags are built as whole strings and marked
+  `safeHTML`. Post cards were duplicated between `list.html` and `index.html` before this
+  and had drifted apart on heading level and thumbnail markup.
+
+  A card thumbnail links to the same URL as the title beside it. When it adds nothing —
+  a post's og-image, or one of the five generated gradient cards in `data/projects.yaml`
+  that show only the project name — the image is `alt=""` and the whole anchor takes
+  `tabindex="-1" aria-hidden="true"`, so the card is one link rather than two and a screen
+  reader does not read the title twice. `project-card.html` decides this per entry from
+  whether `alt` is empty, so the three real screenshots (kana, docaviv+, Scalibur) keep
+  their descriptive alt and stay exposed. **Do not "fix" an empty `alt` by describing the
+  image** — for those five there is nothing to describe that the heading does not say.
+- `layouts/partials/darkmode-init.html` — sets `data-theme` from a blocking script in
+  `<head>`. It has to run before the first paint; when this lived with the toggle wiring at
+  the end of `<body>`, dark-mode readers saw the whole page render light and then flip.
+  `layouts/partials/darkmode.html` keeps only the click handler, which needs the button in
+  the DOM. Which icon shows is CSS off `data-theme`, not inline styles from JS. Every
+  `localStorage` access is wrapped — it throws outright in some privacy modes — and a value
+  is written only on a real click, so a reader who has never chosen keeps following their OS.
 - `layouts/index.html`, `layouts/404.html` — homepage and 404 overrides.
 - `assets/css/main.css` — active stylesheet (Hugo asset pipeline).
 - `static/` — served verbatim at the site root (includes `CNAME`, `favicon.ico`, `robots.txt`, `images/` for non-post-bundle images).
@@ -132,6 +166,22 @@ per-post `translation-link` was removed as a duplicate of it.
 
 Dates use `time.Format ":date_medium"`, not `.Date.Format "Jan 2, 2006"` — the latter is a literal
 Go layout and printed English month names on Hebrew pages.
+
+### CSS: theme-aware alpha colours, logical directions
+
+`--brand-primary` is a different teal per theme, so any `rgba()` built from it must read
+`--brand-primary-rgb`, which is defined in both `:root` and `[data-theme="dark"]`. Two
+rules were written as a literal `rgba(13, 115, 119, …)` and kept the light-mode teal on
+dark backgrounds. Keep the hex and the triple in step when either moves.
+
+RTL is handled by paired `.rtl-content` overrides for physical `margin-`/`padding-`/
+`border-left|right`, and every such rule has its pair — except where a **logical**
+property is simply correct, as in `.reading-time::before { margin-inline-end }`. Prefer
+the logical property in anything new; it needs no pair.
+
+`@media (prefers-reduced-motion: reduce)` must cover `transition-duration` and
+`scroll-behavior`, not only `animation-duration` — the stylesheet has 19 transitions
+including card lifts and an image zoom, and they all kept running when it did not.
 
 ### CSS gotcha: no border-box reset
 
