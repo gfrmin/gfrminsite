@@ -4,7 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ if not .IsHome }}{{ .Title }} – {{ end }}{{ .Site.Title }}</title>
-  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  {{/* `description` in frontmatter is written as a lede — the listing cards show it, and
+       one post's runs to 1118 characters. A search snippet is cut around 160, so sending
+       the whole thing means the cut lands mid-word or the engine discards it and writes
+       its own. Truncate on the way out; the frontmatter and the cards keep the full text.
+       Computed once and shared with og:description below. */}}
+  {{ $desc := truncate 160 (or .Description .Site.Params.description) }}
+  <meta name="description" content="{{ $desc }}">
   <meta name="author" content="{{ .Site.Params.author }}">
   <link rel="canonical" href="{{ .Permalink }}">
   <link rel="icon" href="{{ "favicon.ico" | relURL }}">
@@ -14,7 +20,7 @@
 
   {{/* Open Graph */}}
   <meta property="og:title" content="{{ .Title }}">
-  <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <meta property="og:description" content="{{ $desc }}">
   <meta property="og:url" content="{{ .Permalink }}">
   <meta property="og:site_name" content="{{ .Site.Title }}">
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">

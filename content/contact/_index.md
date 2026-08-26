@@ -1,5 +1,6 @@
 ---
 title: "Contact"
+description: "Open to contract, consulting, part-time, and full-time opportunities — whether you're building something new or have a stuck project that needs rescuing."
 ---
 
 <div class="availability-box">
