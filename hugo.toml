@@ -26,35 +26,63 @@ defaultContentLanguage = "en"
     direction = "rtl"
     title = "גיא פרימן"
 
+# The Hugo version is pinned so local builds and CI produce identical output.
+# Single source of truth is `.hugo-version`, which the publish workflow reads and
+# then asserts against the binary it installed. The `min` below is the dev-side
+# half: too old a local Hugo prints a WARN on every build and `hugo server` start
+# (it is only a warning — Hugo does not treat this as fatal). Bump both together.
+[module]
+  [module.hugoVersion]
+    min = "0.165.0"
+    extended = true
+
 [taxonomies]
   category = "categories"
   series = "series"
 
-[menu]
-  [[menu.main]]
+# Menus are per-language. A single shared [menu] block emitted English labels
+# pointing at English URLs on the Hebrew pages too, so every nav click threw a
+# Hebrew reader back onto the English site. The Hebrew menu lists only what
+# actually exists in Hebrew; the language toggle in the header crosses over.
+[languages.en.menu]
+  [[languages.en.menu.main]]
     name = "Home"
     url = "/"
     weight = 1
-  [[menu.main]]
+  [[languages.en.menu.main]]
     name = "Posts"
     url = "/posts/"
     weight = 2
-  [[menu.main]]
+  [[languages.en.menu.main]]
     name = "Series"
     url = "/series/"
     weight = 3
-  [[menu.main]]
+  [[languages.en.menu.main]]
     name = "Research"
     url = "/research/"
     weight = 4
-  [[menu.main]]
+  [[languages.en.menu.main]]
     name = "Projects"
     url = "/projects/"
     weight = 5
-  [[menu.main]]
+  [[languages.en.menu.main]]
     name = "Contact"
     url = "/contact/"
     weight = 6
+
+[languages.he.menu]
+  [[languages.he.menu.main]]
+    name = "ראשי"
+    url = "/he/"
+    weight = 1
+  [[languages.he.menu.main]]
+    name = "רשומות"
+    url = "/he/posts/"
+    weight = 2
+  [[languages.he.menu.main]]
+    name = "סדרות"
+    url = "/he/series/"
+    weight = 3
 
 [related]
   includeNewer = true

@@ -20,11 +20,22 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Resolve pinned Hugo version
+        id: hugo
+        run: echo "version=$(tr -d '[:space:]' < .hugo-version)" >> "$GITHUB_OUTPUT"
+
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.163.3'
+          hugo-version: ${{ steps.hugo.outputs.version }}
           extended: true
+
+      - name: Assert Hugo version matches the pin
+        run: |
+          want="${{ steps.hugo.outputs.version }}"
+          got="$(hugo version | sed -n 's/^hugo v\([0-9.]*\).*/\1/p')"
+          echo "pinned=$want installed=$got"
+          [ "$want" = "$got" ] || { echo "::error::Hugo $got installed but .hugo-version pins $want"; exit 1; }
 
       - name: Setup Pages
         uses: actions/configure-pages@v6

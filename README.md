@@ -4,7 +4,10 @@ Source for my personal blog at [gfrm.in](https://gfrm.in) — essays on data, AI
 
 ## Local development
 
-Requires Hugo **extended** (CI pins the version used for production builds — see `.github/workflows/publish.yml`).
+Requires Hugo **extended**, at the version in `.hugo-version` — the publish workflow
+reads that file and asserts the binary it installed matches, so dev and prod build
+with the same Hugo. `hugo.toml` carries the same version as a `[module.hugoVersion]`
+floor, which warns on every build if your local Hugo is older. Bump both together.
 
 ```bash
 git clone git@github.com:gfrmin/gfrminsite.git

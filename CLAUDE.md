@@ -17,8 +17,10 @@ hugo server -D
 # Production build (what CI runs)
 hugo --minify
 
-# Pin to the CI-matching Hugo version if the `hugo` on $PATH is newer/older
-# CI uses peaceiris/actions-hugo@v3 with hugo-version 0.163.3 extended
+# Hugo version is pinned in `.hugo-version` (currently 0.165.0, extended).
+# CI reads that file, installs exactly it, and fails if the two disagree.
+# `hugo.toml` repeats it as a [module.hugoVersion] min, which only WARNs.
+# Bumping the version means editing .hugo-version AND hugo.toml together.
 ```
 
 ### Mathematics
@@ -31,7 +33,12 @@ Math is rendered to **MathML at build time** via goldmark's passthrough extensio
 
 - `content/posts/<slug>/index.md` — one directory per post, with `index.md` holding frontmatter and body. Per-post assets (images, `og-image.png`, demo gifs) live alongside in the same directory — Hugo page bundles, so `image: og-image.png` in frontmatter resolves relative to the post.
 - `content/posts/<slug>/index.he.md` — Hebrew translation of a post (Hugo translation-by-filename). The English `index.md` and the Hebrew `index.he.md` are siblings; Hugo links them as translations automatically.
-- `content/he/` — Hebrew-language top-level sections (`_index.md`, `posts/`, `projects/`, `contact/`). Translated **posts** use the `index.he.md` sibling pattern above, not a duplicate tree here.
+- **There is no `content/he/` tree.** Every Hebrew page is an `.he.md` sibling of its English
+  counterpart — `content/_index.he.md` (homepage), `content/posts/<slug>/index.he.md` (posts),
+  `content/series/<slug>/_index.he.md` and `content/categories/<slug>/_index.he.md` (taxonomy
+  display titles). Hugo pairs them by filename. Hebrew currently covers the homepage, the five
+  Velotix posts, and the taxonomy titles those posts use; `/research/`, `/projects/` and
+  `/contact/` are English-only and deliberately absent from the Hebrew menu.
 - `content/projects/`, `content/contact/` — non-post sections.
 - `drafts/` at the **repo root** (not inside `content/`) is gitignored and used as a staging area for work-in-progress drafts before they're moved into `content/posts/`. This is separate from Hugo's own `draft: true` frontmatter mechanism, which is also used for in-tree posts that aren't yet public.
 
@@ -67,7 +74,18 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
 - `layouts/partials/` — `header.html`, `footer.html`, `schema.html` (JSON-LD), `share-buttons.html`, `darkmode.html`, `posthog.html`, `skip-link.html`.
 - `layouts/shortcodes/callout.html` — callout shortcode.
 - `layouts/_default/taxonomy.html` — term index (`/categories/`). Terms are not posts; before this existed they fell through to `list.html` and rendered as post cards with a bogus date and "0 min read".
-- `i18n/{en,he}.toml` — UI strings for the series/related chrome. Anything user-facing added to a template needs an entry in both.
+- `i18n/{en,he}.toml` — **every** user-facing string in a template, not just the series chrome:
+  nav labels, reading time, share buttons, the 404, the homepage section headings. Anything added
+  to a template needs an entry in both files, and the two must stay key-for-key identical — a
+  missing Hebrew key silently falls back to English, which is exactly the failure this replaced.
+- `layouts/partials/category-tags.html` — the category chips. Centralised because two templates
+  had drifted: both printed the raw frontmatter slug (`MACHINE-LEARNING`) instead of the term
+  page's display title, and both built the href with `relURL`, which is not language-aware and so
+  sent Hebrew readers to the English `/categories/<slug>/`. The partial resolves the term page and
+  uses its own `.RelPermalink`.
+- `layouts/_default/_markup/render-image.html` — markdown image render hook, adding
+  `loading="lazy" decoding="async"` and resolving the destination against the page bundle so `src`
+  is an absolute `RelPermalink` rather than a bare filename.
 - `layouts/index.html`, `layouts/404.html` — homepage and 404 overrides.
 - `assets/css/main.css` — active stylesheet (Hugo asset pipeline).
 - `static/` — served verbatim at the site root (includes `CNAME`, `favicon.ico`, `robots.txt`, `images/` for non-post-bundle images).
@@ -99,6 +117,28 @@ image: og-image.png                 # optional, relative to page bundle; falls b
 Display titles for categories whose slug reads badly in title case (`ai` → "AI", `machine-learning` → "Machine Learning") come from `content/categories/<slug>/_index.md`.
 
 The site default OG image is configured in `hugo.toml` under `params.ogImage`; omitting `image:` from a post's frontmatter is fine — the template falls back gracefully. The recent batch of April 2026 drafts (`accuracy-paradox`, `alignment-axiom`, etc.) omit `image:` entirely and are a good pattern to copy.
+
+### Bilingual navigation
+
+Menus are defined **per language** (`[languages.en.menu]` / `[languages.he.menu]` in `hugo.toml`),
+never as one shared `[menu]` block. A shared block emits the same literal `url` values on both
+sides, so every Hebrew nav link pointed at `/posts/`, `/series/` and so on — the English pages —
+and a Hebrew reader was thrown out of the Hebrew site by any click. For the same reason the brand
+link and the RSS link use `.Site.Home.RelPermalink`, not `"/" | relURL`.
+
+The header carries a permanent language toggle: it resolves to the current page's translation when
+one exists and to the other language's homepage otherwise, so it is never a dead link. The old
+per-post `translation-link` was removed as a duplicate of it.
+
+Dates use `time.Format ":date_medium"`, not `.Date.Format "Jan 2, 2006"` — the latter is a literal
+Go layout and printed English month names on Hebrew pages.
+
+### CSS gotcha: no border-box reset
+
+`assets/css/main.css` has **no** global `box-sizing: border-box`. Anything given an explicit
+`width` alongside padding has to set `box-sizing` itself or the page scrolls sideways. `#content`
+does exactly this: it needs `width: 100%` because it is a flex item of the sticky-footer `body`
+and its `margin: 0 auto` would otherwise shrink it to fit its content.
 
 ### RTL
 

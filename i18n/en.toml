@@ -29,3 +29,76 @@ other = "Related reading"
 
 [allSeries]
 other = "All series"
+
+# --- Site chrome ---------------------------------------------------------
+[skipToContent]
+other = "Skip to content"
+
+[toggleNavigation]
+other = "Toggle navigation"
+
+[toggleDarkMode]
+other = "Toggle dark mode"
+
+[switchLanguage]
+other = "עברית"
+
+[footerLicense]
+other = "Licensed under"
+
+[readingTime]
+other = "{{ . }} min read"
+
+[tocTitle]
+other = "On this page"
+
+# --- Homepage ------------------------------------------------------------
+[tagline]
+other = "Bayesian decision theory · Agent architecture · Production ML"
+
+[homeProjects]
+other = "Projects"
+
+[homeSeries]
+other = "Series"
+
+[homeRecentPosts]
+other = "Recent Posts"
+
+[seeAllProjects]
+other = "See all projects"
+
+[seeAllSeriesLink]
+other = "See all series"
+
+[seeAllPosts]
+other = "See all posts"
+
+[viewOnGitHub]
+other = "View on GitHub"
+
+# --- Sharing -------------------------------------------------------------
+[shareLabel]
+other = "Share:"
+
+[shareOn]
+other = "Share on {{ . }}"
+
+[copyLink]
+other = "Copy link"
+
+[copied]
+other = "Copied!"
+
+# --- 404 -----------------------------------------------------------------
+[notFoundBody]
+other = "The page you're looking for doesn't exist or has been moved."
+
+[notFoundHome]
+other = "Back to Home"
+
+[notFoundPosts]
+other = "Browse Posts"
+
+[notFoundProjects]
+other = "View Projects"

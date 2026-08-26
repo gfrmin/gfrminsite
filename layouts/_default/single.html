@@ -5,21 +5,10 @@
       <h1>{{ .Title }}</h1>
       {{ with .Params.subtitle }}<p class="subtitle lead">{{ . }}</p>{{ end }}
       <div class="metadata">
-        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-        <span class="reading-time">{{ .ReadingTime }} min read</span>
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
+        <span class="reading-time">{{ i18n "readingTime" .ReadingTime }}</span>
       </div>
-      {{ with .Params.categories }}
-      <div class="post-categories">
-        {{ range . }}<a href="{{ "categories/" | relURL }}{{ . | urlize }}/" class="category-tag">{{ . }}</a>{{ end }}
-      </div>
-      {{ end }}
-      {{ with .Translations }}
-      <div class="translation-link">
-        {{ range . }}
-        <a href="{{ .RelPermalink }}">{{ if eq .Lang "he" }}עברית{{ else }}English{{ end }}</a>
-        {{ end }}
-      </div>
-      {{ end }}
+      {{ partial "category-tags.html" . }}
     </header>
 
     {{ partial "series-banner.html" . }}
@@ -38,7 +27,7 @@
 {{ if .TableOfContents }}
 <aside class="toc-sidebar {{ if eq .Language.Direction "rtl" }}rtl-content{{ end }}">
   <nav class="toc">
-    <h2>On this page</h2>
+    <h2>{{ i18n "tocTitle" }}</h2>
     {{ .TableOfContents }}
   </nav>
 </aside>

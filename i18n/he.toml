@@ -29,3 +29,76 @@ other = "קריאה נוספת"
 
 [allSeries]
 other = "כל הסדרות"
+
+# --- Site chrome ---------------------------------------------------------
+[skipToContent]
+other = "דלג לתוכן"
+
+[toggleNavigation]
+other = "פתיחת תפריט"
+
+[toggleDarkMode]
+other = "מצב כהה"
+
+[switchLanguage]
+other = "English"
+
+[footerLicense]
+other = "ברישיון"
+
+[readingTime]
+other = "{{ . }} דקות קריאה"
+
+[tocTitle]
+other = "בעמוד זה"
+
+# --- Homepage ------------------------------------------------------------
+[tagline]
+other = "תורת ההחלטות הבייסיאנית · ארכיטקטורת סוכנים · למידת מכונה בייצור"
+
+[homeProjects]
+other = "פרויקטים"
+
+[homeSeries]
+other = "סדרות"
+
+[homeRecentPosts]
+other = "רשומות אחרונות"
+
+[seeAllProjects]
+other = "לכל הפרויקטים"
+
+[seeAllSeriesLink]
+other = "לכל הסדרות"
+
+[seeAllPosts]
+other = "לכל הרשומות"
+
+[viewOnGitHub]
+other = "לצפייה ב-GitHub"
+
+# --- Sharing -------------------------------------------------------------
+[shareLabel]
+other = "שיתוף:"
+
+[shareOn]
+other = "שיתוף ב{{ . }}"
+
+[copyLink]
+other = "העתקת קישור"
+
+[copied]
+other = "הועתק!"
+
+# --- 404 -----------------------------------------------------------------
+[notFoundBody]
+other = "העמוד שחיפשתם אינו קיים או שהועבר."
+
+[notFoundHome]
+other = "חזרה לדף הבית"
+
+[notFoundPosts]
+other = "עיון ברשומות"
+
+[notFoundProjects]
+other = "לפרויקטים"

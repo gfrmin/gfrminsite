@@ -1,0 +1,10 @@
+{{- /* Markdown images. goldmark's default <img> carries no loading/decoding hints, so
+       every screenshot in a long post was fetched eagerly. Post images all sit below
+       the fold — the header is title, subtitle and metadata — so lazy is safe here.
+
+       Destination is resolved against the page bundle first so the emitted src is an
+       absolute RelPermalink rather than a bare filename that only happens to resolve
+       because the page and its assets share a directory. */ -}}
+{{- $src := .Destination -}}
+{{- with .Page.Resources.GetMatch .Destination -}}{{ $src = .RelPermalink }}{{- end -}}
+<img src="{{ $src | safeURL }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async">

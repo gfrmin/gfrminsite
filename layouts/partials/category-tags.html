@@ -1,0 +1,19 @@
+{{- /* Category chips for a post. Context is the page.
+
+       Two things this centralises. The frontmatter value is a slug, so printing it
+       raw gave "MACHINE-LEARNING"; the display title comes from the term page
+       (content/categories/<slug>/_index.md, and its .he sibling). And the link has
+       to be the term page's own RelPermalink — building it with relURL produced
+       /categories/<slug>/ on Hebrew pages too, sending Hebrew readers to the
+       English term index even though /he/categories/<slug>/ exists. */ -}}
+{{- with .Params.categories }}
+<div class="post-categories">
+  {{- range . }}
+  {{- $slug := . | urlize }}
+  {{- $term := site.GetPage (printf "/categories/%s" $slug) }}
+  {{- $name := cond (ne $term nil) (default $slug (and $term $term.Title)) . }}
+  {{- $href := cond (ne $term nil) (and $term $term.RelPermalink) (printf "%s%s/" (relURL "categories/") $slug) }}
+  <a href="{{ $href }}" class="category-tag">{{ $name }}</a>
+  {{- end }}
+</div>
+{{- end }}
