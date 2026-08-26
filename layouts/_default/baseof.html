@@ -46,9 +46,12 @@
   {{ with $en }}<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">{{ end }}
   {{ end }}
 
-  {{/* Fonts */}}
+  {{/* Fonts. The sans is preloaded everywhere — Hebrew pages still set every digit,
+       date and Latin word in it. Fraunces only ever draws headings, which on a Hebrew
+       page are Hebrew, so preloading its 67KB Latin subset there buys nothing and
+       competes for bandwidth with the stylesheet. */}}
   <link rel="preload" href="{{ "fonts/ibm-plex-sans-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="{{ "fonts/fraunces-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+  {{ if eq .Language.Lang "en" }}<link rel="preload" href="{{ "fonts/fraunces-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>{{ end }}
 
   {{/* CSS */}}
   {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
