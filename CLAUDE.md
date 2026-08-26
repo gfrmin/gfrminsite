@@ -57,7 +57,14 @@ Math is rendered to **MathML at build time** via goldmark's passthrough extensio
   Hebrew currently covers the homepage, the posts index, the five Velotix posts, and the
   taxonomy titles those posts use; `/research/`, `/projects/` and `/contact/` are English-only
   and deliberately absent from the Hebrew menu.
-- `content/projects/`, `content/contact/` — non-post sections.
+- `content/projects/`, `content/contact/`, `content/research/` — non-post sections.
+- `content/archive.md` — the year archive, a **regular page** with `layout: archive`, not a
+  section. As a section Hugo would also emit an empty `/archive/index.xml` (`[outputs]` gives
+  every section an RSS feed) and advertise it in the head. As a regular page it has no date,
+  which is why `baseof.html` now computes `og:type` from `and .IsPage (not .Date.IsZero)` —
+  before that it announced itself as an article published on 0001-01-01.
+- `content/categories/_index.md` (and `_index.he.md`) — the title and lede for the term index.
+  Without the Hebrew sibling `/he/categories/` was headed "Categories" in English.
 - `drafts/` at the **repo root** (not inside `content/`) is gitignored and used as a staging area for work-in-progress drafts before they're moved into `content/posts/`. This is separate from Hugo's own `draft: true` frontmatter mechanism, which is also used for in-tree posts that aren't yet public.
 
 ### Series (post sequences)
@@ -76,6 +83,60 @@ Templates: `layouts/series/taxonomy.html` (the `/series/` hub), `layouts/series/
 **Do not hand-maintain cross-links between parts of a series.** Every Velotix post used to carry a "This is Part 3, see Parts 1/2/4/5" callout *and* a trailing italic copy of the same list, in both languages — twenty hand-maintained link sets that had to be edited whenever a part was added. Those were removed in favour of the generated nav. Contextual references inside the prose ("as covered in [Part 1](...)") are fine and were kept.
 
 A post with no `series` simply renders no nav. Seven posts are deliberately standalone.
+
+### Discovery: how a reader finds anything
+
+Thirty-seven posts, most of them long. Five surfaces exist to answer *where do I start*
+and *is there a post about X* without asking anyone to scroll ten screens of cards.
+
+**Start here** (homepage, between "What I Do" and Series) is the one hand-curated list on
+the site — the picks and the reason to read each one live in `data/starthere.yaml`, so the
+whole thing is one file to reorder or rewrite. `layouts/partials/start-here.html` resolves
+each `path` with `site.GetPage` and calls `errorf` when one does not resolve: a curated list
+that silently drops a row is worse than no list. Five is the ceiling — a "start here" of ten
+is the posts index again. English only; the Hebrew site is five Velotix posts, which the
+series block already presents as a sequence.
+
+**The tab row** (`layouts/partials/views-nav.html`) sits on `/posts/`, `/archive/` and
+`/categories/` and names them as three views of one corpus: the full list with descriptions,
+every title by year, the same posts cut by subject. It is **English-only and deliberately
+so** — the archive does not exist in Hebrew, and a three-tab row with two tabs crossing back
+into English is worse than no row.
+
+**`/archive/`** is the only listing that fits on a screen or two. Dates use a literal Go
+layout (`Jan 2`) rather than `:date_medium`, which is the one place on the site that is
+allowed to: the year is already the heading, so repeating it in every row is noise, and this
+page is English-only so the usual reason for the rule — English month names leaking onto a
+Hebrew page — cannot apply. If the archive ever gains a Hebrew sibling, that line has to
+change with it.
+
+**Search** is client-side over a per-language corpus:
+
+- `[outputFormats.SearchIndex]` in `hugo.toml` + `layouts/index.searchindex.json` emit
+  `/search-index.json` and `/he/search-index.json`. `notAlternative = true` keeps it out of
+  `baseof.html`'s `range .AlternativeOutputFormats`, which would otherwise advertise the
+  corpus to feed readers next to the RSS link.
+- The whole index is built into one map and handed to `jsonify`. Printing JSON field by
+  field would be one apostrophe in a title away from a corpus that silently fails to parse.
+- Body text is `.Plain | htmlUnescape`, capped at 4000 characters. **`.Plain` strips tags
+  but leaves entities encoded**, so without the unescape every snippet read
+  `the classics &mdash; using the`. The cap keeps the English corpus at ~170 KB.
+- `assets/js/search.js` fetches it on the first *focus* of the box, not on page load and not
+  on the first keystroke — so a reader who never searches pays nothing, and the download
+  overlaps with the typing. No index structure, no stemmer, no library: 37 posts scored by
+  substring over title/description/taxonomy/body is instant, and at this size beats a
+  stemmer, because the queries that matter here are proper nouns.
+- The result count is of **everything** that matched, not of the 50 that get drawn. A cap
+  that silently rounds "31 results" down to the cap is a lie about the corpus.
+- The control ships with the `hidden` attribute and is revealed by the script. Without
+  JavaScript there is no working search, and a dead input is worse than none — the archive
+  and the category index are the no-JS discovery path. `search.js` is loaded from
+  `search-box.html` itself rather than `baseof.html`, because it is inert without that markup
+  and only two pages carry it.
+
+**Category proportions.** `/categories/` gives each term a bar scaled against the largest.
+The mockup also carried a font-size-weighted tag cloud above the list; it was dropped as a
+second drawing of the same data.
 
 ### Related posts
 
@@ -123,7 +184,18 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
 - `layouts/partials/project-row.html` — the same data as a full-width row: thumbnail beside
   the prose, or prose alone at a 68ch measure when there is no image. `/projects/` uses it for
   all thirteen entries at full length, and the homepage uses it for the single `hero: true`
-  entry clipped to 420. The card grid could not carry that page: the descriptions run from 108
+  entry clipped to 420. It prints **where the link goes** under the title — the host for a
+  hosted thing, `owner/repo` for a GitHub URL — derived from the URL rather than stored,
+  because a second field is one more thing to keep true. It is suppressed when it would
+  merely repeat the title (accessinfo.hk).
+
+  `/projects/` groups the entries by `kind` in `data/projects.yaml` (`use` = live and hosted,
+  `code` = a repository), because thirteen rows in one list asked the reader to work out from
+  each description whether a thing was a website or a checkout. `layouts/projects/list.html`
+  **fails the build** if the two groups do not add up to the whole file: a misspelt `kind`
+  would otherwise drop a project from the site without a trace. The homepage keeps its hero
+  row and featured grid — it is a teaser, not a discovery surface, and the images earn their
+  place there. The card grid could not carry that page: the descriptions run from 108
   characters to 862, so half of it was ragged and the longest sat in a 45-character column.
   The row links only its title — a separate "View on GitHub" CTA was a second link to the same
   URL, and it was wrong for the five entries that are not on GitHub at all.
@@ -138,6 +210,9 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   is written only on a real click, so a reader who has never chosen keeps following their OS.
 - `layouts/index.html`, `layouts/404.html` — homepage and 404 overrides.
 - `assets/css/main.css` — active stylesheet (Hugo asset pipeline).
+- `assets/js/search.js` — the only JavaScript on the site that is not inline in a partial.
+  Minified and fingerprinted, with an `integrity` hash, and loaded only by the two pages that
+  carry a search box.
 - `static/` — served verbatim at the site root (includes `CNAME`, `favicon.ico`, `robots.txt`, `images/` for non-post-bundle images).
 
 ### Post frontmatter conventions
@@ -223,6 +298,12 @@ at 4.3:1, i.e. under AA — that is what the new ochre fixed.
 `--brand-primary-rgb`, defined in both `:root` and `[data-theme="dark"]`. Keep the hex
 and the triple in step when either moves.
 
+**`--text-muted` does not clear AA on `--bg-code`** — 4.42:1 on the light theme. It is fine
+on `--bg-page` (4.79) and `--bg-card` (5.37), which is why it took until the search box to
+surface. Placeholder text is text, so the search input's placeholder is `--text-secondary`
+(5.16); the magnifier icon beside it keeps `--text-muted`, which is a graphic and only owes
+3:1. Anything new that puts small text on the code ground needs the same check.
+
 **Type is four roles and one scale.** `--font-display` (titles), `--font-body` (prose),
 `--font-ui` (anything you *scan* rather than read — nav, metadata, chips, counts,
 buttons, forms, footer), `--font-mono` (code). Display and body are both Literata;
@@ -281,6 +362,14 @@ makes one stylesheet request.
 Inline code is `:not(pre) > code` — the old `code:not(.sourceCode)` also matched the
 `<code>` *inside* a highlighted `<pre>`, so every block got a second background, a
 border and the link colour on top of its own.
+
+### CSS gotcha: `main li a` underlines list links
+
+`main p a, main li a` give content links a subtle underline. Any list-based component whose
+links are *titles* rather than prose therefore gets an underline the post cards do not have —
+`.start-here-item .listing-title a` cancels it for that reason. `/archive/` goes the other
+way and keeps it: its titles are ink rather than teal, so the underline is the only thing
+marking them as links on a page that is nothing but links.
 
 ### CSS gotcha: no border-box reset
 

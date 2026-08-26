@@ -1,0 +1,42 @@
+{{/* Client-side search over the current language's corpus.
+
+     The control ships `hidden` and is revealed by assets/js/search.js, so a reader
+     without JavaScript is never shown a box that cannot do anything. Everything the
+     script needs — where the corpus lives, what to hide while a query is active,
+     and its handful of user-facing strings — is passed on data attributes rather
+     than templated into the script, which stays a static, fingerprinted asset that
+     is identical for both languages.
+
+     Takes `hide`: a CSS selector for the page's normal listing, which is swapped
+     out for the results while a query is running. */}}
+{{- $count := len (where site.RegularPages "Section" "posts") }}
+{{- $index := "" }}
+{{- with site.Home.OutputFormats.Get "searchindex" }}{{ $index = .RelPermalink }}{{ end }}
+{{/* `{n}` is a literal placeholder the script fills in. Go's plural machinery
+     cannot be handed an unknown count from JavaScript, so the two forms are two
+     keys rather than one plural entry. */}}
+{{- $strings := dict
+    "none" (i18n "searchNoResults")
+    "one"  (i18n "searchResultsOne")
+    "many" (i18n "searchResultsMany")
+    "min"  (i18n "readingTimeShort" "{n}") }}
+<div class="site-search" hidden
+     data-search
+     data-search-index="{{ $index }}"
+     data-search-hide="{{ .hide }}"
+     data-search-strings="{{ $strings | jsonify }}">
+  <label for="site-search-input" class="site-search-label">{{ i18n "searchLabel" }}</label>
+  <svg class="site-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+  <input id="site-search-input" type="search" autocomplete="off" spellcheck="false"
+         class="site-search-input" placeholder="{{ i18n "searchPlaceholder" $count }}">
+  <kbd class="site-search-key" aria-hidden="true">/</kbd>
+</div>
+<div class="search-results" data-search-results hidden>
+  <p class="search-summary" role="status" aria-live="polite"></p>
+  <div class="post-listing" data-search-list></div>
+</div>
+{{/* Loaded from here rather than baseof.html: the script is inert without the
+     markup above, and only two pages carry it. */}}
+{{- with resources.Get "js/search.js" | minify | fingerprint }}
+<script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
+{{- end }}

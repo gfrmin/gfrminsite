@@ -3,7 +3,15 @@
   <h1>{{ .Title }}</h1>
   {{ .Content }}
 
-  <div class="post-listing">
+  {{/* The discovery furniture belongs to the posts index only. /research/ and
+       /contact/ also land here, and neither is a corpus to search or re-cut. */}}
+  {{- $isPosts := eq .Section "posts" }}
+  {{- if $isPosts }}
+  {{ partial "views-nav.html" . }}
+  {{ partial "search-box.html" (dict "hide" "[data-post-listing]") }}
+  {{- end }}
+
+  <div class="post-listing"{{ if $isPosts }} data-post-listing{{ end }}>
     {{ range .Pages.ByDate.Reverse }}
     {{ partial "post-card.html" (dict "post" . "level" 2 "full" true) }}
     {{ end }}

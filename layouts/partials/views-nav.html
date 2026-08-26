@@ -1,0 +1,21 @@
+{{/* The three ways into 37 posts, shown as a tab row on all three of them:
+     /posts/ is the full list with descriptions, /archive/ is every title by year,
+     /categories/ is the same corpus cut by subject.
+
+     English only. The archive does not exist in Hebrew — five translated posts,
+     all from one year, would make it a worse version of /he/posts/ — so rather
+     than show a tab row with two of its three links crossing back into English,
+     the Hebrew posts index keeps the search box and no tabs. */}}
+{{- if eq .Language.Lang "en" }}
+{{- $cur := .RelPermalink }}
+{{- $tabs := slice
+    (dict "url" (relLangURL "posts/")      "name" (i18n "viewList"))
+    (dict "url" (relLangURL "archive/")    "name" (i18n "viewArchive"))
+    (dict "url" (relLangURL "categories/") "name" (i18n "viewCategories")) }}
+<nav class="views-nav" aria-label="{{ i18n "viewsLabel" }}">
+  {{- range $tabs }}
+  {{- $on := eq $cur .url }}
+  <a href="{{ .url }}" class="view-tab{{ if $on }} view-tab-on{{ end }}"{{ if $on }} aria-current="page"{{ end }}>{{ .name }}</a>
+  {{- end }}
+</nav>
+{{- end }}

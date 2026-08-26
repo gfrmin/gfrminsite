@@ -98,3 +98,57 @@ other = "Browse Posts"
 
 [notFoundProjects]
 other = "View Projects"
+
+# --- Discovery: search, the archive, the view tabs ------------------------
+[viewsLabel]
+other = "Ways to browse"
+
+[viewList]
+other = "Full list"
+
+[viewArchive]
+other = "Archive"
+
+[viewCategories]
+other = "By category"
+
+[searchLabel]
+other = "Search posts"
+
+[searchPlaceholder]
+other = "Search {{ . }} posts…"
+
+[searchNoResults]
+other = "No posts match that."
+
+# `{n}` is a literal placeholder filled in by assets/js/search.js, which cannot
+# reach Go's plural machinery — hence two keys rather than one plural entry.
+[searchResultsOne]
+other = "1 result"
+
+[searchResultsMany]
+other = "{n} results"
+
+# The compact form, for rows that already carry a date: "9 min", not "9 min read".
+[readingTimeShort]
+other = "{{ . }} min"
+
+# --- Homepage: the curated entry point ------------------------------------
+[homeStartHere]
+other = "Start here"
+
+[homeStartHereLede]
+other = "Five essays that carry the argument. Not the newest — the ones worth reading first."
+
+# --- Projects, split by what a reader can do with them ---------------------
+[projectsUse]
+other = "Things you can use"
+
+[projectsUseLede]
+other = "Live and hosted. These open in a browser — nothing to check out or run."
+
+[projectsCode]
+other = "Code"
+
+[projectsCodeLede]
+other = "Repositories to read or run yourself."

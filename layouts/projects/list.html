@@ -1,9 +1,32 @@
+{{/* /projects/ split by what a reader can do with each entry, not by weight.
+
+     Thirteen rows in one undifferentiated list asked the reader to work out from
+     each description whether a thing was a website they could open or a repository
+     they would have to clone. `kind` in data/projects.yaml answers that up front. */}}
 {{ define "main" }}
 <main class="content {{ if eq .Language.Direction "rtl" }}rtl-content{{ end }}">
   <h1>{{ .Title }}</h1>
   {{ .Content }}
-  {{ range sort hugo.Data.projects "weight" }}
-  {{ partial "project-row.html" (dict "project" . "level" 2) }}
+
+  {{- $all := sort hugo.Data.projects "weight" }}
+  {{- $use := where $all "kind" "use" }}
+  {{- $code := where $all "kind" "code" }}
+  {{/* A project with a missing or misspelt `kind` would appear in neither group and
+       vanish from the site without a trace. Fail the build instead. */}}
+  {{- if ne (add (len $use) (len $code)) (len $all) }}
+    {{- errorf "data/projects.yaml: %d of %d entries have no valid `kind` (use|code)" (sub (len $all) (add (len $use) (len $code))) (len $all) }}
+  {{- end }}
+
+  <h2>{{ i18n "projectsUse" }}</h2>
+  <p class="section-lede">{{ i18n "projectsUseLede" }}</p>
+  {{ range $use }}
+  {{ partial "project-row.html" (dict "project" . "level" 3) }}
+  {{ end }}
+
+  <h2>{{ i18n "projectsCode" }}</h2>
+  <p class="section-lede">{{ i18n "projectsCodeLede" }}</p>
+  {{ range $code }}
+  {{ partial "project-row.html" (dict "project" . "level" 3) }}
   {{ end }}
 </main>
 {{ end }}

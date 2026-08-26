@@ -1,13 +1,19 @@
-# Single source of truth for projects.
-# Rendered by layouts/partials/project-card.html into:
-#   - the homepage (layouts/index.html): `hero: true` -> big feature; `featured: true` -> grid
-#   - /projects/ (layouts/projects/list.html): all entries, ordered by `weight`
+# Single source of truth for projects. Rendered into:
+#   - the homepage (layouts/index.html): `hero: true` -> a full-width project-row;
+#     `featured: true` -> the project-card grid beneath it
+#   - /projects/ (layouts/projects/list.html): every entry as a project-row, in two
+#     groups by `kind`, each group ordered by `weight`
+# `kind` splits /projects/ into what a reader can DO with each entry: `use` is live
+# and hosted (opens in a browser), `code` is a repository to read or run. Every
+# entry needs one — projects/list.html fails the build if the two groups do not
+# add up to the whole file, because a typo would otherwise drop a project silently.
 # Omit `image` to render a text-only card (a top accent rule, no empty image well).
 # `alt: ""` marks a decorative image — five of these are generated gradient title cards
 # showing only the project name, so describing them would just repeat the heading.
 # English-only: there is no Hebrew projects data, so the homepage grid is skipped on /he/.
 
 - title: "Kana Derivation Chart"
+  kind: "use"
   url: "https://kana.gfrm.in"
   image: "/images/kana.png"
   alt: "Kana derivation chart showing hiragana and katakana with their source kanji"
@@ -17,6 +23,7 @@
   hero: false
 
 - title: "proplang"
+  kind: "code"
   url: "https://github.com/gfrmin/proplang"
   description: "A small language built on one claim: an adaptive Bayesian decision-theoretic agent needs no adaptation machinery. If hypotheses are programs and the prior is 2^-|program| under a grammar, then adaptivity, bounded rationality, and inductive bias stop being modules and become posterior dynamics — so the alphabet of the language is the prior, and the design method is to delete every terminal whose removal costs no capability. Ten terminals survived an executed deletion audit; one failed its own proof and is recorded as a standing bug rather than quietly kept. The repository is a closed, frozen artifact: the acceptance tests were written and cryptographically signed before any implementation existed, and the reference implementation and its Haskell port were built against that frozen oracle by an agent that could not change the tests. Python and Haskell."
   weight: 15
@@ -24,6 +31,7 @@
   hero: true
 
 - title: "Credence"
+  kind: "code"
   url: "https://github.com/gfrmin/credence"
   description: "A Bayesian agent framework that treats tool selection as a decision problem rather than a prompt-engineering one. It keeps a Beta posterior over each tool's reliability and, before every call, computes the expected value of the information that call would buy — acting only when the expected utility justifies it. On a tool-use benchmark it scored +112 against LangChain ReAct's -8 while answering fewer questions correctly: the accuracy paradox, where knowing more answers is not the same as knowing which answers are worth finding. The predecessor to proplang, which cornered its foundation. Python, NumPy, and SciPy."
   weight: 20
@@ -31,6 +39,7 @@
   hero: false
 
 - title: "life-agent"
+  kind: "code"
   url: "https://github.com/gfrmin/life-agent"
   description: "The composition root for a personal life-management agent — an assistant that remembers your whole digital life, reasons under uncertainty, and acts across your tools. It reinvents nothing: every capability is wired in as an MCP server, so memory (pkm), the Bayesian governor (credence-pi), the agent runtime (pi-mono), and GTD tasks (jarvis-lite) compose into a single application, leaving the interface a swappable detail. Ask a question and it answers from your own corpus, with citations — and nothing personal ever enters the repo. TypeScript over a polyglot TS/Python/Julia stack."
   weight: 22
@@ -38,6 +47,7 @@
   hero: false
 
 - title: "credence-pi"
+  kind: "code"
   url: "https://github.com/gfrmin/credence/tree/master/apps/credence-pi"
   description: "A Bayesian governance layer that decides which of a coding agent's tool calls to allow, block, or pause for human approval — and learns where the line sits from the agent's own behaviour. The design splits into a body and a brain: a TypeScript body hooks the agent's tool_call event and reports a handful of declared features, while a Julia brain holds a Beta posterior over P(approve) and chooses an action by expected value of information, so asking the human wins exactly when the uncertainty is worth the interruption. The wire between them carries only observations and named actions, leaving the brain free to grow more sophisticated without the body ever needing to change. Julia (BDSL) and TypeScript."
   weight: 25
@@ -45,6 +55,7 @@
   hero: false
 
 - title: "pkm"
+  kind: "code"
   url: "https://github.com/gfrmin/life-agent/tree/master/src/pkm"
   description: "A content-addressed extraction cache and catalogue for personal knowledge management. It ingests documents, routes each through a format-appropriate extractor — pandoc, docling, unstructured — and writes the results to an append-only content-addressed store indexed by DuckDB. Cache keys are derived deterministically from the input hash and the producer's name, version, and config, so re-running is a no-op and every artifact stays reproducible and reconstructible. Python; the retrieval substrate beneath life-agent, now developed inside the life-agent monorepo as src/pkm."
   weight: 27
@@ -52,6 +63,7 @@
   hero: false
 
 - title: "docaviv+"
+  kind: "use"
   url: "https://docavivplus.gfrm.in"
   image: "/images/docavivplus.png"
   alt: "docaviv+ home page showing upcoming festival screenings"
@@ -61,6 +73,7 @@
   hero: false
 
 - title: "accessinfo.hk"
+  kind: "use"
   url: "https://accessinfo.hk"
   image: "/images/accessinfo-hk.png"
   alt: ""
@@ -70,6 +83,7 @@
   hero: false
 
 - title: "Webb Data"
+  kind: "use"
   url: "https://webbsite.renavon.com"
   image: "/images/webb-data.png"
   alt: ""
@@ -79,6 +93,7 @@
   hero: false
 
 - title: "Scalibur"
+  kind: "code"
   url: "https://github.com/gfrmin/scalibur"
   image: "/images/scalibur.png"
   alt: "The Scalibur dashboard: current weight and body-fat percentage above a weight trend chart and a table of logged weigh-ins"
@@ -88,6 +103,7 @@
   hero: false
 
 - title: "Jarvis Lite"
+  kind: "code"
   url: "https://github.com/gfrmin/jarvis-lite"
   image: "/images/jarvis-lite.png"
   alt: ""
@@ -97,6 +113,7 @@
   hero: false
 
 - title: "GTD Lite Bot"
+  kind: "use"
   url: "https://t.me/gtdlitebot"
   image: "/images/gtd-lite-bot.png"
   alt: ""
@@ -106,6 +123,7 @@
   hero: false
 
 - title: "bayesian-agent"
+  kind: "code"
   url: "https://github.com/gfrmin/bayesian-agent"
   image: "/images/bayesian-agent.png"
   alt: ""

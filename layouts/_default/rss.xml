@@ -15,7 +15,9 @@
     <link>{{ .Permalink }}</link>
     <description>{{ $desc }}</description>
     <generator>Hugo</generator>
-    {{- with .Site.Language.LanguageCode }}
+    {{/* .LanguageCode was deprecated in Hugo 0.158; .Locale emits the same
+         "en"/"he" here, because neither language sets a `languageCode`. */}}
+    {{- with .Site.Language.Locale }}
     <language>{{ . }}</language>
     {{- end }}
     {{- with $pages }}

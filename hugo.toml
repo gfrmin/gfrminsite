@@ -116,13 +116,23 @@ defaultContentLanguage = "en"
         inline = [['\(', '\)']]
 
 [outputs]
-  home = ["HTML", "RSS"]
+  # SearchIndex is the client-side search corpus (layouts/index.searchindex.json),
+  # emitted once per language at /search-index.json and /he/search-index.json.
+  home = ["HTML", "RSS", "SearchIndex"]
   section = ["HTML", "RSS"]
 
 [outputFormats]
   [outputFormats.RSS]
     mediaType = "application/rss+xml"
     baseName = "index"
+
+  [outputFormats.SearchIndex]
+    mediaType = "application/json"
+    baseName = "search-index"
+    isPlainText = true
+    # Without this, baseof.html's `range .AlternativeOutputFormats` would advertise
+    # the corpus to feed readers as a <link rel="alternate"> beside the RSS one.
+    notAlternative = true
 
 [minify]
   [minify.tdewolff]

@@ -21,6 +21,22 @@
   {{- end }}
   <div class="featured-project-content">
     {{ $open }}<a href="{{ $p.url }}" target="_blank" rel="noopener">{{ $p.title }}</a>{{ $close }}
+    {{/* Where the link actually goes. On /projects/ the two groups are "things you
+         can use" and "code", and the destination is the difference between them —
+         a host says "this opens", `owner/repo` says "this is a checkout". Derived
+         rather than stored: a second field would be one more thing to keep true. */}}
+    {{- $u := urls.Parse $p.url }}
+    {{- $where := $u.Host }}
+    {{- $path := strings.TrimSuffix "/" (strings.TrimPrefix "/" $u.Path) }}
+    {{- if eq $u.Host "github.com" }}
+      {{- $where = delimit (first 2 (split $path "/")) "/" }}
+    {{- else if $path }}
+      {{- $where = printf "%s/%s" $u.Host $path }}
+    {{- end }}
+    {{/* accessinfo.hk is named after its domain; printing it twice says nothing. */}}
+    {{- if ne (lower $where) (lower $p.title) }}
+    <p class="project-host">{{ $where }}</p>
+    {{- end }}
     <p>{{ if $clip }}{{ $p.description | truncate $clip }}{{ else }}{{ $p.description }}{{ end }}</p>
   </div>
 </div>

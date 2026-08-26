@@ -1,0 +1,38 @@
+{{- /* The search corpus, one file per language (see [outputs] in hugo.toml).
+
+       It is fetched lazily by assets/js/search.js on the first keystroke, never on
+       page load, so it costs nothing to a reader who does not search. Everything is
+       built into one map and handed to `jsonify` rather than printed field by field:
+       the titles carry quotes, dollar signs and em-dashes, and hand-written JSON
+       would be one apostrophe away from a corpus that silently fails to parse.
+
+       Body text is capped. The whole of 37 essays is a megabyte of prose; the cap
+       keeps the corpus small enough to fetch on a phone while still reaching well
+       past the fold of every post. */ -}}
+{{- $limit := 4000 -}}
+{{- $posts := slice -}}
+{{- range (where site.RegularPages "Section" "posts").ByDate.Reverse -}}
+  {{- $cats := slice -}}
+  {{- range .Params.categories -}}
+    {{- $term := site.GetPage (printf "/categories/%s" (urlize .)) -}}
+    {{- $cats = $cats | append (cond (ne $term nil) $term.Title .) -}}
+  {{- end -}}
+  {{- $series := "" -}}
+  {{- with .Params.series -}}
+    {{- with site.GetPage (printf "/series/%s" (index . 0)) -}}{{- $series = .Title -}}{{- end -}}
+  {{- end -}}
+  {{/* .Plain strips tags but leaves entities encoded, so the body arrived as
+       "the classics &mdash; using the" and the snippets showed it. */}}
+  {{- $body := .Plain | htmlUnescape | replaceRE `\s+` " " -}}
+  {{- $posts = $posts | append (dict
+      "u" .RelPermalink
+      "t" .Title
+      "d" (or .Description "")
+      "b" (substr $body 0 $limit)
+      "c" $cats
+      "s" $series
+      "n" (.Date.Format "2006-01-02")
+      "dm" (.Date | time.Format ":date_medium")
+      "r" .ReadingTime) -}}
+{{- end -}}
+{{- dict "posts" $posts | jsonify -}}

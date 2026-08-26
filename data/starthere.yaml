@@ -1,0 +1,44 @@
+# The curated entry point, rendered by layouts/partials/start-here.html into the
+# homepage between "What I Do" and "Series".
+#
+# This is the one hand-curated list on the site: everything else — series nav,
+# related posts, the archive, the category counts — is generated. The point is a
+# path through 37 posts for a reader who has never been here, so it is ordered by
+# what to read first, NOT by date. Five is the ceiling; a "start here" list of ten
+# is just the posts index again.
+#
+# `path` is a Hugo page path and is resolved with site.GetPage — a typo fails the
+# build rather than rendering a dead row. `why` is the reason to read it, in the
+# second person if it helps; it is prose, not a summary, and the post's own
+# description is already shown on every listing card.
+# `label` is optional and overrides the post title for this list only.
+
+- path: /posts/the-alphabet-is-the-prior
+  why: >-
+    The claim the current research rests on. If hypotheses are programs, every
+    terminal you admit into the language costs a bit against every hypothesis
+    that uses it — so the alphabet is the prior, and design becomes deletion.
+
+- path: /posts/accuracy-paradox
+  why: >-
+    A Bayesian agent answered fewer questions correctly than a ReAct baseline and
+    beat it by 120 points. Knowing more answers is not the same as knowing which
+    answers are worth finding.
+
+- path: /posts/signed-before-the-code-existed
+  why: >-
+    The acceptance tests were written, hashed and signed before a line of the
+    implementation existed, then handed to a coding agent that could not change
+    them. What happens when the oracle is frozen first.
+
+- path: /posts/credence-paper
+  why: >-
+    A result I announced and then killed. Three framings, three measurements that
+    finished each one off, and the narrower claim that survived — including why
+    the paper never went to arXiv.
+
+- path: /posts/velotix-investigation
+  why: >-
+    Not research. A five-part investigation into a $30M Israeli cyber startup,
+    its founder, and the paperwork. Start at Part 1; the series nav carries you
+    to the rest.

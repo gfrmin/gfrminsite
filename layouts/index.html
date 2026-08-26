@@ -24,6 +24,15 @@
     {{ .Content }}
   </div>
 
+  {{/* The curated entry point. English only: data/starthere.yaml carries English
+       reasons, and five posts of the Hebrew site are the Velotix series, which the
+       series block below already presents as a sequence. */}}
+  {{ if eq .Language.Lang "en" }}
+  <h2>{{ i18n "homeStartHere" }}</h2>
+  <p class="section-lede">{{ i18n "homeStartHereLede" }}</p>
+  {{ partial "start-here.html" . }}
+  {{ end }}
+
   {{ with site.GetPage "/series" }}
   <h2>{{ i18n "homeSeries" }}</h2>
   <ul class="home-series">

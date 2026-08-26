@@ -98,3 +98,58 @@ other = "עיון ברשומות"
 
 [notFoundProjects]
 other = "לפרויקטים"
+
+# --- Discovery: search, the archive, the view tabs ------------------------
+# The tab row and the archive are English-only (see views-nav.html), so only the
+# search strings below are ever rendered in Hebrew. The rest are kept so the two
+# files stay key-for-key identical — a missing key falls back to English silently,
+# which is the failure this pair of files exists to prevent.
+[viewsLabel]
+other = "דרכי עיון"
+
+[viewList]
+other = "רשימה מלאה"
+
+[viewArchive]
+other = "ארכיון"
+
+[viewCategories]
+other = "לפי קטגוריה"
+
+[searchLabel]
+other = "חיפוש ברשומות"
+
+[searchPlaceholder]
+other = "חיפוש ב־{{ . }} רשומות…"
+
+[searchNoResults]
+other = "לא נמצאו רשומות מתאימות."
+
+[searchResultsOne]
+other = "תוצאה אחת"
+
+[searchResultsMany]
+other = "{n} תוצאות"
+
+[readingTimeShort]
+other = "{{ . }} דק׳"
+
+# --- Homepage: the curated entry point ------------------------------------
+[homeStartHere]
+other = "מכאן מתחילים"
+
+[homeStartHereLede]
+other = "חמש רשומות שנושאות את הטיעון. לא החדשות ביותר — אלה שכדאי לקרוא ראשונות."
+
+# --- Projects, split by what a reader can do with them ---------------------
+[projectsUse]
+other = "מה שאפשר להשתמש בו"
+
+[projectsUseLede]
+other = "חי ומאוחסן — נפתח בדפדפן, בלי להוריד או להריץ דבר."
+
+[projectsCode]
+other = "קוד"
+
+[projectsCodeLede]
+other = "מאגרים לקריאה או להרצה עצמית."

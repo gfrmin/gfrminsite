@@ -374,8 +374,14 @@ p {
 .contact-form label,
 .contact-form input,
 .contact-form textarea,
-.contact-form button {
-  font-family: var(--font-ui);
+.contact-form button,
+.view-tab,
+.site-search-input,
+.site-search-key,
+.search-summary,
+.archive-meta,
+.archive-year-count,
+.project-host {
 }
 
 /* ============================================
@@ -894,6 +900,9 @@ html:lang(he) .footer-container {
 .metadata {
   display: flex;
   flex-wrap: wrap;
+  /* Baseline, not the flex default: a row can now hold a 13px date beside a 12px
+     uppercase series name, and stretch would leave them sitting on two lines. */
+  align-items: baseline;
   gap: var(--space-md);
   font-size: var(--fs-meta);
   color: var(--text-muted);
@@ -1871,15 +1880,16 @@ blockquote p:last-child {
   list-style: none;
   padding: 0;
   margin: var(--space-lg) 0 0;
+  /* 260, not 220: each row now carries a bar between the name and the count. */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: var(--space-sm) var(--space-lg);
 }
 
 .term-cloud-item {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 64px auto;
+  align-items: center;
   gap: var(--space-sm);
   padding: var(--space-xs) 0;
   border-bottom: 1px solid var(--border-subtle);
@@ -1975,4 +1985,336 @@ blockquote p:last-child {
 .nav-lang:hover {
   border-color: var(--border-strong);
   color: var(--brand-primary);
+}
+
+/* ============================================
+   DISCOVERY
+   ============================================ */
+/* Five surfaces that exist to answer "where do I start" and "is there a post
+   about X" without asking the reader to scroll ten screens of cards: the curated
+   band on the homepage, the tab row, the year archive, client-side search, and
+   the proportion bars on the category index.
+
+   Nothing here introduces a colour, a size or a line-height that is not already
+   in the scale, and the ochre does the structural work as it does elsewhere. */
+
+/* A single line under a section heading, saying what the section is for. Pulled
+   up because the h2 already leaves a gap below its rule. */
+.section-lede {
+  color: var(--text-secondary);
+  font-size: var(--fs-small);
+  margin: calc(var(--space-md) * -1) 0 var(--space-lg);
+}
+
+/* --- Start here (homepage) --------------------------------------------- */
+/* An <ol>, numbered by counter rather than by ::marker: the number sits in its
+   own grid column beside the title, which a marker cannot do. */
+.start-here {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: start-here;
+}
+
+.start-here-item {
+  counter-increment: start-here;
+  display: grid;
+  /* Grid tracks follow `direction`, so the numeral moves to the right in Hebrew
+     with no paired rule. Same for every other flex and grid row in this section. */
+  grid-template-columns: 2.75rem 1fr;
+  gap: var(--space-md);
+  padding: var(--space-lg) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.start-here-item:last-child {
+  border-bottom: none;
+}
+
+.start-here-item::before {
+  content: counter(start-here, decimal-leading-zero);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  /* Ochre, at full strength. The mockup faded the teal to 50%, which would have
+     put the one piece of numeric structure on the page under the contrast floor. */
+  color: var(--brand-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* `main li a` underlines every link inside a list item, which is right for prose
+   and wrong for a card title — the post cards elsewhere on the site carry none. */
+.start-here-item .listing-title a {
+  text-decoration: none;
+}
+
+.start-here-why {
+  color: var(--text-secondary);
+  font-size: var(--fs-small);
+  line-height: var(--lh-snug);
+  margin: 0 0 var(--space-sm);
+}
+
+/* The series a pick belongs to, as a third metadata item. Takes the same leading
+   middot as the reading time so the row reads as one sequence. */
+.meta-series {
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.meta-series::before {
+  content: '\00b7';
+  margin-inline-end: var(--space-md);
+}
+
+/* --- The tab row (/posts/, /archive/, /categories/) --------------------- */
+.views-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin: var(--space-lg) 0;
+}
+
+.view-tab {
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  padding: var(--space-xs) var(--space-md);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.view-tab:hover {
+  color: var(--brand-primary);
+  border-color: var(--border-strong);
+  text-decoration: none;
+}
+
+/* --text-inverse is white on the light theme and the page ground on the dark
+   one, so the filled tab stays legible in both without a second rule. */
+.view-tab-on,
+.view-tab-on:hover {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: var(--text-inverse);
+}
+
+/* --- Search ------------------------------------------------------------- */
+/* Ships with the `hidden` attribute and is revealed by assets/js/search.js.
+
+   These two rules are load-bearing, not belt-and-braces: `[hidden] {display:none}`
+   lives in the UA stylesheet, and ANY author `display` beats a UA rule whatever the
+   specificity — so `.site-search {display:flex}` alone would have shown the box to a
+   reader with no JavaScript, which is exactly the dead control the `hidden` attribute
+   exists to prevent. */
+.site-search[hidden],
+.search-results[hidden] {
+  display: none;
+}
+
+.site-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-code);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  margin: 0 0 var(--space-lg);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.site-search:focus-within {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px rgba(var(--brand-primary-rgb), 0.15);
+}
+
+/* The label is real and read aloud; only its box is removed. */
+.site-search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.site-search-icon {
+  flex: none;
+  color: var(--text-muted);
+}
+
+.site-search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: var(--fs-small);
+  color: var(--text-primary);
+}
+
+.site-search-input:focus {
+  /* The ring is on the container, which is what the reader sees as the control. */
+  outline: none;
+}
+
+.site-search-input::placeholder {
+  /* --text-muted, the usual colour for a hint, measures 4.42:1 against --bg-code
+     on the light theme — under AA, and a placeholder is text. --text-secondary
+     clears it at 5.2 and still reads dimmer than the --text-primary a reader
+     types over it (12.2). `opacity: 1` because Firefox dims placeholders by
+     default, which would put it back under the floor. */
+  color: var(--text-secondary);
+  opacity: 1;
+}
+
+.site-search-key {
+  flex: none;
+  margin-inline-start: auto;
+  font-size: var(--fs-micro);
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.4rem;
+}
+
+.search-summary {
+  font-size: var(--fs-meta);
+  color: var(--text-muted);
+  margin: 0 0 var(--space-sm);
+}
+
+.search-results mark {
+  background: rgba(var(--brand-primary-rgb), 0.18);
+  color: inherit;
+  padding: 0 0.1em;
+  border-radius: var(--radius-sm);
+}
+
+/* --- The year archive --------------------------------------------------- */
+/* The year keeps the global h2 treatment — the ochre rule is what separates one
+   year from the next — and the count rides along on the same baseline. */
+.archive-year-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-md);
+}
+
+.archive-year-count {
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.archive-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.archive-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.archive-list li:last-child {
+  border-bottom: none;
+}
+
+/* Ink, not teal: a page that is nothing but links would otherwise be a wall of
+   it. The affordance comes from the site's standard subtle underline, inherited
+   from `main li a` — which is why there is no `text-decoration: none` here. */
+.archive-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: var(--lh-snug);
+}
+
+.archive-title:hover {
+  color: var(--brand-primary);
+}
+
+.archive-meta {
+  display: inline-flex;
+  gap: var(--space-sm);
+  flex: none;
+  font-size: var(--fs-meta);
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tighter than the 1rem the middot carries in a post card's metadata row: this
+   line is two items wide, not a paragraph. */
+.archive-meta .reading-time::before {
+  margin-inline-end: var(--space-sm);
+}
+
+/* --- Category index: proportion bars ------------------------------------ */
+.term-cloud-bar {
+  display: block;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--bg-code);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+/* A block box narrower than its container sits at the start edge, which
+   `direction` already flips — so the bar fills from the right in Hebrew. */
+.term-cloud-bar > span {
+  display: block;
+  height: 100%;
+  background: var(--brand-secondary);
+}
+
+/* --- Projects: where the link goes -------------------------------------- */
+.project-host {
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  color: var(--text-muted);
+  /* Overrides `.featured-project p`, which is prose spacing. */
+  margin: 0 0 var(--space-sm);
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 767.98px) {
+  /* A keyboard hint on a device with no keyboard. */
+  .site-search-key {
+    display: none;
+  }
+
+  .archive-list li {
+    display: grid;
+    gap: var(--space-xs);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .site-search-input {
+    /* 16px absolute, for the same reason as the contact form: iOS Safari zooms
+       the viewport when a focused control is under 16px. Off the scale on
+       purpose — see the note in the mobile typography block above. */
+    font-size: 16px;
+  }
+
+  .start-here-item {
+    grid-template-columns: 2rem 1fr;
+    gap: var(--space-sm);
+  }
 }

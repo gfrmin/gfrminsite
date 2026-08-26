@@ -1,0 +1,41 @@
+{{/* Every post, by year. Reached from the tab row on /posts/, and the one listing
+     on the site that fits on a screen or two — the post cards on /posts/ run to
+     roughly ten screens, which is fine for browsing and useless for finding.
+
+     Selected by `layout: archive` in content/archive.md. English only; see the
+     note in views-nav.html. */}}
+{{ define "main" }}
+<main class="content">
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+
+  {{ partial "views-nav.html" . }}
+  {{ partial "search-box.html" (dict "hide" "[data-archive]") }}
+
+  <div data-archive>
+    {{- range (where site.RegularPages "Section" "posts").GroupByDate "2006" }}
+    <section>
+      <h2 class="archive-year-head">
+        {{ .Key }}
+        <span class="archive-year-count">{{ i18n "seriesPostCount" (len .Pages) }}</span>
+      </h2>
+      <ul class="archive-list">
+        {{- range .Pages }}
+        <li>
+          <a href="{{ .RelPermalink }}" class="archive-title">{{ .Title }}</a>
+          <span class="archive-meta">
+            {{/* A literal Go layout prints English month names, which is why the
+                 rest of the site uses `:date_medium`. Here the year is already the
+                 heading, so repeating it in every row is noise — and this page is
+                 English-only, so the usual reason for the rule does not apply. */}}
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2" }}</time>
+            <span class="reading-time">{{ i18n "readingTimeShort" .ReadingTime }}</span>
+          </span>
+        </li>
+        {{- end }}
+      </ul>
+    </section>
+    {{- end }}
+  </div>
+</main>
+{{ end }}

@@ -1,14 +1,28 @@
 {{/* Index of terms (e.g. /categories/). Terms are not posts: show counts, not
-     reading times. Ordered by how much has actually been written under each. */}}
+     reading times. Ordered by how much has actually been written under each.
+
+     Each row carries a bar scaled against the largest term, because a column of
+     numbers does not answer the question a reader actually has here — which of
+     these fifteen labels is the site mostly about. The mockup for this page also
+     carried a font-size-weighted tag cloud above the list; it was dropped as a
+     second drawing of the same data, and the bars are the more legible one. */}}
 {{ define "main" }}
 <main class="content {{ if eq .Language.Direction "rtl" }}rtl-content{{ end }}">
   <h1>{{ .Title }}</h1>
   {{ .Content }}
 
+  {{ if eq .Data.Plural "categories" }}{{ partial "views-nav.html" . }}{{ end }}
+
+  {{- $terms := .Data.Terms.ByCount }}
+  {{- $max := 1 }}
+  {{- with $terms }}{{ $max = (index . 0).Count }}{{ end }}
   <ul class="term-cloud">
-    {{ range .Data.Terms.ByCount }}
+    {{ range $terms }}
     <li class="term-cloud-item">
       <a href="{{ .Page.RelPermalink }}" class="term-cloud-link">{{ .Page.Title }}</a>
+      <span class="term-cloud-bar" aria-hidden="true">
+        <span style="{{ printf "width:%.0f%%" (div (mul 100.0 .Count) $max) | safeCSS }}"></span>
+      </span>
       <span class="term-cloud-count">{{ i18n "categoryPostCount" .Count }}</span>
     </li>
     {{ end }}

@@ -1,0 +1,33 @@
+{{/* The curated entry point: five posts, ordered by what to read first.
+
+     Everything else that lists posts on this site is generated — the series nav,
+     related posts, the archive, the category counts. This one is hand-picked, and
+     the picks and their reasons live in data/starthere.yaml so the whole list is
+     one file to reorder or rewrite.
+
+     `site.GetPage` resolves each path, and a path that resolves to nothing stops
+     the build: a curated list that silently drops a row is worse than no list. */}}
+{{- $picks := hugo.Data.starthere }}
+{{- with $picks }}
+<ol class="start-here">
+  {{- range . }}
+  {{- $p := site.GetPage .path }}
+  {{- if not $p }}{{ errorf "data/starthere.yaml: no page at %q" .path }}{{ end }}
+  <li class="start-here-item">
+    <div class="start-here-body">
+      <h3 class="listing-title"><a href="{{ $p.RelPermalink }}">{{ default $p.Title .label }}</a></h3>
+      <p class="start-here-why">{{ .why }}</p>
+      <div class="metadata">
+        <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date | time.Format ":date_medium" }}</time>
+        <span class="reading-time">{{ i18n "readingTime" $p.ReadingTime }}</span>
+        {{- with $p.Params.series }}
+        {{- with site.GetPage (printf "/series/%s" (index . 0)) }}
+        <span class="meta-series">{{ .Title }}</span>
+        {{- end }}
+        {{- end }}
+      </div>
+    </div>
+  </li>
+  {{- end }}
+</ol>
+{{- end }}
