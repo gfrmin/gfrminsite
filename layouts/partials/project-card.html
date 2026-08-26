@@ -11,7 +11,7 @@
   </a>
   {{- end }}
   <div class="project-card-body">
-    <h3><a href="{{ $p.url }}" target="_blank" rel="noopener">{{ $p.title }}</a></h3>
+    <h2 class="project-card-title"><a href="{{ $p.url }}" target="_blank" rel="noopener">{{ $p.title }}</a></h2>
     <p>{{ if $clip }}{{ $p.description | truncate $clip }}{{ else }}{{ $p.description }}{{ end }}</p>
   </div>
 </div>

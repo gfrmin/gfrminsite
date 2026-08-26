@@ -13,7 +13,7 @@
       </a>
       {{ end }}
       <div class="post-card-body">
-        <h3 class="listing-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        <h2 class="listing-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
         {{ with .Description }}<p class="listing-description">{{ . | truncate 160 }}</p>{{ end }}
         <div class="metadata">
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>

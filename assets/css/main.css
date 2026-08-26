@@ -488,17 +488,17 @@ main li a:hover {
   padding: var(--space-lg);
 }
 
-.project-card h3 {
+.project-card-title {
   margin: 0 0 var(--space-sm);
   font-size: 1.2rem;
 }
 
-.project-card h3 a {
+.project-card-title a {
   color: var(--brand-primary);
   text-decoration: none;
 }
 
-.project-card h3 a:hover {
+.project-card-title a:hover {
   color: var(--brand-primary-hover);
 }
 
@@ -1333,6 +1333,9 @@ blockquote p:last-child {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-xl);
+  /* Descriptions vary from two lines to two hundred words, so stretched cards drew
+     a large empty box beside every long one. Cards take their natural height. */
+  align-items: start;
 }
 
 .project-grid > .project-card {
@@ -1720,7 +1723,11 @@ blockquote p:last-child {
 }
 
 /* The global h2 rule adds a 4rem top margin and an underline, which is right
-   for headings inside prose and wrong for headings used as list furniture. */
+   for headings inside prose and wrong for headings used as list furniture.
+   Card titles on /posts/ and /projects/ are h2 so those pages do not skip from
+   h1 straight to h3, which puts them in scope of that rule too. */
+.listing-title,
+.project-card-title,
 .series-listing-item .listing-title,
 .related-posts-title,
 .series-index-title,
