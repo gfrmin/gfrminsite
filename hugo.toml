@@ -25,6 +25,11 @@ defaultContentLanguage = "en"
     weight = 2
     direction = "rtl"
     title = "גיא פרימן"
+    # Per-language params override the shared [params] block. Without this the
+    # Hebrew pages fell back to the English bio for their meta description, and
+    # the Hebrew RSS channel described itself in English.
+    [languages.he.params]
+      description = "גיא פרימן — סטטיסטיקאי בייסיאני וחוקר למידת מכונה, עוסק בארכיטקטורה עקרונית של סוכני בינה מלאכותית. דוקטורט בסטטיסטיקה (וורוויק). מעל 1,750 ציטוטים."
 
 # The Hugo version is pinned so local builds and CI produce identical output.
 # Single source of truth is `.hugo-version`, which the publish workflow reads and
