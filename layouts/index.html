@@ -24,32 +24,6 @@
     {{ .Content }}
   </div>
 
-  {{/* data/projects.yaml is English-only, so the grid is skipped rather than
-       served as a block of English inside the Hebrew page. */}}
-  {{ if eq .Language.Lang "en" }}
-  <h2>{{ i18n "homeProjects" }}</h2>
-  {{ range where hugo.Data.projects "hero" true }}
-  {{/* The two-column grid needs something in the second column; a hero entry with no
-       image gets a single-column variant rather than half an empty card. */}}
-  <div class="featured-project{{ if not .image }} featured-project-textonly{{ end }}">
-    {{ with .image }}
-    <div class="featured-project-image"><img src="{{ . }}" alt="{{ $.alt }}" loading="lazy" decoding="async"></div>
-    {{ end }}
-    <div class="featured-project-content">
-      <h3>{{ .title }}</h3>
-      <p>{{ .description | truncate 420 }}</p>
-      <a href="{{ .url }}" target="_blank" rel="noopener" class="featured-project-link">{{ i18n "viewOnGitHub" }} {{ $fwd | safeHTML }}</a>
-    </div>
-  </div>
-  {{ end }}
-  <div class="project-grid">
-    {{ range sort (where hugo.Data.projects "featured" true) "weight" }}
-    {{ partial "project-card.html" (dict "project" . "clip" 200 "level" 3) }}
-    {{ end }}
-  </div>
-  <a href="{{ "projects/" | relURL }}" class="cta-pill">{{ i18n "seeAllProjects" }} {{ $fwd | safeHTML }}</a>
-  {{ end }}
-
   {{ with site.GetPage "/series" }}
   <h2>{{ i18n "homeSeries" }}</h2>
   <ul class="home-series">
@@ -70,5 +44,20 @@
     {{ end }}
   </div>
   <a href="{{ "posts/" | relURL }}" class="cta-pill">{{ i18n "seeAllPosts" }} {{ $fwd | safeHTML }}</a>
+
+  {{/* data/projects.yaml is English-only, so the grid is skipped rather than
+       served as a block of English inside the Hebrew page. */}}
+  {{ if eq .Language.Lang "en" }}
+  <h2>{{ i18n "homeProjects" }}</h2>
+  {{ range where hugo.Data.projects "hero" true }}
+  {{ partial "project-row.html" (dict "project" . "clip" 420 "level" 3) }}
+  {{ end }}
+  <div class="project-grid">
+    {{ range sort (where hugo.Data.projects "featured" true) "weight" }}
+    {{ partial "project-card.html" (dict "project" . "clip" 200 "level" 3) }}
+    {{ end }}
+  </div>
+  <a href="{{ "projects/" | relURL }}" class="cta-pill">{{ i18n "seeAllProjects" }} {{ $fwd | safeHTML }}</a>
+  {{ end }}
 </main>
 {{ end }}

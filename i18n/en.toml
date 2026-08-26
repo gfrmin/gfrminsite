@@ -74,10 +74,6 @@ other = "See all series"
 [seeAllPosts]
 other = "See all posts"
 
-[viewOnGitHub]
-other = "View on GitHub"
-
-# --- Sharing -------------------------------------------------------------
 [shareLabel]
 other = "Share:"
 

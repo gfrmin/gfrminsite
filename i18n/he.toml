@@ -74,10 +74,6 @@ other = "לכל הסדרות"
 [seeAllPosts]
 other = "לכל הרשומות"
 
-[viewOnGitHub]
-other = "לצפייה ב-GitHub"
-
-# --- Sharing -------------------------------------------------------------
 [shareLabel]
 other = "שיתוף:"
 

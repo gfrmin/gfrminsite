@@ -1,0 +1,26 @@
+{{/* One project as a full-width row: screenshot beside the prose, or prose alone at a
+     68ch measure when there is no image. Used by /projects/, where the descriptions run
+     from two lines to two hundred words and a two-column card grid left half the page
+     ragged. The homepage keeps the grid, with the same descriptions clipped.
+
+     One link per row, on the title — the same reasoning as post-card.html. A separate
+     "View on GitHub" CTA would be a second link to the same URL, and it would be a lie
+     for the five entries that are not on GitHub. */}}
+{{- $p := .project }}
+{{- $level := default 2 .level }}
+{{- $clip := default 0 .clip }}
+{{/* Go's contextual autoescaping turns `<h{{ $level }}` into a literal `&lt;h2`, so the
+     tags are built as complete strings and marked safe. */}}
+{{- $open := printf `<h%d class="featured-project-title">` $level | safeHTML }}
+{{- $close := printf "</h%d>" $level | safeHTML }}
+<div class="featured-project{{ if not $p.image }} featured-project-textonly{{ end }}">
+  {{- with $p.image }}
+  {{/* An empty alt is deliberate: five of these are generated gradient title cards that
+       show only the project name, which the heading beside them already says. */}}
+  <div class="featured-project-image"><img src="{{ . }}" alt="{{ $p.alt }}" loading="lazy" decoding="async"></div>
+  {{- end }}
+  <div class="featured-project-content">
+    {{ $open }}<a href="{{ $p.url }}" target="_blank" rel="noopener">{{ $p.title }}</a>{{ $close }}
+    <p>{{ if $clip }}{{ $p.description | truncate $clip }}{{ else }}{{ $p.description }}{{ end }}</p>
+  </div>
+</div>

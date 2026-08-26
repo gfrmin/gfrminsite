@@ -623,7 +623,10 @@ html:lang(he) .footer-container {
   overflow: hidden;
   margin: var(--space-xl) 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* Not 1fr 1fr: the prose is the point, and an even split left it at roughly 45
+     characters a line inside an 800px container. A capped thumbnail column gives
+     the text a ~65-character measure and keeps every screenshot the same size. */
+  grid-template-columns: minmax(0, 280px) 1fr;
   gap: 0;
 }
 
@@ -631,6 +634,9 @@ html:lang(he) .footer-container {
   aspect-ratio: 16 / 10;
   overflow: hidden;
   background: var(--bg-code);
+  /* Descriptions are far taller than a 16:10 thumbnail; centring beats pinning it
+     to the top and leaving a column of dead space underneath. */
+  align-self: center;
 }
 
 .featured-project-image img {
@@ -646,9 +652,21 @@ html:lang(he) .footer-container {
   justify-content: center;
 }
 
+/* h3 on the homepage (under the page <h1> and a section <h2>), h2 on /projects/
+   (under the page <h1>). Same treatment either way. */
+.featured-project h2,
 .featured-project h3 {
   margin: 0 0 var(--space-sm);
   font-size: 1.5rem;
+}
+
+.featured-project-title a {
+  color: var(--brand-primary);
+  text-decoration: none;
+}
+
+.featured-project-title a:hover {
+  color: var(--brand-primary-hover);
 }
 
 .featured-project p {
@@ -656,21 +674,12 @@ html:lang(he) .footer-container {
   margin-bottom: var(--space-md);
 }
 
-.featured-project-link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-sm);
-  font-weight: 600;
-  color: var(--brand-primary);
-}
-
-.featured-project-link:hover {
-  gap: var(--space-md);
-}
-
-/* A hero entry with no image would otherwise leave the second column empty. */
+/* Most entries have no screenshot; those rows drop to a single column. */
 .featured-project-textonly {
   grid-template-columns: 1fr;
+  /* Marks the variant the way .project-card-textonly does, so a row with no
+     screenshot reads as a choice rather than as a missing image. */
+  border-top: 3px solid var(--brand-primary);
 }
 
 .featured-project-textonly .featured-project-content {
