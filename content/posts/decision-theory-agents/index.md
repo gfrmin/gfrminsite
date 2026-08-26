@@ -238,3 +238,7 @@ There is also the matter of composability. The Bayesian agent treats each tool q
 And perhaps the most interesting open question: whether principled decision theory and the flexibility of language models are complementary rather than competing approaches. A hybrid that uses Bayesian VOI to decide *whether* to call a tool, and an LLM to interpret the response, might combine the strengths of both without inheriting the worst habits of either. I haven't built it yet, but the interfaces are clean enough that the attempt wouldn't require heroism.
 
 Code and full results: [github.com/gfrmin/credence](https://github.com/gfrmin/credence)
+
+{{< callout type="note" >}}
+**A later correction.** The scores in the table above came from a benchmark that gave the Bayesian agent each question's category as a perfect oracle while the LangChain agents had to infer it, so the gap between the families is measuring an asymmetry in the harness at least as much as a difference in the designs. Under a fairer re-run a frontier model wins on score, and a one-line greedy ablation with no VOI computation at all beats the full agent. The mechanism this post exists to explain --- Beta posteriors over tool reliability, VOI-gated querying, termination by construction --- is unaffected, and so is the within-LangChain finding that more elaborate prompting bought more queries rather than fewer. What fell is the ordering between the families. [The retrospective is here](/posts/credence-paper/).
+{{< /callout >}}
