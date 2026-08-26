@@ -1,0 +1,37 @@
+{{/* One post card, shared by /posts/ (list.html) and the homepage.
+
+     `level` sets the heading tag so the card nests under whatever heading precedes
+     it — h2 below a page <h1>, h3 below a section <h2>. The two call sites had
+     drifted apart on this and on the thumbnail markup, which is why it is a partial.
+
+     `full` adds the description and category chips (the listing pages want them;
+     the homepage's five recent posts deliberately stay title-and-date). */}}
+{{- $post := .post }}
+{{/* Go's contextual autoescaping turns `<{{ $h }}` into literal `&lt;h2`, so the
+     open and close tags are built as complete strings and marked safe. */}}
+{{- $h := printf "h%d" (default 2 .level) }}
+{{- $open := printf `<%s class="listing-title">` $h | safeHTML }}
+{{- $close := printf "</%s>" $h | safeHTML }}
+<article class="post-card">
+  {{- with $post.Params.image }}
+  {{/* The thumbnail links to the same place as the title beside it. Taking it out
+       of the tab order and the accessibility tree leaves one link per card rather
+       than two identical ones, and the alt would only repeat the heading. */}}
+  <a href="{{ $post.RelPermalink }}" class="post-card-image" tabindex="-1" aria-hidden="true">
+    <img src="{{ $post.RelPermalink }}{{ . }}" alt="" loading="lazy" decoding="async">
+  </a>
+  {{- end }}
+  <div class="post-card-body">
+    {{ $open }}<a href="{{ $post.RelPermalink }}">{{ $post.Title }}</a>{{ $close }}
+    {{- if .full }}{{ with $post.Description }}
+    <p class="listing-description">{{ . | truncate 160 }}</p>
+    {{- end }}{{ end }}
+    <div class="metadata">
+      <time datetime="{{ $post.Date.Format "2006-01-02" }}">{{ $post.Date | time.Format ":date_medium" }}</time>
+      <span class="reading-time">{{ i18n "readingTime" $post.ReadingTime }}</span>
+    </div>
+    {{- if .full }}
+    {{ partial "category-tags.html" $post }}
+    {{- end }}
+  </div>
+</article>

@@ -2,7 +2,10 @@
 # Rendered by layouts/partials/project-card.html into:
 #   - the homepage (layouts/index.html): `hero: true` -> big feature; `featured: true` -> grid
 #   - /projects/ (layouts/projects/list.html): all entries, ordered by `weight`
-# Omit `image` to render a placeholder card. English-only (no content/he tree yet).
+# Omit `image` to render a text-only card (a top accent rule, no empty image well).
+# `alt: ""` marks a decorative image — five of these are generated gradient title cards
+# showing only the project name, so describing them would just repeat the heading.
+# English-only: there is no Hebrew projects data, so the homepage grid is skipped on /he/.
 
 - title: "Kana Derivation Chart"
   url: "https://kana.gfrm.in"
@@ -60,7 +63,7 @@
 - title: "accessinfo.hk"
   url: "https://accessinfo.hk"
   image: "/images/accessinfo-hk.png"
-  alt: "accessinfo.hk screenshot"
+  alt: ""
   description: "Hong Kong's Freedom of Information platform: citizens file requests to government bodies and track the replies in the open. Every exchange stays on the public record, accreting a searchable archive of what officials will and won't disclose. Built on Alaveteli."
   weight: 40
   featured: true
@@ -69,7 +72,7 @@
 - title: "Webb Data"
   url: "https://webbsite.renavon.com"
   image: "/images/webb-data.png"
-  alt: "Webb Data screenshot"
+  alt: ""
   description: "An open archive of 35 years of Hong Kong corporate data — directors, board memberships, CCASS shareholdings, and company-registry filings — cross-linked so you can follow who sits on which boards and who owns what. Corporate transparency as a queryable dataset."
   weight: 50
   featured: true
@@ -78,7 +81,7 @@
 - title: "Scalibur"
   url: "https://github.com/gfrmin/scalibur"
   image: "/images/scalibur.png"
-  alt: "Scalibur screenshot"
+  alt: "The Scalibur dashboard: current weight and body-fat percentage above a weight trend chart and a table of logged weigh-ins"
   description: "A Python tool that frees your weight data from cheap Bluetooth bathroom scales. It reverse-engineers the BLE protocol, reads the raw impedance measurement, and derives the body-fat, muscle-mass, and metabolic figures the vendor app keeps behind its own walls — built to sit on a Raspberry Pi and log every weigh-in automatically."
   weight: 60
   featured: false
@@ -87,7 +90,7 @@
 - title: "Jarvis Lite"
   url: "https://github.com/gfrmin/jarvis-lite"
   image: "/images/jarvis-lite.png"
-  alt: "Jarvis Lite screenshot"
+  alt: ""
   description: "A Getting Things Done bot for Telegram that accepts tasks in plain language. Claude Haiku reads the intent, PostgreSQL holds the list, and APScheduler sends a daily digest by email. Self-hostable, with nothing to install."
   weight: 70
   featured: false
@@ -96,7 +99,7 @@
 - title: "GTD Lite Bot"
   url: "https://t.me/gtdlitebot"
   image: "/images/gtd-lite-bot.png"
-  alt: "GTD Lite Bot screenshot"
+  alt: ""
   description: "A live, hosted instance of Jarvis Lite — open it in Telegram and try it without deploying anything yourself."
   weight: 80
   featured: false
@@ -105,7 +108,7 @@
 - title: "bayesian-agent"
   url: "https://github.com/gfrmin/bayesian-agent"
   image: "/images/bayesian-agent.png"
-  alt: "bayesian-agent screenshot"
+  alt: ""
   description: "A simulation framework for agents that learn to navigate an unknown environment by reasoning about their own uncertainty. It pairs Bayesian inference with Thompson sampling to balance exploration against exploitation — a compact demonstration of online probabilistic learning."
   weight: 90
   featured: false

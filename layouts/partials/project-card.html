@@ -1,17 +1,27 @@
 {{- /* Renders one project card. The context is either a data/projects.yaml entry, or a
-       dict {"project": <entry>, "clip": <int>} to truncate the description — grid cards
-       clip, /projects/ shows the entry in full. Entries with no `image` render as a
+       dict {"project": <entry>, "clip": <int>, "level": <int>} — grid cards clip the
+       description, /projects/ shows it in full, and `level` sets the heading tag so the
+       card nests under whatever heading precedes it. Entries with no `image` render as a
        text-only card: an empty image well reads as a broken image, not as a choice. */ -}}
-{{- $p := . }}{{ $clip := 0 }}
-{{- with .project }}{{ $p = . }}{{ $clip = $.clip }}{{ end }}
+{{- $p := . }}{{ $clip := 0 }}{{ $level := 2 }}
+{{- with .project }}{{ $p = . }}{{ $clip = $.clip }}{{ with $.level }}{{ $level = . }}{{ end }}{{ end }}
+{{/* Built as whole strings: Go's autoescaping would render `<{{ $h }}` as `&lt;h2`. */}}
+{{- $open := printf `<h%d class="project-card-title">` $level | safeHTML }}
+{{- $close := printf "</h%d>" $level | safeHTML }}
 <div class="project-card{{ if not $p.image }} project-card-textonly{{ end }}">
   {{- with $p.image }}
-  <a href="{{ $p.url }}" target="_blank" rel="noopener">
+  {{/* Five of these images are generated gradient cards showing only the project name
+       (alt: "" in data/projects.yaml). Those add nothing beside the title link, so the
+       whole anchor leaves the tab order and the accessibility tree rather than becoming
+       a second, unnamed link to the same URL. The real screenshots keep their alt, which
+       both names the link and describes the image, so they stay exposed. */}}
+  {{- $decorative := not $p.alt }}
+  <a href="{{ $p.url }}" target="_blank" rel="noopener"{{ if $decorative }} tabindex="-1" aria-hidden="true"{{ end }}>
     <div class="project-card-image"><img src="{{ . }}" alt="{{ $p.alt }}" loading="lazy" decoding="async"></div>
   </a>
   {{- end }}
   <div class="project-card-body">
-    <h2 class="project-card-title"><a href="{{ $p.url }}" target="_blank" rel="noopener">{{ $p.title }}</a></h2>
+    {{ $open }}<a href="{{ $p.url }}" target="_blank" rel="noopener">{{ $p.title }}</a>{{ $close }}
     <p>{{ if $clip }}{{ $p.description | truncate $clip }}{{ else }}{{ $p.description }}{{ end }}</p>
   </div>
 </div>

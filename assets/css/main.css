@@ -509,32 +509,14 @@ main li a:hover {
   line-height: 1.6;
 }
 
-/* Tech tags */
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-top: var(--space-md);
-}
+/* `.project-tags`/`.project-tag` used to live here. No template or data file ever
+   emitted them — data/projects.yaml has no tag field — so they were dead.
 
-.project-tag {
-  background: var(--bg-code);
-  color: var(--text-secondary);
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-full);
-  font-size: 0.8rem;
-  font-weight: 500;
-  border: 1px solid var(--border-subtle);
-}
-
-/* Legacy project card support (existing divs) */
-.project-card:not(:has(.project-card-image)) {
-  padding: var(--space-lg);
-}
-
-.project-card:not(:has(.project-card-image)) h3 {
-  margin-top: 0;
-}
+   A `.project-card:not(:has(.project-card-image))` pair lived here too, selecting
+   exactly the same cards as `.project-card-textonly` above. One of its two rules
+   added `padding: var(--space-lg)` to the card on top of the same padding already
+   on `.project-card-body`, double-padding every text-only card; the other zeroed
+   `margin-top` on an `h3` that `.project-card-title` already handles. Both gone. */
 
 /* ============================================
    WHAT I DO SECTION (Service Cards)

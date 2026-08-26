@@ -38,13 +38,13 @@
     <div class="featured-project-content">
       <h3>{{ .title }}</h3>
       <p>{{ .description | truncate 420 }}</p>
-      <a href="{{ .url }}" target="_blank" rel="noopener" class="featured-project-link">{{ i18n "viewOnGitHub" }} &rarr;</a>
+      <a href="{{ .url }}" target="_blank" rel="noopener" class="featured-project-link">{{ i18n "viewOnGitHub" }} {{ $fwd | safeHTML }}</a>
     </div>
   </div>
   {{ end }}
   <div class="project-grid">
     {{ range sort (where hugo.Data.projects "featured" true) "weight" }}
-    {{ partial "project-card.html" (dict "project" . "clip" 200) }}
+    {{ partial "project-card.html" (dict "project" . "clip" 200 "level" 3) }}
     {{ end }}
   </div>
   <a href="{{ "projects/" | relURL }}" class="cta-pill">{{ i18n "seeAllProjects" }} {{ $fwd | safeHTML }}</a>
@@ -66,21 +66,7 @@
   <h2>{{ i18n "homeRecentPosts" }}</h2>
   <div class="post-listing">
     {{ range ((where .Site.RegularPages "Section" "posts").ByDate.Reverse | first 5) }}
-    {{ $post := . }}
-    <article class="post-card">
-      {{ with .Params.image }}
-      <a href="{{ $post.RelPermalink }}" class="post-card-image">
-        <img src="{{ $post.RelPermalink }}{{ . }}" alt="{{ $post.Title }}" loading="lazy">
-      </a>
-      {{ end }}
-      <div class="post-card-body">
-        <h3 class="listing-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-        <div class="metadata">
-          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
-          <span class="reading-time">{{ i18n "readingTime" .ReadingTime }}</span>
-        </div>
-      </div>
-    </article>
+    {{ partial "post-card.html" (dict "post" . "level" 3) }}
     {{ end }}
   </div>
   <a href="{{ "posts/" | relURL }}" class="cta-pill">{{ i18n "seeAllPosts" }} {{ $fwd | safeHTML }}</a>
