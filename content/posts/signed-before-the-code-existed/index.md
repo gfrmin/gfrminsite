@@ -3,8 +3,7 @@ title: "Signed Before the Code Existed"
 subtitle: "A green test suite proves nothing about foundations. So the acceptance tests were written and cryptographically signed before a line of the implementation existed, and handed to the coding agent already failing red --- tests it could not see the answers to, and could not edit to pass."
 description: "The frozen-oracle protocol under which a language was built by a coding agent: the acceptance tests were authored and signed before any code, then handed off compiling-but-failing-red, so the agent could not fit the implementation to checks it was allowed to change. Seven build gates it could not open, a two-key custody chain in which the builder is the agent itself, a machine-checked byte-for-byte audit of the original brief --- and, at the end, the one blind spot a cage cannot cover: it can forbid what gets written, but it cannot by itself keep a test falsifiable."
 author: "Guy Freeman"
-date: 2026-07-10
-draft: true
+date: 2026-07-30
 categories: [ai, essays, bayesian]
 ---
 

@@ -1,16 +1,17 @@
 ---
 title: "The Agent That Prefers to Be Wrong"
-subtitle: "How uncertainty about user preferences produces corrigibility, without safety training"
-description: "The off-switch theorem says that an agent uncertain about what the user wants will prefer to defer rather than act unilaterally. This is not a design choice. It follows from expected utility maximisation under a prior over user preferences. It is an axiom."
+subtitle: "How uncertainty about user preferences produces corrigibility without any safety training --- and why that corrigibility expires at exactly the moment the learning succeeds"
+description: "The off-switch theorem says an agent uncertain about what the user wants will prefer to defer rather than act unilaterally. That is not a design choice --- it follows from expected utility maximisation under a prior over user preferences. This is also the third of proplang's three named residues, the pointer: whose utility is the agent serving? And it carries a consequence the project records against itself. Corrigibility earned this way vanishes at convergence, because a posterior that has concentrated no longer pays for deference. The theorem is not repealed; it is satisfied, and returns zero."
 author: "Guy Freeman"
-date: 2026-04-01
-draft: true
+date: 2026-07-26
 categories: [essays, bayesian, machine-learning, ai]
 ---
 
 The dominant approach to AI alignment involves training. You train a model to be helpful, then train it to be harmless, then apply some form of reinforcement learning from human feedback to bring it closer to what humans want. The result is a system that behaves well, usually, when it behaves in ways resembling its training distribution. What it does in novel situations is harder to predict.
 
-There is an alternative approach. Instead of training alignment in, you derive it from an axiom. The [Credence architecture](/posts/three-types/) takes this approach, and the result is worth examining carefully because the implications are not obvious until you work through the mathematics.
+There is an alternative approach. Instead of training alignment in, you derive it from an axiom. The result is worth working through carefully, because the implications are not obvious until you do the mathematics --- and because the last of them undoes the first.
+
+This is also the third of the three residues. [proplang](https://github.com/gfrmin/proplang), the language the rest of these essays are about, names three things its grammar leans on and cannot itself express: the alphabet, the clock, and the pointer. The alphabet has had [its essay](/posts/the-alphabet-is-the-prior/) and the clock [its own](/posts/think-more-or-act-now/). The pointer is this one. It is the question of *whose* utility the agent is serving — which cannot be inferred from behaviour without first being pointed at a principal. proplang's committed answer is utility-as-latent, the construction below, inherited from the decision-theoretic predecessor [Credence](/posts/three-types/). I should say at the outset what the project says: this one is scoped to design, not implemented. The working tests supply utilities from the world rather than inferring them, which is the shallow end of the problem. What follows is an argument about what the axiom entails, and it ends where the project's own note ends — on the consequence that dissolves it.
 
 ## The Alignment Axiom
 
@@ -36,7 +37,7 @@ This is corrigibility without a corrigibility training objective. The agent pref
 
 The same mechanism that produces deference under uncertainty produces autonomy under confidence. When the posterior b(θ) has concentrated around the true value --- when many observations of user behaviour have consistently pointed in the same direction --- the expected value of further consultation is low. The agent's best estimate of the user's preferences is reliable enough that acting on it produces better outcomes than waiting.
 
-This transition between consultative and autonomous behaviour does not require a threshold to be tuned or a flag to be set. It emerges continuously from the posterior dynamics. As the agent accumulates evidence, the posterior narrows. As the posterior narrows, VOI of human input falls. As VOI falls below the cost of consultation (in whatever units you are measuring cost), the agent stops asking.
+This transition between consultative and autonomous behaviour does not require a threshold to be tuned or a flag to be set. It emerges continuously from the posterior dynamics. As the agent accumulates evidence, the posterior narrows. As the posterior narrows, VOI of human input falls. As VOI falls below the cost of consultation (in whatever units you are measuring cost), the agent stops asking. That is the intended behaviour. It is also, as the closing section has to admit, the exact mechanism by which the safety property expires.
 
 This is, incidentally, the same mechanism that determines when the agent should query a tool in the QA benchmark. The decision to consult the human is structurally identical to the decision to query `knowledge_base`. Both are actions that cost something and return a signal that updates a posterior. The agent evaluates both using the same calculation: expected value of information versus cost. There is no separate "alignment module."
 
@@ -48,7 +49,7 @@ If the user's preferences change, the agent's existing programs start predicting
 
 This happens automatically. There is no change-detection algorithm running in the background. No flag is set when a regime change is detected. The posterior dynamics --- the same mechanism that drives all learning in the architecture --- handle it as a consequence of Bayesian updating. The agent's behaviour after a preference change is structurally indistinguishable from its behaviour at startup, which is correct: in both cases, it is uncertain about the user's objectives and should proceed cautiously.
 
-Shah, Krasheninnikov, Alexander, Abbeel, and Dragan (2020) proved a related result in their generalisation of CIRL into assistance games: the optimal strategy in any assistance game reduces to solving a POMDP where b(θ) is the sufficient statistic. The agent does not need to track the full history of observations, only the current posterior. This is why `condition` --- the single update function in [Credence's Tier 1](/posts/three-types/) --- is sufficient: it is the optimal update given the likelihood model, and the resulting posterior contains everything the agent needs.
+Shah, Krasheninnikov, Alexander, Abbeel, and Dragan (2020) proved a related result in their generalisation of CIRL into assistance games: the optimal strategy in any assistance game reduces to solving a POMDP where b(θ) is the sufficient statistic. The agent does not need to track the full history of observations, only the current posterior. This is why a single update verb --- `condition` in [Credence's Tier 1](/posts/three-types/), `cond` in its successor --- is sufficient: it is the optimal update given the likelihood model, and the resulting posterior contains everything the agent needs.
 
 ## The Preference Laundering Problem
 
@@ -67,3 +68,16 @@ It rules out exploration bonuses. An agent that adds a term to its utility funct
 It rules out separate safety layers. A Bayesian agent with an aligned utility function does not need a separate "safety classifier" checking its outputs. If the utility function is correctly specified, the agent will not take dangerous actions because dangerous actions have low expected utility. If the utility function is incorrectly specified, a safety classifier is unlikely to catch the failure modes that matter. The correct response to misspecification is to reduce uncertainty about the utility function, not to add a filter downstream.
 
 And it rules out the framing where alignment is a problem to be solved at training time and then fixed. Alignment in this architecture is a dynamic property of the posterior. It is maintained continuously as long as the agent is conditioning on observations of user behaviour. It degrades if the observations stop. The agent that does not receive feedback is not aligned; it is merely acting on a prior. This is the correct description of the situation. The training-time framing obscures it.
+## The Corrigibility That Expires
+
+Now the part I have been deferring, because it is the residue and not a footnote.
+
+Read the deference and autonomy sections back to back and the problem is visible without any further mathematics. Deference is preferred *because* b(θ) is diffuse: Δ > 0 exactly when the agent holds meaningful probability mass on actions turning out badly. Autonomy arrives *because* b(θ) has concentrated: the expected value of consulting has fallen below its cost. Those are the same sentence, read at two points in time. Which means the safety property is not a property of the architecture at all. It is a property of the agent's ignorance --- and ignorance is the one thing a working learner is guaranteed to spend.
+
+proplang records this against itself, in the design document, in the same breath as the design it is recommending: corrigibility earned this way vanishes at convergence, since a posterior over utility that has concentrated no longer pays for deference. Note what is *not* happening there. The off-switch theorem is not repealed at convergence; it is satisfied, and it returns Δ ≈ 0. The agent declines to defer correctly, by its own lights, for precisely the reason the theorem gave it to defer in the first place. The mechanism does not fail. It succeeds, and its success is the failure.
+
+Nor can you patch it with a floor on uncertainty --- a minimum entropy below which the agent must keep asking. That reintroduces the exact thing the approach exists to avoid: a tuned constant, parked where the agent cannot argue with it, asserting that the designer knows better than the posterior. It is the throttle from [the clock essay](/posts/think-more-or-act-now/), wearing a safety hat. And it would be a throttle on the one quantity you least want to lie about.
+
+So the honest position is narrower than the one I set out with, and I would rather state it than let the mathematics imply something stronger. Deference-while-uncertain is a theorem, and a theorem is worth more than a training objective --- not because it is stronger, but because it tells you the conditions under which it holds. This one states them plainly: it holds while the agent is uncertain about what you want. That makes it an argument for keeping the agent in genuine, continuing contact with evidence about your preferences, which is the same conclusion the preference-change section reached from the optimistic side. A world where your preferences keep moving is a world where the posterior keeps dispersing and the agent keeps deferring. Corrigibility, on this construction, survives on the assumption that you are never fully known.
+
+That is a strange thing for a safety property to rest on. It is better said out loud, here, than discovered later by an agent that has finished learning who you are.

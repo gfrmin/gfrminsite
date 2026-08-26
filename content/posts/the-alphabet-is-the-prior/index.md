@@ -3,8 +3,7 @@ title: "The Alphabet Is the Prior"
 subtitle: "Minimality as a correctness property, and the executed deletion audit that proves it"
 description: "In a language where hypotheses are programs, description length is the prior --- so every terminal you admit is a bit charged against every belief. Minimality stops being taste and becomes correctness, provable only by an audit that tries to delete each word and measures what capability leaves with it. The full accounting, including the one terminal that failed its own proof and was kept in the open."
 author: "Guy Freeman"
-date: 2026-07-10
-draft: true
+date: 2026-07-14
 categories: [bayesian, ai, essays, decision-theory]
 ---
 
@@ -73,4 +72,4 @@ It is worth one sharp comparison. Credence, the predecessor, froze four types an
 
 I will not oversell the universality, because the project does not. The dominance result is real but not total. Change the reference machine --- the terminal encoding itself --- and the Solomonoff prior shifts by at most a multiplicative constant. "At most a constant" is a strong guarantee and a genuinely comforting one, but the constant is real and finite, not zero. The alphabet is chosen. Running the deletion audit to its end erodes the arbitrariness of that choice, terminal by justified terminal, until very little discretion is left. It never reaches none.
 
-This is one of three irreducible residues the project names rather than hides --- the alphabet is one; the clock ([there is no forgetting](/posts/there-is-no-forgetting/)) and the pointer are the other two, each with its own essay. The honest position on the alphabet is not that it is canonical. It is that it is small, printed in full, and every entry carries an executed deletion proof. That is a weaker claim than canonicity and a much more defensible one. And the single entry whose proof failed is printed in full too, labelled as a bug --- which is the only version of the claim worth trusting, because it is the only version that could have caught itself being wrong.
+This is one of three irreducible residues the project names rather than hides --- the alphabet is one; the clock ([think more, or act now](/posts/think-more-or-act-now/)) and the pointer ([the agent that prefers to be wrong](/posts/alignment-axiom/)) are the other two, each with its own essay. The honest position on the alphabet is not that it is canonical. It is that it is small, printed in full, and every entry carries an executed deletion proof. That is a weaker claim than canonicity and a much more defensible one. And the single entry whose proof failed is printed in full too, labelled as a bug --- which is the only version of the claim worth trusting, because it is the only version that could have caught itself being wrong.

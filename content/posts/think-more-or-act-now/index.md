@@ -3,8 +3,7 @@ title: "Think More, or Act Now"
 subtitle: "Deciding how much to deliberate is just another decision --- and its regress has to terminate in the world's clock, not a threshold you tuned"
 description: "Rational metareasoning made honest. In a Bayesian agent language, think-more-or-act-now is one argmax, priced by the world's impatience rather than a hard-coded budget. Plus the experiment that demonstrates it only partly: two of four rows terminate in the clock, and the essay says which two --- and why the other two do not."
 author: "Guy Freeman"
-date: 2026-07-10
-draft: true
+date: 2026-07-22
 categories: [bayesian, ai, essays, decision-theory]
 ---
 
