@@ -1,5 +1,5 @@
 # The curated entry point, rendered by layouts/partials/start-here.html into the
-# homepage between "What I Do" and "Series".
+# homepage between "What I Do" and Series.
 #
 # This is the one hand-curated list on the site: everything else — series nav,
 # related posts, the archive, the category counts — is generated. The point is a
@@ -7,38 +7,47 @@
 # what to read first, NOT by date. Five is the ceiling; a "start here" list of ten
 # is just the posts index again.
 #
+# Order is deliberate: it opens with the piece that actually is the site's front
+# door — "Why We Stopped Using the Mathematics That Works" brought ~4,835 readers
+# from Hacker News, an order of magnitude more than anything else — and works
+# inward from there to the current research, ending on the investigation, which
+# is the one thing here that is not about agents at all. Do not reorder this by
+# date or by pageviews; the four research posts have almost no traffic because
+# they are new and unlinked, not because nobody wants them.
+#
 # `path` is a Hugo page path and is resolved with site.GetPage — a typo fails the
 # build rather than rendering a dead row. `why` is the reason to read it, in the
 # second person if it helps; it is prose, not a summary, and the post's own
 # description is already shown on every listing card.
 # `label` is optional and overrides the post title for this list only.
 
-- path: /posts/the-alphabet-is-the-prior
+- path: /posts/why-decision-theory-lost
   why: >-
-    The claim the current research rests on. If hypotheses are programs, every
-    terminal you admit into the language costs a bit against every hypothesis
-    that uses it — so the alphabet is the prior, and design becomes deletion.
+    Start here literally. The mathematics for making decisions under uncertainty
+    has existed since the 1960s and the field walked away from it — not after
+    weighing it against something better, but because ImageNet made a different
+    bet pay off and nobody looked back.
 
 - path: /posts/accuracy-paradox
   why: >-
-    A Bayesian agent answered fewer questions correctly than a ReAct baseline and
-    beat it by 120 points. Knowing more answers is not the same as knowing which
-    answers are worth finding.
+    What that mathematics buys once you put it in an agent: it answered fewer
+    questions correctly than a ReAct baseline and beat it by 120 points. Knowing
+    more answers is not the same as knowing which answers are worth finding.
+
+- path: /posts/the-alphabet-is-the-prior
+  why: >-
+    Where the research is now. If hypotheses are programs, every terminal you
+    admit into the language costs a bit against every hypothesis that uses it —
+    so the alphabet is the prior, and design becomes deletion.
 
 - path: /posts/signed-before-the-code-existed
   why: >-
-    The acceptance tests were written, hashed and signed before a line of the
-    implementation existed, then handed to a coding agent that could not change
-    them. What happens when the oracle is frozen first.
-
-- path: /posts/credence-paper
-  why: >-
-    A result I announced and then killed. Three framings, three measurements that
-    finished each one off, and the narrower claim that survived — including why
-    the paper never went to arXiv.
+    The same discipline pointed at coding agents. The acceptance tests were
+    written, hashed and signed before a line of the implementation existed, then
+    handed to an agent that could not change them.
 
 - path: /posts/velotix-investigation
   why: >-
-    Not research. A five-part investigation into a $30M Israeli cyber startup,
-    its founder, and the paperwork. Start at Part 1; the series nav carries you
-    to the rest.
+    Not research, and the other thing this site does. A five-part investigation
+    into a $30M Israeli cyber startup, its founder, and the paperwork. Start at
+    Part 1; the series nav carries you to the rest.

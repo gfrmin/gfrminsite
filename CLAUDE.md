@@ -18,10 +18,24 @@ Hugo-built page has ever carried. Removed Aug 2026. If you find a reference to
 anywhere, it is stale — the live site is entirely Hugo (`hugo.toml` plus the
 `layouts/` tree).
 
-The published domain comes from `static/CNAME` (`www.gfrm.in`), because the
-workflow uploads only `public/`. Note this disagrees with `baseURL` and every
-canonical, which say `gfrm.in`; it works because Cloudflare 301s www to the apex.
-Changing it is a live GitHub Pages action, not an edit.
+The published domain is the **apex**, `gfrm.in`, and everything now agrees on it:
+`baseURL`, every canonical, `static/CNAME`, and the custom-domain setting GitHub
+Pages actually holds (`gh api repos/gfrmin/gfrminsite/pages` → `cname: gfrm.in`,
+`protected_domain_state: verified`).
+
+`static/CNAME` used to say `www.gfrm.in`, and an earlier note here claimed that
+file was what published the domain. It is not: this repo deploys with
+`build_type: workflow`, where the custom domain lives in the repo setting and the
+CNAME file in the artifact is inert — proved by the setting reading `gfrm.in`
+through every deploy the www file was present for. So the file was a stale
+artifact served at `/CNAME`, and a live hazard rather than a harmless one: had
+anything ever applied it, the custom domain would have flipped to www and every
+canonical on the site would have pointed somewhere GitHub was no longer serving.
+Corrected to `gfrm.in` in Aug 2026.
+
+Cloudflare DNS (all proxied): `gfrm.in` CNAME → `gfrmin.github.io`, `www.gfrm.in`
+CNAME → `gfrm.in`. At the edge `www` 301s to the apex and `http` 301s to `https`,
+so every route lands on `https://gfrm.in/`.
 
 ## Common Commands
 
@@ -91,7 +105,15 @@ and *is there a post about X* without asking anyone to scroll ten screens of car
 
 **Start here** (homepage, between "What I Do" and Series) is the one hand-curated list on
 the site — the picks and the reason to read each one live in `data/starthere.yaml`, so the
-whole thing is one file to reorder or rewrite. `layouts/partials/start-here.html` resolves
+whole thing is one file to reorder or rewrite. It opens with
+`why-decision-theory-lost`, which is the site's actual front door: ~4,835 of the
+7,666 people who have visited since Feb 2026 arrived on it from Hacker News, an
+order of magnitude ahead of anything else. **Do not reorder the rest by pageviews.**
+The research posts below it have under 20 readers each because they are new and
+nothing links to them — unmeasured, not unpopular — and read-completion tells a
+different story again (HN traffic completes at ~0.2–5%, the Velotix series at
+15–37%). Analytics live in PostHog project **320861**, not the `POSTHOG_PROJECT_ID`
+in the keyring. `layouts/partials/start-here.html` resolves
 each `path` with `site.GetPage` and calls `errorf` when one does not resolve: a curated list
 that silently drops a row is worse than no list. Five is the ceiling — a "start here" of ten
 is the posts index again. English only; the Hebrew site is five Velotix posts, which the
