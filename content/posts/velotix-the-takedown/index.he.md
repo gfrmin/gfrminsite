@@ -8,6 +8,10 @@ date: 2026-05-19
 series: [velotix]
 series_order: 4
 draft: false
+build:
+  list: never
+  render: never
+  publishResources: false
 categories: [investigation, startups, israel, cyber, policy]
 ---
 

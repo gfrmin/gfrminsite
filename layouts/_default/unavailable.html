@@ -1,0 +1,15 @@
+{{/* A neutral placeholder served at the URL of a page that is temporarily not
+     published. It deliberately carries no title, subtitle, description, date,
+     categories, series nav, related posts, share buttons or schema — nothing
+     that would restate the content of the page it stands in for, and nothing
+     that explains why it is here. The explanation is the part that must not be
+     published. */}}
+{{ define "main" }}
+<main class="content {{ if eq .Language.Direction "rtl" }}rtl-content{{ end }}">
+  <article class="post">
+    <div class="post-body">
+      {{ .Content }}
+    </div>
+  </article>
+</main>
+{{ end }}

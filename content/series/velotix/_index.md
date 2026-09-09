@@ -1,6 +1,10 @@
 ---
 title: "The Velotix Files"
 description: "A five-part investigation into Velotix Ltd, an Israeli cybersecurity startup that marketed angel investments through an ISA-licensed crowdfunding platform while under government enforcement for not paying its employees — and what happened after Part 1 was published."
+build:
+  list: never
+  render: never
+  publishResources: false
 ---
 
 An investigation, in five parts, built on government enforcement findings, court filings, archived pages and public records.
