@@ -3,6 +3,9 @@ name: Publish to GitHub Pages
 on:
   push:
     branches: [master]
+  # Build every pull request too, so master can require a green build before a
+  # merge; only a push to master deploys.
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -10,8 +13,10 @@ permissions:
   pages: write
   id-token: write
 
+# A pull request builds in its own group: in the shared "pages" group a PR build
+# could replace a queued deploy, since a group keeps only one pending run.
 concurrency:
-  group: "pages"
+  group: ${{ github.event_name == 'pull_request' && format('pages-pr-{0}', github.ref) || 'pages' }}
   cancel-in-progress: false
 
 jobs:
@@ -50,6 +55,7 @@ jobs:
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
