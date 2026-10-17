@@ -1,12 +1,16 @@
 ---
 title: "The Alphabet Is the Prior"
 subtitle: "Minimality as a correctness property, and the executed deletion audit that proves it"
-description: "In a language where hypotheses are programs, description length is the prior --- so every terminal you admit is a bit charged against every belief. Minimality stops being taste and becomes correctness, provable only by an audit that tries to delete each word and measures what capability leaves with it. The full accounting, including the one terminal that failed its own proof and was kept in the open."
+description: "In a language where hypotheses are programs, description length is the prior --- so every terminal you admit is a bit charged against every belief. Minimality stops being taste and becomes correctness, provable only by an audit that tries to delete each word and measures what capability leaves with it. The full accounting, including the one terminal that failed its own proof and was kept in the open --- and, in the sequel, deleted after all."
 author: "Guy Freeman"
 date: 2026-07-10
 draft: true
 categories: [bayesian, ai, essays, decision-theory]
 ---
+
+{{< callout type="note" >}}
+The accounting below is the first close's (July 2026), and the table stands as it stood. Its sequel is the strongest evidence the method has produced: the language was later demolished and rebuilt under the same frozen oracle, the audit kept running, and most of these rows did not survive it --- including the one the audit could not justify. [What came next](#what-came-next) is at the end.
+{{< /callout >}}
 
 The [previous essay](/posts/make-it-unsayable/) in this series ended on an identity and left most of the bill unpaid. The identity: in a Bayesian agent language, **the alphabet is the prior**. The agent's hypotheses are programs. Its prior over a hypothesis is the description length of that program under the grammar --- Solomonoff's construction, in which a program of \(k\) bits receives prior probability \(2^{-k}\). This is not one prior among many. It is the unique prior that dominates every computable prior up to a multiplicative constant, which is as close to "the right answer" as inductive inference gets. And the length of a program is counted in the terminals of the language. So every terminal you admit into the alphabet is one bit charged against every hypothesis that uses it.
 
@@ -74,3 +78,13 @@ It is worth one sharp comparison. Credence, the predecessor, froze four types an
 I will not oversell the universality, because the project does not. The dominance result is real but not total. Change the reference machine --- the terminal encoding itself --- and the Solomonoff prior shifts by at most a multiplicative constant. "At most a constant" is a strong guarantee and a genuinely comforting one, but the constant is real and finite, not zero. The alphabet is chosen. Running the deletion audit to its end erodes the arbitrariness of that choice, terminal by justified terminal, until very little discretion is left. It never reaches none.
 
 This is one of three irreducible residues the project names rather than hides --- the alphabet is one; the clock ([there is no forgetting](/posts/there-is-no-forgetting/)) and the pointer are the other two, each with its own essay. The honest position on the alphabet is not that it is canonical. It is that it is small, printed in full, and every entry carries an executed deletion proof. That is a weaker claim than canonicity and a much more defensible one. And the single entry whose proof failed is printed in full too, labelled as a bug --- which is the only version of the claim worth trusting, because it is the only version that could have caught itself being wrong.
+
+## What came next
+
+The table above is the first close's accounting, and I have left it as it stood, because the sequel is the strongest evidence the method has produced: the audit kept running, and it collected.
+
+Days after this was drafted, a re-derivation of the original brief convicted the artifact of being a calculator rather than an agent, and the demolition that followed put most of the table's rows to death by their own criterion. `bern` went first --- the deletion its fixture proved possible became the deletion that happened. `rw` went with it, and drift did not become unsayable: it became a *sentence*, composed from the one production the rebuilt grammar keeps for kernels. `argmax` --- the row marked unutterable --- no longer exists as a terminal: in the rebuilt grammar, choice over a declared menu is an `if`/`>` sentence, and the door out of probability into action turned out to be sayable with less. `push` died as a grammar verb, with prediction staying sayable through an expectation binder. And `call`, the standing bug, the terminal kept on grounds the method explicitly rejects: deleted, at the ninth demolition step, along with the stdlib seam it had been retained to mark. The one entry that failed its deletion proof did not stay a failure in the ledger. The method came back for it.
+
+What survived is a grammar of nine expression productions and one kernel production, over exact rational arithmetic, and the discipline hardened as the alphabet shrank. Five value-of-information verbs admitted along the way had entered on argument alone, and removing them cost two demolition steps --- so a production now *enters* only through a two-sided gate: an executed, transcribed failure to compose it from the existing grammar, plus its ablation fixture, in the same increment. Demonstrated failure licenses the codeword; argument does not.
+
+The residue also acquired a sharper, measured edge. A declared grid does two things to the agent that holds it: it bounds achievable confidence at its extremes, and its posterior converges --- in the limit, on an exchangeable stream --- to the declared rung KL-nearest the truth, which can sit on the *permissive* side of a threshold the truth does not clear. That is a false clear that more evidence sharpens rather than repairs: the one error mode in the system that grows under data. It is now written into the project's law with a named heir (a support that grows with evidence) rather than dressed as a feature, and the general form is the doctrine in one line: declared structure is world data, priced in mention bits; hard-wired structure is a limitation with a named heir.
