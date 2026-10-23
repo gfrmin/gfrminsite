@@ -1,0 +1,50 @@
+# Guy Freeman
+
+> The personal site of Guy Freeman, a Bayesian statistician working on principled AI agent architecture: essays on decision theory, value of information and agents that know what they don't know, his research languages proplang and Credence, and the projects he has built.
+
+Most of the writing is about building agents whose behaviour follows from Bayesian decision theory rather than from prompt engineering, and about the discipline of building them with coding agents. Some posts are also available in Hebrew.
+
+## Main pages
+
+- [Home](https://gfrm.in/): who Guy Freeman is, what he works on, a curated start-here list, recent posts and featured projects
+- [Posts](https://gfrm.in/posts/): every essay, newest first
+- [Series](https://gfrm.in/series/): posts grouped into reading sequences
+- [Research](https://gfrm.in/research/): proplang, its predecessor Credence, and published work on chain event graphs and Bayesian event trees
+- [Projects](https://gfrm.in/projects/): research tools, open-source projects and civic tech
+- [Contact](https://gfrm.in/contact/): how to get in touch about research, roles or consulting
+- [RSS feed](https://gfrm.in/index.xml): the full post feed
+
+## Start here
+
+- [Why We Stopped Using the Mathematics That Works](https://gfrm.in/posts/why-decision-theory-lost/): why AI walked away from decision theory, and what that cost
+- [The Accuracy Paradox](https://gfrm.in/posts/accuracy-paradox/): a decision-theoretic agent that answers fewer questions correctly yet wins, and why accuracy misleads
+- [The Alphabet Is the Prior](https://gfrm.in/posts/the-alphabet-is-the-prior/): in a language where hypotheses are programs, every terminal is a bit charged against every belief, so design becomes deletion
+- [Signed Before the Code Existed](https://gfrm.in/posts/signed-before-the-code-existed/): the frozen-oracle protocol, with acceptance tests signed before any code and handed to an agent that could not change them
+
+## Series
+
+- [Agents from First Principles](https://gfrm.in/series/first-principles/): deriving agent behaviour from a few fundamentals
+- [proplang](https://gfrm.in/series/proplang/): the cornered language for Bayesian agents
+- [Credence](https://gfrm.in/series/credence/): value of information for tool-using LLM agents, and the retrospective that narrowed its claims
+- [The Tool-Call Governor](https://gfrm.in/series/tool-call-governor/): a Bayesian layer that decides which of a coding agent's tool calls to allow, block or ask about
+- [Disciplining the Coding Agent](https://gfrm.in/series/coding-agents/): specs, gates and custody chains for work done by coding agents
+
+## Notable posts
+
+- [The Ablation That Beat the Agent](https://gfrm.in/posts/credence-paper/): how a simple greedy ablation overturned Credence's headline, and what survived
+- [There Is No Forgetting](https://gfrm.in/posts/there-is-no-forgetting/): non-stationarity as content in the hypothesis space rather than a forgetting mechanism
+- [What You Cannot Say, You Cannot Get Wrong](https://gfrm.in/posts/make-it-unsayable/): making axiom violations unsayable in a Bayesian agent language
+- [The Agent That Prefers to Be Wrong](https://gfrm.in/posts/alignment-axiom/): the off-switch theorem as a consequence of expected utility under uncertainty about the user
+- [Think More, or Act Now](https://gfrm.in/posts/think-more-or-act-now/): rational metareasoning as a single argmax
+- [The Gate That Said No](https://gfrm.in/posts/the-gate-that-said-no/): a pre-committed adoption gate that refused a tool its author built
+- [The Bitter Lesson Has No Utility Function](https://gfrm.in/posts/bitter-lesson-missing-half/): what the Bitter Lesson leaves out
+- [Agentic AI Is Neither Intelligent Nor an Agent](https://gfrm.in/posts/agentic-ai/): a Bayesian agent against LangChain on a tool-use benchmark
+
+## Optional
+
+- [proplang on GitHub](https://github.com/gfrmin/proplang): the frozen research artifact, its design and reference implementation
+- [Credence on GitHub](https://github.com/gfrmin/credence): the decision-theoretic agent framework
+- [Kana Derivation Chart](https://kana.gfrm.in/): an interactive map of how hiragana and katakana grew out of kanji
+- [docaviv+](https://docavivplus.gfrm.in/): a phone-friendly guide to the Tel Aviv International Documentary Film Festival
+- [accessinfo.hk](https://accessinfo.hk/): Hong Kong's freedom of information request platform
+- [Google Scholar](https://scholar.google.com/citations?hl=en&user=H422hdkAAAAJ): Guy Freeman's published work
