@@ -8,7 +8,7 @@ draft: true
 categories: [essays, ai, bayesian, decision-theory]
 ---
 
-In March I wrote that [the Bitter Lesson has no utility function](/posts/bitter-lesson-missing-half/). I meant it as a point about frameworks: Rich Sutton's [essay](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) says general methods that leverage computation beat methods built on human knowledge, and says nothing about what the computation is for. I stand by that. I have since spent $285 and four days of agent time learning that it is also a point about me.
+In March I wrote that [the Bitter Lesson has no utility function](/posts/bitter-lesson-missing-half/). I meant it as a point about frameworks: Rich Sutton's [essay](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) says general methods that leverage computation beat methods built on human knowledge, and says nothing about what the computation is for. I stand by that. I have since spent $300 and five days of agent time learning that it is also a point about me.
 
 ## Fourteen briefs, one call
 
@@ -28,7 +28,7 @@ Two projects in a year, the same shape: the decision-theoretic machinery I argue
 
 ## What the lesson is about, and what it is not
 
-So what is Sutton actually claiming, and what did he leave out? He is precise, and his readers are not. The Bitter Lesson is a claim about *methods*: given an objective, data, and feedback, general methods that scale with compute beat the human's encoded knowledge of the domain. His second lesson, the one fewer people quote, extends it to the world model itself: do not build in space, objects, agents, symmetries; build meta-methods that discover them. ximenes confirmed both. My grammar of wordplay was encoded domain knowledge; one call beat it. The grid I so carefully handed over as crossing constraints turned out to be something the model reconciles perfectly well on its own: across seventy-six fresh grids it produced not one crossing conflict. Whether it needs to be *told* the grid at all is a measurement running as I write this, and I will add the number below when it lands.
+So what is Sutton actually claiming, and what did he leave out? He is precise, and his readers are not. The Bitter Lesson is a claim about *methods*: given an objective, data, and feedback, general methods that scale with compute beat the human's encoded knowledge of the domain. His second lesson, the one fewer people quote, extends it to the world model itself: do not build in space, objects, agents, symmetries; build meta-methods that discover them. ximenes confirmed both. My grammar of wordplay was encoded domain knowledge; one call beat it. The grid I so carefully handed over as crossing constraints turned out to be something the model reconciles perfectly well on its own: across seventy-six fresh grids it produced not one crossing conflict. So the last brief took the grid away. Given the clues alone, told nothing about which squares cross, it filled twenty-five of thirty grids against twenty-four with the grid on the same puzzles --- no difference anyone should claim, on a paired test written in advance --- and its clue-by-clue answers disagreed on a shared letter in one grid of thirty. What the grid bought was thinking time: 28 cents a grid with it, 47 without. The world I was supplying was one the model already owned.
 
 But a learning system is a function of four inputs: an objective, a world to observe, outcomes arriving over time, and compute. Write it as \(V = f(\text{compute}, \text{data}, \text{objective}, \text{feedback})\). The Bitter Lesson says \(\partial V / \partial(\text{human knowledge}) \to 0\) as compute grows: our contribution to the *function* is swamped. It says nothing whatever about the inputs, and compute manufactures exactly one of them.
 
@@ -48,7 +48,9 @@ The first is calibration. In ximenes, the raw proposer's confidences were badly 
 
 The second is the decision of what to buy. Value of computation did not beat a heuristic in ximenes; it tied one. But the question it asks --- is this next call worth its price, and which measurement changes a decision --- is the question that eventually produced brief fifteen, and it is the only reason the project cost $285 rather than $2,850. The mathematics did not win the crossword. It told me when to stop building and measure, which is a different and more durable use for it.
 
-Here is the pattern I would offer anyone building around these models. **Measure the strongest simple baseline before you build anything**: the frontier model given the whole problem, allowed to think, with its cost. Then build only what it demonstrably lacks, in the order of measured value: the world it cannot see, the exactness it cannot hold, the calibration it cannot have, the loss it does not know. In ximenes the grid turned out to be something it could see, the letters something it could hold, and calibration the one thing it lacked.
+Here is the pattern I would offer anyone building around these models. **Measure the strongest simple baseline before you build anything**: the frontier model given the whole problem, allowed to think, with its cost. Then build only what it demonstrably lacks, in the order of measured value: the world it cannot see, the exactness it cannot hold, the calibration it cannot have, the loss it does not know. In ximenes the grid turned out to be a world it already had, the letters something it could hold, and calibration the one thing it lacked. A cryptic crossword's world is the English language and a century of setters' conventions, all of it in the training data. The lesson is not that supplying the world is worthless; it is that I chose a problem where there was no world to supply, and did not find out until brief eighteen.
+
+One more number from that last brief, because it reprices every small result above it. Two near-identical conditions --- the same call, with and without the grid --- disagreed on seven grids out of thirty for a net difference of one. The hybrid's one-grid gains in two separate runs sit comfortably inside that noise. I reported them as no claim at the time, by a rule written beforehand, and I am glad I did.
 
 ## Comparative standing
 
@@ -83,11 +85,6 @@ Take compute to infinity and see what is left of the function. It is undefined w
 So the asymptotic human share is not a skill the machines happen not to have yet. It is choosing objectives, owning observation, bearing outcomes, and being the one for whom any of it matters. Everything I built in ximenes that did not survive was an attempt to do the model's job better than the model. Everything that did survive was one of those four. I suspect that is general.
 
 I called the March essay *The Bitter Lesson Has No Utility Function*. The lesson for persons is the same sentence read the other way round: the utility function has no Bitter Lesson. Nobody is going to out-compute you at being the one whose loss it is.
-
-{{< callout type="note" >}}
-## Pending measurement
-Brief 018 of ximenes is running as this is published: the same direct call with the grid removed, clues only, paired against the with-grid result on the same puzzles. It decides whether supplying the world mattered even to a frontier model, or whether the grid was never doing much. The number and what it means will be added here.
-{{< /callout >}}
 
 ## Postscript: on process
 
