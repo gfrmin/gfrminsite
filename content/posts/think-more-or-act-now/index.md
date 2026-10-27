@@ -9,6 +9,10 @@ series_order: 4
 categories: [bayesian, ai, essays, decision-theory]
 ---
 
+{{< callout type="note" >}}
+This essay was drafted at proplang's first close (July 2026). The language has since been demolished and rebuilt twice under the same frozen oracle; the table below is a frozen anchor and still executes green against today's grammar. The [postscript](#what-came-next) records what moved --- including the reflexive limit at the end, which split in two under measurement.
+{{< /callout >}}
+
 Ask an engineer how long an agent should deliberate before it commits, and the answer usually arrives as a number. A maximum iteration count. A step budget. A wall-clock timeout. The deliberation loop runs until the counter is spent, and then the agent acts on whatever it happens to hold. The number is so ordinary that it rarely registers as a decision at all. It looks like plumbing --- the `while` had to stop somewhere, and this is where.
 
 But a cap on thinking is a claim about the world, made in the wrong place. Fix the budget at some number of steps and you have asserted, in advance and for every situation the agent will ever meet, that the step just past your cutoff is never worth its cost. That is a strong empirical statement about deadlines you have not yet faced, hard-coded as a constant. [The flagship essay in this series](/posts/make-it-unsayable/) describes a build gate that refuses to compile the engine if the word `throttle` appears anywhere in it, because a throttle is exactly this: a tuned scalar that stops the agent for reasons the mathematics did not supply. An iteration cap is a throttle wearing the costume of infrastructure. The agent is not deciding to stop thinking. The programmer decided, once, on its behalf, and wrote the decision into a place the agent cannot see or revise.
@@ -90,3 +94,11 @@ There is a boundary all of this runs into, and it deserves to be named as plainl
 And there is a limit past even that. The agent can quote its own deliberations, price them, and choose among them --- but it cannot say its own executor. The host loop that takes the chosen action, fires it into the world, and advances the clock is machinery the language cannot see. The argmax can rank act now against condition again; it cannot reach down and describe the hand that carries out the winner, or the tick that follows. That is the same reflexive-closure limit the flagship essay names about the verbs themselves --- the agent's self-model is real but not total --- and it is better stated than hidden.
 
 The bad answer to when should it stop thinking was a number in the code. The good answer is no number at all: an argmax over acting and deliberating, priced by a cost the world supplies, terminating when the world's impatience makes further thought a losing move. The experiment shows that answer working --- in two rows of four, with the other two honestly marked buffer-bound, and one of those resting on an approximation whose blind spot is written down where anyone can find it. That is less than a proof and more than a promise. The agent thinks exactly as long as thinking beats acting, the world decides what beats means, and where the mechanism does not yet reach, the map says so.
+
+## What came next
+
+A postscript. The table above is frozen --- 1, 3, 12, 12 is an anchor of the signed oracle --- and it still executes green today, though the language under it has been demolished and rebuilt twice since this was drafted. Two things moved that this essay should own.
+
+The verbs that priced thinking were deleted as primitives and re-derived as compositions of the smaller grammar that remained. There is no longer a `v_think` to call --- only a sentence that spells it --- so "VOI is not a primitive," which this essay reports as a stdlib convention, is now a fact of the grammar: the composition is the only way to say it.
+
+And the reflexive limit at the end split in two under measurement. The verbs' half was discharged: the deliberation composition turned out to be a sentence of the shipped grammar, the earlier "inexpressible" verdict a banked negative that expired when the alphabet moved beneath it --- the piece assumed missing had been in the language for weeks. The executor's half proved structural: the environment type has no term for the agent inside it, so the hand that carries out the winner remains, measurably, unsayable. The claim earned two rows of four then. The map is better now, and it still says where it stops.
