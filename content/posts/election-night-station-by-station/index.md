@@ -1,5 +1,6 @@
 ---
 title: "Station by Station"
+kicker: "Election night"
 subtitle: "On election night my live seat projection put an Arab party out of the Knesset that every exit poll had at seven seats. It wasn't a modelling mistake."
 description: "A live election projection on bechirot.fyi failed on the night of Israel's 26th Knesset election, 27–28 October 2026. The cause was not the model but the data: the Central Elections Committee's results file now lists a town only once it reports, and reports it as its polling stations come in, so the projection filled in nothing and treated half-counted cities as complete. The fix was first a refusal, then a rebuild at the level of the polling station."
 author: "Guy Freeman"
@@ -8,7 +9,7 @@ draft: false
 categories: [essays, bayesian, israel, data]
 ---
 
-*This post is about the live projection on election night, and why it failed. What the count showed by morning, polling place by polling place, is in [Polling Place by Polling Place](/posts/election-2026-polling-place-by-polling-place/).*
+*What the count showed by morning, polling place by polling place, is in [Polling Place by Polling Place](/posts/election-2026-polling-place-by-polling-place/).*
 
 At sixteen minutes past two in the morning, Israel time, [bechirot.fyi/live](https://bechirot.fyi/en/live) started showing the count of the election to the 26th Knesset. Above the count sat a seat projection: the 120 seats as they would fall once everything was counted. It put Likud on 31 and Ra'am, the United Arab List, below the electoral threshold, out of the Knesset.
 

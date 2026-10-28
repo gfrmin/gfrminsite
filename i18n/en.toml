@@ -96,6 +96,9 @@ other = "Back to Home"
 [notFoundPosts]
 other = "Browse Posts"
 
+[notFoundArchive]
+other = "Archive"
+
 [notFoundProjects]
 other = "View Projects"
 
@@ -117,6 +120,12 @@ other = "Search posts"
 
 [searchPlaceholder]
 other = "Search {{ . }} posts…"
+
+[searchLoadFailed]
+other = "Search could not load."
+
+[searchArchive]
+other = "Every post, by year, is in the archive."
 
 [searchNoResults]
 other = "No posts match that."
@@ -158,10 +167,10 @@ other = "Repositories to read or run yourself."
 other = "Time"
 
 [nightCounted]
-other = "In"
+other = "Counted"
 
 [nightAsCounted]
-other = "Raw"
+other = "So far"
 
 [nightTown]
 other = "Town"
@@ -175,11 +184,20 @@ other = "List"
 [nightExitPolls]
 other = "Exit polls"
 
+[nightBlocOrder]
+other = "Netanyahu / change / Arab"
+
+[nightBlocsName]
+other = "Seats by bloc, file by file"
+
+[nightListsName]
+other = "Seats by list, file of {{ .at }}"
+
 [nightBlocsCaption]
-other = "Seats for the Netanyahu bloc / the change bloc / the Arab lists. <em>In</em>: the share counted of the {{ .total }} valid votes the station projection expects by the end. <em>Raw</em>: the seats if counting had stopped there. <em>Town</em> and <em>station</em>: the two projections. The five exit polls averaged {{ .polls }}. Files up to {{ .at }}, Israel time."
+other = "Seats for the Netanyahu bloc / the change bloc / the Arab lists. <em>Counted</em>: the share counted of the {{ .total }} valid votes the station projection expects by the end. <em>So far</em>: the seats if counting had stopped there. <em>Town</em> and <em>station</em>: the two projections. The five exit polls averaged {{ .polls }}. Files up to {{ .at }}, Israel time."
 
 [nightListsCaption]
-other = "The file of {{ .at }}, {{ .votes }} valid votes counted. <em>Exit polls</em>: the range of the five. <em>Raw</em>: the seats if counting had stopped there. <em>Station</em>: the projection, with its 90% range in brackets where it has one."
+other = "The file of {{ .at }}, {{ .votes }} valid votes counted. <em>Exit polls</em>: the range of the five. <em>So far</em>: the seats if counting had stopped there. <em>Station</em>: the projection, with its 90% range in brackets where it has one: a bootstrap, and too narrow."
 
 [nightTownError]
 one = "The town projection's backtested error at this much counted is one seat a list either way."

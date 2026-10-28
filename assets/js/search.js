@@ -27,12 +27,14 @@
   var hideSel = box.getAttribute('data-search-hide');
   var hidden = hideSel ? document.querySelectorAll(hideSel) : [];
   var url = box.getAttribute('data-search-index');
+  var archive = box.getAttribute('data-search-archive');
 
-  var strings = { none: 'No matches.', one: '1 result', many: '{n} results', min: '{n} min' };
+  var strings = { none: 'No matches.', one: '1 result', many: '{n} results', min: '{n} min', failed: 'Search could not load.', archive: '' };
   try { strings = JSON.parse(box.getAttribute('data-search-strings')); } catch (e) { /* defaults */ }
 
   var corpus = null;
   var pending = null;
+  var failed = false;   /* a corpus that did not load is not an empty corpus */
 
   /* Latin combining marks only (U+0300-U+036F), so Hebrew points are untouched. */
   function fold(s) {
@@ -50,7 +52,7 @@
   function load() {
     if (pending) { return pending; }
     pending = fetch(url)
-      .then(function (r) { return r.ok ? r.json() : { posts: [] }; })
+      .then(function (r) { if (!r.ok) { throw new Error(r.status); } return r.json(); })
       .then(function (data) {
         corpus = (data.posts || []).map(function (p) {
           p._t = fold(p.t);
@@ -61,7 +63,7 @@
         });
         return corpus;
       })
-      .catch(function () { corpus = []; return corpus; });
+      .catch(function () { failed = true; pending = null; corpus = []; return corpus; });
     return pending;
   }
 
@@ -110,9 +112,19 @@
     /* The count is of everything that matched, not of what is drawn — a cap that
        silently rounds "31 results" down to the cap is a lie about the corpus. The
        cap is above the corpus size, so today it never bites. */
-    summary.textContent = found.length === 0 ? strings.none
+    summary.textContent = failed ? strings.failed
+      : found.length === 0 ? strings.none
       : found.length === 1 ? strings.one
       : strings.many.replace('{n}', found.length);
+    /* Nothing found, or nothing to search: point at the no-JS listing, where the
+       language has one (the archive is English-only). */
+    if (found.length === 0 && archive && strings.archive) {
+      var a = document.createElement('a');
+      a.href = archive;
+      a.textContent = strings.archive;
+      summary.appendChild(document.createTextNode(' '));
+      summary.appendChild(a);
+    }
 
     var hits = found.slice(0, 50);
 
@@ -141,6 +153,7 @@
       if (input.value.trim() !== query) { return; }   /* a later keystroke won */
       render(query);
       show(true);
+      failed = false;   /* the next query tries the fetch again */
     });
   }
 

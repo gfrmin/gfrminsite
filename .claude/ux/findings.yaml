@@ -13,10 +13,11 @@ findings:
   - id: 6d600aca71
     source: probe:first-screen
     sev: 3
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "#content > main.content > article.post > div.post-body > p:nth-of-type(12) > a spans y=7928..7952"
+    lock: probe:first-screen
   - id: dfa3e4d9dd
     source: probe:first-screen
     sev: 3
@@ -71,10 +72,11 @@ findings:
   - id: f3eaa835dd
     source: probe:first-screen
     sev: 3
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 1280
     evidence: "#content > main.content > article.post > div.post-body > p:nth-of-type(12) > a spans y=4501..4525"
+    lock: probe:first-screen
   - id: 6fdc4e450e
     source: probe:first-screen
     sev: 3
@@ -194,31 +196,35 @@ findings:
   - id: 08caa63c05
     source: probe:h-overflow
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/
     viewport: 360
     evidence: "document is 367px wide at a 360px viewport (+7px)"
+    lock: probe:h-overflow
   - id: 76473bf2ca
     source: probe:h-overflow
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/
     viewport: 360
     evidence: "document is 367px wide at a 360px viewport (+7px)"
+    lock: probe:h-overflow
   - id: 181bc6d830
     source: probe:h-overflow
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/
     viewport: 360
     evidence: "document is 367px wide at a 360px viewport (+7px)"
+    lock: probe:h-overflow
   - id: 66ab748ff1
     source: probe:h-overflow
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/
     viewport: 360
     evidence: "document is 367px wide at a 360px viewport (+7px)"
+    lock: probe:h-overflow
   - id: cnt-majority
     source: ux-critic
     also: [dataviz-critic]
@@ -248,10 +254,11 @@ findings:
     source: ux-critic
     also: [dataviz-critic, accessibility-evaluator]
     sev: 3
-    status: verified
+    status: fixed
     route: /posts/election-night-station-by-station/
     viewport: 360
     evidence: "Station column cut at 360 hiding the Arab-lists figure; results table hides bloc-change column; no scroll cue, not keyboard-focusable"
+    lock: "grep:table-scroll wrapper in render-table.html"
   - id: dv-threshold-on-local-rows
     source: dataviz-critic
     sev: 3
@@ -262,40 +269,45 @@ findings:
   - id: uxc-my-town
     source: ux-critic
     sev: 3
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "no town lookup; only bechirot.fyi link goes to the map, 10.7 screens down [UNTESTED - assumption]"
     note: "PR 1 added the localities link in the summary; still below the first screen (rows 6d600aca71, f3eaa835dd)"
+    lock: probe:first-screen
   - id: a11y-callout-strong-contrast
     source: accessibility-evaluator
     also: [ux-critic]
     sev: 3
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "teal bold in callout 4.19:1 on --bg-code; reads as a link"
+    lock: "grep:.about-body ul li strong"
   - id: a11y-footer-link-colour-only
     source: accessibility-evaluator
     sev: 3
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "footer CC BY-SA link 2.75:1 vs surrounding text, no underline"
+    lock: "grep:.footer-left a"
   - id: a11y-copied-dark-contrast
     source: accessibility-evaluator
     sev: 3
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "'Copied!' white on #7fb894, 2.29:1 in dark"
+    lock: "grep:copy-feedback uses --text-inverse"
   - id: a11y-copied-not-announced
     source: accessibility-evaluator
     sev: 2
-    status: unverified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "no role=status for copy confirmation"
+    lock: "grep:role=status span in share-buttons.html"
   - id: uxc-night-no-summary
     source: ux-critic
     sev: 2
@@ -307,38 +319,43 @@ findings:
   - id: uxc-toc-at-bottom-mobile
     source: ux-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/election-night-station-by-station/
     viewport: 360
     evidence: "'On this page' renders after the article below 992px"
+    lock: "grep:details class=toc-inline"
   - id: uxc-callout-padding-360
     source: ux-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "callout padding + indent leave 204px of text, summary 843px tall"
+    lock: "grep:callout padding-inline at 575px"
   - id: uxc-he-404-english
     source: ux-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /he/posts/no-such-post/
     viewport: 360
     evidence: "Hebrew path serves the English 404"
+    lock: "grep:DOMParser in layouts/404.html"
   - id: uxc-search-error-as-empty
     source: ux-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/
     viewport: 360
     evidence: "failed index load reads 'No posts match that.'"
+    lock: "grep:searchLoadFailed"
   - id: uxc-he-titles-near-identical
     source: ux-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /he/posts/
     viewport: 360
     evidence: "קלפי מול קלפי / קלפי אחר קלפי differ by one word [UNTESTED - assumption]"
+    lock: "grep:kicker: in both election posts"
   - id: dv-bar-scale-drifts-per-row
     source: dataviz-critic
     sev: 2
@@ -399,17 +416,19 @@ findings:
   - id: dv-night-key-below-and-raw
     source: dataviz-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/election-night-station-by-station/
     viewport: 360
     evidence: "bloc key in caption after table; 'In'/'Raw' cryptic"
+    lock: "grep:nightBlocOrder"
   - id: dv-night-range-asymmetry
     source: dataviz-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/election-night-station-by-station/
     viewport: 360
     evidence: "town ±2 not shown; station ranges not called too narrow in caption"
+    lock: "grep:list_p90 in the Town header"
   - id: cnt-cross-units
     source: ux-critic
     sev: 2
@@ -429,10 +448,11 @@ findings:
   - id: a11y-table-no-caption-scope
     source: accessibility-evaluator
     sev: 1
-    status: verified
+    status: fixed
     route: /posts/election-night-station-by-station/
     viewport: 360
     evidence: "no <caption>, no scope"
+    lock: "grep:scope=row"
   - id: dv-eli-two-lists
     source: dataviz-critic
     sev: 1
@@ -471,8 +491,10 @@ findings:
     evidence: "RTL range order is logically correct"
   - id: 23880c5064
     source: probe:first-screen
-    sev: 3
+    sev: 2
     status: open
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "summary's headline item spans y=674..810, first screen ends 740 (local, PR 1 branch)"
+
+    note: "PR 2: starts at y=732 of a 740 first screen and ends below it, EN only (HE passes). Kicker, three-line title, subtitle, meta, chips and contents fill the rest; the summary opening line (preliminary note, town link) is on the first screen. Kept open at sev 2 as a trade-off."

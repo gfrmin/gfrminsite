@@ -1,5 +1,6 @@
 ---
 title: "Polling Place by Polling Place"
+kicker: "Results"
 subtitle: "What Israel's 2026 election changed, read from four thousand polling places rather than the national total."
 description: "Preliminary findings from the count of Israel's 26th Knesset election, 27 October 2026, compared with 2022 polling place by polling place: an Arab turnout surge of more than twenty-five points, Haredi voters staying home and leaving Shas, right-wing votes in the settlements lost below the threshold, Druze towns moving towards Likud, and mixed cities where the national story splits in two."
 author: "Guy Freeman"
@@ -8,10 +9,10 @@ draft: false
 categories: [essays, israel, data]
 ---
 
-*This post is about what changed in the vote. How the live projection was built on the night, and why it failed, is in [Station by Station](/posts/election-night-station-by-station/).*
+*How the live projection was built, and why it failed on the night, is in [Station by Station](/posts/election-night-station-by-station/).*
 
 {{< callout type="note" >}}
-**In short.** Preliminary, from the committee's 10:02 file, Israel time; the seat figures are projections.
+**In short.** Preliminary, from the committee's 10:02 file, Israel time; the seat figures are projections. Every town's results are on [bechirot.fyi](https://bechirot.fyi/en/localities).
 
 - **The Netanyahu bloc is projected at 54 seats**, down from 64 and seven short of the 61 a government needs.
 - **Arab turnout rose by 26 points**, to 76.9%. With the Arab parties running together, the Arab lists go from 10 seats to a projected 18.
@@ -19,8 +20,6 @@ categories: [essays, israel, data]
 - **In the settlements, right-wing votes were lost.** They went to small lists below the 3.25% threshold and elected no one.
 - **Druze towns moved towards Likud**, against the national tide.
 - **In the mixed cities the Netanyahu bloc fell nearly twice as fast or more** in the Jewish neighbourhoods as in the rest of the country.
-
-About thirty of the 859 towns compared are named below; every town's results are on [bechirot.fyi](https://bechirot.fyi/en/localities).
 {{< /callout >}}
 
 A national result is an average, and an average hides things moving in opposite directions. On a projection from the count so far, Israel's election on 27 October moved the Netanyahu bloc (Likud, Otzma Yehudit, Religious Zionism, Shas and United Torah Judaism) from 64 seats to about 54, seven short of the 61 a government needs in the 120-seat Knesset. That is the headline. Underneath it, some places moved much further than the country did, some moved the other way, and in one group of towns turnout did not move at all while it rose everywhere else.
@@ -35,11 +34,11 @@ The committee put national turnout at 77.7% when the polls closed, against 70.6%
 
 {{< stat-chart id="turnout" >}}
 
-| Polling places, by who won them in 2022 | Places compared | Turnout, 2022 → 2026 | Netanyahu bloc, change in share |
-|---|---|---|---|
-| The Arab lists | 431 | 50.6% → 76.9% | −1.5 points |
-| Shas and UTJ | 226 | 72.8% → 72.2% | −3.7 points |
-| Everywhere else | 3,156 | 64.6% → 70.1% | −4.5 points |
+| Polling places, by who won them in 2022 | Netanyahu bloc, change in share |
+|---|---|
+| The Arab lists | −1.5 points |
+| Shas and UTJ | −3.7 points |
+| Everywhere else | −4.5 points |
 
 It rose most in the Triangle, the band of Arab towns along the old Green Line in the centre of the country, and among the Bedouin of the Negev: 42 points in Umm al-Fahm, 39 in Fureidis, 38 in Hura, 37 in Jatt. It rose least in Galilee towns with large Christian and Druze populations, 14 points in Mi'elya and Kafr Yasif, and in the Arab neighbourhoods of Haifa, 12.
 
@@ -81,6 +80,6 @@ Elsewhere the change was more even. Likud fell most in Modi'in (6.5 points), Ari
 
 Each comparison is a polling place against itself: the same place, in the same neighbourhood, in 2022 and in 2026. The committee renumbers its ballot boxes between elections, splitting and merging them, but the whole number of a ballot box (the 20 in 20.3) identifies the polling place, and that carries over. Matched that way, 3,813 polling places in 859 towns line up, holding 2.02 million of the votes counted so far.
 
-As a check, I compared how far each matched place leaned away from the rest of its town in 2022 with how far it leaned in 2026. The correlation is 0.97 for the Haredi parties, 0.97 for the Arab parties and 0.91 for Likud. Pairing each place with the next number in the same town instead gives 0.19, 0.35 and 0.26, so the matches are the same neighbourhoods and not chance. Places that do not match, mostly new or renumbered ones, are left out, and so are the envelope ballots. The 431 places in the turnout table are the polling places the Arab lists won in 2022. [Station by Station](/posts/election-night-station-by-station/) counts something else, the 1,606 ballot boxes that had an Arab majority in 2022, so the two numbers do not compare.
+As a check, I compared how far each matched place leaned away from the rest of its town in 2022 with how far it leaned in 2026. The correlation is 0.97 for the Haredi parties, 0.97 for the Arab parties and 0.91 for Likud. Pairing each place with the next number in the same town instead gives 0.19, 0.35 and 0.26, so the matches are the same neighbourhoods and not chance. Places that do not match, mostly new or renumbered ones, are left out, and so are the envelope ballots. The 431 places in the turnout chart are the polling places the Arab lists won in 2022. [Station by Station](/posts/election-night-station-by-station/) counts something else, the 1,606 ballot boxes that had an Arab majority in 2022, so the two numbers do not compare.
 
 How the night itself went, and how the live projection was built and rebuilt, is in [Station by Station](/posts/election-night-station-by-station/).

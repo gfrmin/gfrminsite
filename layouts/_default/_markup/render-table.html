@@ -1,0 +1,20 @@
+{{- /* Every markdown table sits in a focusable, named scroll region, so a table wider
+       than a phone scrolls inside its own box, can be reached from the keyboard, and
+       keeps display: table (a block-displayed table loses its table role in WebKit).
+       The region is named after the table's first header cell. */ -}}
+{{- $name := "" }}{{ with .THead }}{{ with index . 0 }}{{ with index . 0 }}{{ $name = .Text | plainify }}{{ end }}{{ end }}{{ end -}}
+<div class="table-scroll" role="region" tabindex="0"{{ with $name }} aria-label="{{ . }}"{{ end }}>
+<table{{ range $k, $v := .Attributes }} {{ $k }}="{{ $v }}"{{ end }}>
+<thead>
+{{- range .THead }}
+<tr>{{ range . }}<th scope="col"{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</th>{{ end }}</tr>
+{{- end }}
+</thead>
+<tbody>
+{{- range .TBody }}
+<tr>{{ range . }}<td{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</td>{{ end }}</tr>
+{{- end }}
+</tbody>
+</table>
+</div>
+{{- /**/ -}}

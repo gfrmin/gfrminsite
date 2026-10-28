@@ -1002,6 +1002,8 @@ math[display="block"] {
   overflow-x: auto;
   overflow-y: hidden;
   max-width: 100%;
+  /* room for a descender under a large operator (the k under a sum) */
+  padding-block: 0.25em;
 }
 
 /* ============================================
@@ -1132,7 +1134,7 @@ math[display="block"] {
   left: 50%;
   transform: translateX(-50%);
   background: var(--brand-success);
-  color: white;
+  color: var(--text-inverse);
   padding: 4px 10px;
   border-radius: var(--radius-sm);
   font-size: var(--fs-micro);
@@ -1149,6 +1151,27 @@ math[display="block"] {
 /* ============================================
    SKIP LINK (Accessibility)
    ============================================ */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* A one-word label above a post title, for posts that are easily confused with a
+   sibling (the two election posts' titles differ by one word in Hebrew). */
+.kicker {
+  font-family: var(--font-ui);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-secondary);
+  margin: 0 0 var(--space-xs);
+}
+
 .skip-link {
   position: absolute;
   left: -9999px;
@@ -1201,6 +1224,43 @@ math[display="block"] {
   }
 }
 
+/* The table of contents is a sidebar from 992px. Below that it is a collapsed
+   <details> above the body (single.html); as a sidebar it fell to the end of the
+   page, after the article it was meant to navigate. */
+.toc-inline {
+  margin: var(--space-sm) 0 var(--space-md);
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+}
+
+.toc-inline summary {
+  cursor: pointer;
+  padding-block: 0.25rem;   /* a 24px-tall target, clear of the category chips */
+  color: var(--text-secondary);
+}
+
+.toc-inline ul {
+  list-style: none;
+  padding-inline-start: var(--space-md);
+  margin: var(--space-sm) 0 0;
+}
+
+.toc-inline li {
+  margin-bottom: var(--space-xs);
+}
+
+@media (min-width: 992px) {
+  .toc-inline {
+    display: none;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .toc-sidebar {
+    display: none;
+  }
+}
+
 .toc-sidebar {
   position: sticky;
   top: 80px;
@@ -1244,12 +1304,59 @@ main img {
   height: auto;
 }
 
-/* Responsive tables */
-table {
-  display: block;
+/* Responsive tables. A table scrolls inside .table-scroll (render-table.html and the
+   election-night shortcode), not by itself: `display: block` on a <table> drops its
+   table role in WebKit. The wrapper is a focusable region so the keyboard can scroll
+   it, and two `local` gradients cover two `scroll` shadows, so a shadow shows on
+   whichever side has more table to see, in either direction. */
+.table-scroll {
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
   max-width: 100%;
+  margin-bottom: var(--space-md);
+  background:
+    linear-gradient(to right, var(--bg-page) 30%, transparent) left center / 40px 100% no-repeat local,
+    linear-gradient(to left, var(--bg-page) 30%, transparent) right center / 40px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, 0.18), transparent) left center / 12px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.18), transparent) right center / 12px 100% no-repeat scroll;
+}
+
+.table-scroll table {
+  border-collapse: collapse;
+}
+
+.table-scroll th,
+.table-scroll td {
+  padding: var(--space-xs) var(--space-sm);
+  vertical-align: top;
+}
+
+.table-note {
+  font-size: var(--fs-meta);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.table-scroll tbody th {
+  font-weight: normal;
+  text-align: start;
+}
+
+.night-table .night-key td {
+  font-family: var(--font-ui);
+  font-size: var(--fs-micro);
+  color: var(--text-secondary);
+  padding-top: 0;
+}
+
+@media (max-width: 575px) {
+  .table-scroll table {
+    font-size: var(--fs-small);
+  }
+
+  .table-scroll th,
+  .table-scroll td {
+    padding: var(--space-xs) 0.3rem;
+  }
 }
 
 /* Service list styling */
@@ -1257,7 +1364,10 @@ main ul li {
   margin-bottom: 0.75rem;
 }
 
-main ul li strong {
+/* Homepage "What I do" only. Site-wide, it turned every bold lead-in in a post's
+   list link-teal: it read as a link, and on the callout's --bg-code ground it was
+   4.19:1, under AA for 16px bold. */
+.about-body ul li strong {
   color: var(--brand-primary);
 }
 
@@ -1294,6 +1404,24 @@ blockquote,
 
 blockquote p:last-child {
   margin-bottom: 0;
+}
+
+/* Link teal is 4.19:1 on the --bg-code ground of a callout or quote, under AA; the
+   darker hover teal is 5.62:1 there (dark theme: lighter teal on a dark ground). */
+blockquote a,
+.callout a {
+  color: var(--brand-primary-hover);
+}
+
+@media (max-width: 575px) {
+  blockquote,
+  .callout {
+    padding-inline: var(--space-md) var(--space-sm);
+  }
+
+  .callout ul {
+    padding-inline-start: 1.1em;
+  }
 }
 
 /* ============================================
@@ -1376,8 +1504,11 @@ blockquote p:last-child {
     padding: var(--space-md);
   }
 
-  /* Post listing - stack vertically */
-  .post-card {
+  /* Post listing - stack vertically. The :has() rule above outranks a bare
+     .post-card, so it has to be named here too, or cards with an image kept a
+     200px column and pushed the page sideways at 360px. */
+  .post-card,
+  .post-card:has(.post-card-image) {
     grid-template-columns: 1fr;
     gap: var(--space-md);
   }
@@ -1534,6 +1665,13 @@ blockquote p:last-child {
 .nav-footer a {
   color: var(--text-muted);
   transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+/* The licence link sits inside a sentence and is 2.75:1 against it: colour alone
+   would not mark it as a link (WCAG 1.4.1). */
+.footer-left a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .nav-footer a:hover {

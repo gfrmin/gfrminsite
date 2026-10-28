@@ -1,11 +1,37 @@
 {{ define "main" }}
-<main class="content" style="text-align: center; padding: 4em 1em;">
+<main class="content not-found" style="text-align: center; padding: 4em 1em;">
   <h1>404</h1>
   <p>{{ i18n "notFoundBody" }}</p>
   <p style="margin-top: 2em;">
     <a href="{{ .Site.Home.RelPermalink }}">{{ i18n "notFoundHome" }}</a> |
     <a href="{{ .Site.Home.RelPermalink }}posts/">{{ i18n "notFoundPosts" }}</a> |
+    {{- with site.GetPage "/archive" }}{{ if eq .Language.Lang site.Language.Lang }}
+    <a href="{{ .RelPermalink }}">{{ i18n "notFoundArchive" }}</a> |
+    {{- end }}{{ end }}
     <a href="{{ "projects/" | relURL }}">{{ i18n "notFoundProjects" }}</a>
   </p>
 </main>
+{{- /* GitHub Pages serves only the root 404.html, so a missing /he/ page got the
+       English one. When that happens, swap in the body of the Hebrew 404, which Hugo
+       builds at /he/404.html but nothing ever serves. */}}
+{{- if eq .Language.Lang (index hugo.Sites 0).Language.Lang }}
+{{- range hugo.Sites }}{{ with .Language }}{{ if ne .Lang site.Language.Lang }}
+<script>
+(function () {
+  var prefix = {{ printf "/%s/" .Lang }};
+  if (location.pathname.indexOf(prefix) !== 0 || !window.fetch) { return; }
+  fetch(prefix + '404.html').then(function (r) { return r.ok ? r.text() : null; }).then(function (html) {
+    if (!html) { return; }
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    var mine = document.querySelector('main.not-found'), theirs = doc.querySelector('main.not-found');
+    if (!mine || !theirs) { return; }
+    mine.innerHTML = theirs.innerHTML;
+    if (theirs.className) { mine.className = theirs.className; }
+    document.documentElement.lang = doc.documentElement.lang;
+    document.title = doc.title;
+  });
+})();
+</script>
+{{- end }}{{ end }}{{ end }}
+{{- end }}
 {{ end }}
