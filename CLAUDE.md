@@ -180,6 +180,12 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   in the shortcode, every other string is in i18n). Values are joined with no-break
   characters so a bloc or a range never splits across lines; that, not overflow, was the
   failure at phone width.
+- `layouts/shortcodes/stat-chart.html` — small charts (`stats` tiles, `dumbbell`, `bars`)
+  drawn in HTML and CSS from a bundle's `charts.json`, where every title and label is keyed
+  by language. No SVG and no script: text stays text, and RTL mirrors through logical
+  properties (`inset-inline-start`) alone. Styles are the `.stat-*` block in `main.css`,
+  on the existing tokens, so dark mode needs nothing extra. First used by
+  `election-2026-polling-place-by-polling-place`.
 - `layouts/_default/taxonomy.html` — term index (`/categories/`). Terms are not posts; before this existed they fell through to `list.html` and rendered as post cards with a bogus date and "0 min read".
 - `i18n/{en,he}.toml` — **every** user-facing string in a template, not just the series chrome:
   nav labels, reading time, share buttons, the 404, the homepage section headings. Anything added
