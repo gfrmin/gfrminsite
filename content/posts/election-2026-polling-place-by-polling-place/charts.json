@@ -1,0 +1,266 @@
+{
+  "seats": {
+    "kind": "stats",
+    "title": {
+      "en": "Seats, 2022 and projected 2026",
+      "he": "מנדטים, 2022 והתחזית ל-2026"
+    },
+    "rows": [
+      {
+        "label": {
+          "en": "Netanyahu bloc",
+          "he": "גוש נתניהו"
+        },
+        "from": 64,
+        "to": 54
+      },
+      {
+        "label": {
+          "en": "Arab lists",
+          "he": "הרשימות הערביות"
+        },
+        "from": 10,
+        "to": 18
+      },
+      {
+        "label": {
+          "en": "Shas",
+          "he": "ש״ס"
+        },
+        "from": 11,
+        "to": 7
+      }
+    ],
+    "note": {
+      "en": "2026 is a projection from the 10:02 file, not the result.",
+      "he": "2026 היא תחזית מקובץ 10:02, לא התוצאה."
+    }
+  },
+  "turnout": {
+    "kind": "dumbbell",
+    "title": {
+      "en": "Turnout, 2022 → 2026, by who won the polling place in 2022",
+      "he": "שיעור ההצבעה, 2022 ← 2026, לפי מי שזכה בקלפי ב-2022"
+    },
+    "min": 40,
+    "max": 80,
+    "unit": "%",
+    "legend": {
+      "from": {
+        "en": "2022",
+        "he": "2022"
+      },
+      "to": {
+        "en": "2026",
+        "he": "2026"
+      }
+    },
+    "rows": [
+      {
+        "label": {
+          "en": "Arab lists (431 places)",
+          "he": "הרשימות הערביות (431 קלפיות)"
+        },
+        "from": 50.6,
+        "to": 76.9
+      },
+      {
+        "label": {
+          "en": "Shas and UTJ (226)",
+          "he": "ש״ס ויהדות התורה (226)"
+        },
+        "from": 72.8,
+        "to": 72.2
+      },
+      {
+        "label": {
+          "en": "Everywhere else (3,156)",
+          "he": "כל השאר (3,156)"
+        },
+        "from": 64.6,
+        "to": 70.1
+      }
+    ]
+  },
+  "arab-rise": {
+    "kind": "bars",
+    "title": {
+      "en": "Rise in turnout since 2022, points",
+      "he": "העלייה בשיעור ההצבעה מאז 2022, בנקודות"
+    },
+    "rows": [
+      {
+        "label": {
+          "en": "Umm al-Fahm",
+          "he": "אום אל-פחם"
+        },
+        "value": 42
+      },
+      {
+        "label": {
+          "en": "Fureidis",
+          "he": "פוריידיס"
+        },
+        "value": 39
+      },
+      {
+        "label": {
+          "en": "Hura",
+          "he": "חורה"
+        },
+        "value": 38
+      },
+      {
+        "label": {
+          "en": "Jatt",
+          "he": "ג׳ת"
+        },
+        "value": 37
+      },
+      {
+        "label": {
+          "en": "Mi'elya",
+          "he": "מעיליא"
+        },
+        "value": 14
+      },
+      {
+        "label": {
+          "en": "Kafr Yasif",
+          "he": "כפר יאסיף"
+        },
+        "value": 14
+      },
+      {
+        "label": {
+          "en": "Haifa, Arab neighbourhoods",
+          "he": "חיפה, השכונות הערביות"
+        },
+        "value": 12
+      }
+    ]
+  },
+  "shas-fall": {
+    "kind": "bars",
+    "title": {
+      "en": "Fall in Shas's share since 2022, points",
+      "he": "הירידה בחלקה של ש״ס מאז 2022, בנקודות"
+    },
+    "rows": [
+      {
+        "label": {
+          "en": "Beit Shemesh",
+          "he": "בית שמש"
+        },
+        "value": 10.9
+      },
+      {
+        "label": {
+          "en": "Betar Illit",
+          "he": "ביתר עילית"
+        },
+        "value": 8.0
+      },
+      {
+        "label": {
+          "en": "Modi'in Illit",
+          "he": "מודיעין עילית"
+        },
+        "value": 7.0
+      },
+      {
+        "label": {
+          "en": "Tiberias",
+          "he": "טבריה"
+        },
+        "value": 7.0
+      }
+    ],
+    "decimals": 1
+  },
+  "below-threshold": {
+    "kind": "bars",
+    "title": {
+      "en": "Share for lists below the threshold, %",
+      "he": "החלק של רשימות מתחת לאחוז החסימה, %"
+    },
+    "rows": [
+      {
+        "label": {
+          "en": "Eli: Amcha Yisrael and Noam",
+          "he": "עלי: עמך ישראל ונעם"
+        },
+        "value": 14.7
+      },
+      {
+        "label": {
+          "en": "Kfar Adumim: Amcha Yisrael",
+          "he": "כפר אדומים: עמך ישראל"
+        },
+        "value": 11.9
+      },
+      {
+        "label": {
+          "en": "Efrat: Amcha Yisrael",
+          "he": "אפרת: עמך ישראל"
+        },
+        "value": 9.1
+      },
+      {
+        "label": {
+          "en": "Amcha Yisrael, whole country",
+          "he": "עמך ישראל, כל הארץ"
+        },
+        "value": 1.7,
+        "ref": true
+      }
+    ],
+    "marker": {
+      "value": 3.25,
+      "label": {
+        "en": "threshold 3.25%",
+        "he": "אחוז החסימה 3.25%"
+      }
+    },
+    "decimals": 1
+  },
+  "mixed": {
+    "kind": "bars",
+    "title": {
+      "en": "Fall in the Netanyahu bloc's share outside the Arab neighbourhoods, points",
+      "he": "הירידה בחלקו של גוש נתניהו מחוץ לשכונות הערביות, בנקודות"
+    },
+    "rows": [
+      {
+        "label": {
+          "en": "Lod",
+          "he": "לוד"
+        },
+        "value": 12.4
+      },
+      {
+        "label": {
+          "en": "Akko",
+          "he": "עכו"
+        },
+        "value": 10.5
+      },
+      {
+        "label": {
+          "en": "Ramla",
+          "he": "רמלה"
+        },
+        "value": 8.1
+      },
+      {
+        "label": {
+          "en": "Everywhere else in the country",
+          "he": "כל השאר בארץ"
+        },
+        "value": 4.5,
+        "ref": true
+      }
+    ],
+    "decimals": 1
+  }
+}
