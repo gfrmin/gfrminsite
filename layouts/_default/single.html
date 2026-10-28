@@ -2,6 +2,7 @@
 <main class="content {{ if eq .Language.Direction "rtl" }}rtl-content{{ end }}">
   <article class="post">
     <header class="post-header">
+      {{ with .Params.kicker }}<p class="kicker">{{ . }}</p>{{ end }}
       <h1>{{ .Title }}</h1>
       {{ with .Params.subtitle }}<p class="subtitle lead">{{ . }}</p>{{ end }}
       <div class="metadata">
@@ -12,6 +13,13 @@
     </header>
 
     {{ partial "series-banner.html" . }}
+
+    {{ if .TableOfContents }}
+    <details class="toc-inline">
+      <summary>{{ i18n "tocTitle" }}</summary>
+      {{ .TableOfContents }}
+    </details>
+    {{ end }}
 
     <div class="post-body">
       {{ .Content }}

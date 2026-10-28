@@ -186,6 +186,23 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   properties (`inset-inline-start`) alone. Styles are the `.stat-*` block in `main.css`,
   on the existing tokens, so dark mode needs nothing extra. First used by
   `election-2026-polling-place-by-polling-place`.
+- `layouts/_default/_markup/render-table.html` — every markdown table is wrapped in a
+  focusable, named `.table-scroll` region (the election-night shortcode does the same). The
+  `table` element keeps `display: table`: the old `table { display: block; overflow-x: auto }`
+  stripped the table role in WebKit and could not be scrolled from the keyboard. A table's
+  description goes in a paragraph **above** the box, tied with `aria-describedby` — a
+  `<caption>` is as wide as its table and was cut off inside a narrower scroll box.
+- `kicker:` in a post's frontmatter prints a one-word label above the `<h1>`. Used on the two
+  election posts, whose Hebrew titles differ by one word.
+- The table of contents is a sidebar from 992px and a collapsed `<details class="toc-inline">`
+  above the body below that; as a sidebar on a phone it rendered after the article.
+- `layouts/404.html`: GitHub Pages serves only the root `404.html`, so on a `/he/` path a
+  small script fetches the Hebrew `/he/404.html` Hugo builds and swaps its `<main>` in.
+- `assets/js/search.js` tells a corpus that failed to load from one with no matches, and
+  both messages link the archive where the language has one.
+- `.about-body ul li strong` is the homepage's teal bold; it used to be `main ul li strong`,
+  which turned every bold lead-in in a post's list link-teal (and 4.19:1 on a callout).
+  Links in callouts and quotes use `--brand-primary-hover`, for the same `--bg-code` reason.
 - `layouts/_default/taxonomy.html` — term index (`/categories/`). Terms are not posts; before this existed they fell through to `list.html` and rendered as post cards with a bogus date and "0 min read".
 - `i18n/{en,he}.toml` — **every** user-facing string in a template, not just the series chrome:
   nav labels, reading time, share buttons, the 404, the homepage section headings. Anything added

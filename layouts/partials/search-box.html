@@ -19,11 +19,15 @@
     "none" (i18n "searchNoResults")
     "one"  (i18n "searchResultsOne")
     "many" (i18n "searchResultsMany")
-    "min"  (i18n "readingTimeShort" "{n}") }}
+    "min"  (i18n "readingTimeShort" "{n}")
+    "failed" (i18n "searchLoadFailed")
+    "archive" (i18n "searchArchive") }}
+{{- $archive := "" }}{{ with site.GetPage "/archive" }}{{ if eq .Language.Lang site.Language.Lang }}{{ $archive = .RelPermalink }}{{ end }}{{ end }}
 <div class="site-search" hidden
      data-search
      data-search-index="{{ $index }}"
      data-search-hide="{{ .hide }}"
+     {{ with $archive }}data-search-archive="{{ . }}"{{ end }}
      data-search-strings="{{ $strings | jsonify }}">
   <label for="site-search-input" class="site-search-label">{{ i18n "searchLabel" }}</label>
   <svg class="site-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
