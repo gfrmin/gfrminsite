@@ -1,0 +1,29 @@
+persona: Israeli reader, Hebrew
+jtbd: "כשאני שומע את התוצאה, אני רוצה לדעת מה השתנה ואיפה — When I hear the result, I want to know what changed and where, in Hebrew, with the same numbers as the English."
+provenance: assumption
+post: election-2026-polling-place-by-polling-place
+source: none — hypothesis drafted 2026-10-28; the Hebrew site previously held only the Velotix series
+steps:
+  - id: get-the-findings-he
+    surface: gfrm.in
+    goal: The same five shifts, in Hebrew, right to left
+    route: /he/posts/election-2026-polling-place-by-polling-place/
+    first_screen: The "בקיצור" summary, starting with the projected seats against the 61 majority
+    first_screen_probe: '.callout li::גוש נתניהו'
+    success: Reader reaches the summary and the turnout chart; numbers identical to the English
+    failure_modes: [mirrored numbers or ranges, English chrome leaking, chart bars growing the wrong way, a number differing from the English]
+    scent: Hebrew subtitle and the language toggle
+    signals:
+      - name: he-reads-past-summary
+        kind: posthog
+        hogql: "select count() from events where event='post_progress' and properties.depth>=50 and properties.slug='/he/posts/election-2026-polling-place-by-polling-place/' and timestamp > now() - interval {window_days} day"
+        window_days: 14
+        threshold: 10
+        becomes_evidence: Hebrew readers go past the summary; shows the Hebrew page is used, not that it is preferred.
+      - name: he-switches-to-english
+        kind: posthog
+        refutes: true
+        hogql: "with pv as (select count() c from events where event='$pageview' and properties.$pathname like '/he/posts/election-%' and timestamp > now() - interval {window_days} day), sw as (select count() c from events where event='lang_switch' and properties.to='en' and properties.$pathname like '/he/posts/election-%' and timestamp > now() - interval {window_days} day) select if((select c from pv) >= 50 and (select c from sw) > 0.3*(select c from pv), 1, 0)"
+        window_days: 14
+        threshold: 1
+        becomes_evidence: With at least 50 Hebrew views, more than 30% switching to English means the Hebrew version fails its readers. Returns 0 below 50 views.

@@ -1,0 +1,19 @@
+persona: journalist or analyst citing a figure
+jtbd: "When I want to quote a number, I need to know how fresh it is and how it was made, so I don't cite a preliminary figure as final."
+provenance: assumption
+post: election-2026-polling-place-by-polling-place
+source: none — drafted 2026-10-28
+steps:
+  - id: date-the-number
+    surface: gfrm.in
+    goal: See the data's timestamp and preliminary status before any figure
+    route: /posts/election-2026-polling-place-by-polling-place/
+    first_screen: The preliminary note naming the 10:02 file, at the head of the summary
+    first_screen_probe: '.callout p::10:02'
+    success: Reader can state the file time and method without scrolling to the end
+    failure_modes: [preliminary status only at the bottom, projection presented as result]
+    scent: the word "preliminary"
+    signals:
+      - name: unmeasured
+        kind: none
+        note: Nothing measures citation. Would need a copy event on figures, which is free-text-adjacent; not recommended.

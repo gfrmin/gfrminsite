@@ -32,8 +32,8 @@
       }
     ],
     "note": {
-      "en": "2026 is a projection from the 10:02 file, not the result.",
-      "he": "2026 היא תחזית מקובץ 10:02, לא התוצאה."
+      "en": "2026 is a projection from the 10:02 file, not the result. 61 of the 120 seats make a majority.",
+      "he": "2026 היא תחזית מקובץ 10:02, לא התוצאה. רוב הוא 61 מתוך 120 המנדטים."
     }
   },
   "turnout": {
@@ -80,7 +80,11 @@
         "from": 64.6,
         "to": 70.1
       }
-    ]
+    ],
+    "note": {
+      "en": "Matched polling places only, without the envelope ballots; not comparable with the committee's national figure.",
+      "he": "מקומות קלפי שהותאמו בלבד, בלי המעטפות החיצוניות; לא ניתן להשוואה לנתון הארצי של הוועדה."
+    }
   },
   "arab-rise": {
     "kind": "bars",
