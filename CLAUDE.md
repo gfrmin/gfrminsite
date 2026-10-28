@@ -68,8 +68,9 @@ Math is rendered to **MathML at build time** via goldmark's passthrough extensio
   display titles) and `content/posts/_index.he.md` (the posts index — without it `/he/posts/`,
   the Hebrew menu's second item, rendered `<h1>Posts</h1>` and the English site bio for its
   meta description, because Hugo falls back to the section name). Hugo pairs them by filename.
-  Hebrew currently covers the homepage, the posts index, the five Velotix posts, and the
-  taxonomy titles those posts use; `/research/`, `/projects/` and `/contact/` are English-only
+  Hebrew currently covers the homepage, the posts index, the five Velotix posts, the
+  election-night post (`election-night-station-by-station`), and the taxonomy titles those
+  posts use; `/research/`, `/projects/` and `/contact/` are English-only
   and deliberately absent from the Hebrew menu.
 - `content/projects/`, `content/contact/`, `content/research/` — non-post sections.
 - `content/archive.md` — the year archive, a **regular page** with `layout: archive`, not a
@@ -174,6 +175,11 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
 - `layouts/_default/{baseof,list,single}.html` — base chrome plus list and single-page templates.
 - `layouts/partials/` — `header.html`, `footer.html`, `schema.html` (JSON-LD), `share-buttons.html`, `darkmode.html`, `posthog.html`, `skip-link.html`.
 - `layouts/shortcodes/callout.html` — callout shortcode.
+- `layouts/shortcodes/election-night-table.html` — the election-night post's tables, read
+  from that bundle's `night.json` (one file for both translations; list names are translated
+  in the shortcode, every other string is in i18n). Values are joined with no-break
+  characters so a bloc or a range never splits across lines; that, not overflow, was the
+  failure at phone width.
 - `layouts/_default/taxonomy.html` — term index (`/categories/`). Terms are not posts; before this existed they fell through to `list.html` and rendered as post cards with a bogus date and "0 min read".
 - `i18n/{en,he}.toml` — **every** user-facing string in a template, not just the series chrome:
   nav labels, reading time, share buttons, the 404, the homepage section headings. Anything added

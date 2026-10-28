@@ -1,0 +1,1196 @@
+{
+ "generated_at": "06:59",
+ "rows": [
+  {
+   "at": "00:19",
+   "votes": 2661,
+   "counted": {
+    "blocs": [
+     75,
+     45,
+     0
+    ],
+    "seats": {
+     "The Democrats": 11,
+     "Otzma Yehudit": 11,
+     "The Reservists": 4,
+     "Yashar": 22,
+     "Religious Zionist Party": 22,
+     "Likud": 36,
+     "Together": 8,
+     "Shas": 6
+    }
+   },
+   "town": null,
+   "station": {
+    "blocs": [
+     49,
+     71,
+     0
+    ],
+    "valid_projected": 6306187,
+    "arab_stations": 0,
+    "arab_stations_2022": 1606,
+    "seats": {
+     "The Democrats": [
+      9,
+      5,
+      51
+     ],
+     "Otzma Yehudit": [
+      6,
+      4,
+      15
+     ],
+     "United Torah Judaism": [
+      0,
+      0,
+      6
+     ],
+     "The Reservists": [
+      5,
+      0,
+      7
+     ],
+     "Yashar": [
+      30,
+      15,
+      52
+     ],
+     "Religious Zionist Party": [
+      13,
+      5,
+      23
+     ],
+     "Amcha Yisrael": [
+      0,
+      0,
+      12
+     ],
+     "Yisrael Beiteinu": [
+      19,
+      0,
+      29
+     ],
+     "Likud": [
+      25,
+      15,
+      35
+     ],
+     "Together": [
+      8,
+      0,
+      11
+     ],
+     "Shas": [
+      5,
+      0,
+      6
+     ]
+    }
+   }
+  },
+  {
+   "at": "01:06",
+   "votes": 14386,
+   "counted": {
+    "blocs": [
+     66,
+     54,
+     0
+    ],
+    "seats": {
+     "The Democrats": 11,
+     "Otzma Yehudit": 11,
+     "Yashar": 26,
+     "Religious Zionist Party": 15,
+     "Likud": 35,
+     "Together": 11,
+     "Shas": 5,
+     "Yisrael Beiteinu": 6
+    }
+   },
+   "town": null,
+   "station": {
+    "blocs": [
+     61,
+     59,
+     0
+    ],
+    "valid_projected": 5475424,
+    "arab_stations": 0,
+    "arab_stations_2022": 1606,
+    "seats": {
+     "The Democrats": [
+      19,
+      8,
+      27
+     ],
+     "Otzma Yehudit": [
+      8,
+      6,
+      11
+     ],
+     "United Torah Judaism": [
+      5,
+      0,
+      5
+     ],
+     "The Reservists": [
+      0,
+      0,
+      6
+     ],
+     "Yashar": [
+      23,
+      19,
+      35
+     ],
+     "Joint List": [
+      0,
+      0,
+      4
+     ],
+     "Religious Zionist Party": [
+      10,
+      9,
+      17
+     ],
+     "Amcha Yisrael": [
+      0,
+      0,
+      6
+     ],
+     "Yisrael Beiteinu": [
+      7,
+      4,
+      19
+     ],
+     "Likud": [
+      31,
+      22,
+      32
+     ],
+     "Together": [
+      10,
+      7,
+      14
+     ],
+     "Shas": [
+      7,
+      5,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "at": "01:34",
+   "votes": 29272,
+   "counted": {
+    "blocs": [
+     63,
+     57,
+     0
+    ],
+    "seats": {
+     "The Democrats": 11,
+     "Otzma Yehudit": 10,
+     "Yashar": 26,
+     "Religious Zionist Party": 10,
+     "Likud": 37,
+     "Together": 12,
+     "Shas": 6,
+     "Yisrael Beiteinu": 8
+    }
+   },
+   "town": null,
+   "station": {
+    "blocs": [
+     59,
+     48,
+     13
+    ],
+    "valid_projected": 5330542,
+    "arab_stations": 1,
+    "arab_stations_2022": 1606,
+    "seats": {
+     "The Democrats": [
+      8,
+      7,
+      17
+     ],
+     "Otzma Yehudit": [
+      8,
+      6,
+      11
+     ],
+     "United Torah Judaism": [
+      7,
+      0,
+      8
+     ],
+     "The Reservists": [
+      0,
+      0,
+      5
+     ],
+     "Yashar": [
+      23,
+      20,
+      27
+     ],
+     "Joint List": [
+      8,
+      0,
+      8
+     ],
+     "Religious Zionist Party": [
+      9,
+      7,
+      10
+     ],
+     "Amcha Yisrael": [
+      0,
+      0,
+      5
+     ],
+     "Yisrael Beiteinu": [
+      7,
+      6,
+      14
+     ],
+     "Likud": [
+      29,
+      23,
+      32
+     ],
+     "Ra'am": [
+      5,
+      0,
+      6
+     ],
+     "Together": [
+      10,
+      9,
+      12
+     ],
+     "Shas": [
+      6,
+      4,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "at": "02:14",
+   "votes": 93680,
+   "counted": {
+    "blocs": [
+     65,
+     51,
+     4
+    ],
+    "seats": {
+     "The Democrats": 8,
+     "Otzma Yehudit": 9,
+     "Yashar": 22,
+     "Religious Zionist Party": 8,
+     "Likud": 35,
+     "Together": 11,
+     "Shas": 7,
+     "Yisrael Beiteinu": 10,
+     "United Torah Judaism": 6,
+     "Joint List": 4
+    }
+   },
+   "town": null,
+   "station": {
+    "blocs": [
+     53,
+     45,
+     22
+    ],
+    "valid_projected": 5774506,
+    "arab_stations": 3,
+    "arab_stations_2022": 1606,
+    "seats": {
+     "The Democrats": [
+      8,
+      7,
+      8
+     ],
+     "Otzma Yehudit": [
+      7,
+      6,
+      9
+     ],
+     "United Torah Judaism": [
+      6,
+      5,
+      7
+     ],
+     "Yashar": [
+      20,
+      20,
+      23
+     ],
+     "Joint List": [
+      18,
+      8,
+      20
+     ],
+     "Religious Zionist Party": [
+      7,
+      6,
+      8
+     ],
+     "Yisrael Beiteinu": [
+      7,
+      6,
+      9
+     ],
+     "Likud": [
+      27,
+      25,
+      30
+     ],
+     "Ra'am": [
+      4,
+      0,
+      5
+     ],
+     "Together": [
+      10,
+      9,
+      11
+     ],
+     "Shas": [
+      6,
+      5,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "at": "02:38",
+   "votes": 320750,
+   "counted": {
+    "blocs": [
+     64,
+     52,
+     4
+    ],
+    "seats": {
+     "The Democrats": 6,
+     "Otzma Yehudit": 9,
+     "The Reservists": 4,
+     "Yashar": 21,
+     "Religious Zionist Party": 6,
+     "Likud": 36,
+     "Together": 11,
+     "Shas": 7,
+     "United Torah Judaism": 6,
+     "Joint List": 4,
+     "Yisrael Beiteinu": 10
+    }
+   },
+   "town": null,
+   "station": {
+    "blocs": [
+     55,
+     48,
+     17
+    ],
+    "valid_projected": 5419534,
+    "arab_stations": 9,
+    "arab_stations_2022": 1606,
+    "seats": {
+     "The Democrats": [
+      8,
+      7,
+      8
+     ],
+     "Otzma Yehudit": [
+      7,
+      7,
+      8
+     ],
+     "United Torah Judaism": [
+      6,
+      6,
+      7
+     ],
+     "Yashar": [
+      21,
+      20,
+      22
+     ],
+     "Joint List": [
+      13,
+      11,
+      16
+     ],
+     "Religious Zionist Party": [
+      7,
+      6,
+      7
+     ],
+     "Yisrael Beiteinu": [
+      8,
+      7,
+      8
+     ],
+     "Likud": [
+      28,
+      27,
+      29
+     ],
+     "Ra'am": [
+      4,
+      4,
+      5
+     ],
+     "Together": [
+      11,
+      10,
+      11
+     ],
+     "Shas": [
+      7,
+      6,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "at": "03:25",
+   "votes": 629580,
+   "counted": {
+    "blocs": [
+     65,
+     50,
+     5
+    ],
+    "seats": {
+     "The Democrats": 7,
+     "Otzma Yehudit": 8,
+     "Yashar": 22,
+     "Religious Zionist Party": 7,
+     "Likud": 34,
+     "Together": 12,
+     "Shas": 8,
+     "United Torah Judaism": 8,
+     "Joint List": 5,
+     "Yisrael Beiteinu": 9
+    }
+   },
+   "town": {
+    "blocs": [
+     54,
+     51,
+     15
+    ],
+    "list_p90": 3,
+    "counted_pct": 12.0,
+    "seats": {
+     "The Democrats": 9,
+     "Otzma Yehudit": 7,
+     "United Torah Judaism": 6,
+     "Yashar": 22,
+     "Joint List": 11,
+     "Religious Zionist Party": 7,
+     "Yisrael Beiteinu": 8,
+     "Likud": 28,
+     "Ra'am": 4,
+     "Together": 12,
+     "Shas": 6
+    }
+   },
+   "station": {
+    "blocs": [
+     54,
+     48,
+     18
+    ],
+    "valid_projected": 5489431,
+    "arab_stations": 27,
+    "arab_stations_2022": 1606,
+    "seats": {
+     "The Democrats": [
+      8,
+      8,
+      9
+     ],
+     "Otzma Yehudit": [
+      7,
+      7,
+      7
+     ],
+     "United Torah Judaism": [
+      7,
+      6,
+      7
+     ],
+     "Yashar": [
+      21,
+      21,
+      21
+     ],
+     "Joint List": [
+      11,
+      10,
+      13
+     ],
+     "Religious Zionist Party": [
+      7,
+      6,
+      7
+     ],
+     "Yisrael Beiteinu": [
+      8,
+      7,
+      8
+     ],
+     "Likud": [
+      27,
+      27,
+      28
+     ],
+     "Ra'am": [
+      7,
+      6,
+      8
+     ],
+     "Together": [
+      11,
+      10,
+      11
+     ],
+     "Shas": [
+      6,
+      6,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "at": "03:46",
+   "votes": 952050,
+   "counted": {
+    "blocs": [
+     63,
+     50,
+     7
+    ],
+    "seats": {
+     "The Democrats": 7,
+     "Otzma Yehudit": 8,
+     "Yashar": 22,
+     "Religious Zionist Party": 7,
+     "Likud": 32,
+     "Together": 12,
+     "Shas": 7,
+     "United Torah Judaism": 9,
+     "Joint List": 7,
+     "Yisrael Beiteinu": 9
+    }
+   },
+   "town": {
+    "blocs": [
+     53,
+     51,
+     16
+    ],
+    "list_p90": 3,
+    "counted_pct": 19.5,
+    "seats": {
+     "The Democrats": 9,
+     "Otzma Yehudit": 7,
+     "United Torah Judaism": 6,
+     "Yashar": 22,
+     "Joint List": 11,
+     "Religious Zionist Party": 7,
+     "Yisrael Beiteinu": 8,
+     "Likud": 27,
+     "Ra'am": 5,
+     "Together": 12,
+     "Shas": 6
+    }
+   },
+   "station": {
+    "blocs": [
+     54,
+     47,
+     19
+    ],
+    "valid_projected": 5522549,
+    "arab_stations": 54,
+    "arab_stations_2022": 1606,
+    "seats": {
+     "The Democrats": [
+      8,
+      8,
+      9
+     ],
+     "Otzma Yehudit": [
+      7,
+      6,
+      7
+     ],
+     "United Torah Judaism": [
+      7,
+      7,
+      7
+     ],
+     "Yashar": [
+      21,
+      20,
+      21
+     ],
+     "Joint List": [
+      12,
+      11,
+      13
+     ],
+     "Religious Zionist Party": [
+      7,
+      7,
+      8
+     ],
+     "Yisrael Beiteinu": [
+      7,
+      7,
+      8
+     ],
+     "Likud": [
+      27,
+      26,
+      27
+     ],
+     "Ra'am": [
+      7,
+      6,
+      8
+     ],
+     "Together": [
+      11,
+      10,
+      11
+     ],
+     "Shas": [
+      6,
+      6,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "at": "04:04",
+   "votes": 1210461,
+   "counted": {
+    "blocs": [
+     63,
+     49,
+     8
+    ],
+    "seats": {
+     "The Democrats": 8,
+     "Otzma Yehudit": 8,
+     "Yashar": 21,
+     "Religious Zionist Party": 7,
+     "Likud": 32,
+     "Together": 11,
+     "Shas": 7,
+     "United Torah Judaism": 9,
+     "Joint List": 8,
+     "Yisrael Beiteinu": 9
+    }
+   },
+   "town": {
+    "blocs": [
+     53,
+     51,
+     16
+    ],
+    "list_p90": 2,
+    "counted_pct": 25.9,
+    "seats": {
+     "The Democrats": 9,
+     "Otzma Yehudit": 7,
+     "United Torah Judaism": 6,
+     "Yashar": 22,
+     "Joint List": 11,
+     "Religious Zionist Party": 7,
+     "Yisrael Beiteinu": 8,
+     "Likud": 27,
+     "Ra'am": 5,
+     "Together": 12,
+     "Shas": 6
+    }
+   },
+   "station": {
+    "blocs": [
+     54,
+     47,
+     19
+    ],
+    "valid_projected": 5515062,
+    "arab_stations": 74,
+    "arab_stations_2022": 1606,
+    "seats": {
+     "The Democrats": [
+      8,
+      8,
+      9
+     ],
+     "Otzma Yehudit": [
+      7,
+      7,
+      7
+     ],
+     "United Torah Judaism": [
+      7,
+      7,
+      7
+     ],
+     "Yashar": [
+      21,
+      20,
+      21
+     ],
+     "Joint List": [
+      11,
+      11,
+      12
+     ],
+     "Religious Zionist Party": [
+      7,
+      7,
+      8
+     ],
+     "Yisrael Beiteinu": [
+      7,
+      7,
+      8
+     ],
+     "Likud": [
+      27,
+      26,
+      27
+     ],
+     "Ra'am": [
+      8,
+      7,
+      8
+     ],
+     "Together": [
+      11,
+      10,
+      11
+     ],
+     "Shas": [
+      6,
+      6,
+      6
+     ]
+    }
+   }
+  },
+  {
+   "at": "04:48",
+   "votes": 1597973,
+   "counted": {
+    "blocs": [
+     59,
+     46,
+     15
+    ],
+    "seats": {
+     "The Democrats": 7,
+     "Otzma Yehudit": 7,
+     "Yashar": 20,
+     "Religious Zionist Party": 7,
+     "Likud": 29,
+     "Together": 11,
+     "Shas": 7,
+     "United Torah Judaism": 9,
+     "Joint List": 11,
+     "Yisrael Beiteinu": 8,
+     "Ra'am": 4
+    }
+   },
+   "town": {
+    "blocs": [
+     54,
+     51,
+     15
+    ],
+    "list_p90": 2,
+    "counted_pct": 33.4,
+    "seats": {
+     "The Democrats": 9,
+     "Otzma Yehudit": 7,
+     "United Torah Judaism": 6,
+     "Yashar": 22,
+     "Joint List": 10,
+     "Religious Zionist Party": 7,
+     "Yisrael Beiteinu": 8,
+     "Likud": 27,
+     "Ra'am": 5,
+     "Together": 12,
+     "Shas": 7
+    }
+   },
+   "station": {
+    "blocs": [
+     54,
+     47,
+     19
+    ],
+    "valid_projected": 5519420,
+    "arab_stations": 122,
+    "arab_stations_2022": 1606,
+    "seats": {
+     "The Democrats": [
+      8,
+      8,
+      9
+     ],
+     "Otzma Yehudit": [
+      7,
+      6,
+      7
+     ],
+     "United Torah Judaism": [
+      7,
+      6,
+      7
+     ],
+     "Yashar": [
+      21,
+      20,
+      21
+     ],
+     "Joint List": [
+      12,
+      11,
+      12
+     ],
+     "Religious Zionist Party": [
+      7,
+      7,
+      8
+     ],
+     "Yisrael Beiteinu": [
+      7,
+      7,
+      8
+     ],
+     "Likud": [
+      27,
+      26,
+      27
+     ],
+     "Ra'am": [
+      7,
+      6,
+      8
+     ],
+     "Together": [
+      11,
+      10,
+      11
+     ],
+     "Shas": [
+      6,
+      6,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "at": "05:14",
+   "votes": 1766198,
+   "counted": {
+    "blocs": [
+     59,
+     46,
+     15
+    ],
+    "seats": {
+     "The Democrats": 7,
+     "Otzma Yehudit": 7,
+     "Yashar": 20,
+     "Religious Zionist Party": 7,
+     "Likud": 29,
+     "Together": 11,
+     "Shas": 7,
+     "United Torah Judaism": 9,
+     "Joint List": 11,
+     "Yisrael Beiteinu": 8,
+     "Ra'am": 4
+    }
+   },
+   "town": {
+    "blocs": [
+     54,
+     50,
+     16
+    ],
+    "list_p90": 2,
+    "counted_pct": 36.8,
+    "seats": {
+     "The Democrats": 9,
+     "Otzma Yehudit": 7,
+     "United Torah Judaism": 6,
+     "Yashar": 22,
+     "Joint List": 11,
+     "Religious Zionist Party": 7,
+     "Yisrael Beiteinu": 8,
+     "Likud": 27,
+     "Ra'am": 5,
+     "Together": 11,
+     "Shas": 7
+    }
+   },
+   "station": {
+    "blocs": [
+     54,
+     47,
+     19
+    ],
+    "valid_projected": 5519094,
+    "arab_stations": 138,
+    "arab_stations_2022": 1606,
+    "seats": {
+     "The Democrats": [
+      8,
+      8,
+      9
+     ],
+     "Otzma Yehudit": [
+      7,
+      6,
+      7
+     ],
+     "United Torah Judaism": [
+      7,
+      6,
+      7
+     ],
+     "Yashar": [
+      21,
+      20,
+      21
+     ],
+     "Joint List": [
+      12,
+      11,
+      12
+     ],
+     "Religious Zionist Party": [
+      7,
+      7,
+      8
+     ],
+     "Yisrael Beiteinu": [
+      7,
+      7,
+      8
+     ],
+     "Likud": [
+      27,
+      26,
+      27
+     ],
+     "Ra'am": [
+      7,
+      7,
+      8
+     ],
+     "Together": [
+      11,
+      10,
+      11
+     ],
+     "Shas": [
+      6,
+      6,
+      7
+     ]
+    }
+   }
+  },
+  {
+   "at": "05:58",
+   "votes": 2122846,
+   "counted": {
+    "blocs": [
+     57,
+     47,
+     16
+    ],
+    "seats": {
+     "The Democrats": 7,
+     "Otzma Yehudit": 7,
+     "Yashar": 21,
+     "Religious Zionist Party": 7,
+     "Likud": 28,
+     "Together": 11,
+     "Shas": 7,
+     "United Torah Judaism": 8,
+     "Joint List": 12,
+     "Yisrael Beiteinu": 8,
+     "Ra'am": 4
+    }
+   },
+   "town": {
+    "blocs": [
+     54,
+     49,
+     17
+    ],
+    "list_p90": 2,
+    "counted_pct": 45.0,
+    "seats": {
+     "The Democrats": 9,
+     "Otzma Yehudit": 7,
+     "United Torah Judaism": 6,
+     "Yashar": 21,
+     "Joint List": 12,
+     "Religious Zionist Party": 7,
+     "Yisrael Beiteinu": 8,
+     "Likud": 27,
+     "Ra'am": 5,
+     "Together": 11,
+     "Shas": 7
+    }
+   },
+   "station": {
+    "blocs": [
+     54,
+     47,
+     19
+    ],
+    "valid_projected": 5528236,
+    "arab_stations": 163,
+    "arab_stations_2022": 1606,
+    "seats": {
+     "The Democrats": [
+      8,
+      8,
+      8
+     ],
+     "Otzma Yehudit": [
+      7,
+      6,
+      7
+     ],
+     "United Torah Judaism": [
+      7,
+      7,
+      7
+     ],
+     "Yashar": [
+      21,
+      21,
+      21
+     ],
+     "Joint List": [
+      12,
+      11,
+      12
+     ],
+     "Religious Zionist Party": [
+      7,
+      7,
+      7
+     ],
+     "Yisrael Beiteinu": [
+      7,
+      7,
+      8
+     ],
+     "Likud": [
+      27,
+      26,
+      27
+     ],
+     "Ra'am": [
+      7,
+      6,
+      8
+     ],
+     "Together": [
+      11,
+      11,
+      11
+     ],
+     "Shas": [
+      6,
+      6,
+      7
+     ]
+    }
+   }
+  }
+ ],
+ "exit_polls": {
+  "Likud": [
+   24,
+   30
+  ],
+  "Yashar": [
+   19,
+   23
+  ],
+  "Together": [
+   11,
+   15
+  ],
+  "Joint List": [
+   9,
+   11
+  ],
+  "The Democrats": [
+   9,
+   10
+  ],
+  "Yisrael Beiteinu": [
+   4,
+   9
+  ],
+  "Otzma Yehudit": [
+   6,
+   7
+  ],
+  "Ra'am": [
+   7,
+   7
+  ],
+  "Shas": [
+   6,
+   9
+  ],
+  "United Torah Judaism": [
+   6,
+   7
+  ],
+  "Religious Zionist Party": [
+   6,
+   7
+  ]
+ },
+ "exit_poll_blocs": [
+  53,
+  50,
+  17
+ ]
+}
