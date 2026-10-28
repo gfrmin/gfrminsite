@@ -152,3 +152,35 @@ other = "Code"
 
 [projectsCodeLede]
 other = "Repositories to read or run yourself."
+
+# --- The election-night post's tables (shortcodes/election-night-table.html) --
+[nightTime]
+other = "Time"
+
+[nightCounted]
+other = "In"
+
+[nightAsCounted]
+other = "Raw"
+
+[nightTown]
+other = "Town"
+
+[nightStation]
+other = "Station"
+
+[nightList]
+other = "List"
+
+[nightExitPolls]
+other = "Exit polls"
+
+[nightBlocsCaption]
+other = "Seats for the Netanyahu bloc / the change bloc / the Arab lists. <em>In</em>: the share counted of the {{ .total }} valid votes the station projection expects by the end. <em>Raw</em>: the seats if counting had stopped there. <em>Town</em> and <em>station</em>: the two projections. The five exit polls averaged {{ .polls }}. Files up to {{ .at }}, Israel time."
+
+[nightListsCaption]
+other = "The file of {{ .at }}, {{ .votes }} valid votes counted. <em>Exit polls</em>: the range of the five. <em>Raw</em>: the seats if counting had stopped there. <em>Station</em>: the projection, with its 90% range in brackets where it has one."
+
+[nightTownError]
+one = "The town projection's backtested error at this much counted is one seat a list either way."
+other = "The town projection's backtested error at this much counted is {{ .Count }} seats a list either way."

@@ -1,0 +1,59 @@
+{{- /* Tables for the election-night post, read from the bundle's night.json, which
+       a loop regenerates from every archived CEC results file. Both translations read
+       the same file: list names are translated here, every other string is in i18n.
+       {{< election-night-table table="blocs" >}}              one row per file
+       {{< election-night-table table="lists" at="05:14" >}}  one file's seats by list; no at = the latest */ -}}
+{{- $doc := .Page.Resources.Get "night.json" | transform.Unmarshal -}}
+{{- $rows := $doc.rows -}}
+{{- $last := index $rows (sub (len $rows) 1) -}}
+{{- $total := 0 -}}
+{{- range $rows }}{{ with .station }}{{ $total = .valid_projected }}{{ end }}{{ end -}}
+{{- $names := index (dict
+      "en" (dict "Yashar" "Yashar!" "Religious Zionist Party" "Religious Zionism" "United Torah Judaism" "UTJ" "Ra'am" "Ra’am")
+      "he" (dict "Likud" "הליכוד" "Yashar" "ישר!" "Together" "ביחד" "Joint List" "הרשימה המשותפת" "The Democrats" "הדמוקרטים" "Yisrael Beiteinu" "ישראל ביתנו" "Otzma Yehudit" "עוצמה יהודית" "Ra'am" "רע״ם" "Shas" "ש״ס" "United Torah Judaism" "יהדות התורה" "Religious Zionist Party" "הציונות הדתית" "The Reservists" "המילואימניקים" "Amcha Yisrael" "עמך ישראל")
+    ) .Page.Language.Lang -}}
+{{- /* No value may break inside its cell: a bloc split over two lines, or a range
+       broken after its dash, reads as two numbers. Narrow no-break spaces round the
+       bloc slashes, and a range's bracket and dash are joined to their numbers. */ -}}
+{{- $sep := "\u202f/\u202f" -}}
+{{- $nb := "\u00a0" -}}
+{{- $dash := "\u2060–\u2060" -}}
+{{- if eq (.Get "table") "blocs" -}}
+<table>
+<thead><tr><th>{{ i18n "nightTime" }}</th><th>{{ i18n "nightCounted" }}</th><th>{{ i18n "nightAsCounted" }}</th><th>{{ i18n "nightTown" }}</th><th>{{ i18n "nightStation" }}</th></tr></thead>
+<tbody>
+{{- range $rows }}
+{{- $pct := mul 100.0 (div (float .votes) $total) -}}
+<tr><td>{{ .at }}</td>
+<td>{{ if lt $pct 0.1 }}{{ lang.FormatNumber 2 $pct }}{{ else if lt $pct 2 }}{{ lang.FormatNumber 1 $pct }}{{ else }}{{ lang.FormatNumber 0 $pct }}{{ end }}%</td>
+<td>{{ delimit .counted.blocs $sep }}</td>
+<td>{{ with .town }}{{ delimit .blocs $sep }}{{ else }}—{{ end }}</td>
+<td>{{ with .station }}{{ delimit .blocs $sep }}{{ else }}—{{ end }}</td></tr>
+{{- end }}
+</tbody>
+</table>
+<p>{{ i18n "nightBlocsCaption" (dict "total" (lang.FormatNumber 0 $total) "polls" (delimit $doc.exit_poll_blocs $sep) "at" $last.at) | safeHTML }}</p>
+{{- else if eq (.Get "table") "lists" -}}
+{{- $row := $last -}}
+{{- with $at := .Get "at" }}{{ range $rows }}{{ if eq .at $at }}{{ $row = . }}{{ end }}{{ end }}{{ end -}}
+{{- $order := slice -}}
+{{- range $name, $n := $row.counted.seats }}{{ $order = $order | append $name }}{{ end -}}
+{{- with $row.town }}{{ range $name, $n := .seats }}{{ if not (in $order $name) }}{{ $order = $order | append $name }}{{ end }}{{ end }}{{ end -}}
+{{- with $row.station }}{{ range $name, $s := .seats }}{{ if not (in $order $name) }}{{ $order = $order | append $name }}{{ end }}{{ end }}{{ end -}}
+{{- $keyed := slice -}}
+{{- range $n := $order }}{{ $s := 0 }}{{ with $row.station }}{{ with index .seats $n }}{{ $s = index . 0 }}{{ end }}{{ end }}{{ $t := 0 }}{{ with $row.town }}{{ with index .seats $n }}{{ $t = . }}{{ end }}{{ end }}{{ $keyed = $keyed | append (dict "name" $n "k" (add $s $t)) }}{{ end -}}
+<table>
+<thead><tr><th>{{ i18n "nightList" }}</th><th>{{ i18n "nightExitPolls" }}</th><th>{{ i18n "nightAsCounted" }}</th><th>{{ i18n "nightTown" }}</th><th>{{ i18n "nightStation" }}</th></tr></thead>
+<tbody>
+{{- range sort $keyed "k" "desc" }}
+{{- $n := .name -}}
+<tr><td>{{ index $names $n | default $n }}</td>
+<td>{{ with index $doc.exit_polls $n }}{{ $lo := index . 0 }}{{ $hi := index . 1 }}{{ $lo }}{{ if ne $lo $hi }}{{ $dash }}{{ $hi }}{{ end }}{{ else }}—{{ end }}</td>
+<td>{{ index $row.counted.seats $n | default 0 }}</td>
+<td>{{ with $row.town }}{{ index .seats $n | default 0 }}{{ else }}—{{ end }}</td>
+<td>{{ with $row.station }}{{ with index .seats $n }}{{ $p := index . 0 }}{{ $lo := index . 1 }}{{ $hi := index . 2 }}{{ $p }}{{ if or (ne $lo $p) (ne $hi $p) }}{{ $nb }}({{ $lo }}{{ if ne $lo $hi }}{{ $dash }}{{ $hi }}{{ end }}){{ end }}{{ else }}0{{ end }}{{ else }}—{{ end }}</td></tr>
+{{- end }}
+</tbody>
+</table>
+<p>{{ i18n "nightListsCaption" (dict "at" $row.at "votes" (lang.FormatNumber 0 $row.votes)) | safeHTML }}{{ with $row.town }} {{ i18n "nightTownError" (int .list_p90) }}{{ end }}</p>
+{{- end -}}
