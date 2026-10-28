@@ -1,0 +1,29 @@
+persona: data or ML practitioner, English (HN-style referral)
+jtbd: "When a live model fails in public, I want the cause and the lesson I can reuse, so I don't make the same mistake."
+provenance: assumption
+post: election-night-station-by-station
+source: none — hypothesis drafted 2026-10-28; CLAUDE.md records HN as the site's main referral source for earlier posts
+steps:
+  - id: get-the-cause
+    surface: gfrm.in
+    goal: Learn in one screen why the projection failed
+    route: /posts/election-night-station-by-station/
+    first_screen: The subtitle saying it wasn't a modelling mistake, and the opening claim that Ra'am was put out against every exit poll
+    first_screen_probe: 'p.subtitle::modelling mistake'
+    success: Reader reaches "What I would keep"
+    failure_modes: [tables unreadable on a phone, method undefined, the cause buried below the method]
+    scent: the title and subtitle as shared on HN or social
+    signals:
+      - name: reaches-lessons
+        kind: posthog
+        hogql: "select count() from events where event='post_progress' and properties.depth=100 and properties.slug='/posts/election-night-station-by-station/' and timestamp > now() - interval {window_days} day"
+        window_days: 30
+        threshold: 15
+        becomes_evidence: Readers finish the post; behaviour only.
+      - name: hn-bounce
+        kind: posthog
+        refutes: true
+        hogql: "with pv as (select count() c from events where event='$pageview' and properties.$pathname='/posts/election-night-station-by-station/' and properties.$referring_domain like '%ycombinator%' and timestamp > now() - interval {window_days} day), d as (select count() c from events where event='post_progress' and properties.depth>=75 and properties.slug='/posts/election-night-station-by-station/' and timestamp > now() - interval {window_days} day) select if((select c from pv) >= 30 and (select c from d) < 0.05*(select c from pv), 1, 0)"
+        window_days: 30
+        threshold: 1
+        becomes_evidence: With at least 30 HN-referred views, under 5% reaching 75% means the post doesn't hold this reader. Returns 0 below 30 views.

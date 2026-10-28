@@ -1,0 +1,53 @@
+persona: a reader on the other post's page
+jtbd: "When I land on the election post that isn't the one I wanted (the night's modelling story when I wanted the results, or the reverse), I want to see straight away that the other one exists, so I don't leave thinking the site has nothing for me."
+provenance: assumption
+source: none — drafted 2026-10-28 after the owner noted the two posts serve different readers. Their titles are close ("Station by Station" / "Polling Place by Polling Place"; in Hebrew "קלפי אחר קלפי" / "קלפי מול קלפי"), so a share or a search can easily land the wrong one.
+steps:
+  - id: night-to-results
+    surface: gfrm.in
+    goal: A general reader on Station by Station finds the results post
+    route: /posts/election-night-station-by-station/
+    first_screen: A pointer to "Polling Place by Polling Place" for what changed in the vote
+    first_screen_probe: 'a[href*="polling-place-by-polling-place"]::'
+    success: Reader opens the polling-place post
+    failure_modes: [no link to the results post anywhere, link only at the end]
+    scent: the word "results"
+    signals:
+      - name: night-to-results-clicks
+        kind: posthog
+        hogql: "select count() from events where event='$pageview' and properties.$pathname like '%election-2026-polling-place-by-polling-place%' and properties.$referrer like '%election-night-station-by-station%' and timestamp > now() - interval {window_days} day"
+        window_days: 14
+        threshold: 5
+        becomes_evidence: Readers cross from the night post to the results post.
+  - id: results-to-night
+    surface: gfrm.in
+    goal: A technical reader on Polling Place finds the modelling post
+    route: /posts/election-2026-polling-place-by-polling-place/
+    first_screen: A pointer to "Station by Station" for how the live projection was built and why it failed
+    first_screen_probe: 'a[href*="election-night-station-by-station"]::'
+    success: Reader opens the station-by-station post
+    failure_modes: [link only in the last paragraph]
+    scent: the words "projection", "model"
+    signals:
+      - name: results-to-night-clicks
+        kind: posthog
+        hogql: "select count() from events where event='$pageview' and properties.$pathname like '%election-night-station-by-station%' and properties.$referrer like '%election-2026-polling-place-by-polling-place%' and timestamp > now() - interval {window_days} day"
+        window_days: 14
+        threshold: 5
+        becomes_evidence: Readers cross from the results post to the night post.
+      - name: neither-crosses
+        kind: posthog
+        refutes: true
+        hogql: "with pv as (select count() c from events where event='$pageview' and (properties.$pathname like '%election-night-station-by-station%' or properties.$pathname like '%election-2026-polling-place%') and timestamp > now() - interval {window_days} day), x as (select count() c from events where event='$pageview' and ((properties.$pathname like '%election-night-station-by-station%' and properties.$referrer like '%election-2026-polling-place%') or (properties.$pathname like '%election-2026-polling-place%' and properties.$referrer like '%election-night-station-by-station%')) and timestamp > now() - interval {window_days} day) select if((select c from pv) >= 300 and (select c from x) = 0, 1, 0)"
+        window_days: 14
+        threshold: 1
+        becomes_evidence: With 300 views of the pair and no reader crossing, the wrong-door reader doesn't exist (or the link can't be found); returns 0 below 300.
+  - id: night-to-results-he
+    surface: gfrm.in
+    goal: A Hebrew reader on קלפי אחר קלפי finds the results post (the titles differ by one word)
+    route: /he/posts/election-night-station-by-station/
+    first_screen: A pointer to "קלפי מול קלפי" for what changed in the vote
+    first_screen_probe: 'a[href*="polling-place-by-polling-place"]::'
+    success: Reader opens the Hebrew polling-place post
+    failure_modes: [link only in related reading, titles confused]
+    scent: the word "תוצאות"

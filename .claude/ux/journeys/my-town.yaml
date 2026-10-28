@@ -1,0 +1,22 @@
+persona: voter checking their own town
+jtbd: "When I read that places moved differently, I want to see how my own town or neighbourhood voted, so I can place myself in the story."
+provenance: assumption
+post: election-2026-polling-place-by-polling-place
+source: none — the job nobody wrote down; drafted 2026-10-28. The post names about thirty towns out of 859 compared.
+steps:
+  - id: find-my-town
+    surface: gfrm.in
+    goal: Find my town's change, or a clear route to it
+    route: /posts/election-2026-polling-place-by-polling-place/
+    first_screen: A visible pointer to where any town can be looked up (bechirot.fyi)
+    first_screen_probe: 'a[href*="bechirot.fyi"]::'
+    success: Reader clicks through to a town page on bechirot.fyi
+    failure_modes: [my town isn't in the post and nothing says where to look, the only bechirot.fyi link is near the bottom and goes to the map, not to a town]
+    scent: town names in the prose
+    signals:
+      - name: clicks-to-bechirot
+        kind: posthog
+        hogql: "select count() from events where event='outbound_click' and properties.href like '%bechirot.fyi%' and properties.$pathname like '%election-2026-polling-place%' and timestamp > now() - interval {window_days} day"
+        window_days: 14
+        threshold: 10
+        becomes_evidence: Readers leave for bechirot.fyi; whether they looked up their town is not measured.

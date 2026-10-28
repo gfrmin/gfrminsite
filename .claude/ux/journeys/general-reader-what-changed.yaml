@@ -1,0 +1,29 @@
+persona: general reader, English
+jtbd: "When I've heard the headline result, I want to know what actually changed and where, so I can understand it beyond 'the bloc lost ten seats'."
+provenance: assumption
+post: election-2026-polling-place-by-polling-place
+source: none — hypothesis drafted 2026-10-28 from the post's stated audience ("for a more general audience")
+steps:
+  - id: get-the-findings
+    surface: gfrm.in
+    goal: Learn the five main shifts without reading 2,000 words
+    route: /posts/election-2026-polling-place-by-polling-place/
+    first_screen: The "In short" summary, starting with the projected seats against the 61 majority
+    first_screen_probe: '.callout li::Netanyahu bloc'
+    success: Reader reaches the summary and at least one chart
+    failure_modes: [summary below the fold on a phone, jargon undefined (bloc, threshold, Haredi), charts unreadable at 360px]
+    scent: the subtitle "read from four thousand polling places"
+    signals:
+      - name: reads-past-summary
+        kind: posthog
+        hogql: "select count() from events where event='post_progress' and properties.depth>=50 and properties.slug='/posts/election-2026-polling-place-by-polling-place/' and timestamp > now() - interval {window_days} day"
+        window_days: 14
+        threshold: 20
+        becomes_evidence: Readers get past the summary into the charts; behaviour, not why they came.
+      - name: bounces-at-top
+        kind: posthog
+        refutes: true
+        hogql: "with pv as (select count() c from events where event='$pageview' and properties.$pathname='/posts/election-2026-polling-place-by-polling-place/' and timestamp > now() - interval {window_days} day), d as (select count() c from events where event='post_progress' and properties.depth>=25 and properties.slug='/posts/election-2026-polling-place-by-polling-place/' and timestamp > now() - interval {window_days} day) select if((select c from pv) >= 100 and (select c from d) < 0.1*(select c from pv), 1, 0)"
+        window_days: 14
+        threshold: 1
+        becomes_evidence: With at least 100 views, under 10% reaching a quarter of the post means the post doesn't serve a skim-the-findings reader. Returns 0 below 100 views.

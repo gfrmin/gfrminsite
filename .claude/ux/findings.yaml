@@ -1,0 +1,478 @@
+# ux-loop findings ledger for gfrm.in. Round 1 baseline 2026-10-28, prod, read-only.
+# Probe rows carry the probe id; critic rows a slug. Status set: open|verified|unverified|false-positive|fixed|wontfix.
+findings:
+  - id: 8e0e23727c
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "div.callout.callout-note spans y=1104..1947"
+    lock: probe:first-screen
+    note: "PR 1 moved the summary above the intro and retargeted the anchor to its first item; tracked from here by the new anchor rows"
+  - id: 6d600aca71
+    source: probe:first-screen
+    sev: 3
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "#content > main.content > article.post > div.post-body > p:nth-of-type(12) > a spans y=7928..7952"
+  - id: dfa3e4d9dd
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "#content > main.content > article.post > div.post-body > p:nth-of-type(2) spans y=781..1080"
+    lock: probe:first-screen
+    note: "PR 1 moved the summary above the intro and retargeted the anchor to its first item; tracked from here by the new anchor rows"
+  - id: 77216a603f
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "#content > main.content > article.post > div.post-body > p:nth-of-type(15) > a spans y=9135..9159"
+    lock: probe:first-screen
+  - id: c7dbbd88aa
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 768
+    evidence: "div.callout.callout-note spans y=716..1124"
+    lock: probe:first-screen
+    note: "PR 1 moved the summary above the intro and retargeted the anchor to its first item; tracked from here by the new anchor rows"
+  - id: c44d551be1
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 768
+    evidence: "#content > main.content > article.post > div.post-body > p:nth-of-type(12) > a spans y=4709..4733"
+    lock: probe:first-screen
+  - id: 8af96b3556
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 768
+    evidence: "#content > main.content > article.post > div.post-body > p:nth-of-type(15) > a spans y=5325..5376"
+    lock: probe:first-screen
+  - id: bfea1e0d48
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 1280
+    evidence: "div.callout.callout-note spans y=624..1032"
+    lock: probe:first-screen
+    note: "PR 1 moved the summary above the intro and retargeted the anchor to its first item; tracked from here by the new anchor rows"
+  - id: f3eaa835dd
+    source: probe:first-screen
+    sev: 3
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 1280
+    evidence: "#content > main.content > article.post > div.post-body > p:nth-of-type(12) > a spans y=4501..4525"
+  - id: 6fdc4e450e
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 1280
+    evidence: "#content > main.content > article.post > div.post-body > p:nth-of-type(15) > a spans y=5035..5059"
+    lock: probe:first-screen
+  - id: 4c9a6cb4a3
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /he/posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "div.callout.callout-note spans y=822..1474"
+    lock: probe:first-screen
+    note: "PR 1 moved the summary above the intro and retargeted the anchor to its first item; tracked from here by the new anchor rows"
+  - id: 014955e955
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /he/posts/election-2026-polling-place-by-polling-place/
+    viewport: 1280
+    evidence: "div.callout.callout-note spans y=543..896"
+    lock: probe:first-screen
+    note: "PR 1 moved the summary above the intro and retargeted the anchor to its first item; tracked from here by the new anchor rows"
+  - id: 97739da357
+    source: probe:clipped-text
+    sev: 1
+    status: false-positive
+    route: /posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "DPR-2 crop shows the subscript k intact at the clip edge (math descender)"
+  - id: 16a9ae00d2
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "#content > main.content > article.post > aside.related-posts > ul.related-posts-list > li:nth-of-type(1) > a spans y=17859..17882"
+    lock: probe:first-screen
+  - id: b873eafcf6
+    source: probe:clipped-text
+    sev: 1
+    status: false-positive
+    route: /posts/election-night-station-by-station/
+    viewport: 768
+    evidence: "DPR-2 crop shows the subscript k intact at the clip edge (math descender)"
+  - id: e05ba78d92
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /posts/election-night-station-by-station/
+    viewport: 768
+    evidence: "#content > main.content > article.post > aside.related-posts > ul.related-posts-list > li:nth-of-type(1) > a spans y=10031..10054"
+    lock: probe:first-screen
+  - id: 40b190552a
+    source: probe:clipped-text
+    sev: 1
+    status: false-positive
+    route: /posts/election-night-station-by-station/
+    viewport: 1280
+    evidence: "DPR-2 crop shows the subscript k intact at the clip edge (math descender)"
+  - id: f3a0881b67
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /posts/election-night-station-by-station/
+    viewport: 1280
+    evidence: "#content > main.content > article.post > aside.related-posts > ul.related-posts-list > li:nth-of-type(1) > a spans y=9244..9267"
+    lock: probe:first-screen
+  - id: b4cec2f7c2
+    source: probe:clipped-text
+    sev: 1
+    status: false-positive
+    route: /he/posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "DPR-2 crop shows the subscript k intact at the clip edge (math descender)"
+  - id: 750ea95941
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /he/posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "ul.related-posts-list > li > a spans y=14976..14999"
+    lock: probe:first-screen
+  - id: a6bbe16e1b
+    source: probe:clipped-text
+    sev: 1
+    status: false-positive
+    route: /he/posts/election-night-station-by-station/
+    viewport: 768
+    evidence: "DPR-2 crop shows the subscript k intact at the clip edge (math descender)"
+  - id: 6a74f5ab05
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /he/posts/election-night-station-by-station/
+    viewport: 768
+    evidence: "ul.related-posts-list > li > a spans y=8700..8723"
+    lock: probe:first-screen
+  - id: d9018cb5e1
+    source: probe:clipped-text
+    sev: 1
+    status: false-positive
+    route: /he/posts/election-night-station-by-station/
+    viewport: 1280
+    evidence: "DPR-2 crop shows the subscript k intact at the clip edge (math descender)"
+  - id: a66b07519c
+    source: probe:first-screen
+    sev: 3
+    status: fixed
+    route: /he/posts/election-night-station-by-station/
+    viewport: 1280
+    evidence: "ul.related-posts-list > li > a spans y=8265..8288"
+    lock: probe:first-screen
+  - id: 08caa63c05
+    source: probe:h-overflow
+    sev: 2
+    status: verified
+    route: /posts/
+    viewport: 360
+    evidence: "document is 367px wide at a 360px viewport (+7px)"
+  - id: 76473bf2ca
+    source: probe:h-overflow
+    sev: 2
+    status: verified
+    route: /posts/
+    viewport: 360
+    evidence: "document is 367px wide at a 360px viewport (+7px)"
+  - id: 181bc6d830
+    source: probe:h-overflow
+    sev: 2
+    status: verified
+    route: /posts/
+    viewport: 360
+    evidence: "document is 367px wide at a 360px viewport (+7px)"
+  - id: 66ab748ff1
+    source: probe:h-overflow
+    sev: 2
+    status: verified
+    route: /posts/
+    viewport: 360
+    evidence: "document is 367px wide at a 360px viewport (+7px)"
+  - id: cnt-majority
+    source: ux-critic
+    also: [dataviz-critic]
+    sev: 3
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "no 61-of-120 frame for the 54; seats tiles omit the change bloc"
+    note: "PR 1 added the 61 frame to prose, summary and chart note; three-bloc tiles wait for PR 3"
+  - id: uxc-projection-as-count
+    source: ux-critic
+    sev: 3
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "p1 'On the count so far ... about 54' is a projection; Shas 7 likewise"
+    lock: grep:On a projection from the count so far
+  - id: dv-turnout-contradicts-prose
+    source: dataviz-critic
+    sev: 3
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "'nearly all of that rise' vs chart ~40%; group turnouts all below national 77.7% unexplained"
+    lock: grep:By far the largest rise
+  - id: uxc-tables-clip-360
+    source: ux-critic
+    also: [dataviz-critic, accessibility-evaluator]
+    sev: 3
+    status: verified
+    route: /posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "Station column cut at 360 hiding the Arab-lists figure; results table hides bloc-change column; no scroll cue, not keyboard-focusable"
+  - id: dv-threshold-on-local-rows
+    source: dataviz-critic
+    sev: 3
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "national 3.25% marker drawn across Eli/Kfar Adumim/Efrat bars"
+  - id: uxc-my-town
+    source: ux-critic
+    sev: 3
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "no town lookup; only bechirot.fyi link goes to the map, 10.7 screens down [UNTESTED - assumption]"
+    note: "PR 1 added the localities link in the summary; still below the first screen (rows 6d600aca71, f3eaa835dd)"
+  - id: a11y-callout-strong-contrast
+    source: accessibility-evaluator
+    also: [ux-critic]
+    sev: 3
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "teal bold in callout 4.19:1 on --bg-code; reads as a link"
+  - id: a11y-footer-link-colour-only
+    source: accessibility-evaluator
+    sev: 3
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "footer CC BY-SA link 2.75:1 vs surrounding text, no underline"
+  - id: a11y-copied-dark-contrast
+    source: accessibility-evaluator
+    sev: 3
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "'Copied!' white on #7fb894, 2.29:1 in dark"
+  - id: a11y-copied-not-announced
+    source: accessibility-evaluator
+    sev: 2
+    status: unverified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "no role=status for copy confirmation"
+  - id: uxc-night-no-summary
+    source: ux-critic
+    sev: 2
+    status: fixed
+    route: /posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "no summary/timeline; lessons 22.6 phone screens down; first screen doesn't say count unfinished"
+    lock: grep:What the live page showed
+  - id: uxc-toc-at-bottom-mobile
+    source: ux-critic
+    sev: 2
+    status: verified
+    route: /posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "'On this page' renders after the article below 992px"
+  - id: uxc-callout-padding-360
+    source: ux-critic
+    sev: 2
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "callout padding + indent leave 204px of text, summary 843px tall"
+  - id: uxc-he-404-english
+    source: ux-critic
+    sev: 2
+    status: verified
+    route: /he/posts/no-such-post/
+    viewport: 360
+    evidence: "Hebrew path serves the English 404"
+  - id: uxc-search-error-as-empty
+    source: ux-critic
+    sev: 2
+    status: verified
+    route: /posts/
+    viewport: 360
+    evidence: "failed index load reads 'No posts match that.'"
+  - id: uxc-he-titles-near-identical
+    source: ux-critic
+    sev: 2
+    status: verified
+    route: /he/posts/
+    viewport: 360
+    evidence: "קלפי מול קלפי / קלפי אחר קלפי differ by one word [UNTESTED - assumption]"
+  - id: dv-bar-scale-drifts-per-row
+    source: dataviz-critic
+    sev: 2
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "track width varies with value-column width, lie factor ~0.96"
+  - id: dv-dumbbell-hidden-2022
+    source: dataviz-critic
+    sev: 2
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "Shas/UTJ 2022 ring hidden under 2026 dot"
+  - id: dv-dumbbell-no-scale
+    source: dataviz-critic
+    sev: 2
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "40-80% domain unmarked"
+  - id: dv-cross-chart-scales
+    source: dataviz-critic
+    sev: 2
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "each chart scaled to own max; falls drawn like rises, no sign"
+  - id: dv-accent-as-datum
+    source: dataviz-critic
+    sev: 2
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "link teal used as the data colour"
+  - id: dv-mixed-ratio-claim
+    source: dataviz-critic
+    sev: 2
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "'twice as fast or more' vs Ramla 1.8x"
+    lock: grep:nearly twice as fast or more
+  - id: dv-arab-rise-no-reference
+    source: dataviz-critic
+    sev: 2
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "no reference bar unlike figs 5-6"
+  - id: dv-seats-no-uncertainty
+    source: dataviz-critic
+    sev: 2
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "point values only"
+  - id: dv-night-key-below-and-raw
+    source: dataviz-critic
+    sev: 2
+    status: verified
+    route: /posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "bloc key in caption after table; 'In'/'Raw' cryptic"
+  - id: dv-night-range-asymmetry
+    source: dataviz-critic
+    sev: 2
+    status: verified
+    route: /posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "town ±2 not shown; station ranges not called too narrow in caption"
+  - id: cnt-cross-units
+    source: ux-critic
+    sev: 2
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "1,606 boxes vs 431 places; 'near 80%' vs 76.9% unreconciled"
+    lock: grep:so the two numbers do not compare
+  - id: cnt-haredi-stayed-home
+    source: ux-critic
+    sev: 2
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "'stayed home' overstates flat turnout"
+    lock: grep:Haredi turnout stood still
+  - id: a11y-table-no-caption-scope
+    source: accessibility-evaluator
+    sev: 1
+    status: verified
+    route: /posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "no <caption>, no scope"
+  - id: dv-eli-two-lists
+    source: dataviz-critic
+    sev: 1
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "Eli row sums two lists against a per-list threshold"
+  - id: dv-he-title-orphan
+    source: dataviz-critic
+    sev: 1
+    status: verified
+    route: /he/posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "', %' wraps alone"
+  - id: dv-chart-box-ink
+    source: dataviz-critic
+    sev: 1
+    status: verified
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "border + fill + tile fill"
+  - id: dv-night-convergence-unplotted
+    source: dataviz-critic
+    sev: 2
+    status: wontfix
+    route: /posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "large build; the table carries the data"
+  - id: dv-he-range-display
+    source: dataviz-critic
+    also: [accessibility-evaluator]
+    sev: 1
+    status: wontfix
+    route: /he/posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "RTL range order is logically correct"
+  - id: 23880c5064
+    source: probe:first-screen
+    sev: 3
+    status: open
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "summary's headline item spans y=674..810, first screen ends 740 (local, PR 1 branch)"

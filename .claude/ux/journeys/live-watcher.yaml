@@ -1,0 +1,29 @@
+persona: someone who watched the live projection on election night (Hebrew or English)
+jtbd: "When the seat projection I watched overnight turns out to have been wrong, I want to know which numbers I saw were wrong, why, and what the corrected picture is, so I can trust (or discount) what I told people."
+provenance: assumption
+source: none — hypothesis drafted 2026-10-28; the live page bechirot.fyi/live showed Ra'am out and Likud on 31 from 02:16
+post: election-night-station-by-station
+steps:
+  - id: was-what-i-saw-wrong
+    surface: gfrm.in
+    goal: Learn, in the first screen, that the overnight projection was wrong and in which direction
+    route: /he/posts/election-night-station-by-station/
+    first_screen: The subtitle saying the projection put an Arab party out that exit polls had at seven, and that it wasn't a modelling mistake
+    first_screen_probe: 'p.subtitle::סקרי המדגם'
+    success: Reader reaches the corrected projection table (the last night table)
+    failure_modes: [the corrected numbers only appear after the method, the Hebrew reader is sent to the English live page, times not in Israel time]
+    scent: the live page's own link, the word "תחזית"
+    signals:
+      - name: arrives-from-bechirot
+        kind: posthog
+        hogql: "select count() from events where event='$pageview' and properties.$pathname like '%election-night-station-by-station%' and properties.$referring_domain like '%bechirot.fyi%' and timestamp > now() - interval {window_days} day"
+        window_days: 14
+        threshold: 10
+        becomes_evidence: People come to the post from the live page itself; who they are is not measured.
+      - name: watcher-bounces
+        kind: posthog
+        refutes: true
+        hogql: "with pv as (select count() c from events where event='$pageview' and properties.$pathname like '%election-night-station-by-station%' and properties.$referring_domain like '%bechirot.fyi%' and timestamp > now() - interval {window_days} day), d as (select count() c from events where event='post_progress' and properties.depth>=50 and properties.slug like '%election-night-station-by-station%' and timestamp > now() - interval {window_days} day) select if((select c from pv) >= 30 and (select c from d) < 0.1*(select c from pv), 1, 0)"
+        window_days: 14
+        threshold: 1
+        becomes_evidence: With at least 30 arrivals from bechirot.fyi, under 10% reaching halfway means the post doesn't answer the watcher. Returns 0 below 30.
