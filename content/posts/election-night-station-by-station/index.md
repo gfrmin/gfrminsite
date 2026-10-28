@@ -8,6 +8,8 @@ draft: false
 categories: [essays, bayesian, israel, data]
 ---
 
+*This post is about the live projection on election night, and why it failed. What the count showed by morning, polling place by polling place, is in [Polling Place by Polling Place](/posts/election-2026-polling-place-by-polling-place/).*
+
 At sixteen minutes past two in the morning, Israel time, [bechirot.fyi/live](https://bechirot.fyi/en/live) started showing the count of the election to the 26th Knesset. Above the count sat a seat projection: the 120 seats as they would fall once everything was counted. It put Likud on 31 and Ra'am, the United Arab List, below the electoral threshold, out of the Knesset.
 
 Four hours earlier, every television exit poll had given Ra'am seven seats.
@@ -15,6 +17,16 @@ Four hours earlier, every television exit poll had given Ra'am seven seats.
 There are two lazy readings of a gap like that. One is that the exit polls were wrong, as they sometimes are. The other is that the projection was wrong, as new models usually are. Both readings skip the useful question, which is *what was the projection looking at?* The answer turned out to be: almost nothing, labelled as almost everything.
 
 I was in Hong Kong, six hours ahead, where the exit polls had come out at four in the morning. The site was being run by a coding agent, Claude Code, against a checklist we had written beforehand: the same habit I have written about in [disciplining the coding agent](/series/coding-agents/), applied to a night rather than a codebase. What follows is what it found and what we built in the next few hours.
+
+{{< callout type="note" >}}
+**In short**
+
+- **What the live page showed.** From 02:16, Israel time, a seat projection with Likud on 31 and Ra'am out of the Knesset. The fix went live shortly after 03:26, and a second projection, built station by station, went up at 03:45.
+- **Why.** Not the model but the data: the committee's 2026 file lists a town only once it reports, and reports it in pieces, so the projection filled in nothing and took half-counted cities as complete.
+- **What I would keep.** Rehearse on the shape of the next file, not the contents of the last one. Let the estimator say "not yet", and make that the default. Keep every version of every file.
+
+Written while the count was still running: the tables run to the committee's 05:58 file. What the count showed by 10:02 is in [Polling Place by Polling Place](/posts/election-2026-polling-place-by-polling-place/).
+{{< /callout >}}
 
 ## The projection had been rehearsed on the wrong file
 
@@ -56,7 +68,7 @@ With stations matched, the classic tool is the one political scientists call eco
 
 $$ y_{j}(s) = \sum_k \beta_{jk} \, x_k(s), $$
 
-where \(x_k(s)\) is the 2022 vote for list \(k\) in station \(s\), scaled by the change in its eligible voters, with one extra \(k\) for the people who did not vote in 2022. Each \(\beta_{jk}\) reads, loosely, as the share of list \(k\)'s 2022 voters who voted for list \(j\) this time. It is fitted by non-negative least squares, because a negative flow of voters is not a thing. The non-voter column is what lets it see a turnout surge rather than mistake it for a shift between parties: this was an election in which Arab turnout was reported near 80%.
+where \(x_k(s)\) is the 2022 vote for list \(k\) in station \(s\), scaled by the change in its eligible voters, with one extra \(k\) for the people who did not vote in 2022. Each \(\beta_{jk}\) reads, loosely, as the share of list \(k\)'s 2022 voters who voted for list \(j\) this time. It is fitted by non-negative least squares, because a negative flow of voters is not a thing. The non-voter column is what lets it see a turnout surge rather than mistake it for a shift between parties: this was an election in which Arab turnout was reported near 80% (76.9% in the polling places the Arab lists won in 2022, on the committee's 10:02 file).
 
 Goodman's method rests on one strong assumption: that the flows are the same everywhere, so that a 2022 Joint List voter in Rahat moves like one in Haifa. The \(\beta\)s are fitted once, from whichever stations have been counted, and applied to every station that has not.
 
@@ -86,13 +98,13 @@ It went on the live page, under a heading that says *experimental*. The page car
 - Its ranges are too narrow.
 - While few Arab-majority stations are counted, the split between the two Arab lists is not to be relied on. This is the constancy assumption failing in plain sight. At 02:38 it was 9 of the 1,606 stations that had an Arab majority in 2022, nearly all of them in Haifa and the Galilee, where the Joint List is strong. Ra'am's base in the Negev and the Triangle had not reported, which is why Ra'am's 4 is almost certainly too low and the Joint List's 13 too high. Their sum matched the exit polls.
 
-The ranges deserve a sentence of their own. They come from a bootstrap that resamples the towns already counted. A bootstrap can only tell you how much your answer would move if you had drawn a different sample *from the same population*. The stations counted by 2:38 are not a sample from the same population as the stations counted by 6:00: small kibbutzim count fast, cities and the Negev count slowly. The honest uncertainty is the bootstrap's plus the error of assuming the uncounted resemble the counted, and only a backtest over real counting orders can measure the second. For the town projection we had that backtest. For the station projection we did not, because the 2022 per-station file holds only the final count, with no record of which station came in when.
+The ranges deserve a sentence of their own. They come from a bootstrap that resamples the towns already counted. A bootstrap can only tell you how much your answer would move if you had drawn a different sample *from the same population*. The stations counted by 02:38 are not a sample from the same population as the stations counted by 06:00: small kibbutzim count fast, cities and the Negev count slowly. The honest uncertainty is the bootstrap's plus the error of assuming the uncounted resemble the counted, and only a backtest over real counting orders can measure the second. For the town projection we had that backtest. For the station projection we did not, because the 2022 per-station file holds only the final count, with no record of which station came in when.
 
 ## Four numbers on one page
 
 By four in the morning the live page carried four different answers to the question "how many seats?", and it is worth being exact about what each one is.
 
-- **The exit polls.** Five channels' estimates at 22:00: Kan 11, Channel 12, Channel 13, Channel 14 and i24NEWS. Each was copied by hand from the channel's own published figures, each summed to 120, and each is linked to its source. They are interviews, not counts.
+- **The exit polls.** Five channels' estimates at 22:00: Kan 11, Channel 12, Channel 13, Channel 14 and i24NEWS. Each was copied by hand from the channel's own published figures, each summed to 120, and each is linked to its source on the live page. They are interviews, not counts.
 - **The seats if the count stopped now.** Bader-Ofer on the votes counted so far: the 3.25% threshold, then the division, with the six surplus agreements the committee published in October. No modelling at all. It answers a question nobody is asking, but it is the only one of the four that is a fact.
 - **The town projection.** Every town not yet counted filled in from towns that voted like it in the past, as above. It shows nothing until each camp has ten whole towns counted. Its range is the error it made at that much counted when the last four elections were replayed.
 - **The station projection.** Every station not yet counted filled in from its own 2022 result, through the flows estimated from the counted stations. Its range is the bootstrap, and it is too narrow.
@@ -128,6 +140,8 @@ The count was still running when I wrote this. This is the latest file the table
 {{< election-night-table table="lists" >}}
 
 The real test is the certified result. Every version of every file is kept, so the comparison can be made at each one: the station projection against the final seats, with the town projection beside it from the moment its gate opened. Three questions will settle it. At what share counted did each projection come within a seat of the final result for every list? Did the Arab split converge once the Negev and the Triangle reported, and how fast? And how often did the final seat count fall outside the bootstrap's 90% range? That last one measures how much too narrow it was.
+
+By 10:02 on the 28th the committee's file held 3.76 million valid votes. What that file shows, polling place by polling place, is in [Polling Place by Polling Place](/posts/election-2026-polling-place-by-polling-place/).
 
 ## What I would keep
 
