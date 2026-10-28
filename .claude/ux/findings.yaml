@@ -233,7 +233,7 @@ findings:
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "no 61-of-120 frame for the 54; seats tiles omit the change bloc"
-    note: "PR 1 added the 61 frame to prose, summary and chart note; three-bloc tiles wait for PR 3"
+    note: "Open only for the three-bloc tiles (change bloc), which need the change-bloc figure from the 10:02 projection confirmed. PR 1 added the 61 frame to prose, summary and chart note; three-bloc tiles wait for PR 3"
   - id: uxc-projection-as-count
     source: ux-critic
     sev: 3
@@ -262,10 +262,11 @@ findings:
   - id: dv-threshold-on-local-rows
     source: dataviz-critic
     sev: 3
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "national 3.25% marker drawn across Eli/Kfar Adumim/Efrat bars"
+    lock: "grep:marker drawn on .ref rows only"
   - id: uxc-my-town
     source: ux-critic
     sev: 3
@@ -359,38 +360,43 @@ findings:
   - id: dv-bar-scale-drifts-per-row
     source: dataviz-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "track width varies with value-column width, lie factor ~0.96"
+    lock: "grep:fixed value column in .stat-row"
   - id: dv-dumbbell-hidden-2022
     source: dataviz-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "Shas/UTJ 2022 ring hidden under 2026 dot"
+    lock: "grep:.stat-track .stat-dot-from transparent, drawn last"
   - id: dv-dumbbell-no-scale
     source: dataviz-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "40-80% domain unmarked"
+    lock: "grep:ticks in charts.json turnout"
   - id: dv-cross-chart-scales
     source: dataviz-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "each chart scaled to own max; falls drawn like rises, no sign"
+    lock: "grep:max 15 and sign - on shas-fall and mixed"
   - id: dv-accent-as-datum
     source: dataviz-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "link teal used as the data colour"
+    lock: "grep:.stat-bar background text-primary"
   - id: dv-mixed-ratio-claim
     source: dataviz-critic
     sev: 2
@@ -402,17 +408,19 @@ findings:
   - id: dv-arab-rise-no-reference
     source: dataviz-critic
     sev: 2
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "no reference bar unlike figs 5-6"
+    lock: "grep:All places the Arab lists won in 2022"
   - id: dv-seats-no-uncertainty
     source: dataviz-critic
     sev: 2
-    status: verified
+    status: wontfix
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "point values only"
+    note: "No validated error band exists for the 10:02 projection; the note says it is a projection, not the result, and gives the 61 majority."
   - id: dv-night-key-below-and-raw
     source: dataviz-critic
     sev: 2
@@ -456,24 +464,27 @@ findings:
   - id: dv-eli-two-lists
     source: dataviz-critic
     sev: 1
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "Eli row sums two lists against a per-list threshold"
+    lock: "grep:Amcha Yisrael and Noam combined"
   - id: dv-he-title-orphan
     source: dataviz-critic
     sev: 1
-    status: verified
+    status: fixed
     route: /he/posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "', %' wraps alone"
+    lock: "grep:nbsp before (%) in below-threshold title"
   - id: dv-chart-box-ink
     source: dataviz-critic
     sev: 1
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "border + fill + tile fill"
+    lock: "grep:.stat-tile without background"
   - id: dv-night-convergence-unplotted
     source: dataviz-critic
     sev: 2

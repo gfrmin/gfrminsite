@@ -2459,8 +2459,10 @@ blockquote a,
 
 /* Stat charts (layouts/shortcodes/stat-chart.html): bars, dumbbells and tiles drawn in
    HTML, so labels stay text and RTL mirrors them through logical properties alone.
-   The 2022 dot is muted ink and hollow, the 2026 dot teal and filled: identity never
-   rests on colour alone, and the value is printed beside every row. */
+   Data marks are ink, reference marks muted: teal is the link colour and nothing else.
+   The 2022 dot is a hollow muted ring drawn above the filled 2026 dot, so when the two
+   coincide the ring still shows. Identity never rests on colour alone, and the value is
+   printed beside every row. */
 .stat-chart {
   margin: 2rem 0;
   padding: 1rem 1.25rem;
@@ -2478,13 +2480,15 @@ blockquote a,
 }
 .stat-row {
   display: grid;
-  grid-template-columns: minmax(7rem, 38%) 1fr auto;
+  /* a fixed value column: with `auto` each row sized its own, and the tracks, which
+     every bar is a share of, came out a few pixels different per row */
+  grid-template-columns: minmax(7rem, 38%) 1fr 4.5ch;
   align-items: center;
   gap: 0.75rem;
   margin: 0.45rem 0;
 }
 .stat-label { color: var(--text-secondary); }
-.stat-value { color: var(--text-primary); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stat-value { color: var(--text-primary); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: end; }
 .stat-track {
   position: relative;
   display: block;
@@ -2494,7 +2498,7 @@ blockquote a,
   position: absolute;
   inset-block: 0;
   inset-inline-start: 0;
-  background: var(--brand-primary);
+  background: var(--text-primary);
   border-start-end-radius: 4px;
   border-end-end-radius: 4px;
 }
@@ -2533,7 +2537,25 @@ blockquote a,
   margin-inline-start: -0.375rem;
 }
 .stat-dot-from { background: var(--bg-card); border: 2px solid var(--text-muted); }
-.stat-dot-to { background: var(--brand-primary); box-shadow: 0 0 0 2px var(--bg-card); }
+.stat-track .stat-dot-from { background: transparent; }
+.stat-dot-to { background: var(--text-primary); box-shadow: 0 0 0 2px var(--bg-card); }
+.stat-chart-dumbbell .stat-row { grid-template-columns: minmax(7rem, 38%) 1fr 14ch; }
+.stat-axis { margin-top: 0.1rem; }
+.stat-axis .stat-track { height: 1.1em; border-top: 1px solid var(--border-subtle); }
+.stat-tick {
+  position: absolute;
+  top: 0.15rem;
+  transform: translateX(-50%);
+  color: var(--text-muted);
+  font-size: var(--fs-micro);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.rtl-content .stat-tick { transform: translateX(50%); }
+/* the end ticks sit inside the track rather than half outside it */
+.stat-tick:first-child { transform: none; }
+.stat-tick:last-child { transform: translateX(-100%); }
+.rtl-content .stat-tick:last-child { transform: translateX(100%); }
 .stat-legend { color: var(--text-secondary); margin: 0 0 0.5rem; }
 .stat-legend .stat-dot { vertical-align: -0.1em; margin-inline: 0 0.35rem; }
 .stat-legend .stat-dot-to { margin-inline-start: 1rem; }
@@ -2551,15 +2573,15 @@ blockquote a,
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  padding: 0.75rem;
-  background: var(--bg-page);
-  border-radius: 4px;
+  padding: 0.25rem 0;
 }
 .stat-tile-label { color: var(--text-secondary); }
 .stat-tile-value { font-family: var(--font-display); font-size: var(--fs-h3); color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .stat-tile-value strong { color: var(--text-primary); font-weight: 600; }
 @media (max-width: 575px) {
   .stat-chart { padding: 0.75rem; }
-  .stat-row { grid-template-columns: 1fr auto; row-gap: 0.25rem; }
+  .stat-row { grid-template-columns: 1fr 4.5ch; row-gap: 0.25rem; }
+  .stat-chart-dumbbell .stat-row { grid-template-columns: 1fr 14ch; }
   .stat-label { grid-column: 1 / -1; }
+  .stat-axis .stat-label { display: none; }
 }
