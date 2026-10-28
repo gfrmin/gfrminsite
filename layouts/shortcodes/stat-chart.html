@@ -1,11 +1,20 @@
 {{- /* A small chart drawn in HTML and CSS from the bundle's charts.json, so the text stays
        text, a right-to-left page mirrors it with no extra rules, and nothing runs in the
        browser. Every label, title and note lives in the data, keyed by language.
-       {{< stat-chart id="turnout" >}}   kinds: stats (tiles), dumbbell (from → to), bars */ -}}
+       {{< stat-chart id="turnout" >}}   kinds: stats (tiles), dumbbell (from → to), bars
+       Optional keys: max (bars: a fixed scale end, so two charts of one measure share a
+       scale), ticks (a list of values printed under the tracks), sign ("-" prints a minus
+       on every bar value; lengths are magnitudes), marker (bars: a dashed line drawn on reference
+       rows only, where the comparison is like for like), note. */ -}}
 {{- $lang := .Page.Language.Lang -}}
 {{- $c := index (.Page.Resources.Get "charts.json" | transform.Unmarshal) (.Get "id") -}}
 {{- if not $c }}{{ errorf "stat-chart: no chart %q in %s/charts.json" (.Get "id") .Page.File.Dir }}{{ end -}}
 {{- $arrow := cond (eq .Page.Language.Direction "rtl") "←" "→" -}}
+{{- /* scale: from lo to hi; a bar chart starts at zero */ -}}
+{{- $lo := 0.0 }}{{ $hi := 0.0 -}}
+{{- if eq $c.kind "dumbbell" }}{{ $lo = float $c.min }}{{ $hi = float $c.max }}{{ end -}}
+{{- if eq $c.kind "bars" }}{{ range $c.rows }}{{ $hi = math.Max $hi (float .value) }}{{ end }}{{ with $c.max }}{{ $hi = float . }}{{ end }}{{ end -}}
+{{- $span := sub $hi $lo -}}
 <figure class="stat-chart stat-chart-{{ $c.kind }}">
 <figcaption class="stat-chart-title">{{ index $c.title $lang }}</figcaption>
 {{- if eq $c.kind "stats" }}
@@ -15,28 +24,37 @@
 {{- end }}
 </div>
 {{- else if eq $c.kind "dumbbell" }}
-{{- $span := sub (float $c.max) (float $c.min) -}}
 <p class="stat-legend" aria-hidden="true"><span class="stat-dot stat-dot-from"></span>{{ index $c.legend.from $lang }} <span class="stat-dot stat-dot-to"></span>{{ index $c.legend.to $lang }}</p>
 {{- range $c.rows }}
-{{- $a := mul 100 (div (sub (float .from) $c.min) $span) -}}
-{{- $b := mul 100 (div (sub (float .to) $c.min) $span) -}}
+{{- $a := mul 100 (div (sub (float .from) $lo) $span) -}}
+{{- $b := mul 100 (div (sub (float .to) $lo) $span) -}}
 <div class="stat-row" title="{{ index .label $lang }}: {{ .from }}{{ $c.unit }} {{ $arrow }} {{ .to }}{{ $c.unit }}">
 <span class="stat-label">{{ index .label $lang }}</span>
-<span class="stat-track" aria-hidden="true"><span class="stat-span" style="inset-inline-start: {{ printf "%.2f" (math.Min $a $b) }}%; width: {{ printf "%.2f" (math.Abs (sub $b $a)) }}%"></span><span class="stat-dot stat-dot-from" style="inset-inline-start: {{ printf "%.2f" $a }}%"></span><span class="stat-dot stat-dot-to" style="inset-inline-start: {{ printf "%.2f" $b }}%"></span></span>
+<span class="stat-track" aria-hidden="true"><span class="stat-span" style="inset-inline-start: {{ printf "%.2f" (math.Min $a $b) }}%; width: {{ printf "%.2f" (math.Abs (sub $b $a)) }}%"></span><span class="stat-dot stat-dot-to" style="inset-inline-start: {{ printf "%.2f" $b }}%"></span><span class="stat-dot stat-dot-from" style="inset-inline-start: {{ printf "%.2f" $a }}%"></span></span>
 <span class="stat-value">{{ .from }}{{ $c.unit }} {{ $arrow }} <strong>{{ .to }}{{ $c.unit }}</strong></span>
 </div>
 {{- end }}
 {{- else if eq $c.kind "bars" }}
 {{- $dp := int ($c.decimals | default 0) -}}
-{{- $max := 0.0 }}{{ range $c.rows }}{{ $max = math.Max $max (float .value) }}{{ end -}}
+{{- $minus := cond (eq $c.sign "-") "−" "" -}}
 {{- range $c.rows }}
-<div class="stat-row{{ if .ref }} stat-row-ref{{ end }}" title="{{ index .label $lang }}: {{ lang.FormatNumber $dp .value }}">
+{{- $v := printf "%s%s" $minus (lang.FormatNumber $dp .value) -}}
+<div class="stat-row{{ if .ref }} stat-row-ref{{ end }}" title="{{ index .label $lang }}: {{ $v }}">
 <span class="stat-label">{{ index .label $lang }}</span>
-<span class="stat-track" aria-hidden="true"><span class="stat-bar" style="width: {{ printf "%.2f" (mul 100 (div (float .value) $max)) }}%"></span>{{ with $c.marker }}<span class="stat-marker" style="inset-inline-start: {{ printf "%.2f" (mul 100 (div (float .value) $max)) }}%"></span>{{ end }}</span>
-<span class="stat-value">{{ lang.FormatNumber $dp .value }}</span>
+<span class="stat-track" aria-hidden="true"><span class="stat-bar" style="width: {{ printf "%.2f" (mul 100 (div (float .value) $span)) }}%"></span>{{ if .ref }}{{ with $c.marker }}<span class="stat-marker" style="inset-inline-start: {{ printf "%.2f" (mul 100 (div (float .value) $span)) }}%"></span>{{ end }}{{ end }}</span>
+{{- /* dir=ltr: a leading minus is a neutral, and in a right-to-left run it lands on
+       the far side of its number */}}
+<span class="stat-value" dir="ltr">{{ $v }}</span>
 </div>
 {{- end }}
-{{- with $c.marker }}<p class="stat-note"><span class="stat-marker-key" aria-hidden="true"></span>{{ index .label $lang }}</p>{{ end }}
 {{- end }}
+{{- with $c.ticks }}
+<div class="stat-row stat-axis" aria-hidden="true">
+<span class="stat-label"></span>
+<span class="stat-track">{{ range . }}<span class="stat-tick" style="inset-inline-start: {{ printf "%.2f" (mul 100 (div (sub (float .) $lo) $span)) }}%">{{ . }}{{ $c.unit }}</span>{{ end }}</span>
+<span class="stat-value"></span>
+</div>
+{{- end }}
+{{- if eq $c.kind "bars" }}{{ with $c.marker }}<p class="stat-note"><span class="stat-marker-key" aria-hidden="true"></span>{{ index .label $lang }}</p>{{ end }}{{ end }}
 {{- with $c.note }}<p class="stat-note">{{ index . $lang }}</p>{{ end }}
 </figure>

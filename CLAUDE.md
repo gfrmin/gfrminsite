@@ -185,7 +185,12 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   by language. No SVG and no script: text stays text, and RTL mirrors through logical
   properties (`inset-inline-start`) alone. Styles are the `.stat-*` block in `main.css`,
   on the existing tokens, so dark mode needs nothing extra. First used by
-  `election-2026-polling-place-by-polling-place`.
+  `election-2026-polling-place-by-polling-place`. Optional keys: `max` (a fixed scale end, so two charts
+  of one measure share a scale), `ticks` (values printed under the tracks), `sign: "-"`
+  (prints a minus; bar lengths stay magnitudes, and bar values are `dir="ltr"` because a
+  leading minus lands on the wrong side of its number in RTL), `marker` (drawn on `ref`
+  rows only: a national threshold across a local bar compares unlike things). Data
+  marks are ink, reference marks muted; teal stays the link colour.
 - `layouts/_default/_markup/render-table.html` — every markdown table is wrapped in a
   focusable, named `.table-scroll` region (the election-night shortcode does the same). The
   `table` element keeps `display: table`: the old `table { display: block; overflow-x: auto }`

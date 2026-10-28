@@ -84,7 +84,12 @@
     "note": {
       "en": "Matched polling places only, without the envelope ballots; not comparable with the committee's national figure.",
       "he": "מקומות קלפי שהותאמו בלבד, בלי המעטפות החיצוניות; לא ניתן להשוואה לנתון הארצי של הוועדה."
-    }
+    },
+    "ticks": [
+      40,
+      60,
+      80
+    ]
   },
   "arab-rise": {
     "kind": "bars",
@@ -123,6 +128,14 @@
       },
       {
         "label": {
+          "en": "All places the Arab lists won in 2022",
+          "he": "כל המקומות שהרשימות הערביות זכו בהם ב-2022"
+        },
+        "value": 26,
+        "ref": true
+      },
+      {
+        "label": {
           "en": "Mi'elya",
           "he": "מעיליא"
         },
@@ -142,13 +155,18 @@
         },
         "value": 12
       }
+    ],
+    "ticks": [
+      0,
+      20,
+      40
     ]
   },
   "shas-fall": {
     "kind": "bars",
     "title": {
-      "en": "Fall in Shas's share since 2022, points",
-      "he": "הירידה בחלקה של ש״ס מאז 2022, בנקודות"
+      "en": "Change in Shas's share since 2022, points",
+      "he": "השינוי בחלקה של ש״ס מאז 2022, בנקודות"
     },
     "rows": [
       {
@@ -180,19 +198,27 @@
         "value": 7.0
       }
     ],
-    "decimals": 1
+    "decimals": 1,
+    "sign": "-",
+    "max": 15,
+    "ticks": [
+      0,
+      5,
+      10,
+      15
+    ]
   },
   "below-threshold": {
     "kind": "bars",
     "title": {
-      "en": "Share for lists below the threshold, %",
-      "he": "החלק של רשימות מתחת לאחוז החסימה, %"
+      "en": "Share for lists below the threshold (%)",
+      "he": "החלק של רשימות מתחת לאחוז החסימה (%)"
     },
     "rows": [
       {
         "label": {
-          "en": "Eli: Amcha Yisrael and Noam",
-          "he": "עלי: עמך ישראל ונעם"
+          "en": "Eli: Amcha Yisrael and Noam combined",
+          "he": "עלי: עמך ישראל ונעם יחד"
         },
         "value": 14.7
       },
@@ -222,8 +248,8 @@
     "marker": {
       "value": 3.25,
       "label": {
-        "en": "threshold 3.25%",
-        "he": "אחוז החסימה 3.25%"
+        "en": "national threshold 3.25%, which applies to the whole-country figure",
+        "he": "אחוז החסימה הארצי, 3.25%, שחל על הנתון הארצי"
       }
     },
     "decimals": 1
@@ -231,8 +257,8 @@
   "mixed": {
     "kind": "bars",
     "title": {
-      "en": "Fall in the Netanyahu bloc's share outside the Arab neighbourhoods, points",
-      "he": "הירידה בחלקו של גוש נתניהו מחוץ לשכונות הערביות, בנקודות"
+      "en": "Change in the Netanyahu bloc's share outside the Arab neighbourhoods, points",
+      "he": "השינוי בחלקו של גוש נתניהו מחוץ לשכונות הערביות, בנקודות"
     },
     "rows": [
       {
@@ -265,6 +291,14 @@
         "ref": true
       }
     ],
-    "decimals": 1
+    "decimals": 1,
+    "sign": "-",
+    "max": 15,
+    "ticks": [
+      0,
+      5,
+      10,
+      15
+    ]
   }
 }
