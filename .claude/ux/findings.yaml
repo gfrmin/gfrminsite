@@ -600,4 +600,36 @@ findings:
     viewport: 360
     evidence: "Related reading offers two unrelated posts sharing only the 'data' category"
     lock: grep:complement (slice \"essays\" \"data\")
-    note: "related-posts.html ignores essays and data as evidence; the election posts now list each other only."
+    note: "related-posts.html ignores essays and data as evidence; the election posts now list each other only."  # Fact-check by the bechirot session, 2026-10-29, against the archived CEC files and live.json.
+  - id: fc-town-link-overclaims
+    source: fact-check
+    sev: 3
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "'Every town's results' linked locality pages that carry only 2026 turnout until the certified result"
+    lock: grep:Town turnout
+  - id: fc-map-attribution
+    source: fact-check
+    sev: 3
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 1280
+    evidence: "the 2026 Yashar!/Together placement came from an offline fit; the site's polling-place map runs to 2022"
+    lock: grep:Its polling-place map runs to 2022
+  - id: fc-turnout-unlike-comparison
+    source: fact-check
+    sev: 2
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 1280
+    evidence: "77.7% polls-close announcement set against 2022's final 70.6% as like for like"
+    lock: grep:on the final count, turnout in 2022
+  - id: fc-ch14-62
+    source: fact-check
+    sev: 1
+    status: open
+    route: /posts/election-night-station-by-station/
+    viewport: 1280
+    evidence: "Channel 14's 22:00 poll on the site gives the Netanyahu bloc 60; the post says 62 (a later revision?)"
+    note: "Needs the author's source before any change."

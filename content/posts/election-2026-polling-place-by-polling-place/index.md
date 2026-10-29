@@ -12,7 +12,7 @@ categories: [essays, israel, data]
 *Why the live projection failed on the night: [Station by Station](/posts/election-night-station-by-station/).*
 
 {{< callout type="note" >}}
-**In short.** Preliminary, from the committee's 10:02 file, Israel time; seats are projections. Every town's results: [bechirot.fyi](https://bechirot.fyi/en/localities).
+**In short.** Preliminary, from the committee's 10:02 file, Israel time; seats are projected. Town turnout: [bechirot.fyi](https://bechirot.fyi/en/localities).
 
 - **Netanyahu bloc: 54 seats, projected**, down from 64 and seven short of a majority.
 - **Arab turnout rose by 26 points**, to 76.9%. With the Arab parties running together, the Arab lists go from 10 seats to a projected 18.
@@ -26,11 +26,13 @@ A national result is an average, and an average hides things moving in opposite 
 
 These findings are preliminary. They come from the Central Elections Committee's results file of 10:02, Israel time, on the morning of the 28th, with 3.76 million valid votes counted. The envelope ballots, cast by soldiers, diplomats, prisoners and hospital patients, are still to come. When the count is final I will update the findings here, with the date of the update. The seat figures are a projection from the same file, not the result.
 
+*Update, 29 October.* On the committee's 07:00 file, with ballot boxes covering 98% of the electorate counted and the envelope ballots still to come, the Netanyahu bloc stands at 53 seats on every measure, the change bloc at 48 and the Arab lists at 19; Shas is projected at 6. The findings below are still from the 10:02 file.
+
 {{< stat-chart id="seats" >}}
 
 ## Arab turnout jumped by more than twenty-five points
 
-The committee put national turnout at 77.7% when the polls closed, against 70.6% for the whole of 2022. By far the largest rise came from one community. In polling places where the Arab lists won a majority in 2022, turnout went from 50.6% to 76.9%. The polling-place figures here cover only the places matched across the two elections, and none of the envelope ballots, so they run below the committee's national figure and compare only with each other.
+The committee announced national turnout of 77.7% when the polls closed; on the final count, turnout in 2022 was 70.6%. By far the largest rise came from one community. In polling places where the Arab lists won a majority in 2022, turnout went from 50.6% to 76.9%. The polling-place figures here cover only the places matched across the two elections, and none of the envelope ballots, so they run below the committee's national figure and compare only with each other.
 
 {{< stat-chart id="turnout" >}}
 
@@ -76,7 +78,7 @@ Elsewhere the change was more even. Likud fell most in Modi'in (6.5 points), Ari
 
 ## The new parties sit where the old ones did
 
-[bechirot.fyi](https://bechirot.fyi/en/map) draws a political map from the votes alone: places that vote alike sit close together, and each party sits where its voters are. Drawn from polling places rather than towns, the map puts Gadi Eisenkot's Yashar! and Naftali Bennett's Together almost on top of each other, where National Unity sat in 2022, and not where Yesh Atid did. Eisenkot was third on National Unity's list in 2022.
+[bechirot.fyi](https://bechirot.fyi/en/map/places) draws a political map from the votes alone: places that vote alike sit close together, and each party sits where its voters are. Its polling-place map runs to 2022. Fitted the same way to the provisional 2026 count, a map drawn from polling places rather than towns puts Gadi Eisenkot's Yashar! and Naftali Bennett's Together almost on top of each other, where National Unity sat in 2022, and not where Yesh Atid did. Eisenkot was third on National Unity's list in 2022.
 
 ## How these numbers were made
 

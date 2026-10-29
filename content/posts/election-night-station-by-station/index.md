@@ -132,6 +132,8 @@ Four things stand out.
 
 The town projection's backtested error at this much counted is two seats a list either way, and every station figure falls inside it. The town figure falls outside the station projection's range twice, for Yashar! and Ra'am, which says more about how narrow those ranges are than about either figure. What matters is that the small differences all lean the same way, and they add up in the bloc that decides the government. The town projection gives the change bloc 50 and the Arab lists 16, the station projection 47 and 19. Ra'am is the largest single gap: 5 against 7. The exit polls all said 7. On this one the station projection agrees with the polls and the town projection does not. That is not a verdict either way. The exit polls are interviews in a sample of stations. And at 05:14 the stations counted had held only 6% of Ra'am's 2022 vote: none of Rahat's 64 stations, none of Kafr Qasim's 29 or Tamra's 42. Both projections were filling in Ra'am almost entirely from its 2022 map. They differ in how they carry that map forward, and the next files will say which carried it better.
 
+*Update, 29 October.* They have, provisionally. On the committee's 07:00 file Ra'am stands at 8 as counted, 8 on the station projection and 7 on the town projection. The town projection under-filled Ra'am's strongholds and caught up as Rahat, Kafr Qasim and Tamra reported; the station projection was right or slightly low throughout. The envelope ballots, which usually trim the Arab lists, are still to come.
+
 Two methods agreeing is also weaker evidence than it sounds. Both read the same early, fast-counting places, so where they agree they may share one error.
 
 ## How it did
