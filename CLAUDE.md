@@ -198,7 +198,10 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   description goes in a paragraph **above** the box, tied with `aria-describedby` — a
   `<caption>` is as wide as its table and was cut off inside a narrower scroll box.
 - `kicker:` in a post's frontmatter prints a one-word label above the `<h1>`. Used on the two
-  election posts, whose Hebrew titles differ by one word.
+  election posts. It shows only on the post page, not in listings, search, feeds, tabs or
+  share cards, so it cannot by itself tell two titles apart: the Hebrew titles were one word
+  apart ("קלפי מול קלפי" / "קלפי אחר קלפי") until the night post became "ליל הבחירות, קלפי
+  אחר קלפי" and dropped its Hebrew kicker, which would have repeated the title's opening.
 - The table of contents is a sidebar from 992px and a collapsed `<details class="toc-inline">`
   above the body below that; as a sidebar on a phone it rendered after the article.
 - `layouts/404.html`: GitHub Pages serves only the root `404.html`, so on a `/he/` path a
