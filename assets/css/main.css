@@ -1406,6 +1406,10 @@ blockquote p:last-child {
   margin-bottom: 0;
 }
 
+/* The box's padding is the inset; a first paragraph's own top margin doubled it. */
+.callout > :first-child { margin-top: 0; }
+.callout > :last-child { margin-bottom: 0; }
+
 /* Link teal is 4.19:1 on the --bg-code ground of a callout or quote, under AA; the
    darker hover teal is 5.62:1 there (dark theme: lighter teal on a dark ground). */
 blockquote a,
@@ -1417,6 +1421,8 @@ blockquote a,
   blockquote,
   .callout {
     padding-inline: var(--space-md) var(--space-sm);
+    margin-block: var(--space-md);
+    padding-block-start: var(--space-sm);
   }
 
   .callout ul {

@@ -9,12 +9,12 @@ draft: false
 categories: [essays, israel, data]
 ---
 
-*How the live projection was built, and why it failed on the night, is in [Station by Station](/posts/election-night-station-by-station/).*
+*Why the live projection failed on the night: [Station by Station](/posts/election-night-station-by-station/).*
 
 {{< callout type="note" >}}
-**In short.** Preliminary, from the committee's 10:02 file, Israel time; the seat figures are projections. Every town's results are on [bechirot.fyi](https://bechirot.fyi/en/localities).
+**In short.** Preliminary, from the committee's 10:02 file, Israel time; seats are projections. Every town's results: [bechirot.fyi](https://bechirot.fyi/en/localities).
 
-- **The Netanyahu bloc is projected at 54 seats**, down from 64 and seven short of the 61 a government needs.
+- **Netanyahu bloc: 54 seats, projected**, down from 64 and seven short of a majority.
 - **Arab turnout rose by 26 points**, to 76.9%. With the Arab parties running together, the Arab lists go from 10 seats to a projected 18.
 - **Haredi (ultra-Orthodox) turnout stood still, and Shas lost ground.** Turnout was flat while it rose elsewhere, and Shas fell in every Haredi town, from 11 seats to a projected 7.
 - **In the settlements, right-wing votes were lost.** They went to small lists below the 3.25% threshold and elected no one.

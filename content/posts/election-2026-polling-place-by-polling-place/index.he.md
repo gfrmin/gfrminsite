@@ -9,7 +9,7 @@ draft: false
 categories: [essays, israel, data]
 ---
 
-*איך נבנתה התחזית החיה, ולמה נכשלה בליל הבחירות, מסופר ב[קלפי אחר קלפי](/he/posts/election-night-station-by-station/).*
+*למה התחזית החיה נכשלה בליל הבחירות: [קלפי אחר קלפי](/he/posts/election-night-station-by-station/).*
 
 {{< callout type="note" >}}
 **בקיצור.** ממצאים ראשוניים, מקובץ 10:02 של הוועדה, שעון ישראל; מספרי המנדטים הם תחזית. התוצאות של כל יישוב נמצאות ב-[bechirot.fyi](https://bechirot.fyi/localities).
