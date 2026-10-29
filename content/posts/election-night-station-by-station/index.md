@@ -55,7 +55,7 @@ The pattern I keep relearning is that the most useful thing an estimator can do 
 
 ## What the exit polls were doing at one in the morning
 
-While the count crawled, the channels kept updating their exit polls. Channel 13's moved Likud from 25 to 27. Channel 14's took Yisrael Beiteinu below the threshold and gave the Netanyahu bloc 62. My first reaction was the reader's reaction: how are they predicting final results already?
+While the count crawled, the channels kept [updating their exit polls](https://www.israelhayom.co.il/news/politics/article/21720077). Channel 13's moved Likud from 25 to 27. Channel 14's took Yisrael Beiteinu below the threshold and gave the Netanyahu bloc 62. My first reaction was the reader's reaction: how are they predicting final results already?
 
 They are not predicting from the count the way the projection does. An exit poll is built from interviews with voters leaving a sample of polling stations. When those same stations are counted, the pollster sees how far the interviews were off *in those stations*: refusals, shy voters, sectors the interviewers under-sampled. They then correct the whole poll by that error. The final turnout gives a second correction: the interviews stop before the polls close, and the people who vote late are not the people who vote early. One pollster revised his poll after the final turnout figure and said so on air.
 
