@@ -16,6 +16,14 @@
       },
       {
         "label": {
+          "en": "Change bloc",
+          "he": "גוש השינוי"
+        },
+        "from": 46,
+        "to": 48
+      },
+      {
+        "label": {
           "en": "Arab lists",
           "he": "הרשימות הערביות"
         },
@@ -32,8 +40,8 @@
       }
     ],
     "note": {
-      "en": "2026 is a projection from the 10:02 file, not the result. 61 of the 120 seats make a majority.",
-      "he": "2026 היא תחזית מקובץ 10:02, לא התוצאה. רוב הוא 61 מתוך 120 המנדטים."
+      "en": "2026 is the town projection from the 10:02 file, not the result. The change bloc is Yashar!, Together, the Democrats and Yisrael Beiteinu; in 2022, Yesh Atid, National Unity, Yisrael Beiteinu and Labor. No list outside the blocs is projected a seat. 61 of the 120 seats make a majority.",
+      "he": "2026 היא תחזית היישובים מקובץ 10:02, לא התוצאה. גוש השינוי הוא ישר!, ביחד, הדמוקרטים וישראל ביתנו; ב-2022, יש עתיד, המחנה הממלכתי, ישראל ביתנו והעבודה. אף רשימה מחוץ לגושים לא מקבלת מנדט בתחזית. רוב הוא 61 מתוך 120 המנדטים."
     }
   },
   "turnout": {
