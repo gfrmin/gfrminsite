@@ -2513,7 +2513,7 @@ blockquote a,
 .stat-marker-key {
   display: inline-block;
   width: 0;
-  height: 0.9em;
+  height: 1.25rem; /* the in-track marker's height, so its dashes show */
   margin-inline-end: 0.5rem;
   vertical-align: middle;
   border-inline-start: 2px dashed var(--text-primary);
@@ -2581,7 +2581,14 @@ blockquote a,
 @media (max-width: 575px) {
   .stat-chart { padding: 0.75rem; }
   .stat-row { grid-template-columns: 1fr 4.5ch; row-gap: 0.25rem; }
-  .stat-chart-dumbbell .stat-row { grid-template-columns: 1fr 14ch; }
+  /* the dumbbell's 14ch value column left a 40-point track ~130px wide; the value
+     goes up beside the label and the track takes the whole row */
+  .stat-chart-dumbbell .stat-row { grid-template-columns: 1fr auto; }
+  .stat-chart-dumbbell .stat-label { grid-column: 1; grid-row: 1; }
+  .stat-chart-dumbbell .stat-value { grid-column: 2; grid-row: 1; }
+  .stat-chart-dumbbell .stat-track { grid-column: 1 / -1; grid-row: 2; }
+  .stat-chart-dumbbell .stat-axis .stat-track { grid-row: 1; }
+  .stat-chart-dumbbell .stat-axis .stat-value { display: none; }
   .stat-label { grid-column: 1 / -1; }
   .stat-axis .stat-label { display: none; }
 }

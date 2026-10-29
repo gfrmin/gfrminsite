@@ -87,6 +87,9 @@ other = "Copy link"
 other = "Copied!"
 
 # --- 404 -----------------------------------------------------------------
+[notFoundTitle]
+other = "Page not found"
+
 [notFoundBody]
 other = "The page you're looking for doesn't exist or has been moved."
 

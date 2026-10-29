@@ -34,13 +34,15 @@ The committee put national turnout at 77.7% when the polls closed, against 70.6%
 
 {{< stat-chart id="turnout" >}}
 
+The Netanyahu bloc lost least where turnout rose most:
+
 | Polling places, by who won them in 2022 | Netanyahu bloc, change in share |
 |---|---|
 | The Arab lists | −1.5 points |
 | Shas and UTJ | −3.7 points |
 | Everywhere else | −4.5 points |
 
-It rose most in the Triangle, the band of Arab towns along the old Green Line in the centre of the country, and among the Bedouin of the Negev: 42 points in Umm al-Fahm, 39 in Fureidis, 38 in Hura, 37 in Jatt. It rose least in Galilee towns with large Christian and Druze populations, 14 points in Mi'elya and Kafr Yasif, and in the Arab neighbourhoods of Haifa, 12.
+Turnout rose most in the Triangle, the band of Arab towns along the old Green Line in the centre of the country, and among the Bedouin of the Negev: 42 points in Umm al-Fahm, 39 in Fureidis, 38 in Hura, 37 in Jatt. It rose least in Galilee towns with large Christian and Druze populations, 14 points in Mi'elya and Kafr Yasif, and in the Arab neighbourhoods of Haifa, 12.
 
 {{< stat-chart id="arab-rise" >}}
 

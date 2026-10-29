@@ -187,7 +187,7 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   on the existing tokens, so dark mode needs nothing extra. First used by
   `election-2026-polling-place-by-polling-place`. Optional keys: `max` (a fixed scale end, so two charts
   of one measure share a scale), `ticks` (values printed under the tracks), `sign: "-"`
-  (prints a minus; bar lengths stay magnitudes, and bar values are `dir="ltr"` because a
+  (prints a minus on the values and the non-zero ticks; bar lengths stay magnitudes, and bar values are `dir="ltr"` because a
   leading minus lands on the wrong side of its number in RTL), `marker` (drawn on `ref`
   rows only: a national threshold across a local bar compares unlike things). Data
   marks are ink, reference marks muted; teal stays the link colour.
@@ -202,9 +202,14 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
 - The table of contents is a sidebar from 992px and a collapsed `<details class="toc-inline">`
   above the body below that; as a sidebar on a phone it rendered after the article.
 - `layouts/404.html`: GitHub Pages serves only the root `404.html`, so on a `/he/` path a
-  small script fetches the Hebrew `/he/404.html` Hugo builds and swaps its `<main>` in.
+  small script fetches the Hebrew `/he/404.html` Hugo builds and swaps in its `<main>`, the
+  brand, nav links, language link and footer line (an English footer under `lang=he` is
+  bidi-scrambled). The menu and theme buttons are not replaced, only relabelled, because
+  their click handlers are bound to the elements. The title comes from `notFoundTitle`.
 - `assets/js/search.js` tells a corpus that failed to load from one with no matches, and
-  both messages link the archive where the language has one.
+  both messages link the archive where the language has one; the full post list stays
+  visible under either message. `fold` drops quotes and apostrophes (`" ' ‘ ’ ׳ ״`), so
+  `ש"ס` typed on a Hebrew keyboard finds `ש״ס`, and `Ra'am` finds `Ra’am`.
 - `.about-body ul li strong` is the homepage's teal bold; it used to be `main ul li strong`,
   which turned every bold lead-in in a post's list link-teal (and 4.19:1 on a callout).
   Links in callouts and quotes use `--brand-primary-hover`, for the same `--bg-code` reason.

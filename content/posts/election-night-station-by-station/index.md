@@ -22,7 +22,7 @@ I was in Hong Kong, six hours ahead, where the exit polls had come out at four i
 {{< callout type="note" >}}
 **In short**
 
-- **What the live page showed.** From 02:16, Israel time, a seat projection with Likud on 31 and Ra'am out of the Knesset. The fix went live shortly after 03:26, and a second projection, built station by station, went up at 03:45.
+- **What the live page showed.** From 02:16, Israel time, a seat projection with Likud on 31 and Ra'am out of the Knesset. The fix went live shortly after 03:26, and a second projection, built station by station, went up at 03:45. By 05:58 both projections had Likud on 27 and the Netanyahu bloc on 54; they still differed on Ra'am, 5 or 7.
 - **Why.** Not the model but the data: the committee's 2026 file lists a town only once it reports, and reports it in pieces, so the projection filled in nothing and took half-counted cities as complete.
 - **What I would keep.** Rehearse on the shape of the next file, not the contents of the last one. Let the estimator say "not yet", and make that the default. Keep every version of every file.
 
@@ -77,7 +77,7 @@ Every 2022 station not yet counted is then predicted from its own 2022 result. A
 
 On the 02:38 file it gave:
 
-| List | Seats | 90% range |
+| List | Projected seats | 90% range (too narrow) |
 |---|---|---|
 | Likud | 28 | 27–29 |
 | Yashar! (Eisenkot) | 21 | 20–22 |
