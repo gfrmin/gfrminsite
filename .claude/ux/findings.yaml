@@ -628,8 +628,8 @@ findings:
   - id: fc-ch14-62
     source: fact-check
     sev: 1
-    status: open
+    status: false-positive
     route: /posts/election-night-station-by-station/
     viewport: 1280
     evidence: "Channel 14's 22:00 poll on the site gives the Netanyahu bloc 60; the post says 62 (a later revision?)"
-    note: "Needs the author's source before any change."
+    note: "62 is Channel 14's revised poll, out by 00:20 (Israel Hayom live article, archived 02:21: 62 / 40 / 18). The sentence now links that article."
