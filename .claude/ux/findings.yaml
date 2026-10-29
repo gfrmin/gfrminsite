@@ -234,7 +234,7 @@ findings:
     viewport: 360
     evidence: "no 61-of-120 frame for the 54; seats tiles omit the change bloc"
     lock: grep:61 for a majority
-    note: "The tile itself now carries the frame (Netanyahu bloc (61 for a majority)). No change-bloc tile: its 10:02 figure is not in the repo or any local data, and 120-54-18 would assume The Reservists win nothing."
+    note: "The bloc tile carries the 61 frame, and a change-bloc tile (46 to 48) was added from the 10:02 town projection, re-run read-only by the bechirot session: lists sum to 120, The Reservists 0 seats."
   - id: uxc-projection-as-count
     source: ux-critic
     sev: 3
