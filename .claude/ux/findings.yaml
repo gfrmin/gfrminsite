@@ -509,3 +509,92 @@ findings:
     evidence: "summary's headline item spans y=674..810, first screen ends 740 (local, PR 1 branch)"
 
     note: "PR 2: starts at y=732 of a 740 first screen and ends below it, EN only (HE passes). Kicker, three-line title, subtitle, meta, chips and contents fill the rest; the summary opening line (preliminary note, town link) is on the first screen. Kept open at sev 2 as a trade-off."
+  # Round 3 (final critic round), 2026-10-29, prod, read-only; fixed in the same PR.
+  - id: dv-night-0238-table-unlabelled
+    source: dataviz-critic
+    sev: 2
+    status: fixed
+    route: /posts/election-night-station-by-station/
+    viewport: 1280
+    evidence: "02:38 table headed 'Seats' / '90% range'; projection and too-narrow caveat only three blocks later"
+    lock: grep:Projected seats | 90% range (too narrow)
+  - id: dv-unsigned-ticks-on-falls
+    source: dataviz-critic
+    sev: 2
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "values print −10.9, axis under them 0 5 10 15; the tick loop ignored sign"
+    lock: grep:stat-tick.*\$minus
+  - id: dv-dumbbell-track-360
+    source: dataviz-critic
+    sev: 1
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "14ch value column left ~132px for 40 points; value moved beside the label, track takes the row"
+    lock: grep:stat-chart-dumbbell .stat-track { grid-column: 1 / -1
+  - id: dv-marker-key-solid
+    source: dataviz-critic
+    sev: 1
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "key 0.9em tall drew solid while the in-track marker is dashed; now 1.25rem"
+    lock: grep:stat-marker-key
+  - id: uxc3-search-quote-fold
+    source: ux-critic
+    sev: 2
+    status: fixed
+    route: /he/posts/
+    viewport: 360
+    evidence: "ש\"ס and רע\"ם (keyboard quote) and Ra'am gave 'no matches'; posts use ״ and ’"
+    lock: grep:u05f3
+  - id: uxc3-search-he-dead-end
+    source: ux-critic
+    sev: 2
+    status: fixed
+    route: /he/posts/
+    viewport: 360
+    evidence: "no-match and failed load hid the list; HE has no archive link, so the page was empty"
+    lock: grep:keepList
+  - id: uxc3-he-404-chrome
+    source: ux-critic
+    sev: 2
+    status: fixed
+    route: /he/posts/no-such-post/
+    viewport: 360
+    evidence: "English nav and footer under lang=he; footer bidi-scrambled; title in English"
+    lock: grep:footer-left
+  - id: uxc3-orphan-bloc-table
+    source: ux-critic
+    sev: 2
+    status: fixed
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "bloc-change table had no lead-in; next 'It rose most' read as the table"
+    lock: grep:lost least where turnout rose most
+  - id: uxc3-night-summary-no-corrected
+    source: ux-critic
+    sev: 2
+    status: fixed
+    route: /he/posts/election-night-station-by-station/
+    viewport: 360
+    evidence: "[UNTESTED — assumption] summary gave the wrong figures and the fix time, never the corrected projection"
+    lock: grep:By 05:58 both projections
+  - id: uxc3-posts-lede-ghost
+    source: ux-critic
+    sev: 2
+    status: open
+    route: /posts/
+    viewport: 360
+    evidence: "/posts/ lede and description still promise the five-part investigation, which is unlisted"
+    note: "Owner decision: Velotix-adjacent text, left untouched."
+  - id: uxc3-related-irrelevant
+    source: ux-critic
+    sev: 1
+    status: open
+    route: /posts/election-2026-polling-place-by-polling-place/
+    viewport: 360
+    evidence: "Related reading offers two unrelated posts sharing only the 'data' category"
+    note: "Site-wide [related] tuning; not in this PR."

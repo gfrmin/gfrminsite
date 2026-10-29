@@ -36,9 +36,12 @@
   var pending = null;
   var failed = false;   /* a corpus that did not load is not an empty corpus */
 
-  /* Latin combining marks only (U+0300-U+036F), so Hebrew points are untouched. */
+  /* Latin combining marks only (U+0300-U+036F), so Hebrew points are untouched.
+     Quotes and apostrophes go too: a Hebrew keyboard types ש"ס where the posts have
+     ש״ס, and Ra'am is Ra’am in the text, and either is a false "no matches". */
   function fold(s) {
-    return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/["'\u2018\u2019\u05f3\u05f4]/g, '');
   }
 
   function esc(s) {
@@ -138,11 +141,14 @@
         + (p.s ? '<span class="meta-series">' + esc(p.s) + '</span>' : '')
         + '</div></div></article>';
     }).join('');
+    return found.length;
   }
 
-  function show(on) {
+  /* With nothing to show, the full list stays under the message: on the Hebrew
+     side there is no archive to point to, and an empty page is a dead end. */
+  function show(on, keepList) {
     panel.hidden = !on;
-    for (var i = 0; i < hidden.length; i++) { hidden[i].hidden = on; }
+    for (var i = 0; i < hidden.length; i++) { hidden[i].hidden = on && !keepList; }
   }
 
   function run() {
@@ -151,8 +157,7 @@
     if (query.length < 2) { show(false); return; }
     load().then(function () {
       if (input.value.trim() !== query) { return; }   /* a later keystroke won */
-      render(query);
-      show(true);
+      show(true, render(query) === 0);
       failed = false;   /* the next query tries the fetch again */
     });
   }

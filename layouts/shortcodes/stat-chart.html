@@ -10,6 +10,7 @@
 {{- $c := index (.Page.Resources.Get "charts.json" | transform.Unmarshal) (.Get "id") -}}
 {{- if not $c }}{{ errorf "stat-chart: no chart %q in %s/charts.json" (.Get "id") .Page.File.Dir }}{{ end -}}
 {{- $arrow := cond (eq .Page.Language.Direction "rtl") "←" "→" -}}
+{{- $minus := cond (eq $c.sign "-") "−" "" -}}
 {{- /* scale: from lo to hi; a bar chart starts at zero */ -}}
 {{- $lo := 0.0 }}{{ $hi := 0.0 -}}
 {{- if eq $c.kind "dumbbell" }}{{ $lo = float $c.min }}{{ $hi = float $c.max }}{{ end -}}
@@ -36,7 +37,6 @@
 {{- end }}
 {{- else if eq $c.kind "bars" }}
 {{- $dp := int ($c.decimals | default 0) -}}
-{{- $minus := cond (eq $c.sign "-") "−" "" -}}
 {{- range $c.rows }}
 {{- $v := printf "%s%s" $minus (lang.FormatNumber $dp .value) -}}
 <div class="stat-row{{ if .ref }} stat-row-ref{{ end }}" title="{{ index .label $lang }}: {{ $v }}">
@@ -51,7 +51,7 @@
 {{- with $c.ticks }}
 <div class="stat-row stat-axis" aria-hidden="true">
 <span class="stat-label"></span>
-<span class="stat-track">{{ range . }}<span class="stat-tick" style="inset-inline-start: {{ printf "%.2f" (mul 100 (div (sub (float .) $lo) $span)) }}%">{{ . }}{{ $c.unit }}</span>{{ end }}</span>
+<span class="stat-track">{{ range . }}<span class="stat-tick" style="inset-inline-start: {{ printf "%.2f" (mul 100 (div (sub (float .) $lo) $span)) }}%"><bdi dir="ltr">{{ if ne (float .) 0.0 }}{{ $minus }}{{ end }}{{ . }}{{ $c.unit }}</bdi></span>{{ end }}</span>
 <span class="stat-value"></span>
 </div>
 {{- end }}

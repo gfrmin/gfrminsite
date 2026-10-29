@@ -12,7 +12,7 @@
   </p>
 </main>
 {{- /* GitHub Pages serves only the root 404.html, so a missing /he/ page got the
-       English one. When that happens, swap in the body of the Hebrew 404, which Hugo
+       English one. When that happens, swap in the body and chrome of the Hebrew 404, which Hugo
        builds at /he/404.html but nothing ever serves. */}}
 {{- if eq .Language.Lang (index hugo.Sites 0).Language.Lang }}
 {{- range hugo.Sites }}{{ with .Language }}{{ if ne .Lang site.Language.Lang }}
@@ -27,6 +27,17 @@
     if (!mine || !theirs) { return; }
     mine.innerHTML = theirs.innerHTML;
     if (theirs.className) { mine.className = theirs.className; }
+    /* The chrome too: an English footer under lang=he is bidi-reordered into
+       nonsense. Elements with listeners (the menu and theme buttons) keep theirs
+       and only take the translated label. */
+    ['.navbar-brand', '.navbar-nav', '.nav-lang', '.footer-left'].forEach(function (sel) {
+      var a = document.querySelector(sel), b = doc.querySelector(sel);
+      if (a && b) { a.replaceWith(document.importNode(b, true)); }
+    });
+    ['.navbar-toggle', '.darkmode-toggle'].forEach(function (sel) {
+      var a = document.querySelector(sel), b = doc.querySelector(sel);
+      if (a && b) { a.setAttribute('aria-label', b.getAttribute('aria-label')); }
+    });
     document.documentElement.lang = doc.documentElement.lang;
     document.title = doc.title;
   });
