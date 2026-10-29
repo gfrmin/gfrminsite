@@ -2,10 +2,18 @@
      otherwise a series member's "related" is just its own series again. */}}
 {{ $here := . }}
 {{ $series := "" }}{{ with .Params.series }}{{ $series = index . 0 }}{{ end }}
+{{/* A shared category is evidence of relatedness only when it is specific. "essays"
+     covers most of the site, and a post with several subjects (the election posts are
+     israel + data) matched anything that shared just one of them -- a personal
+     knowledge base under an election result. So: ignore "essays", and require as many
+     shared subjects as the post has, up to two. */}}
+{{ $mine := complement (slice "essays" "data") (.Params.categories | default slice) }}
+{{ $need := 1 }}
 {{ $out := slice }}
 {{ range first 16 (.Site.RegularPages.Related .) }}
   {{ $s := "" }}{{ with .Params.series }}{{ $s = index . 0 }}{{ end }}
-  {{ if or (eq $series "") (ne $s $series) }}{{ $out = $out | append . }}{{ end }}
+  {{ $shared := intersect $mine (.Params.categories | default slice) }}
+  {{ if and (or (eq $series "") (ne $s $series)) (ge (len $shared) $need) }}{{ $out = $out | append . }}{{ end }}
 {{ end }}
 {{ with first 3 $out }}
 <aside class="related-posts" aria-label="{{ i18n "relatedTitle" }}">

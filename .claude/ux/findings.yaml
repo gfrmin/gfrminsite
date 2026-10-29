@@ -229,11 +229,12 @@ findings:
     source: ux-critic
     also: [dataviz-critic]
     sev: 3
-    status: verified
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "no 61-of-120 frame for the 54; seats tiles omit the change bloc"
-    note: "Open only for the three-bloc tiles (change bloc), which need the change-bloc figure from the 10:02 projection confirmed. PR 1 added the 61 frame to prose, summary and chart note; three-bloc tiles wait for PR 3"
+    lock: grep:61 for a majority
+    note: "The tile itself now carries the frame (Netanyahu bloc (61 for a majority)). No change-bloc tile: its 10:02 figure is not in the repo or any local data, and 120-54-18 would assume The Reservists win nothing."
   - id: uxc-projection-as-count
     source: ux-critic
     sev: 3
@@ -503,12 +504,12 @@ findings:
   - id: 23880c5064
     source: probe:first-screen
     sev: 2
-    status: open
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "summary's headline item spans y=674..810, first screen ends 740 (local, PR 1 branch)"
-
-    note: "PR 2: starts at y=732 of a 740 first screen and ends below it, EN only (HE passes). Kicker, three-line title, subtitle, meta, chips and contents fill the rest; the summary opening line (preliminary note, town link) is on the first screen. Kept open at sev 2 as a trade-off."
+    lock: probe:first-screen
+    note: "Round 3 follow-up: shorter link line and headline bullet, callout top padding and margins tightened on phones. Bullet now y=654..735 of 740 at 360 and 375."
   # Round 3 (final critic round), 2026-10-29, prod, read-only; fixed in the same PR.
   - id: dv-night-0238-table-unlabelled
     source: dataviz-critic
@@ -585,16 +586,18 @@ findings:
   - id: uxc3-posts-lede-ghost
     source: ux-critic
     sev: 2
-    status: open
+    status: fixed
     route: /posts/
     viewport: 360
     evidence: "/posts/ lede and description still promise the five-part investigation, which is unlisted"
-    note: "Owner decision: Velotix-adjacent text, left untouched."
+    lock: grep:close reading of Israel
+    note: "Posts index text only (content/posts/_index*.md); no Velotix file touched. HE lede no longer says everything is in English."
   - id: uxc3-related-irrelevant
     source: ux-critic
     sev: 1
-    status: open
+    status: fixed
     route: /posts/election-2026-polling-place-by-polling-place/
     viewport: 360
     evidence: "Related reading offers two unrelated posts sharing only the 'data' category"
-    note: "Site-wide [related] tuning; not in this PR."
+    lock: grep:complement (slice \"essays\" \"data\")
+    note: "related-posts.html ignores essays and data as evidence; the election posts now list each other only."

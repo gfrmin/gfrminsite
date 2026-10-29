@@ -163,7 +163,7 @@ second drawing of the same data.
 
 ### Related posts
 
-`layouts/partials/related-posts.html` uses Hugo's built-in `.Site.RegularPages.Related`, configured under `[related]` in `hugo.toml` (categories + date; **series is deliberately not an index**). It then filters out any post in the *same* series, because the series nav already lists those — related exists to reach *across* series. Posts whose only related pages are same-series render nothing, which is correct.
+`layouts/partials/related-posts.html` uses Hugo's built-in `.Site.RegularPages.Related`, configured under `[related]` in `hugo.toml` (categories + date; **series is deliberately not an index**). It then filters out any post in the *same* series, because the series nav already lists those — related exists to reach *across* series. It also ignores `essays` and `data` as evidence of relatedness: both cover so much of the site that the election results listed a personal-knowledge-base post as related reading. A post needs one other category in common. Posts whose only related pages are same-series, or share only those two categories, render nothing, which is correct.
 
 ### URL shape (non-obvious)
 
