@@ -2,8 +2,8 @@
   "seats": {
     "kind": "stats",
     "title": {
-      "en": "Seats, 2022 and projected 2026",
-      "he": "מנדטים, 2022 והתחזית ל-2026"
+      "en": "Seats, 2022 and 2026",
+      "he": "מנדטים, 2022 ו-2026"
     },
     "rows": [
       {
@@ -12,7 +12,7 @@
           "he": "גוש נתניהו (61 לרוב)"
         },
         "from": 64,
-        "to": 54
+        "to": 53
       },
       {
         "label": {
@@ -28,7 +28,7 @@
           "he": "הרשימות הערביות"
         },
         "from": 10,
-        "to": 18
+        "to": 19
       },
       {
         "label": {
@@ -36,12 +36,12 @@
           "he": "ש״ס"
         },
         "from": 11,
-        "to": 7
+        "to": 6
       }
     ],
     "note": {
-      "en": "2026 is the town projection from the 10:02 file, not the result. The change bloc is Yashar!, Together, the Democrats and Yisrael Beiteinu; in 2022, Yesh Atid, National Unity, Yisrael Beiteinu and Labor. No list outside the blocs is projected a seat. 61 of the 120 seats make a majority.",
-      "he": "2026 היא תחזית היישובים מקובץ 10:02, לא התוצאה. גוש השינוי הוא ישר!, ביחד, הדמוקרטים וישראל ביתנו; ב-2022, יש עתיד, המחנה הממלכתי, ישראל ביתנו והעבודה. אף רשימה מחוץ לגושים לא מקבלת מנדט בתחזית. רוב הוא 61 מתוך 120 המנדטים."
+      "en": "2026 is the committee's final count. The change bloc is Yashar!, Together, the Democrats and Yisrael Beiteinu; in 2022, Yesh Atid, National Unity, Yisrael Beiteinu and Labor. No list outside the blocs won a seat. 61 of the 120 seats make a majority.",
+      "he": "2026 היא הספירה הסופית של הוועדה. גוש השינוי הוא ישר!, ביחד, הדמוקרטים וישראל ביתנו; ב-2022, יש עתיד, המחנה הממלכתי, ישראל ביתנו והעבודה. אף רשימה מחוץ לגושים לא זכתה במנדט. רוב הוא 61 מתוך 120 המנדטים."
     }
   },
   "turnout": {
@@ -66,32 +66,32 @@
     "rows": [
       {
         "label": {
-          "en": "Arab lists (431 places)",
-          "he": "הרשימות הערביות (431 קלפיות)"
+          "en": "Arab lists (652 places)",
+          "he": "הרשימות הערביות (652 קלפיות)"
         },
-        "from": 50.6,
-        "to": 76.9
+        "from": 53.5,
+        "to": 78.5
       },
       {
         "label": {
-          "en": "Shas and UTJ (226)",
-          "he": "ש״ס ויהדות התורה (226)"
+          "en": "Shas and UTJ (284)",
+          "he": "ש״ס ויהדות התורה (284)"
         },
-        "from": 72.8,
-        "to": 72.2
+        "from": 73.4,
+        "to": 72.8
       },
       {
         "label": {
-          "en": "Everywhere else (3,156)",
-          "he": "כל השאר (3,156)"
+          "en": "Everywhere else (4,093)",
+          "he": "כל השאר (4,093)"
         },
-        "from": 64.6,
+        "from": 64.8,
         "to": 70.1
       }
     ],
     "note": {
-      "en": "Matched polling places only, without the envelope ballots; not comparable with the committee's national figure.",
-      "he": "מקומות קלפי שהותאמו בלבד, בלי המעטפות החיצוניות; לא ניתן להשוואה לנתון הארצי של הוועדה."
+      "en": "Matched polling places only, without the envelope ballots; not comparable with the national figure.",
+      "he": "מקומות קלפי שהותאמו בלבד, בלי המעטפות החיצוניות; לא ניתן להשוואה לנתון הארצי."
     },
     "ticks": [
       40,
@@ -122,10 +122,10 @@
       },
       {
         "label": {
-          "en": "Hura",
-          "he": "חורה"
+          "en": "Ma'ale Iron",
+          "he": "מעלה עירון"
         },
-        "value": 38
+        "value": 37
       },
       {
         "label": {
@@ -139,15 +139,8 @@
           "en": "All places the Arab lists won in 2022",
           "he": "כל המקומות שהרשימות הערביות זכו בהם ב-2022"
         },
-        "value": 26,
+        "value": 25,
         "ref": true
-      },
-      {
-        "label": {
-          "en": "Mi'elya",
-          "he": "מעיליא"
-        },
-        "value": 14
       },
       {
         "label": {
@@ -158,10 +151,24 @@
       },
       {
         "label": {
+          "en": "Mi'elya",
+          "he": "מעיליא"
+        },
+        "value": 14
+      },
+      {
+        "label": {
+          "en": "Tel Aviv-Yafo, Arab neighbourhoods",
+          "he": "תל אביב-יפו, השכונות הערביות"
+        },
+        "value": 12
+      },
+      {
+        "label": {
           "en": "Haifa, Arab neighbourhoods",
           "he": "חיפה, השכונות הערביות"
         },
-        "value": 12
+        "value": 11
       }
     ],
     "ticks": [
@@ -182,7 +189,7 @@
           "en": "Beit Shemesh",
           "he": "בית שמש"
         },
-        "value": 10.9
+        "value": 10.5
       },
       {
         "label": {
@@ -193,17 +200,17 @@
       },
       {
         "label": {
-          "en": "Modi'in Illit",
-          "he": "מודיעין עילית"
+          "en": "Tiberias",
+          "he": "טבריה"
         },
         "value": 7.0
       },
       {
         "label": {
-          "en": "Tiberias",
-          "he": "טבריה"
+          "en": "El'ad",
+          "he": "אלעד"
         },
-        "value": 7.0
+        "value": 6.6
       }
     ],
     "decimals": 1,
@@ -274,21 +281,21 @@
           "en": "Lod",
           "he": "לוד"
         },
-        "value": 12.4
+        "value": 12.3
       },
       {
         "label": {
           "en": "Akko",
           "he": "עכו"
         },
-        "value": 10.5
+        "value": 9.0
       },
       {
         "label": {
           "en": "Ramla",
           "he": "רמלה"
         },
-        "value": 8.1
+        "value": 8.9
       },
       {
         "label": {

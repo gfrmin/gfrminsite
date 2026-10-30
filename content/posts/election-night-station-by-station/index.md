@@ -26,7 +26,7 @@ I was in Hong Kong, six hours ahead, where the exit polls had come out at four i
 - **Why.** Not the model but the data: the committee's 2026 file lists a town only once it reports, and reports it in pieces, so the projection filled in nothing and took half-counted cities as complete.
 - **What I would keep.** Rehearse on the shape of the next file, not the contents of the last one. Let the estimator say "not yet", and make that the default. Keep every version of every file.
 
-Written while the count was still running: the tables run to the committee's 05:58 file. What the count showed by 10:02 is in [Polling Place by Polling Place](/posts/election-2026-polling-place-by-polling-place/).
+Written while the count was still running: the tables run to the committee's 05:58 file. How the projections did against the final count is at the end; what the final count shows, place by place, is in [Polling Place by Polling Place](/posts/election-2026-polling-place-by-polling-place/).
 {{< /callout >}}
 
 ## The projection had been rehearsed on the wrong file
@@ -69,7 +69,7 @@ With stations matched, the classic tool is the one political scientists call eco
 
 $$ y_{j}(s) = \sum_k \beta_{jk} \, x_k(s), $$
 
-where \(x_k(s)\) is the 2022 vote for list \(k\) in station \(s\), scaled by the change in its eligible voters, with one extra \(k\) for the people who did not vote in 2022. Each \(\beta_{jk}\) reads, loosely, as the share of list \(k\)'s 2022 voters who voted for list \(j\) this time. It is fitted by non-negative least squares, because a negative flow of voters is not a thing. The non-voter column is what lets it see a turnout surge rather than mistake it for a shift between parties: this was an election in which Arab turnout was reported near 80% (76.9% in the polling places the Arab lists won in 2022, on the committee's 10:02 file).
+where \(x_k(s)\) is the 2022 vote for list \(k\) in station \(s\), scaled by the change in its eligible voters, with one extra \(k\) for the people who did not vote in 2022. Each \(\beta_{jk}\) reads, loosely, as the share of list \(k\)'s 2022 voters who voted for list \(j\) this time. It is fitted by non-negative least squares, because a negative flow of voters is not a thing. The non-voter column is what lets it see a turnout surge rather than mistake it for a shift between parties: this was an election in which Arab turnout was reported near 80% (78.5% in the polling places the Arab lists won in 2022, on the final count).
 
 Goodman's method rests on one strong assumption: that the flows are the same everywhere, so that a 2022 Joint List voter in Rahat moves like one in Haifa. The \(\beta\)s are fitted once, from whichever stations have been counted, and applied to every station that has not.
 
@@ -132,7 +132,7 @@ Four things stand out.
 
 The town projection's backtested error at this much counted is two seats a list either way, and every station figure falls inside it. The town figure falls outside the station projection's range twice, for Yashar! and Ra'am, which says more about how narrow those ranges are than about either figure. What matters is that the small differences all lean the same way, and they add up in the bloc that decides the government. The town projection gives the change bloc 50 and the Arab lists 16, the station projection 47 and 19. Ra'am is the largest single gap: 5 against 7. The exit polls all said 7. On this one the station projection agrees with the polls and the town projection does not. That is not a verdict either way. The exit polls are interviews in a sample of stations. And at 05:14 the stations counted had held only 6% of Ra'am's 2022 vote: none of Rahat's 64 stations, none of Kafr Qasim's 29 or Tamra's 42. Both projections were filling in Ra'am almost entirely from its 2022 map. They differ in how they carry that map forward, and the next files will say which carried it better.
 
-*Update, 29 October.* They have, provisionally. On the committee's 07:00 file Ra'am stands at 8 as counted, 8 on the station projection and 7 on the town projection. The town projection under-filled Ra'am's strongholds and caught up as Rahat, Kafr Qasim and Tamra reported; the station projection was right or slightly low throughout. The envelope ballots, which usually trim the Arab lists, are still to come.
+*Update, 29 October.* They have, provisionally. On the committee's 07:00 file Ra'am stands at 8 as counted, 8 on the station projection and 7 on the town projection. The town projection under-filled Ra'am's strongholds and caught up as Rahat, Kafr Qasim and Tamra reported; the station projection was right or slightly low throughout. The envelope ballots, which usually trim the Arab lists, are still to come. (They did not, this time: see [How it did](#how-it-did).)
 
 Two methods agreeing is also weaker evidence than it sounds. Both read the same early, fast-counting places, so where they agree they may share one error.
 
@@ -144,7 +144,15 @@ The count was still running when I wrote this. This is the latest file the table
 
 The real test is the certified result. Every version of every file is kept, so the comparison can be made at each one: the station projection against the final seats, with the town projection beside it from the moment its gate opened. Three questions will settle it. At what share counted did each projection come within a seat of the final result for every list? Did the Arab split converge once the Negev and the Triangle reported, and how fast? And how often did the final seat count fall outside the bootstrap's 90% range? That last one measures how much too narrow it was.
 
-By 10:02 on the 28th the committee's file held 3.76 million valid votes. What that file shows, polling place by polling place, is in [Polling Place by Polling Place](/posts/election-2026-polling-place-by-polling-place/).
+*Updated 30 October, on the final count.* The committee's final file, of 00:08 on the 30th, gives Likud 27, Yashar! 21, Together 12, the Joint List 11, the Democrats 8, Ra'am 8, Otzma Yehudit 7, UTJ 7, Yisrael Beiteinu 7, Religious Zionism 6 and Shas 6: blocs of 53, 48 and 19. The official result goes to the President on 4 November. I reran both projections on every archived file through to the final one, 41 in all, with the same code as the tables above, which the rerun reproduces exactly.
+
+**How soon was each within a seat of the final result on every list?** The station projection was there from 03:25 on the 28th, with 11% of the votes counted, and stayed there on every file after. It was not exact on every list until the count was complete: at 99.7% counted it moved a seat from Ra'am to Shas, and moved it back only on the complete count. The town projection got within a seat of every list only at 14:33 on the 28th, with 85% counted, the same file on which the plain count did. Before that it was four seats off on its first file, three until 09:17 and two until 12:50, nearly always on Ra'am.
+
+**Did the Arab split converge as the Negev and the Triangle reported?** The station projection's converged before they reported. Rahat, Kafr Qasim and Tamra had not reported a single station by 09:17 on the 28th, yet from 03:25 the station projection had the Joint List on 11 or 12 and Ra'am on 7 or 8. When it was wrong about Ra'am it was one seat low, never high. The town projection's converged only as those towns came in: Ra'am on 4 at 03:25, 5 until 09:17, 6 once Rahat's first stations reported at 10:02, 7 from 14:33 and 8 only on the 29th. That settles the question left open at 05:14: Ra'am's 2022 map was a better guide carried forward station by station than town by town.
+
+**How often did the final seats fall outside the 90% range?** From 03:25 to the end, 43 times in 396, about one in nine, which looks like an honest 90% range and is not. From 03:25 to 14:33 on the 28th, while the result was still in doubt, it was 37 times in 154, about one in four, against the one in ten a 90% range promises. The misses were the same one-seat errors repeated on the same few lists, Ra'am on 7 and Together on 11, inside ranges with no width at all. When it mattered, the range was too narrow by a factor of two or three. That is the error a bootstrap over the places already counted was always going to make: it cannot know that the places not yet counted are different.
+
+The envelope ballots, which I expected to trim the Arab lists, did not: the count had the Joint List on 11 and Ra'am on 8 both before and after them. What they moved was one seat, from Shas to Likud. What the final count shows, polling place by polling place, is in [Polling Place by Polling Place](/posts/election-2026-polling-place-by-polling-place/).
 
 ## What I would keep
 
