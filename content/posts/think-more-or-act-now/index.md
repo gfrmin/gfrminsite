@@ -10,7 +10,7 @@ categories: [bayesian, ai, essays, decision-theory]
 ---
 
 {{< callout type="note" >}}
-This essay was drafted at proplang's first close (July 2026). The language has since been demolished and rebuilt twice under the same frozen oracle; the table below is a frozen anchor and still executes green against today's grammar. The [postscript](#what-came-next) records what moved --- including the reflexive limit at the end, which split in two under measurement.
+*This essay was drafted at proplang's first close (July 2026). The language has since been demolished and rebuilt twice under the same frozen oracle; the table below is a frozen anchor and still executes green against today's grammar. The [postscript](#what-came-next) records what moved --- including the reflexive limit at the end, which split in two under measurement.*
 {{< /callout >}}
 
 Ask an engineer how long an agent should deliberate before it commits, and the answer usually arrives as a number. A maximum iteration count. A step budget. A wall-clock timeout. The deliberation loop runs until the counter is spent, and then the agent acts on whatever it happens to hold. The number is so ordinary that it rarely registers as a decision at all. It looks like plumbing --- the `while` had to stop somewhere, and this is where.
@@ -63,7 +63,7 @@ Then the same agent, running the same code, is dropped into four different world
 
 Make delay expensive and the agent turns decisive, acting after a single tick. Make it cheap and the agent grows patient, thinking a dozen times before it commits. Nobody edited the agent between rows. The only thing that changed was the world's impatience, and the agent's diligence tracked it. The regress terminated in the clock.
 
-## The two rows that don't
+## The two rows that do not
 
 And now the part I refuse to bury, because it is the reason to trust the rest. The clock terminated the regress in two of those four rows. Not four. Two.
 
@@ -71,7 +71,7 @@ Look again at the bottom of the table. At a price of 0.005 the agent takes twelv
 
 The zero-price row is worse, and more instructive. At a price of zero, thinking is free, and an agent that stops deliberating when deliberating costs nothing demands an explanation. The explanation is a known bias of the cheap approximation the agent uses to value thinking. With a linear utility, the myopic value of information --- the worth of one more batch, assuming you will then act --- is exactly zero whenever no single next batch could change which act comes out on top. When the decision is already locked against any one further batch, one-step lookahead sees no reason to look, even though the clock is charging nothing. So the agent can stop when thinking is free, for the wrong reason. This is not a defect concealed in the implementation. The surrogate is a recorded simplification, not a hidden one --- written down where the agent's arithmetic is defined, precisely so that a reader knows not to over-read the table.
 
-So the honest scoreboard reads: two rows genuinely clock-bound, two rows buffer-bound. The experiment demonstrates that the regress can terminate in the clock. It does not yet demonstrate that it always does, and the two rows where it doesn't are labelled as such. A later increment --- making the depth of enumeration itself a rung the agent must pay for, rather than a fixed buffer it merely drains --- partly repairs the gap, by giving the clock something to bite on after the evidence is exhausted. Partly. The claim earns exactly the two rows it earns, and no more.
+So the honest scoreboard reads: two rows genuinely clock-bound, two rows buffer-bound. The experiment demonstrates that the regress can terminate in the clock. It does not yet demonstrate that it always does, and the two rows where it does not are labelled as such. A later increment --- making the depth of enumeration itself a rung the agent must pay for, rather than a fixed buffer it merely drains --- partly repairs the gap, by giving the clock something to bite on after the evidence is exhausted. Partly. The claim earns exactly the two rows it earns, and no more.
 
 ## One currency, two fidelities
 

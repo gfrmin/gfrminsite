@@ -10,13 +10,9 @@ publishDate: 2026-04-28
 categories: [julia, bayesian, machine-learning, ai]
 ---
 
-{{< callout type="note" >}}
-This is Part 3 of a series. For the axiomatic foundation, see [Part 1: Three Types and a Funeral](/posts/three-types/). For the VOI-gated text adventure agent, see [Part 2: Teaching Zork to a Bayesian](/posts/teaching-zork/).
-{{< /callout >}}
-
 Every reinforcement learning agent that has ever played a text adventure has, at some point, tried to take the lantern fifty times in a row.
 
-Not because it's stupid. Because its state representation makes "Shack with book" and "Shack with lantern" look like different states, so the learned futility of "take lantern" in one state doesn't transfer to the other. The agent is doing exactly what its architecture tells it to do: each state-action pair is independent, and it hasn't yet learned that *this particular* pair is useless. It will learn, eventually, after wasting 39 steps per episode on actions it has already tried.
+Not because it is stupid. Because its state representation makes "Shack with book" and "Shack with lantern" look like different states, so the learned futility of "take lantern" in one state does not transfer to the other. The agent is doing exactly what its architecture tells it to do: each state-action pair is independent, and it has not yet learned that *this particular* pair is useless. It will learn, eventually, after wasting 39 steps per episode on actions it has already tried.
 
 The fix is not better exploration heuristics. Not epsilon-greedy. Not curiosity bonuses. Not "try something different when you're stuck." The fix is representing state properly.
 
@@ -34,7 +30,7 @@ Location on the left, opaque hash of everything else on the right. The hash comb
 - Shack with lantern: `"Shack|hash2"`
 - Shack with book and lantern: `"Shack|hash3"`
 
-These are three different states. When the agent learns that `("Shack|hash1", "take book")` produces no state change, it marks this as a null action. Useful information. But `("Shack|hash2", "take book")` is a *different state*, so the model tries it again. And `("Shack|hash3", "take book")` is yet another state. The insight --- that "take book" doesn't change your location regardless of what else you're carrying --- cannot transfer, because the representation has destroyed the structure that would enable it.
+These are three different states. When the agent learns that `("Shack|hash1", "take book")` produces no state change, it marks this as a null action. Useful information. But `("Shack|hash2", "take book")` is a *different state*, so the model tries it again. And `("Shack|hash3", "take book")` is yet another state. The insight --- that "take book" does not change your location regardless of what else you are carrying --- cannot transfer, because the representation has destroyed the structure that would enable it.
 
 The benchmark results from five episodes of Enchanter confirm the damage:
 
@@ -74,7 +70,7 @@ After one observation of "take book" in the Kitchen, the model learns:
 - `P(location' | location, "take book")` = no change. The Kitchen stays the Kitchen.
 - `P(book ∈ inventory' | book ∈ inventory, "take book")` = the book is now in inventory.
 
-The first CPD --- location doesn't change when you take something --- applies to every "take X" action in every location. The agent doesn't need to learn this for each item separately. It learns once, from one observation, that "take" actions don't move you. This generalisation is not programmed. It falls out of the factored representation: since location and inventory are separate variables with separate CPDs, the model *cannot* learn location-dependent take behaviour unless the data supports it.
+The first CPD --- location does not change when you take something --- applies to every "take X" action in every location. The agent does not need to learn this for each item separately. It learns once, from one observation, that "take" actions do not move you. This generalisation is not programmed. It falls out of the factored representation: since location and inventory are separate variables with separate CPDs, the model *cannot* learn location-dependent take behaviour unless the data supports it.
 
 The benchmark results:
 
@@ -85,15 +81,15 @@ The benchmark results:
 | Unique states | 15.2 | 19.2 | +26.3% |
 | Steps/episode | 87.6 | 103.0 | +17.4% |
 
-Thirty-nine loops reduced to 0.6. The agent discovers more unique states (19.2 vs 15.2) because it's not wasting steps on repetition. It runs longer episodes (103 vs 87.6) because it's actually exploring instead of circling.
+Thirty-nine loops reduced to 0.6. The agent discovers more unique states (19.2 vs 15.2) because it is not wasting steps on repetition. It runs longer episodes (103 vs 87.6) because it is exploring instead of circling.
 
 ## The Score Regression
 
-The factored model scores zero. The baseline scores 20. This looks like a regression and isn't.
+The factored model scores zero. The baseline scores 20. This looks like a regression and is not.
 
 The factored model has reward learning infrastructure --- a Normal-Gamma posterior over `P(reward | state, action)` that updates via conjugate conditioning --- but it is not yet effective. The `FactoredWorldModel` tracks transition dynamics well (where do I end up, what changes in my inventory), and the reward posteriors update correctly, but the MCTS planner cannot yet find rewarding states reliably enough to learn from them. Random rollouts in a game as large as Enchanter rarely stumble into rewards, so the reward posteriors remain too diffuse to guide planning.
 
-This is incomplete integration, not failure. The agent stops doing stupid things. It doesn't yet know what smart things look like. I present this straightforwardly because the alternative --- cherry-picking the metric that improved while eliding the one that regressed --- is the kind of benchmarking that makes machine learning papers unreliable. The looping elimination is the result. The scoring is future work. Both facts matter.
+This is incomplete integration, not failure. The agent stops doing stupid things. It does not yet know what smart things look like. I present this straightforwardly because the alternative --- cherry-picking the metric that improved while eliding the one that regressed --- is the kind of benchmarking that makes machine learning papers unreliable. The looping elimination is the result. The scoring is future work. Both facts matter.
 
 ## Thompson MCTS
 
@@ -127,17 +123,17 @@ The elimination is mechanical, not heuristic. Consider what happens when the age
 
 **Hash state:** The agent has tried "take book" in state `"Kitchen|hash1"`. The current state is `"Kitchen|hash2"` (different inventory → different hash). The model checks: have I tried `("Kitchen|hash2", "take book")`? No. Try it.
 
-**Factored state:** The agent has tried "take book" in state `MinimalState("Kitchen", {...})`. The location CPD for "take book" has been updated: `P(location' | "Kitchen", "take book") = [1.0 for "Kitchen"]`. The location doesn't change. The MCTS planner, sampling from this CPD, gets "Kitchen" → "Kitchen" for every rollout. The value of "take book" is identical to the value of doing nothing. The agent moves on.
+**Factored state:** The agent has tried "take book" in state `MinimalState("Kitchen", {...})`. The location CPD for "take book" has been updated: `P(location' | "Kitchen", "take book") = [1.0 for "Kitchen"]`. The location does not change. The MCTS planner, sampling from this CPD, gets "Kitchen" → "Kitchen" for every rollout. The value of "take book" is identical to the value of doing nothing. The agent moves on.
 
 The key insight is that the factored CPD shares parameters across states. All "take X" actions share the same location CPD, because the location variable is independent of which specific item is being taken. The hash state has no mechanism for this sharing. Every combination is its own entry in the table.
 
-This is the representation counterpart to Part 1's prohibition on opaque likelihood functions. A hash state is an opaque dynamics model. It compresses structure into a token that the learning algorithm cannot decompose. A factored state is a typed kernel: it declares which variables it operates on, enabling the model to learn the right abstraction. The lesson is the same in both cases: if you can't inspect the structure, you can't learn the structure.
+This is the representation counterpart to Part 1's prohibition on opaque likelihood functions. A hash state is an opaque dynamics model. It compresses structure into a token that the learning algorithm cannot decompose. A factored state is a typed kernel: it declares which variables it operates on, enabling the model to learn the right abstraction. The lesson is the same in both cases: if you cannot inspect the structure, you cannot learn the structure.
 
 ## The Bayes-Adaptive POMDP
 
-The full framework is a Bayes-Adaptive Partially Observable Markov Decision Process. This is a mouthful that means: the agent maintains uncertainty over both the world state (where am I? what's in my inventory?) and the world dynamics (what happens when I go north? what happens when I take the book?). Both are probability distributions. Both are updated by conditioning on observations. Both influence planning.
+The full framework is a Bayes-Adaptive Partially Observable Markov Decision Process. This is a mouthful that means: the agent maintains uncertainty over both the world state (where am I? what is in my inventory?) and the world dynamics (what happens when I go north? what happens when I take the book?). Both are probability distributions. Both are updated by conditioning on observations. Both influence planning.
 
-This is the four-axiom thesis from Part 1 in its most ambitious form. The agent doesn't just not know where it is. It doesn't know how the world works. Its beliefs about dynamics are Dirichlet priors that update with every transition it observes. Its beliefs about state are maintained by the MCTS tree, which marginalises over sampled dynamics. The entire system is uncertainty quantification, applied to every layer of the problem.
+This is the four-axiom thesis from Part 1 in its most ambitious form. The agent is ignorant not merely of where it is but of how the world works. Its beliefs about dynamics are Dirichlet priors that update with every transition it observes. Its beliefs about state are maintained by the MCTS tree, which marginalises over sampled dynamics. The entire system is uncertainty quantification, applied to every layer of the problem.
 
 The factored state representation makes this tractable. With hash states, the dynamics table has \(|S| \times |A| \times |S|\) entries --- states times actions times successor states. Since \(|S|\) grows combinatorially with the number of objects, this table explodes. With factored state, the dynamics decompose into per-variable CPDs: \(|A| \times \sum_i |V_i|^2\) entries, where \(|V_i|\) is the number of values for variable \(i\). The growth is additive, not multiplicative.
 

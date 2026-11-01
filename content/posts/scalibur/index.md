@@ -1,7 +1,7 @@
 ---
 title: "Scalibur: Reading Body Composition from a Cheap Bluetooth Scale"
 subtitle: "A journey through BLE packet sniffing, protocol reverse-engineering, and Raspberry Pi deployment"
-description: "How I built a Raspberry Pi dashboard to capture and visualize body composition data from a GoodPharm TY5108 Bluetooth scale"
+description: "How I built a Raspberry Pi dashboard to capture and visualise body composition data from a GoodPharm TY5108 Bluetooth scale"
 author: "Guy Freeman"
 date: 2025-12-22
 lastmod: 2025-12-31
@@ -9,7 +9,7 @@ categories: [python, hardware, data]
 image: og-image.png
 ---
 
-Body composition scales are, on their own terms, genuinely useful devices. Step on, wait a few seconds, receive a small dossier on your own physical form: weight, body fat percentage, muscle mass, and several other numbers whose accuracy I'm diplomatically not questioning here. The problem is what happens next. Your data vanishes into whichever proprietary app the manufacturer saw fit to build, typically bundled with aggressive upsells and privacy practices that would make a data broker wince.
+Body composition scales are, on their own terms, genuinely useful devices. Step on, wait a few seconds, receive a small dossier on your own physical form: weight, body fat percentage, muscle mass, and several other numbers whose accuracy I am diplomatically not questioning here. The problem is what happens next. Your data vanishes into whichever proprietary app the manufacturer saw fit to build, typically bundled with aggressive upsells and privacy practices that would make a data broker wince.
 
 I bought a cheap GoodPharm TY5108 scale (it announces itself as "tzc" over Bluetooth LE) for around £20. It measures things competently enough, but I wanted to own the resulting numbers. So I built [Scalibur](https://github.com/gfrmin/scalibur): a Raspberry Pi system that captures raw BLE advertisements, decodes the measurements, calculates body composition metrics, and presents everything on a web dashboard of modest visual ambition.
 
@@ -21,7 +21,7 @@ Here is how the whole thing came together.
 
 ## The Hardware
 
-Not much to report on this front:
+There is little to report on this front:
 
 - **GoodPharm TY5108 scale** - A cheap body composition scale with BLE. It measures weight via load cells and impedance through electrodes on the surface (bare feet required for the full reading, which is a sentence I never expected to type in a technical specification).
 - **Raspberry Pi** - Any model with Bluetooth LE will do. I used a Pi 4, though a Pi Zero W would manage perfectly well.
@@ -30,7 +30,7 @@ The scale broadcasts its measurements as BLE advertisements. Unlike connected BL
 
 ## Reverse-Engineering the Protocol
 
-My first attempt used `bleak`, a popular Python BLE library. I could see the device advertising, but the high-level APIs abstracted away the manufacturer-specific data I actually needed. The scale wasn't exposing GATT services in the conventional manner --- all the interesting data lived in the advertisement packets themselves.
+My first attempt used `bleak`, a popular Python BLE library. I could see the device advertising, but the high-level APIs abstracted away the manufacturer-specific data I actually needed. The scale was not exposing GATT services in the conventional manner --- all the interesting data lived in the advertisement packets themselves.
 
 So I switched to `aioblescan`, which gives you raw HCI (Host Controller Interface) packets. This is the low-level interface between the Bluetooth controller and the host system, and it is where the fun begins, if your definition of fun accommodates hex dumps.
 
@@ -82,7 +82,7 @@ f477996 Fix packet decoding: weight in data bytes, not manufacturer_id
 28de4a4 Fix packet decoding: weight is in manufacturer ID field
 ```
 
-I initially believed the weight was encoded in the manufacturer ID field (the first two bytes of the manufacturer-specific data). Then I believed the opposite. Both were wrong, though in interestingly different ways --- I was consistently off by exactly one byte, which is the kind of systematic error that makes you feel like you're nearly right when you're actually just consistently wrong.
+I initially believed the weight was encoded in the manufacturer ID field (the first two bytes of the manufacturer-specific data). Then I believed the opposite. Both were wrong, though in interestingly different ways --- I was consistently off by exactly one byte, which is the kind of systematic error that makes you feel you are nearly right when you are in fact merely consistently wrong.
 
 The actual layout, once I stopped theorising and started reading correctly:
 
@@ -161,7 +161,7 @@ def calculate_body_composition(
 
 These formulae are not perfectly accurate --- consumer BIA scales are notoriously inconsistent --- but they suffice for tracking trends over time. The numbers need not be right in absolute terms; they merely need to be wrong in the same way each morning.
 
-## The ETL Problem I Didn't Anticipate
+## The ETL Problem I Did Not Anticipate
 
 The scale sends multiple packets per measurement. First you receive weight-only packets (`0x20`), then eventually a complete packet with impedance (`0x21`). Sometimes the impedance reading arrives seconds after the weight, like a slow friend catching up at a pedestrian crossing.
 
@@ -278,13 +278,13 @@ This rsyncs the code, installs dependencies via `uv`, and sets up two systemd se
 - `scalibur-scanner.service` - The BLE scanner daemon (needs `CAP_NET_RAW` for raw socket access)
 - `scalibur-dashboard.service` - The Flask dashboard on port 5000
 
-SQLite with WAL mode handles concurrent access between the scanner writing packets and the dashboard reading measurements. The dashboard runs database migrations on startup, so existing installations upgrade themselves when new schema changes arrive (like the addition of the profiles table). Hopefully inside the bus rather than under it, but I won't make the perfect the enemy of the good.
+SQLite with WAL mode handles concurrent access between the scanner writing packets and the dashboard reading measurements. The dashboard runs database migrations on startup, so existing installations upgrade themselves when new schema changes arrive (like the addition of the profiles table). Hopefully inside the bus rather than under it, but I will not make the perfect the enemy of the good.
 
 ## What I Learned
 
 **Low-level BLE is tricky but gratifying.** Most BLE tutorials concern themselves with GATT services and characteristics. Advertisement-based protocols are less commonly documented, but simpler once you grasp HCI packets. The documentation is sparse enough that you feel like an archaeologist.
 
-**Iterative debugging with real hardware is slow.** I spent a lot of time stepping on and off the scale, waiting for packets, scrutinising hex dumps. A proper test suite with captured packets would have saved hours. I did not build one until far too late, because I am a human being and not a pedagogical example.
+**Iterative debugging with real hardware is slow.** I spent a great deal of time stepping on and off the scale, waiting for packets, scrutinising hex dumps. A proper test suite with captured packets would have saved hours. I did not build one until far too late, because I am a human being and not a pedagogical example.
 
 **Owning your data is worth the bother.** The scale's original app functions well enough. But now I have a SQLite database I can query however I please --- export to CSV, build custom visualisations, integrate with other systems. The entire pipeline from bare feet to bar chart lives under my roof.
 

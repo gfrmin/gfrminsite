@@ -9,9 +9,9 @@ series_order: 2
 categories: [essays, bayesian, ai, decision-theory]
 ---
 
-In [the last post](/posts/credence-pi-pass-1/) I built a governance layer for a coding agent's tool calls: a *body* that hooks the agent's `tool_call` event, extracts a few features, and dispatches ask, proceed, or block; and a *brain*, a Julia daemon that holds a belief and maximises expected utility. The commitment that held it together was that the brain is opaque to the body. The wire carries observations and named actions and nothing else, so the brain can change how it reasons without the body ever knowing.
+In [the previous essay](/posts/credence-pi-pass-1/) I built a governance layer for a coding agent's tool calls: a *body* that hooks the agent's `tool_call` event, extracts a few features, and dispatches ask, proceed, or block; and a *brain*, a Julia daemon that holds a belief and maximises expected utility. The commitment that held it together was that the brain is opaque to the body. The wire carries observations and named actions and nothing else, so the brain can change how it reasons without the body ever knowing.
 
-This is the cash-out of that commitment, and then an argument I care about more than the engineering. (If you just want to install the thing, [the short version is here](/posts/openclaw-cheaper-and-harder-to-fool/).)
+This is the cash-out of that commitment, and then an argument I care about more than the engineering. (For readers who only want to install the thing, [the short version is here](/posts/openclaw-cheaper-and-harder-to-fool/).)
 
 The cash-out first. The Pass-1 brain promised that the next pass would replace the global Beta with a structure-learning posterior over the features. What shipped is a structure-BMA: a posterior that learns *which* features matter and how they interact by averaging over the possible dependency graphs, rather than committing to one. The role matches the promise, and the discipline paid in both directions: the brain swapped its posterior without the body knowing, and the body itself moved house — Pass 1's body was an extension for pi, the agent I was using then; this pass reships it as an [OpenClaw](https://github.com/openclaw/openclaw) plugin — without the brain noticing. The wire schema never moved.
 
@@ -49,7 +49,7 @@ Run end to end through the brain, the taint features buy something the old featu
 
 And then the ceiling, which I would rather state than have found for me. What a tool-boundary governor can see at all tops out at about three in ten of these unsafe trajectories, and the brain saturates about three-quarters of that bound. The ceiling sits where it does because a little under half of "unsafe" is the agent producing harmful *output* — bad advice, a wrong answer, a fabrication — with no tool call to intercept, and a governor that lives at the tool boundary is structurally blind to it. The rest is harm that carries no static signal. This is a net for action-mediated, statically visible injection harm. It is not a complete safety classifier, and at the tool boundary it cannot be one. A guardrail sold as complete is being sold dishonestly.
 
-## What a regex can't do
+## What a regex cannot do
 
 Now the part I actually want to defend, which is not "a regex scores lower" — that is a tuning contest. The claim is that several of these behaviours are outside what any fixed rule, and even any hand-tuned stateful heuristic, can express. I had a panel of adversarial reviewers try to break the claim. They broke the weak form of it, and what survived is both stronger and more honest.
 
@@ -88,4 +88,4 @@ What you get: wasted repeated calls blocked; an injected exfiltration brought to
 
 What this is not, plainly: a complete safety guarantee — it is blind to harmful output, and the harm it can see at the tool boundary tops out at about three in ten of unsafe trajectories — and not yet a proven net improvement to your task outcomes, which needs the live data the invitation asks for. What it is: a governor that learns your agent's behaviour from your agent's behaviour, and decides as a decision under uncertainty actually demands, which, where it matters, is something a rule cannot be.
 
-The code, the eval harness, the adversarial red-team of the claims above, and the demonstrations are all in the open. If you can find a fixed rule that does what is in the "what a regex can't do" section without quietly reconstructing the maths, I would like to see it.
+The code, the eval harness, the adversarial red-team of the claims above, and the demonstrations are all in the open. If you can find a fixed rule that does what is in the "what a regex cannot do" section without quietly reconstructing the maths, I would like to see it.

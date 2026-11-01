@@ -1,7 +1,7 @@
 ---
 title: "Sixty-Two Percent Correct and Winning by a Hundred and Twenty Points"
 subtitle: "What happens when you add a utility function to a question-answering benchmark"
-description: "A Bayesian decision-theoretic agent scores lower on accuracy than every LLM variant it competes against — and beats the best of them by 120 points. The explanation requires thinking about something that LLM benchmarks typically refuse to think about."
+description: "A Bayesian decision-theoretic agent scores lower on accuracy than the two stronger LLM variants it competes against — and beats the best of them by 120 points. The explanation requires thinking about something that LLM benchmarks typically refuse to think about."
 author: "Guy Freeman"
 date: 2026-04-01
 series: [credence]
@@ -64,7 +64,7 @@ That this produces better outcomes while generating lower accuracy is not a para
 
 When the Bayesian agent submits an answer, it has already decided that the expected score from submitting is positive. It has queried the tools that the VOI calculation identified as worth querying, updated its belief about the correct answer, and concluded that the probability of being right, times +10, minus the probability of being wrong times 5, is greater than zero.
 
-When it achieves 62.6% accuracy on submitted answers, this means its calibration is roughly correct: for a question where submitting has positive expected value, it is right about 63% of the time. The questions where it is less confident --- it abstains on. The LLM agents submit those too. They get some of them right, which raises their accuracy percentage. They also get some of them wrong at a cost of 5 points each, plus whatever they spent querying tools to arrive at the wrong answer.
+When it achieves 62.6% accuracy on submitted answers, this means its calibration is roughly correct: for a question where submitting has positive expected value, it is right about 63% of the time. On the questions where it is less confident, it abstains. The LLM agents submit those too. They get some of them right, which raises their accuracy percentage. They also get some of them wrong at a cost of 5 points each, plus whatever they spent querying tools to arrive at the wrong answer.
 
 The accuracy comparison is measuring something real. The Bayesian agent *is* less accurate on the questions it attempts. That is exactly as it should be. It is attempting harder questions more selectively and easier questions more efficiently.
 
@@ -79,5 +79,5 @@ The comparison above is unfair in a specific and since-measured way. The Bayesia
 
 Worse for the argument as I made it, a one-line greedy ablation --- query the single most reliable tool, submit, stop, no value-of-information calculation anywhere --- beats the full Bayesian agent by 25.75 points under fair conditions, and keeps beating it under every credit-assignment rule tested. The ablation table I published elsewhere, the one that said removing VOI costs 78.1 points, was computed under oracle categories and flips sign without them.
 
-What survives is narrower and conditional. The Bayesian substrate --- reliability learning plus category inference --- still owns the cost-efficient frontier in both conditions, and VOI still dominates a free local model on queries and score together. Optimism-greedy is itself a Bayesian policy, so what fell is not decision theory against prompting; it is the narrower claim that the VOI *action layer* specifically earns its cost once categories have to be inferred. And the arithmetic this post is actually about --- that a scoring function with costs and penalties makes accuracy the wrong objective --- never depended on which agent won. The full account, including why the paper never went to arXiv, is in [The Ablation That Beat the Agent](/posts/credence-paper/).
+What survives is narrower and conditional. The Bayesian substrate --- reliability learning plus category inference --- still owns the cost-efficient frontier in both conditions, and VOI still dominates a free local model on queries and score together. Optimism-greedy is itself a Bayesian policy, so what fell is not decision theory against prompting; it is the narrower claim that the VOI *action layer* specifically earns its cost once categories have to be inferred. And the arithmetic this essay is actually about --- that a scoring function with costs and penalties makes accuracy the wrong objective --- never depended on which agent won. The full account, including why the paper never went to arXiv, is in [The Ablation That Beat the Agent](/posts/credence-paper/).
 {{< /callout >}}

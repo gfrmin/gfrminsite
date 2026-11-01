@@ -1,7 +1,7 @@
 ---
 title: "Station by Station"
 kicker: "Election night"
-subtitle: "On election night my live seat projection put an Arab party out of the Knesset that every exit poll had at seven seats. It wasn't a modelling mistake."
+subtitle: "On election night my live seat projection put an Arab party out of the Knesset that every exit poll had at seven seats. It was not a modelling mistake."
 description: "A live election projection on bechirot.fyi failed on the night of Israel's 26th Knesset election, 27–28 October 2026. The cause was not the model but the data: the Central Elections Committee's results file now lists a town only once it reports, and reports it as its polling stations come in, so the projection filled in nothing and treated half-counted cities as complete. The fix was first a refusal, then a rebuild at the level of the polling station."
 author: "Guy Freeman"
 date: 2026-10-28
