@@ -1,6 +1,6 @@
 ---
 title: "The Science Was Done. The Engineering Wasn't."
-subtitle: "What has to sit underneath an agent that is allowed to change itself, and why every piece of it was finished between 1939 and 2007, with two glosses from 2016 — waiting for something cheap enough to govern."
+subtitle: "What has to sit underneath an agent that is allowed to change itself, and why nearly every piece of it was finished decades ago — waiting for something cheap enough to govern."
 description: "A self-modifying agent needs a fixed core it cannot reach, a free edge it can rewrite, and a score that is rigid everywhere. The founding note for jack: the theorems that bound the design, the old mechanisms they force — Hart, Dawid, Ville, Hedge, the reference monitor — what is actually new, and what the programme claims in terms that can be shown wrong."
 author: "Guy Freeman"
 date: 2026-11-01
@@ -50,7 +50,7 @@ The record exists so that three things can be tested without taking anyone's wor
 
 ### An election instead of a choice
 
-If every output is a forecast and every forecast is scored, "which model should do this" stops being a decision and becomes a statistic. **Freund and Schapire's Hedge (1997)** — exponential weights over experts, cumulative loss within \(\ln K\) of the best of \(K\) — is the aggregate; with the learning rate at one it is the Bayes mixture, and the regret bound is the only constant in it, which satisfies the charter's rule that the law may contain a number only when it is derived from a proof or pre-stated before the window opens — which is what \(\alpha\) is. **Herbster and Warmuth (1998)** handle experts that drift; **Auer, Cesa-Bianchi, Freund and Schapire (2002)** handle the bandit case, where only the invited proposer's outcome is seen. All three are named as *entrants*, not law: an aggregation rule competes like anything else and a test exists to show it can lose. **Wald (1950)** sits behind the whole: decide by expected loss, and treat your own advice as a bet. The adviser who wrote the law is scored too.
+If every output is a forecast and every forecast is scored, "which model should do this" stops being a decision and becomes a statistic. **Freund and Schapire's Hedge (1997)** — exponential weights over experts, cumulative loss within \(\ln K\) of the best of \(K\) — is the aggregate; with the learning rate at one it is the Bayes mixture, and the regret bound is the only constant in it, which satisfies the charter's rule that the law may contain a number only when it is derived from a proof or pre-stated before the window opens, as \(\alpha\) is. **Herbster and Warmuth (1998)** handle experts that drift; **Auer, Cesa-Bianchi, Freund and Schapire (2002)** handle the bandit case, where only the invited proposer's outcome is seen. All three are named as *entrants*, not law: an aggregation rule competes like anything else and a test exists to show it can lose. **Wald (1950)** sits behind the whole: decide by expected loss, and treat your own advice as a bet. The adviser who wrote the law is scored too.
 
 ### Enforcement at a seam
 
@@ -71,7 +71,7 @@ jack is built in layers, each a simple system that works before the next is adde
 - **C0, the record.** The log, two checkers, keys with powers, the judge in CI. Done in October.
 - **C1, the ledger and the clerk.** Forecasts and resolutions under a proper score; then obligations derived from state and the clock, with deadlines and escalation; the human's acts as typed entries. Its liveness test is an e-process on items completed without a human repair, against a null rate taken from the predecessor's own record. Closing as I write.
 - **C2, the election.** The Bayes mixture over the proposers, scored prequentially on real events — which of my company's datasets the next hourly pipeline run refreshes, whether the favourite wins race seven, whether this pull request's tests go green — against the base-rate forecaster. Then the one change to the core that lets the court invite proposers and accept their work by that record.
-- **C3, the seed agent.** Only now does an agent arrive: a mixture over programs in a tiny seed language, conditioning within episodes, judged by a sealed judge no party can edit on held-out seeds of the world it was trained in.
+- **C3, the seed agent.** Only now does an agent arrive: a mixture over programs in a tiny seed language, conditioning within episodes, judged by a sealed judge no party can edit on held-out seeds of the same two worlds, never seen while it was built.
 - **Beyond.** Language as action — the agent extends its own library and adopts the extension if it dominates; adoption by sequential expected utility, with no human in the loop; the agent writing its own briefs, the human's role reduced to wishes, vetoes and a budget. The first priced world is the one I already run.
 
 ## What we hope to achieve
