@@ -16,9 +16,9 @@ Credence-proxy is the latter approach, shipped as a Docker container. It present
 
 On a 50-query [OpenClaw](https://github.com/open-claw) benchmark, compared against an always-Sonnet baseline, it produced:
 
-- **Quality: +1.24** (7.80 vs 6.56, on a 0--10 scale judged by a separate model)
+- **Quality: +1.24** (8.54 vs 7.29, on a 0--10 scale judged by a separate model)
 - **Latency: --52%** (7.2s vs 14.9s per request)
-- **Cost: --96%** ($0.024 vs $0.001 per request)
+- **Cost: --96%** ($0.089 vs $0.003 per request)
 
 These numbers are surprising in the direction they are surprising. The cheaper routing is not slightly worse. It is measurably better.
 
@@ -36,18 +36,18 @@ There is no epsilon-greedy exploration. There is no decay schedule. There is no 
 
 ## What the Router Learned
 
-The most interesting fact about the OpenClaw experiment is what the router did not do. It did not learn an intricate mapping between task types and model capabilities. It learned that one cheap model --- gpt-4o-mini --- was sufficient for forty-nine out of fifty queries, including categories that the conventional wisdom would route to a larger model.
+The most interesting fact about the OpenClaw experiment is what the router did not do. It did not learn an intricate mapping between task types and model capabilities. It learned that one cheap model --- gpt-4o-mini --- was sufficient for forty-nine of its fifty-two model calls (the other three went to Haiku), including categories that the conventional wisdom would route to a larger model.
 
 The mechanism is straightforward. The OpenClaw agent decomposes problems into narrow, well-scoped sub-queries. Narrow well-scoped sub-queries are precisely what small models handle well. The router, evaluating each query on its own merits rather than applying a global heuristic, discovered that the problem the agent was actually posing was not "solve a hard reasoning task" but "execute a simple step in a decomposition." For that, mini is fine.
 
-The cost savings are therefore not strategic --- no clever abstention, no sophisticated cascading. They are the result of replacing Sonnet with mini on the queries where mini is adequate, and doing so on the basis of measured performance rather than priors about model capability. Price goes down by a factor of thirty-five per request. Quality, measured by a separate judge, goes up by 1.24 points. Latency halves, because smaller models are faster.
+The cost savings are therefore not strategic --- no clever abstention, no sophisticated cascading. They are the result of replacing Sonnet with mini on the queries where mini is adequate, and doing so on the basis of measured performance rather than priors about model capability. Price goes down by a factor of twenty-eight per request. Quality, measured by a separate judge, goes up by 1.24 points. Latency halves, because smaller models are faster.
 
 ## The Knobs That Matter
 
-The proxy exposes two configuration parameters, `CREDENCE_REWARD` and `CREDENCE_LATENCY_WEIGHT`, which together define the agent's utility function. There are suggested presets:
+The proxy exposes two configuration parameters, `CREDENCE_REWARD` and `CREDENCE_LATENCY_WEIGHT`, which together define the agent's utility function. There are suggested presets; the shipped default is reward 1.0 with latency-weight 0.01:
 
 - **Quality-first**: reward 1.0, latency-weight 0.001. Used when you do not care about a few extra seconds.
-- **Cost-optimised**: reward 0.5, latency-weight 0.01. The default. Treats quality as worth 50 cents per point, latency as worth 1 cent per second.
+- **Cost-optimised**: reward 0.5, latency-weight 0.01. Treats quality as worth 50 cents per point, latency as worth 1 cent per second.
 - **Latency-critical**: reward 0.5, latency-weight 0.1. For real-time UIs where a two-second delay is a problem.
 
 These are not magic numbers. They are prices. If you believe a quality point is worth a dollar, set reward to 1.0. If a second of latency costs you ten cents of user patience, set latency-weight to 0.1. The proxy then optimises the thing you said you wanted. This is less satisfying than a model selector that promises to just handle it, and more honest.
@@ -64,7 +64,7 @@ There is a separate objection, which is that a well-tuned heuristic plus occasio
 
 ## What This Is For
 
-The shipped [credence-proxy](https://github.com/gfrmin/credence) is the concrete answer to a question the [accuracy paradox essay](/posts/accuracy-paradox/) raised in the abstract: can a Bayesian agent, given the same tools as a language model, deploy them more efficiently? On a 50-question benchmark with four simulated tools, the answer was yes by a factor of twelve. On a 50-query OpenClaw benchmark with real LLM providers, the answer is yes by a factor of thirty-five in cost, two in latency, and slightly more than one in quality.
+The shipped [credence-proxy](https://github.com/gfrmin/credence) is the concrete answer to a question the [accuracy paradox essay](/posts/accuracy-paradox/) raised in the abstract: can a Bayesian agent, given the same tools as a language model, deploy them more efficiently? On a 50-question benchmark with four simulated tools, the answer was yes by a factor of twelve. On a 50-query OpenClaw benchmark with real LLM providers, the answer is yes by a factor of twenty-eight in cost, two in latency, and slightly more than one in quality.
 
 The proxy is shipped as a Docker image. The evaluation is reproducible. The utility function is configurable. The architecture is the same one the [Three Types essay](/posts/three-types/) described, with the decision-theoretic layer deciding which external sensor to query and the LLMs serving as the sensors.
 

@@ -52,7 +52,7 @@ This is the learning loop: enumerate programs → observe outcomes → compute p
 
 The obvious comparison is to methods that learn model structure --- neural architecture search, evolutionary algorithms, genetic programming. These methods do something similar in spirit: they search a space of structured hypotheses for one that fits the data.
 
-The distinction is in the search criterion. Gradient descent, evolutionary fitness, and cross-validation accuracy are all surrogates for a quantity you actually care about. They can be gamed. A program that achieves high training accuracy by memorising will score well under cross-validation if the training set is large enough. An evolved architecture that overfits will dominate a population in short episodes.
+The distinction is in the search criterion. Gradient descent, evolutionary fitness, and cross-validation accuracy are all surrogates for a quantity you actually care about. They can be gamed. A program that memorises its training data will still score well under cross-validation whenever the folds leak --- near-duplicates on both sides of the split, or the same entities recurring in each. An evolved architecture that overfits will dominate a population in short episodes.
 
 The Bayesian criterion --- posterior probability --- cannot be similarly gamed, because it integrates fit and complexity simultaneously. The complexity penalty (the prior \(2^{-k}\)) is not a regularisation coefficient tuned by hand. It is the prior probability of the program's existence under a maximum-entropy distribution over programs. The posterior is the uniquely correct update of this prior given the observed data. There is no hyperparameter to tune and no threshold to set.
 

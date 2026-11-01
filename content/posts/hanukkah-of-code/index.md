@@ -172,7 +172,7 @@ orders_plus |>
 ```
 
 
-One customer fits. (I originally called this variable `tinder_girl`, which tells you everything about my variable naming discipline.)
+Two customers fit; the second, Christina Booker, is the one the puzzle accepts. (I originally called this variable `tinder_girl`, which tells you everything about my variable naming discipline.)
 
 
 ```r
