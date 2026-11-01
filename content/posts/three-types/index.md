@@ -10,20 +10,16 @@ categories: [julia, bayesian, machine-learning, ai, essays]
 ---
 
 {{< callout type="note" >}}
-This is Part 1 of a series on Bayesian decision-theoretic agents.
-{{< /callout >}}
-
-{{< callout type="note" >}}
-This post describes the Credence architecture as it stood in March 2026, when the system used the standard Kolmogorov definition of probability --- measures over sample spaces. Since then, the foundation has been reconstructed around de Finetti's definition, where expectation (the *prevision*) is the primitive and probability is derived from it. The three types described here were the right starting point; [what came next](#what-came-next-the-funeral-in-the-title) is at the end.
+*This essay describes the Credence architecture as it stood in March 2026, when the system used the standard Kolmogorov definition of probability --- measures over sample spaces. Since then, the foundation has been reconstructed around de Finetti's definition, where expectation (the prevision) is the primitive and probability is derived from it. The three types described here were the right starting point; [what came next](#what-came-next-the-funeral-in-the-title) is at the end.*
 {{< /callout >}}
 
 What would it take to build an agent that genuinely learns and decides --- not one that pattern-matches its way through tool calls, but one whose behaviour is *derived* from a few fundamentals the way physics is derived from conservation laws?
 
-I've spent the last several months trying to answer this. The [earlier posts](/posts/agentic-ai/) on this blog laid out the critique: current "AI agents" have no beliefs, no uncertainty, no principled mechanism for deciding whether a query justifies its cost. The [companion piece](/posts/decision-theory-agents/) demonstrated that a few hundred lines of decision theory could outscore LangChain by 120 points on its own benchmark. The [Bayesian agent series](/posts/bayesian-agent/) showed conjugate priors converging in real-time. These were demonstrations. This post is the foundation they were standing on.
+I have spent the last several months trying to answer this. The [earlier essays](/posts/agentic-ai/) on this site laid out the critique: current "AI agents" have no beliefs, no uncertainty, no principled mechanism for deciding whether a query justifies its cost. The [companion piece](/posts/decision-theory-agents/) demonstrated that a few hundred lines of decision theory could outscore LangChain by 120 points on its own benchmark. The [Bayesian agent series](/posts/bayesian-agent/) showed conjugate priors converging in real time. These were demonstrations. This essay is the foundation they were standing on.
 
-The answer turns out to be three types and four axioms. Everything else --- tool selection, exploration, when to ask for help, when to stop --- falls out of the mathematics. I built a DSL called [Credence](https://github.com/gfrmin/credence) to enforce this, and the enforcement is the interesting part. Not "here is a nice framework." Here is a constitution, and here is why violations are mathematical errors.
+The answer proved to be three types and four axioms. Everything else --- tool selection, exploration, when to ask for help, when to stop --- falls out of the mathematics. I built a DSL called [Credence](https://github.com/gfrmin/credence) to enforce this, and the enforcement is the interesting part. Not "here is a nice framework." Here is a constitution, and here is why violations are mathematical errors.
 
-No existing framework occupies this position. Every probabilistic programming language takes the probability calculus as given rather than deriving it. Every POMDP solver assumes a fixed model class. Every LLM agent framework lacks principled decision theory entirely. The gap between axiomatic foundations and practical implementation has been well-documented for decades. It has not, until now, been filled.
+No existing framework occupies this position. Every probabilistic programming language takes the probability calculus as given rather than deriving it. Every POMDP solver assumes a fixed model class. Every LLM agent framework lacks principled decision theory entirely. The gap between axiomatic foundations and practical implementation has been well documented for decades. It has not, until now, been filled.
 
 ## The Four Axioms
 
@@ -31,13 +27,13 @@ These are not design choices. They are theorems, established by Cox, Savage, Bay
 
 **A1. Beliefs are probability measures.** Cox (1946) proved that any system of beliefs satisfying basic consistency requirements --- if you believe A more than B, and B more than C, then you believe A more than C --- must be representable as probabilities. Not "could be." Must be. The alternative is incoherence: a bookmaker can construct a set of bets that guarantees you lose money. (Halpern (1999) showed the proof breaks in certain finite domains. The practical significance is limited --- the counterexamples require increasingly pathological constructions as domain size grows --- but intellectual honesty requires noting it.)
 
-**A2. Rational action maximises expected utility.** Savage (1954) showed that if your preferences over actions satisfy six axioms (completeness, the sure-thing principle, and four others that amount to "don't be absurd"), there exists a unique probability measure and a utility function such that you act as if maximising expected utility. The utility function isn't imposed. It's *implied* by coherent preference.
+**A2. Rational action maximises expected utility.** Savage (1954) showed that if your preferences over actions satisfy six axioms (completeness, the sure-thing principle, and four others that amount to "don't be absurd"), there exists a unique probability measure and a utility function such that you act as if maximising expected utility. The utility function is not imposed. It is *implied* by coherent preference.
 
 **A3. Learning is conditioning on evidence.** Bayes' rule is the unique update rule satisfying diachronic coherence: no sequence of bets can extract guaranteed money from an agent that updates this way. Amarante (2022) proved something stronger --- Bayes' rule is the unique rule for which updating and computing the predictive commute. Any other update rule either loses information or introduces inconsistency.
 
 **A4. One learning mechanism. One decision mechanism.** Dutch book coherence again. If you maintain two ways of updating beliefs, or two ways of selecting actions, a sufficiently clever adversary can construct a set of bets that guarantees your ruin. This is the axiom that does the most work, and the one that current AI architectures violate most enthusiastically.
 
-These four axioms aren't one principled approach among many. Wald's complete class theorem (1950) establishes that under mild regularity conditions, any admissible decision procedure --- any procedure not dominated by another across all possible states of nature --- must be a Bayes rule with respect to some prior. The alternative to Bayesian decision theory is not a different theory. It is inadmissibility.
+These four axioms are not one principled approach among many. Wald's complete class theorem (1950) establishes that under mild regularity conditions, any admissible decision procedure --- any procedure not dominated by another across all possible states of nature --- must be a Bayes rule with respect to some prior. The alternative to Bayesian decision theory is not a different theory. It is inadmissibility.
 
 ## Three Types
 
@@ -61,7 +57,7 @@ A **Space** is a set of possibilities. It might be finite (five hypotheses about
 
 A **Measure** is a probability distribution over a space. Not an approximation, not a sample, not a point estimate --- a distribution, encoding both what the agent believes and how uncertain it is. The DSL provides several: categorical (finite discrete), Beta (continuous on \[0,1\]), Gaussian, Dirichlet, Normal-Gamma, and their products and mixtures.
 
-A **Kernel** is a conditional distribution between two spaces. It is the agent's theory of how hypotheses generate data --- for each hypothesis, what distribution over observations does the agent expect? A kernel is a morphism in the Markov category, which is a fancy way of saying it's the right mathematical object for the job. It declares its source space, its target space, and its generative structure. This declaration matters: it's what allows the system to detect conjugate structure and select the right computational backend.
+A **Kernel** is a conditional distribution between two spaces. It is the agent's theory of how hypotheses generate data --- for each hypothesis, what distribution over observations does the agent expect? A kernel is a morphism in the Markov category, which is a grand way of saying it is the right mathematical object for the job. It declares its source space, its target space, and its generative structure. This declaration matters: it is what allows the system to detect conjugate structure and select the right computational backend.
 
 Everything else --- every operation, every combinator, every named concept --- is a function over these three types.
 
@@ -84,9 +80,9 @@ else
 end
 ```
 
-When conjugacy isn't available, it falls back to grid approximation or importance sampling. The DSL user never sees the difference. The interface is `condition(belief, kernel, observation)`. Always. The computational strategy is invisible.
+When conjugacy is not available, it falls back to grid approximation or importance sampling. The DSL user never sees the difference. The interface is `condition(belief, kernel, observation)`. Always. The computational strategy is invisible.
 
-No other function may modify a measure's weights. This isn't a convention. It's the only function whose type signature permits it.
+No other function may modify a measure's weights. This is not a convention. It is the only function whose type signature permits it.
 
 **`expect`**: Integration against a measure.
 
@@ -98,7 +94,7 @@ This is what a measure *is*: a thing that assigns expected values to functions. 
 
 **`push_measure`**: Composition. Given a distribution over hypotheses and a kernel to another space, produce the induced distribution on the target. `expect` is `push_measure` to the real line.
 
-Four functions. Three types. That's the frozen layer. Everything built on top of this --- and there's quite a lot --- is stdlib.
+Four functions. Three types. That is the frozen layer. Everything built on top of this --- and there is quite a lot --- is stdlib.
 
 ## The Standard Library in 74 Lines
 
@@ -116,7 +112,7 @@ The entire decision-theoretic apparatus is derived from the axiom-constrained fu
                       (support actions))))))
 ```
 
-Argmax over actions of `expect(measure, preference)`. That's it. No special machinery. No planning algorithm. Just: for each action, compute the expected utility under the current beliefs, pick the highest.
+Argmax over actions of `expect(measure, preference)`. That is all. No special machinery. No planning algorithm. Simply: for each action, compute the expected utility under the current beliefs, pick the highest.
 
 Here is `voi` --- value of information:
 
@@ -133,9 +129,9 @@ Here is `voi` --- value of information:
            current-val)))))
 ```
 
-How much would one observation from kernel `k` improve the decision? Enumerate possible observations, weighted by their predictive probability. For each, condition the beliefs and compute the resulting optimal EU. Subtract the current optimal EU. The difference is what the observation is worth. If this exceeds the observation's cost, query. Otherwise don't.
+How much would one observation from kernel `k` improve the decision? Enumerate possible observations, weighted by their predictive probability. For each, condition the beliefs and compute the resulting optimal EU. Subtract the current optimal EU. The difference is what the observation is worth. If this exceeds the observation's cost, query. Otherwise, do not.
 
-The [API Bill post](/posts/decision-theory-agents/) showed the Python implementation of this calculation beating LangChain by 120 points. The calculation itself is nine lines of stdlib, composed entirely from `condition`, `expect`, and `density`. The remaining functions --- `value` (optimal EU), `eu` (expected utility of a specific action), `predictive` (marginal probability of an observation), `net-voi` (VOI minus cost) --- are equally terse compositions. The standard library, including a self-test that verifies VOI of a flat kernel is zero, is 74 lines.
+The [API Bill essay](/posts/decision-theory-agents/) showed the Python implementation of this calculation beating LangChain by 120 points. The calculation itself is nine lines of stdlib, composed entirely from `condition`, `expect`, and `density`. The remaining functions --- `value` (optimal EU), `eu` (expected utility of a specific action), `predictive` (marginal probability of an observation), `net-voi` (VOI minus cost) --- are equally terse compositions. The standard library, including a self-test that verifies VOI of a flat kernel is zero, is 74 lines.
 
 ## The Coin
 
@@ -181,7 +177,7 @@ The DSL in its entirety, applied to learning a biased coin:
 
 Forty-six lines. Define three spaces. Build a kernel. Condition on four observations. Print the posterior. Optimise. Compute VOI. The VOI tells you whether one more coin flip would improve your bet enough to justify watching it. The entire DSL is here: types, axiom-constrained functions, stdlib compositions. There is nothing else.
 
-The syntax is S-expressions, after McCarthy (1960). The syntax is the AST. Programs can manipulate programs, which matters when your hypotheses *are* programs --- but that's Tier 2, and a story for another post.
+The syntax is S-expressions, after McCarthy (1960). The syntax is the AST. Programs can manipulate programs, which matters when your hypotheses *are* programs --- but that is Tier 2, and a story for another essay.
 
 ## The Forbidden Patterns
 
@@ -191,43 +187,43 @@ Here is where the constitution earns its keep. Each of these is a mathematical e
 
 LangChain has no learning mechanism at all, which is a different kind of violation --- it achieves coherence the way a stopped clock achieves accuracy, by not attempting the relevant operation.
 
-**No second decision mechanism.** Only EU maximisation (via `expect` + `argmax`) selects actions. Epsilon-greedy, UCB bonuses, softmax temperature, and similar heuristics are not forbidden as *concepts*. They may emerge as EU-maximising strategies when computational cost enters the utility function. But they must not be hard-coded as mechanisms outside of EU maximisation. The difference matters: a hard-coded exploration bonus cannot be turned off when exploration becomes wasteful. An EU-maximising agent that accounts for computational cost will naturally stop exploring when the expected gain drops below the cost, because that's what "maximise expected utility" means.
+**No second decision mechanism.** Only EU maximisation (via `expect` + `argmax`) selects actions. Epsilon-greedy, UCB bonuses, softmax temperature, and similar heuristics are not forbidden as *concepts*. They may emerge as EU-maximising strategies when computational cost enters the utility function. But they must not be hard-coded as mechanisms outside of EU maximisation. The difference matters: a hard-coded exploration bonus cannot be turned off when exploration becomes wasteful. An EU-maximising agent that accounts for computational cost will naturally stop exploring when the expected gain drops below the cost, because that is what "maximise expected utility" means.
 
 **No opaque likelihood functions.** Likelihoods are kernels, not bare lambdas. A kernel declares its source space, its target space, and its generative structure. This allows the system to detect conjugate structure (Beta-Bernoulli, Dirichlet-Categorical, Normal-Normal) and select exact inference where available. A bare `(lambda (h o) ...)` discards this information, forcing the system to treat every problem as non-conjugate. It is the computational equivalent of refusing to show your working.
 
-**Heuristics are EU maximisation, not approximations.** When computational cost enters the utility function, a faster approximate strategy may have higher EU than the exact Bayesian computation. This is not an approximation of the correct answer. It IS the correct answer. The right framing is not "we approximated inference for speed" but "we maximised expected utility over a decision space that includes computational strategy." The DSL specification doesn't change. The Julia execution layer implements alternative strategies; the agent selects among them by the same mechanism it uses for everything else.
+**Heuristics are EU maximisation, not approximations.** When computational cost enters the utility function, a faster approximate strategy may have higher EU than the exact Bayesian computation. This is not an approximation of the correct answer. It IS the correct answer. The right framing is not "we approximated inference for speed" but "we maximised expected utility over a decision space that includes computational strategy." The DSL specification does not change. The Julia execution layer implements alternative strategies; the agent selects among them by the same mechanism it uses for everything else.
 
-**Indifference implies exploration.** When the EU of interacting equals the EU of waiting (both zero), interact. Indifference means the VOI from the interaction outcome is positive --- you'll learn something. The threshold is \(\geq 0\), not \(> 0\). This is a theorem, not a tie-breaking rule. Do not "fix" it to strict inequality.
+**Indifference implies exploration.** When the EU of interacting equals the EU of waiting (both zero), interact. Indifference means the VOI from the interaction outcome is positive --- you will learn something. The threshold is \(\geq 0\), not \(> 0\). This is a theorem, not a tie-breaking rule. Do not "fix" it to strict inequality.
 
 ## The Host Boundary
 
 The DSL is pure. No side effects, no IO, no mutation. The host provides observations and executes actions. This separation is load-bearing.
 
-`draw` --- the only source of randomness in the system --- lives in the Julia host, not the DSL. The DSL constructs mathematical objects (measures, kernels, expectations). The host realises them (samples values, executes actions, drives loops). This is why Thompson Sampling works cleanly: the DSL computes the posterior via `condition`. The host calls `draw()` to sample from it. Ordinary arithmetic picks the action with the highest sampled value. Three steps, three different layers, zero special cases. The [Bayesian agent post](/posts/bayesian-agent/) showed this working in a grid world. The mechanism is not "Thompson Sampling, the algorithm." It is "Bayesian inference, followed by sampling, followed by argmax" --- three operations that already exist, composed in the obvious way.
+`draw` --- the only source of randomness in the system --- lives in the Julia host, not the DSL. The DSL constructs mathematical objects (measures, kernels, expectations). The host realises them (samples values, executes actions, drives loops). This is why Thompson Sampling works cleanly: the DSL computes the posterior via `condition`. The host calls `draw()` to sample from it. Ordinary arithmetic picks the action with the highest sampled value. Three steps, three different layers, zero special cases. The [Bayesian agent essay](/posts/bayesian-agent/) showed this working in a grid world. The mechanism is not "Thompson Sampling, the algorithm." It is "Bayesian inference, followed by sampling, followed by argmax" --- three operations that already exist, composed in the obvious way.
 
 This also explains why a `(thompson-sample m actions pref)` primitive was proposed and rejected: sampling is randomness, randomness is a side effect, the DSL is pure. Construct the posterior in the DSL, call `draw()` in the host. Conflating the two layers is not a convenience. It is a category error.
 
 ## What the Axioms Produce
 
-The existing posts on this blog were demonstrations of a system the reader hadn't seen yet.
+The earlier essays on this site were demonstrations of a system the reader had not yet seen.
 
 The VOI computation in [How Decision Theory Cuts Your API Bill in Half](/posts/decision-theory-agents/) --- the one that beat LangChain by 120 points --- is `stdlib.bdsl`'s nine-line `voi` function, composed from `condition`, `expect`, and `density`. The Thompson Sampling in [Building a Bayesian Learning Agent That Teaches Itself to Eat](/posts/bayesian-agent/) is `condition` in the DSL followed by `draw` in the host. The evolutionary cognitive architecture in [Part 2](/posts/bayesian-agent-part2/) is the hierarchy-of-fixedness question: which levels of the agent's architecture should be learned (via `condition`) and which should be evolved (via a population-level analogue of the same operation)?
 
-Three types. Four axioms. Seventy-four lines of stdlib. Everything else these posts described falls out of the mathematics. Not because the mathematics is clever, but because the mathematics is correct, and the alternative --- adding special-case mechanisms for exploration, for tool selection, for when to stop querying --- is provably worse.
+Three types. Four axioms. Seventy-four lines of stdlib. Everything else those essays described falls out of the mathematics. Not because the mathematics is clever, but because the mathematics is correct, and the alternative --- adding special-case mechanisms for exploration, for tool selection, for when to stop querying --- is provably worse.
 
-The next posts in this series apply these principles to domains where the consequences are visceral: a text adventure where over-querying is impossible and the LLM is explicitly a sensor, not a commander, and the most universal failure mode of RL agents --- the loop --- eliminated by representing state properly. Those are applications. This post is the reason they work.
+The next essays in this series apply these principles to domains where the consequences are visceral: a text adventure where over-querying is impossible and the LLM is explicitly a sensor, not a commander, and the most universal failure mode of RL agents --- the loop --- eliminated by representing state properly. Those are applications. This essay is the reason they work.
 
 ## What Came Next: The Funeral in the Title
 
 The architecture described above works. But building on it revealed three operational pains that traced to the same root cause: taking Measure as the foundational type.
 
-**Pain 1: Conjugate dispatch scattered across case branches.** Adding a new conjugate pair --- say, Normal-Gamma --- required editing `condition` methods across multiple Measure subtypes, each with nested case analysis on the kernel's `likelihood_family`. The dispatch logic was \(N \times M\) branches: \(N\) measure types times \(M\) likelihood families. Every new pair touched code it shouldn't need to know about.
+**Pain 1: Conjugate dispatch scattered across case branches.** Adding a new conjugate pair --- say, Normal-Gamma --- required editing `condition` methods across multiple Measure subtypes, each with nested case analysis on the kernel's `likelihood_family`. The dispatch logic was \(N \times M\) branches: \(N\) measure types times \(M\) likelihood families. Every new pair touched code it should not need to know about.
 
 **Pain 2: Mixture conditioning duct-taped across two layers.** The email agent maintained a belief over 22 candidate programs as a mixture. Conditioning that mixture on evidence required a `FiringByTag` routing helper on the kernel side, a `_predictive_ll` flattening loop on the measure side, and application code manually reweighting components. Per-component routing semantics lived in one place; mixture flattening in another. Each extension was fragile.
 
 **Pain 3: Exchangeability inexpressible in the type system.** Those 22 programs were exchangeable within their tag class --- the agent's belief was symmetric in programs of the same type, which is the mathematical structure that justifies de Finetti's representation theorem. But the type system had no way to say this. Exchangeability was a comment in the code. A comment is a promise to future programmers that the runtime cannot enforce.
 
-All three pains share a cause. The Kolmogorov foundation takes the **measure** as primitive and derives expectation as integration against it. But the agent's coherence --- the Dutch-book argument that justifies Bayesian updating in the first place --- doesn't require a measure at all.
+All three pains share a cause. The Kolmogorov foundation takes the **measure** as primitive and derives expectation as integration against it. But the agent's coherence --- the Dutch-book argument that justifies Bayesian updating in the first place --- does not require a measure at all.
 
 De Finetti's *Theory of Probability* (1974, vol. 1, ch. 3) makes the alternative explicit. A **prevision** \(\mathbf{P}(X)\) is the certain gain you consider equivalent to a random gain \(X\) --- the price at which you would be indifferent between holding the uncertain quantity and accepting the sure thing. Coherence --- the impossibility of a combination of bets that guarantees loss --- forces \(\mathbf{P}\) to be additive and bounded. These two properties are, as de Finetti puts it, "not only necessary but also sufficient" for the entire theory. Probability is the special case: the prevision of an indicator. Whittle's *Probability via Expectation* (2000, ch. 2) reaches the same conclusion from the other direction, axiomatising the expectation operator directly --- positivity, linearity, normalisation, continuity --- and deriving \(P(A) = E[\mathbf{1}_A]\) as a consequence. In both treatments, the measure is not a foundation. It is a derived quantity.
 
@@ -247,7 +243,7 @@ The three types became four --- Space, **Prevision**, Event, Kernel --- and the 
 
 The reconstruction is operationally equivalent to the measure-theoretic implementation it replaced --- bit-exact under seeded RNG for particle paths, bit-exact for closed-form conjugate updates, and tighter-than-reassociation tolerances everywhere else. The axioms did not change. The four frozen functions did not change. The applications work identically. What changed is which type appears at the bottom, and therefore which invariants the type system can enforce.
 
-The funeral in the title was meant for inference libraries that add special-case mechanisms instead of deriving behaviour from axioms. It turned out to apply, in the end, to the Measure type itself.
+The funeral in the title was meant for inference libraries that add special-case mechanisms instead of deriving behaviour from axioms. It applied, in the end, to the Measure type itself.
 
 {{< callout type="note" >}}
 The reconstruction did not stop here. Getting the *nouns* right — prevision at the bottom, four types instead of three — was half the job. The other half was getting the *verbs* right, and it happened in a different repository. A successor project, [proplang](https://github.com/gfrmin/proplang), cornered the whole language: it demoted the prior from an object to an accounting property of the grammar, made the verbs of inference terminals a program can utter rather than host functions it can only call, and — the part Credence never managed — made its own architectural rules unwriteable rather than merely written down — including, pointedly, where *this* system quietly drifted from its own constitution.

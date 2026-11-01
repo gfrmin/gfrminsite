@@ -10,7 +10,7 @@ publishDate: 2026-04-30
 categories: [essays, bayesian, machine-learning, ai]
 ---
 
-The production question about LLM agents, once you have gotten past whether they work at all, is how much they cost. A customer-service agent that answers well but costs eight cents per turn is not a customer-service agent; it is a charity. The conventional answer is to pick a cheaper model and hope it is good enough. The less conventional answer is to treat model selection as a decision problem.
+The production question about LLM agents, once you have got past whether they work at all, is how much they cost. A customer-service agent that answers well but costs eight cents per turn is not a customer-service agent; it is a charity. The conventional answer is to pick a cheaper model and hope it is good enough. The less conventional answer is to treat model selection as a decision problem.
 
 Credence-proxy is the latter approach, shipped as a Docker container. It presents an OpenAI-compatible `/v1/chat/completions` endpoint. You send a request with `"model": "auto"`. It picks a model --- from whatever set you have configured, across whatever providers --- and returns the response. It also updates its beliefs about which model is good for which kind of query, so the next decision is marginally better informed.
 
@@ -32,7 +32,7 @@ $$\text{EU}(a) = R \cdot \sum_c w_c \cdot \mathbb{E}[\theta_{a,c}] - \text{cost}
 
 where *R* is the reward per quality point (default $1.00), \(w_c\) are the category weights from the classifier, and \(\theta_{a,c}\) is the Beta posterior over model *a*'s reliability in category *c*. Latency enters indirectly through the search routing domain (which adds a \(W \cdot \text{latency}\) penalty) and through the `CREDENCE_LATENCY_WEIGHT` configuration, but the core LLM routing decision is quality versus cost. The proxy picks the model with the highest expected utility and makes the call. After the response, a separate judge model scores the result, and the posterior updates.
 
-There is no epsilon-greedy exploration. There is no decay schedule. There is no thresholded reliability cutoff. Exploration happens because the Beta posterior on an unused model is wide, which inflates the variance of its expected quality, which sometimes makes its EU higher than a well-understood alternative. This is the right amount of exploration, under the agent's own objective, and the amount of exploration falls as beliefs sharpen. The math does the job that in other systems is done by a tuned hyperparameter.
+There is no epsilon-greedy exploration. There is no decay schedule. There is no thresholded reliability cutoff. Exploration happens because the Beta posterior on an unused model is wide, which inflates the variance of its expected quality, which sometimes makes its EU higher than a well-understood alternative. This is the right amount of exploration, under the agent's own objective, and the amount of exploration falls as beliefs sharpen. The mathematics does the job that in other systems is done by a tuned hyperparameter.
 
 ## What the Router Learned
 
@@ -64,8 +64,8 @@ There is a separate objection, which is that a well-tuned heuristic plus occasio
 
 ## What This Is For
 
-The shipped [credence-proxy](https://github.com/gfrmin/credence) is the concrete answer to a question the [accuracy paradox post](/posts/accuracy-paradox/) raised in the abstract: can a Bayesian agent, given the same tools as a language model, deploy them more efficiently? On a 50-question benchmark with four simulated tools, the answer was yes by a factor of twelve. On a 50-query OpenClaw benchmark with real LLM providers, the answer is yes by a factor of thirty-five in cost, two in latency, and slightly more than one in quality.
+The shipped [credence-proxy](https://github.com/gfrmin/credence) is the concrete answer to a question the [accuracy paradox essay](/posts/accuracy-paradox/) raised in the abstract: can a Bayesian agent, given the same tools as a language model, deploy them more efficiently? On a 50-question benchmark with four simulated tools, the answer was yes by a factor of twelve. On a 50-query OpenClaw benchmark with real LLM providers, the answer is yes by a factor of thirty-five in cost, two in latency, and slightly more than one in quality.
 
-The proxy is shipped as a Docker image. The evaluation is reproducible. The utility function is configurable. The architecture is the same one the [Three Types post](/posts/three-types/) described, with the decision-theoretic layer deciding which external sensor to query and the LLMs serving as the sensors.
+The proxy is shipped as a Docker image. The evaluation is reproducible. The utility function is configurable. The architecture is the same one the [Three Types essay](/posts/three-types/) described, with the decision-theoretic layer deciding which external sensor to query and the LLMs serving as the sensors.
 
 It is, at this point, the most deployable argument for the framework. A research benchmark can be dismissed as benchmark-specific. A production proxy saving ninety-six percent of your inference budget is more difficult to argue with.

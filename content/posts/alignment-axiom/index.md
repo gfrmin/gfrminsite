@@ -70,6 +70,7 @@ It rules out exploration bonuses. An agent that adds a term to its utility funct
 It rules out separate safety layers. A Bayesian agent with an aligned utility function does not need a separate "safety classifier" checking its outputs. If the utility function is correctly specified, the agent will not take dangerous actions because dangerous actions have low expected utility. If the utility function is incorrectly specified, a safety classifier is unlikely to catch the failure modes that matter. The correct response to misspecification is to reduce uncertainty about the utility function, not to add a filter downstream.
 
 And it rules out the framing where alignment is a problem to be solved at training time and then fixed. Alignment in this architecture is a dynamic property of the posterior. It is maintained continuously as long as the agent is conditioning on observations of user behaviour. It degrades if the observations stop. The agent that does not receive feedback is not aligned; it is merely acting on a prior. This is the correct description of the situation. The training-time framing obscures it.
+
 ## The Corrigibility That Expires
 
 Now the part I have been deferring, because it is the residue and not a footnote.

@@ -109,7 +109,7 @@ Before polling day, the best of each pollster's last polls was i24NEWS's, by Dir
 | Walla / Lazar, 19 Oct | 13 | 5 too few |
 | Channel 16 / Maagar Mochot, 20 Oct | 14 | 7 too few |
 
-The rankings matter less than what the polls got wrong together. On average the last polls had Likud five or six seats too low, and Ra'am and the Joint List more than two seats too low each: the same rise in Arab turnout this post began with, which no poll saw coming. They also gave The Reservists more than two seats, a list now below the threshold. The exit polls missed by about half as much, and their largest remaining misses were small: a seat or more too many each for Shas, the Democrats and Together, a seat too few each for Ra'am and the Joint List.
+The rankings matter less than what the polls got wrong together. On average the last polls had Likud five or six seats too low, and Ra'am and the Joint List more than two seats too low each: the same rise in Arab turnout this essay began with, which no poll saw coming. They also gave The Reservists more than two seats, a list now below the threshold. The exit polls missed by about half as much, and their largest remaining misses were small: a seat or more too many each for Shas, the Democrats and Together, a seat too few each for Ra'am and the Joint List.
 
 ## The call that was furthest out
 
@@ -127,7 +127,7 @@ The threshold decides who gets in at all, so it is fair to ask what it changed. 
 
 Without a threshold, five seats would go to two lists that do not get in. The Reservists, with HaKalkalit, have 2.7% of the vote and would get three. Amcha Yisrael, Ofer Winter's list, has 1.7% and would get two. Those seats come out of all three groups: with the agreements kept, Likud and Yashar! would have two fewer each, and Ra'am one fewer.
 
-So the threshold does not favour either side over the other. It gives each large bloc two seats and the Arab lists one. What it does is decide that 307,958 votes, 5.4% of all those cast, elect no one. Amcha Yisrael's two seats would have sat on the right, which is the settlement vote this post found going to waste. The Reservists' three are not counted in either bloc, because the newspapers' grouping does not place them.
+So the threshold does not favour either side over the other. It gives each large bloc two seats and the Arab lists one. What it does is decide that 307,958 votes, 5.4% of all those cast, elect no one. Amcha Yisrael's two seats would have sat on the right, which is the settlement vote this essay found going to waste. The Reservists' three are not counted in either bloc, because the newspapers' grouping does not place them.
 
 ## How these numbers were made
 

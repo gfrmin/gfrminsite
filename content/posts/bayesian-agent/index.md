@@ -10,9 +10,9 @@ categories: [python, bayesian, machine-learning, simulation]
 image: og-image.png
 ---
 
-You're stranded somewhere unfamiliar with twelve types of food scattered around. Some provide energy. Others are toxic. You don't know which is which, you're losing energy with every step, and nobody left a manual. The question is whether you can learn fast enough to survive.
+You are stranded somewhere unfamiliar with twelve types of food scattered around. Some provide energy. Others are toxic. You do not know which is which, you are losing energy with every step, and nobody left a manual. The question is whether you can learn fast enough to survive.
 
-This is the exploration-exploitation tradeoff, and it's one of those problems that sounds like a thought experiment until you actually have to solve it. Pure exploration --- trying everything at random --- kills you. Pure exploitation --- eating only what you currently believe is best --- starves you when better options exist two metres away. You need something that balances both, and ideally something with a mathematical proof attached.
+This is the exploration-exploitation tradeoff, and it is one of those problems that sounds like a thought experiment until you actually have to solve it. Pure exploration --- trying everything at random --- kills you. Pure exploitation --- eating only what you currently believe is best --- starves you when better options exist two metres away. You need something that balances both, and ideally something with a mathematical proof attached.
 
 Bayesian inference, as it happens, provides exactly this. I built a simulation to watch the learning process unfold: an agent navigating a grid world, updating its beliefs about food types using exact conjugate priors, and making decisions through Thompson Sampling. No neural networks. No reinforcement learning frameworks. Just probability theory and about 200 lines of Python. As someone who spent several years of his life inside a statistics department, I find this deeply pleasing, in the way that a well-set prior is pleasing --- quietly correct before any data arrives.
 
@@ -22,13 +22,13 @@ The simulation runs in your terminal using curses. The agent (@) navigates a 30x
 
 ![Terminal simulation showing a Bayesian agent navigating a grid world, updating belief distributions about food safety in real-time](demo.gif)
 
-As the agent explores, you can watch uncertainty collapse. Belief bars narrow. Means migrate toward true values. Behaviour evolves from random wandering to purposeful pursuit of the good stuff. It is, if you'll permit the enthusiasm, Bayesian inference made visible. I have watched it more times than is professionally advisable.
+As the agent explores, you can watch uncertainty collapse. Belief bars narrow. Means migrate toward true values. Behaviour evolves from random wandering to purposeful pursuit of the good food. It is, if you will permit the enthusiasm, Bayesian inference made visible. I have watched it more times than is professionally advisable.
 
 ## The Problem: Exploration vs. Exploitation
 
 The agent starts with 10 energy units and loses 0.1 per step. It can see nearby food and must decide what to pursue. There are 12 food types: 3 shapes (circle, square, triangle) x 4 colours (red, green, blue, yellow). Each type has an unknown true energy distribution --- some are consistently nourishing (circles), some reliably toxic (triangles), and some are gambles of the sort your supervisor would call "high variance" (squares).
 
-How do you decide what to eat when you don't know what's safe? This question has a long and distinguished history in statistics, and the answer I chose is Thompson Sampling. Instead of fixed exploration rates or elaborate formulae, it uses an idea of such elegant simplicity that I suspect it annoys people who prefer their solutions complicated: sample from your posterior belief about each food type, then pick the one with the highest sampled value.
+How do you decide what to eat when you do not know what is safe? This question has a long and distinguished history in statistics, and the answer I chose is Thompson Sampling. Instead of fixed exploration rates or elaborate formulae, it uses an idea of such elegant simplicity that I suspect it annoys people who prefer their solutions complicated: sample from your posterior belief about each food type, then pick the one with the highest sampled value.
 
 ```python
 def select_target_food(self, available_foods):
@@ -56,11 +56,11 @@ def select_target_food(self, available_foods):
 
 The elegance lies in what this achieves without trying:
 
-- **High uncertainty = wide distribution = exploration**: When you haven't tried a food much, its belief distribution is broad. Occasionally you'll sample an extreme value, which sends you off to investigate. This is exploration arising from honest uncertainty rather than a coin flip.
-- **Low uncertainty = narrow distribution = exploitation**: Once you've eaten something ten times, the distribution narrows. Samples consistently reflect the true mean, and the agent stops wasting energy on known quantities.
+- **High uncertainty = wide distribution = exploration**: When you have not tried a food much, its belief distribution is broad. Occasionally you will sample an extreme value, which sends you off to investigate. This is exploration arising from honest uncertainty rather than a coin flip.
+- **Low uncertainty = narrow distribution = exploitation**: Once you have eaten something ten times, the distribution narrows. Samples consistently reflect the true mean, and the agent stops wasting energy on known quantities.
 - **No hyperparameters**: The uncertainty itself governs the exploration rate. It adapts automatically. Nobody needs to choose an epsilon. Nobody needs to tune a constant. The mathematics handles it.
 
-## The Math: Conjugate Priors Made Simple
+## The Mathematics: Conjugate Priors Made Simple
 
 Each food type has an unknown true energy value. The agent maintains a belief distribution over what that value might be, represented as a Normal distribution with mean mu (expected energy), variance sigma-squared (uncertainty), and pseudo-observation count n (effective sample size).
 
@@ -110,13 +110,13 @@ def update_belief(self, shape, color, observed_energy):
     belief["n"] = n + observation_weight
 ```
 
-This is the mathematical heart of the system, and if you've spent time with Bayesian statistics you'll recognise it immediately. Two properties make it beautiful:
+This is the mathematical heart of the system, and if you have spent time with Bayesian statistics you will recognise it immediately. Two properties make it beautiful:
 
 1. **The posterior mean is a weighted average** of the prior and the observation. Early data has enormous influence; later observations refine. The first time the agent eats a red circle and gets +3 energy, its belief shifts dramatically. The hundredth time, barely a nudge. This is how learning should work, and here it falls out of the algebra for free.
 
-2. **Uncertainty always decreases** with observation. After one data point, variance drops from 10.0 to about 9.1. After ten, it's down to 0.9. The agent becomes progressively more confident, which is to say progressively less interesting at dinner parties.
+2. **Uncertainty always decreases** with observation. After one data point, variance drops from 10.0 to about 0.91. After ten, it is down to about 0.1. The agent becomes progressively more confident, which is to say progressively less interesting at dinner parties.
 
-No MCMC sampling. No variational inference. No neural network approximations. The Normal-Normal conjugate pair gives you the exact posterior. The math just works. I realise this sounds like the sort of thing a Bayesian would say about everything, and I want to be clear: in this case it's literally true.
+No MCMC sampling. No variational inference. No neural network approximations. The Normal-Normal conjugate pair gives you the exact posterior. The mathematics simply works. I realise this sounds like the sort of thing a Bayesian would say about everything, and I want to be clear: in this case it is literally true.
 
 ## Thompson Sampling: The Exploration Strategy
 
@@ -133,13 +133,13 @@ Why Thompson Sampling over the alternatives?
 sampled_energy = np.random.normal(belief["mean"], np.sqrt(belief["variance"]))
 ```
 
-That's it. Sample, account for travel cost, pick the highest. The posterior handles everything else.
+That is all. Sample, account for travel cost, pick the highest. The posterior handles everything else.
 
-Early on, when beliefs are diffuse, the wide distributions produce occasional extreme samples that send the agent exploring. As beliefs sharpen, distributions narrow, samples stabilise, and behaviour converges to exploitation. The transition is smooth, automatic, and --- this matters --- provably optimal for multi-armed bandits with logarithmic regret O(log T). Thompson Sampling isn't a heuristic. It matches the probability of each option being best, which is the kind of result that makes you want to phone someone who cares about probability theory. Fortunately I know several.
+Early on, when beliefs are diffuse, the wide distributions produce occasional extreme samples that send the agent exploring. As beliefs sharpen, distributions narrow, samples stabilise, and behaviour converges to exploitation. The transition is smooth, automatic, and --- this matters --- provably optimal for multi-armed bandits with logarithmic regret O(log T). Thompson Sampling is not a heuristic. It matches the probability of each option being best, which is the kind of result that makes you want to phone someone who cares about probability theory. Fortunately I know several.
 
 ## Implementation Highlights
 
-The implementation separates concerns in the way that feels natural once you've done it and clever before you have: the agent maintains beliefs and makes decisions, the environment handles world state and dynamics, and the main loop orchestrates everything with curses rendering.
+The implementation separates concerns in the way that feels natural once you have done it and clever before you have: the agent maintains beliefs and makes decisions, the environment handles world state and dynamics, and the main loop orchestrates everything with curses rendering.
 
 **Grid World Setup**:
 
@@ -204,9 +204,9 @@ The terminal UI displays the grid, the agent's position, all food items with sha
 
 ## What I Learned Building This
 
-**Conjugate priors are underrated.** In the era of deep learning and approximate inference, exact Bayesian updates feel like a minor superpower. No training epochs, no learning rate schedules, no convergence diagnostics. Observe data, apply one formula, receive the exact posterior. When conjugate pairs exist --- Normal-Normal for means, Beta-Bernoulli for proportions, Gamma-Poisson for rates --- there is no reason not to use them. They are, in the old sense of the word, elegant: achieving the maximum result with the minimum machinery.
+**Conjugate priors are underrated.** In the era of deep learning and approximate inference, exact Bayesian updates feel like a small conjuring trick. No training epochs, no learning rate schedules, no convergence diagnostics. Observe data, apply one formula, receive the exact posterior. When conjugate pairs exist --- Normal-Normal for means, Beta-Bernoulli for proportions, Gamma-Poisson for rates --- there is no reason not to use them. They are, in the old sense of the word, elegant: achieving the maximum result with the minimum machinery.
 
-**Visualisation changes understanding.** I've taught Bayesian statistics. I've read about Thompson Sampling in several textbooks, some of which I enjoyed. But watching this agent shift from aimless wandering to purposeful foraging, watching uncertainty collapse observation by observation, watching exploration give way to exploitation as priors tighten --- that gave me an intuition that the equations alone did not. Abstract mathematics becomes concrete when you can watch it make decisions about lunch.
+**Visualisation changes understanding.** I have taught Bayesian statistics. I have read about Thompson Sampling in several textbooks, some of which I enjoyed. But watching this agent shift from aimless wandering to purposeful foraging, watching uncertainty collapse observation by observation, watching exploration give way to exploitation as priors tighten --- that gave me an intuition that the equations alone did not. Abstract mathematics becomes concrete when you can watch it make decisions about lunch.
 
 **Simple simulations teach complex concepts.** The grid world is arbitrary. The food types are invented. But the learning principles are universal: Bayesian inference, Thompson Sampling, the exploration-exploitation tradeoff, conjugate updates --- all demonstrated in under 200 lines of Python with zero ML frameworks. This could be a teaching tool. I rather wish it had been available when I was teaching.
 
@@ -253,4 +253,4 @@ cd bayesian-agent
 uv run main.py
 ```
 
-Fork it, extend it, teach with it. The framework is there. The math is exact. And if you find yourself watching the belief distributions converge at 2am, rest assured that you are not the first.
+Fork it, extend it, teach with it. The framework is there. The mathematics is exact. And if you find yourself watching the belief distributions converge at 2am, rest assured that you are not the first.

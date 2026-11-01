@@ -1,26 +1,26 @@
 ---
 title: "I Built a GTD Telegram Bot in Under an Hour with Claude Code"
 subtitle: "Using Claude Haiku for natural language task parsing"
-description: "How I built a Getting Things Done Telegram bot with natural language parsing using Claude Haiku, Python, and PostgreSQL - all in under an hour with Claude Code."
+description: "How I built a Getting Things Done Telegram bot with natural language parsing using Claude Haiku, Python, and PostgreSQL — all in under an hour with Claude Code."
 author: "Guy Freeman"
 date: 2025-12-20
 categories: [ai, python]
 image: og-image.png
 ---
 
-Every GTD app I've tried commits one of two sins. Either it's a Byzantine fortress of features --- Kanban boards, team collaboration, productivity gamification, the full catastrophe (looking at you, OmniFocus) --- or it's simple but demands you learn its particular syntax for categorising things, which rather defeats the purpose of a system meant to get tasks out of your head quickly.
+Every GTD app I have tried commits one of two sins. Either it is a Byzantine fortress of features --- Kanban boards, team collaboration, productivity gamification, the full catastrophe (OmniFocus, for one) --- or it is simple but demands you learn its particular syntax for categorising things, which rather defeats the purpose of a system meant to get tasks out of your head quickly.
 
 What I actually wanted was to type "buy milk tomorrow" into my phone and have it land in the right place. No app switching. No form fields. No learning a miniature programming language just to add a grocery item.
 
 ## The Absence
 
-Todoist, to its credit, has excellent natural language parsing. You can type "Call dentist next Tuesday at 2pm #errands" and it does the right thing. But Todoist is a jumbo jet when I need a bicycle. I don't want team collaboration features. I want a scratchpad that understands English.
+Todoist, to its credit, has excellent natural language parsing. You can type "Call dentist next Tuesday at 2pm #errands" and it does the right thing. But Todoist is a jumbo jet when I need a bicycle. I do not want team collaboration features. I want a scratchpad that understands English.
 
 Telegram, meanwhile, is already on my phone, always running, and has an excellent bot API. The intersection of these two facts seemed promising. Surely someone had built a proper GTD bot?
 
 I looked. There are todo list bots, reminder bots, note-taking bots. But nothing that implements actual GTD methodology --- the inbox/next/scheduled/someday workflow that David Allen describes --- with natural language understanding. The niche was sitting there, unoccupied, like a parking space in central London. Suspicious, but real.
 
-So I built one.
+I built one.
 
 ## The Solution: 839 Lines of Python
 
@@ -39,7 +39,7 @@ One-click deployment to Render with a managed Postgres database.
 
 ### Natural Language Parsing with Claude Haiku
 
-The key realisation is that you don't need custom NLP libraries or bespoke models for this. Claude Haiku is fast, cheap, and remarkably good at intent classification. Every message gets parsed through this system prompt:
+The key realisation is that you do not need custom NLP libraries or bespoke models for this. Claude Haiku is fast, cheap, and remarkably good at intent classification. Every message gets parsed through this system prompt:
 
 ```python
 system_prompt = f"""You are a GTD task parser. Parse the user's message into a JSON action.
@@ -112,13 +112,13 @@ Four lists, matching GTD methodology:
 - **scheduled**: Tasks with specific due dates
 - **someday**: Maybe/future items
 
-The `is_today` flag lets you pick 3--5 tasks for daily focus --- a key GTD concept that most apps quietly ignore, presumably because it doesn't look good in screenshots. Context tags like `@work` or `@errands` live in the task text itself and are searchable via "show @work".
+The `is_today` flag lets you pick 3--5 tasks for daily focus --- a key GTD concept that most apps quietly ignore, presumably because it does not look good in screenshots. Context tags like `@work` or `@errands` live in the task text itself and are searchable via "show @work".
 
 ### Morning Digest
 
 APScheduler sends a daily summary at 7am containing:
 
-- Your today's focus tasks
+- Your focus tasks for today
 - Overdue items
 - Tasks due today
 - Suggested next actions
@@ -135,26 +135,26 @@ The entire bot --- from nothing to deployed --- took under an hour with Claude C
 4. Claude Code added the database layer, then deployment configs for Render
 5. I deployed, tested with real messages, and refined
 
-The prompt engineering phase was the bulk of the work, and this is where the Claude Code workflow earns its keep. Refining how Haiku interprets ambiguous messages --- does "milk tomorrow" mean "add a task about milk, due tomorrow" or "add a task called 'milk tomorrow'"? --- is fiddly work that benefits from having a collaborator who doesn't get bored of the iteration cycle.
+The prompt engineering phase was the bulk of the work, and this is where the Claude Code workflow earns its keep. Refining how Haiku interprets ambiguous messages --- does "milk tomorrow" mean "add a task about milk, due tomorrow" or "add a task called 'milk tomorrow'"? --- is fiddly work that benefits from having a collaborator who does not get bored of the iteration cycle.
 
 ## Try It
 
-The bot is live at [@gtdlitebot](https://t.me/gtdlitebot) --- though it's currently single-user (me). The code is on [GitHub](https://github.com/gfrmin/jarvis-lite) if you want to deploy your own instance.
+The bot is live at [@gtdlitebot](https://t.me/gtdlitebot) --- though it is currently single-user (me). The code is on [GitHub](https://github.com/gfrmin/jarvis-lite) if you want to deploy your own instance.
 
-## What's Missing
+## What Is Missing
 
-This is a v0.1, and the list of things it doesn't do is longer than the list of things it does, which is normal for anything built in an hour.
+This is a v0.1, and the list of things it does not do is longer than the list of things it does, which is normal for anything built in an hour.
 
-**Recurring tasks**: "Water plants every Sunday" doesn't work yet. Would need a recurrence pattern in the schema and logic to regenerate tasks. The plants are, for now, at the mercy of my memory.
+**Recurring tasks**: "Water plants every Sunday" does not work yet. It would need a recurrence pattern in the schema and logic to regenerate tasks. The plants are, for now, at the mercy of my memory.
 
-**Projects and areas**: Real GTD has hierarchical projects. Currently everything is flat. You can approximate it with tags, but it's not the same and I'm not going to pretend otherwise.
+**Projects and areas**: Real GTD has hierarchical projects. Currently everything is flat. You can approximate it with tags, but it is not the same and I am not going to pretend otherwise.
 
-**Voice input**: Telegram supports voice messages. Whisper transcription could make capture even more frictionless --- you'd just mutter at your phone, which is how I add most tasks mentally anyway.
+**Voice input**: Telegram supports voice messages. Whisper transcription could make capture even more frictionless --- you would simply mutter at your phone, which is how I add most tasks mentally anyway.
 
 **Time-based reminders**: Push notifications at specific times, not just the morning digest.
 
 **Calendar sync**: Export scheduled tasks to Google Calendar.
 
-**Analytics**: What days am I most productive? What contexts get neglected? The data is there; the dashboard isn't.
+**Analytics**: What days am I most productive? What contexts get neglected? The data is there; the dashboard is not.
 
 For now, though, it does what I need. I type a thought in natural language, it lands in the right GTD bucket, and my inbox gets processed. 839 lines of Python, one LLM as a parsing layer, built in an hour. The ratio of usefulness to effort is, upon consideration, rather good.

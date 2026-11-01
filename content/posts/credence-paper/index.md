@@ -49,7 +49,7 @@ There was one honest way out, and I took it seriously because it would have resc
 
 Under fair conditions the agent has to infer categories rather than being told them, which it does with a Gaussian naive-Bayes classifier over offline sentence embeddings --- leave-one-out accuracy about 0.78. Every inferred-category result therefore sits downstream of a second choice nobody had tested: the *credit-assignment rule*, which decides how an observed outcome updates per-category reliability when you are not certain which category you were in. The deployed rule spread fractional credit across every category. If that leakage was what denied exploration its signal, then the fair loss was an artefact of a tractable approximation, not a fact about the architecture.
 
-So all three rules were tested against both policies, cost-blind, twenty seeds:
+All three rules were therefore tested against both policies, cost-blind, twenty seeds:
 
 | credit rule | greedy | horizon-VOI | gap |
 | --- | ---: | ---: | ---: |
@@ -91,7 +91,7 @@ At every stage I held both pens. I designed the benchmark, I designed the agent,
 
 But the aggregate is a benchmark that moved every time it delivered bad news, and there is no sequence of locally-defensible adjustments that gets you back the epistemic standing of a criterion fixed in advance. The thing that saved this project was one measurement I did not design my way around: a one-line ablation, simpler than the agent, that beat it. It won because it was cheap enough that nobody had thought to protect it.
 
-So every project since runs the other way round. The acceptance criteria are written first, before any implementation exists, and cryptographically sealed --- [the frozen-oracle protocol](/posts/signed-before-the-code-existed/), where the tests are handed to the builder already failing red and cannot be edited to pass. The point is not that I distrust myself more than average. It is that "I will not soften this test when it becomes inconvenient" is a promise, and a hash is not. The same instinct produced [a gate that decides whether a tool is worth adopting](/posts/the-gate-that-said-no/) and was given the power to refuse --- and refused.
+Every project since therefore runs the other way round. The acceptance criteria are written first, before any implementation exists, and cryptographically sealed --- [the frozen-oracle protocol](/posts/signed-before-the-code-existed/), where the tests are handed to the builder already failing red and cannot be edited to pass. The point is not that I distrust myself more than average. It is that "I will not soften this test when it becomes inconvenient" is a promise, and a hash is not. The same instinct produced [a gate that decides whether a tool is worth adopting](/posts/the-gate-that-said-no/) and was given the power to refuse --- and refused.
 
 None of that machinery would have saved the original paper. Freezing the wrong criterion in advance just gets you a frozen wrong criterion, and no amount of custody chain tells you that your fifty questions are answerable without tools. What it would have done is make the record legible: three framings, each one dated, each one's falsifier named, with no possibility of the earliest one quietly disappearing.
 

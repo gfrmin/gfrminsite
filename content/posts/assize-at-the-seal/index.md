@@ -10,9 +10,9 @@ series_order: 5
 categories: [essays, ai, bayesian, decision-theory]
 ---
 
-The last post in this series ended on a forecast. The foreseeable end state of a programme like the one it described, I wrote, was "arriving in October with a beautiful generated artefact, an armed ratchet, four reports, and the same three silent seams." It is October. This is the account of another programme of mine, which arrived with a sealed artefact, a measured verdict, and a bill.
+The last essay in this series ended on a forecast. The foreseeable end state of a programme like the one it described, I wrote, was "arriving in October with a beautiful generated artefact, an armed ratchet, four reports, and the same three silent seams." It is October. This is the account of another programme of mine, which arrived with a sealed artefact, a measured verdict, and a bill.
 
-The four earlier posts each add one guard around a coding agent: a spec it cannot renegotiate, an adoption gate allowed to say no, an answer key signed before the first line, and a standing assumption that every guard is dead until something has tried to kill it. In October I put all of them into one repository and took myself out of the loop as far as I could. The repository is [assize](https://github.com/renavondata/assize), after the old English courts that sat, heard, and moved on. It ran from the 4th to the 27th of October 2026. It is now public, archived, and frozen at the point it was built to reach.
+The four earlier essays each add one guard around a coding agent: a spec it cannot renegotiate, an adoption gate allowed to say no, an answer key signed before the first line, and a standing assumption that every guard is dead until something has tried to kill it. In October I put all of them into one repository and took myself out of the loop as far as I could. The repository is [assize](https://github.com/renavondata/assize), after the old English courts that sat, heard, and moved on. It ran from the 4th to the 27th of October 2026. It is now public, archived, and frozen at the point it was built to reach.
 
 ## What the court was for
 
@@ -95,7 +95,7 @@ And one thing the ledger could not show at all. Counsel acted through my GitHub 
 
 Before the successor's first line, a fresh session read every system that preceded it, cold. There were seven of them over eight repositories: Credence and its governor, life-agent, proplang, tannen, and the three wald repositories. Its synthesis has a sentence I would not have written about myself: no repository carries its own reason for stopping. Proplang ends on unposted drafts, Credence on a merge, tannen on a version sitting, and each reason appears in the successor's founding text.
 
-I had taken assize for the exception, because its ending is in its own record: a wish, an amendment, a verdict line. An earlier draft of this post said so. The record does not bear it out. Amendment 6 says what ended and my wish gives no reason, and the reader, given assize, put it in one line: "The reason for jack is written in jack's charter, not in assize's: the pattern above, once more."
+I had taken assize for the exception, because its ending is in its own record: a wish, an amendment, a verdict line. An earlier draft of this essay said so. The record does not bear it out. Amendment 6 says what ended and my wish gives no reason, and the reader, given assize, put it in one line: "The reason for jack is written in jack's charter, not in assize's: the pattern above, once more."
 
 So the reason goes here. By 13 October the court had shown two things. It could produce a sealed judge and a measured verdict. And each merge was costing me five repairs, with four merges in five changing the court rather than the thing it was building. The charter counsel drafted for the successor that day proposed that assize finish its layer, freeze, and become the new project's judge of last resort. On 24 October I cut the layer at the seal.
 
@@ -120,6 +120,6 @@ The question this series started with was: if you did not write the code and can
 
 A court whose owner is outside its loops is not a court. It is a very elaborate way of generating work for him.
 
-What I now trust is not the judge, which is only as sound as the pins that tried to break it. Nor is it the models, which are elected and can lose. It is a ledger in which my own forecasts, my own hours and my own restarts are scored by the same rule as everyone else's. And, for once, the reason a system of mine ended is written down where the next reader will look. As that reader would point out, it is in the successor's charter and in this post, not in the system. One out of two.
+What I now trust is not the judge, which is only as sound as the pins that tried to break it. Nor is it the models, which are elected and can lose. It is a ledger in which my own forecasts, my own hours and my own restarts are scored by the same rule as everyone else's. And, for once, the reason a system of mine ended is written down where the next reader will look. As that reader would point out, it is in the successor's charter and in this essay, not in the system. One out of two.
 
 Whether any of it was worth the hours is a forecast I should put on that ledger, with a date. I would put it at 0.6.

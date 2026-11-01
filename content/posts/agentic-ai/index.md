@@ -10,13 +10,13 @@ categories: [python, bayesian, machine-learning, ai, essays]
 image: og-image.png
 ---
 
-I've spent the last few months building agents that maintain actual beliefs and update them from evidence — first [a Bayesian learner](/posts/bayesian-agent/) that teaches itself which foods are safe, then [an evolutionary system](/posts/bayesian-agent-part2/) that discovers its own cognitive architecture. The experience has given me a certain clarity about the industry's use of the word "agent," in much the same way that learning to cook gives you clarity about airline food.
+I have spent the last few months building agents that maintain actual beliefs and update them from evidence — first [a Bayesian learner](/posts/bayesian-agent/) that teaches itself which foods are safe, then [an evolutionary system](/posts/bayesian-agent-part2/) that discovers its own cognitive architecture. The experience has given me a certain clarity about the industry's use of the word "agent," in much the same way that learning to cook gives you clarity about airline food.
 
 What would it take for an AI system to genuinely deserve the word?
 
-An agent has *beliefs* — not hunches, not vibes, but quantifiable representations of what it thinks is true and how certain it is. An agent has *goals* — not a prompt that says "be helpful," but an objective function it's trying to maximise. An agent *decides* — not by asking a language model what to do next, but by evaluating its options against its goals in light of its beliefs. These are not exotic requirements. They are the bare minimum. They are the floor.
+An agent has *beliefs* — not hunches, not impressions, but quantifiable representations of what it thinks is true and how certain it is. An agent has *goals* — not a prompt that says "be helpful," but an objective function it is trying to maximise. An agent *decides* — not by asking a language model what to do next, but by evaluating its options against its goals in light of its beliefs. These are not exotic requirements. They are the bare minimum. They are the floor.
 
-By this standard, what we're calling "AI agents" are none of these things.
+By this standard, what we are calling "AI agents" are none of these things.
 
 ## What LangChain Actually Is
 
@@ -32,7 +32,7 @@ Calling this an agent is like calling a thermostat a negotiator because it respo
 For the technical implementation --- Beta posteriors, value-of-information calculations, and full code --- see [How Decision Theory Cuts Your AI Agent's API Bill in Half](/posts/decision-theory-agents/).
 {{< /callout >}}
 
-I built a simple alternative — building on the Bayesian inference work from the [earlier posts](/posts/bayesian-agent/) — a Bayesian agent that maintains probability distributions over tool reliability, computes the expected value of information before making each query, and maximises expected utility across a coherent objective function. I called it [Credence](https://github.com/gfrmin/credence).
+I built a simple alternative — building on the Bayesian inference work from the [earlier essays](/posts/bayesian-agent/) — a Bayesian agent that maintains probability distributions over tool reliability, computes the expected value of information before making each query, and maximises expected utility across a coherent objective function. I called it [Credence](https://github.com/gfrmin/credence).
 
 Then I set it against a LangChain ReAct agent on a straightforward task: answer 50 multiple-choice questions using four tools with different strengths, where correct answers earn points, wrong answers lose points, and every tool query costs something. LangChain's home turf. Tool-using question answering. The exact thing the framework was built for.
 
@@ -44,7 +44,7 @@ The LangChain ReAct agent achieved 63.7% accuracy. The Bayesian agent achieved 5
 
 LangChain got more answers right. And it *lost* — by 120 points.
 
-Final scores: LangChain at -8.0, Bayesian agent at +112.6. The mechanism is simple and damning. The LangChain agent averaged 3.22 tool calls per question, querying nearly everything available for nearly every question, because it has no concept of whether a query is worth its cost. It has the resource discipline of a man in a hotel minibar. The Bayesian agent averaged far fewer calls, because it computed whether the expected information gain from each query exceeded the price of making it. When the maths said no, the agent didn't ask.
+Final scores: LangChain at -8.0, Bayesian agent at +112.6. The mechanism is simple and damning. The LangChain agent averaged 3.22 tool calls per question, querying nearly everything available for nearly every question, because it has no concept of whether a query is worth its cost. It has the resource discipline of a man in a hotel minibar. The Bayesian agent averaged far fewer calls, because it computed whether the expected information gain from each query exceeded the price of making it. When the maths said no, the agent did not ask.
 
 LangChain knew more answers. The Bayesian agent knew which answers were *worth knowing*. This distinction — between raw accuracy and decision-theoretic utility — is apparently invisible to the current paradigm.
 
@@ -60,7 +60,7 @@ You cannot instruct an LLM to perform calibrated cost-benefit analysis through n
 
 ## What Goes Wrong When Things Change
 
-I ran a second experiment where one tool's reliability degraded mid-task — simulating the kind of API change, index update, or backend swap that happens routinely in production. Nothing exotic. Tuesday, basically.
+I ran a second experiment where one tool's reliability degraded mid-task — simulating the kind of API change, index update, or backend swap that happens routinely in production. Nothing exotic. An ordinary Tuesday.
 
 An agent that always used the degraded tool saw its score collapse by 69 points. The Bayesian agent barely noticed. Its posterior over the tool's reliability shifted within a few questions, it reallocated queries to more reliable alternatives, and it continued accumulating points. No change-detection heuristic. No special handling. Just Bayes' rule doing what it has done since 1763.
 
@@ -70,11 +70,11 @@ The LangChain agent kept querying the broken tool with identical confidence, bec
 
 The word "agent" in "agentic AI" is doing an enormous amount of work whilst meaning almost nothing. It conjures images of autonomous decision-making, adaptive behaviour, goal-directed reasoning. What it delivers is a for-loop around an API call with delusions of grandeur.
 
-A real agent — even a very simple one — maintains beliefs, updates them from evidence, and chooses actions to maximise expected utility given those beliefs. None of this is exotic technology. It's undergraduate decision theory, implemented in a few hundred lines of scipy. The Credence benchmark agent has no neural networks, no fine-tuning, no chain-of-thought prompting. It has Beta distributions and Bayes' rule. The mathematics predates the transistor.
+A real agent — even a very simple one — maintains beliefs, updates them from evidence, and chooses actions to maximise expected utility given those beliefs. None of this is exotic technology. It is undergraduate decision theory, implemented in a few hundred lines of scipy. The Credence benchmark agent has no neural networks, no fine-tuning, no chain-of-thought prompting. It has Beta distributions and Bayes' rule. The mathematics predates the transistor.
 
-The question isn't whether we can build better AI agents. We manifestly can; the mathematics has existed for decades and is collecting dust in textbooks that nobody in the LLM world seems to have opened. The question is why the industry settled for so much less, and how long we'll keep calling flowcharts "agents" before someone gets embarrassed enough to build systems that deserve the name.
+The question is not whether we can build better AI agents. We manifestly can; the mathematics has existed for decades and is collecting dust in textbooks that nobody in the LLM world seems to have opened. The question is why the industry settled for so much less, and how long we will keep calling flowcharts "agents" before someone gets embarrassed enough to build systems that deserve the name.
 
-I don't know whether this Bayesian approach scales beyond toy benchmarks. Fifty multiple-choice questions with four tools is a long way from production systems with hundreds of endpoints, ambiguous objectives, and constraints that shift hourly. The expected-value-of-information calculation that works cleanly here might become intractable when the action space explodes. And there's a genuine question about whether principled decision-making and the flexibility of language models are complementary rather than competing — whether the right architecture is Bayesian reasoning *on top of* LLM capabilities, not instead of them. I don't have answers yet. But a benchmark where the mathematically principled agent beats the industry-standard one by 120 points whilst getting fewer answers right suggests, at minimum, that the questions are worth asking.
+I do not know whether this Bayesian approach scales beyond toy benchmarks. Fifty multiple-choice questions with four tools is a long way from production systems with hundreds of endpoints, ambiguous objectives, and constraints that shift hourly. The expected-value-of-information calculation that works cleanly here might become intractable when the action space explodes. And there is a genuine question about whether principled decision-making and the flexibility of language models are complementary rather than competing — whether the right architecture is Bayesian reasoning *on top of* LLM capabilities, not instead of them. I do not have answers yet. But a benchmark where the mathematically principled agent beats the industry-standard one by 120 points whilst getting fewer answers right suggests, at minimum, that the questions are worth asking.
 
 Code and full results: [github.com/gfrmin/credence](https://github.com/gfrmin/credence)
 

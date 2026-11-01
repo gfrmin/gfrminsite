@@ -1,7 +1,7 @@
 ---
 title: "Hanukkah of Data 5783"
 subtitle: "Solving the data version of Advent of Code in R"
-description: "Step-by-step R solutions to all 8 Hanukkah of Data puzzles - a data-focused alternative to Advent of Code with a delightful narrative twist."
+description: "Step-by-step R solutions to all 8 Hanukkah of Data puzzles — a data-focused alternative to Advent of Code with a delightful narrative twist."
 author: "Guy Freeman"
 date: 2022-12-25
 categories: [data]
@@ -12,7 +12,7 @@ The madpersons behind the retro-chic data analysis tool [VisiData](https://visid
 
 I only just found out about it, so although one puzzle was released for each day of real-life Chanukah, I was able to gorge on the first 7 puzzles, needing only to wait for the last one. Each puzzle is represented by an ASCII candle in an ASCII world --- quite an impressive achievement in its own right.
 
-Here's how I solved all 8 puzzles in R. The data comes on a password-protected USB drive (the password being the year of the previous Hanukkah of Data, which is a nice meta-puzzle). I can probably give more details (aka make the code clearer) upon request.
+Here is how I solved all 8 puzzles in R. The data comes on a password-protected USB drive (the password being the year of the previous Hanukkah of Data, which is a nice meta-puzzle). I can probably give more details (that is, make the code clearer) upon request.
 
 
 ```r
@@ -44,7 +44,7 @@ orders_plus <- orders |>
 
 Sarah needs help finding her grandmother's rug, and a cashier remembers a private investigator who once shopped at Noah's. His business card was clever: the phone number spelled out his surname on the old T9 phone keypad (2=ABC, 3=DEF, and so on).
 
-So we need to build a letter-to-number converter. The mildly annoying part is that the keypad isn't perfectly regular --- S, V, Y, and Z get shunted around --- so they need special handling.
+We therefore need to build a letter-to-number converter. The mildly annoying part is that the keypad is not perfectly regular --- S, V, Y, and Z get shunted around --- so they need special handling.
 
 
 ```r
@@ -216,7 +216,7 @@ orders_plus |>
 ```
 
 
-Only one female name in the results. That's her.
+Only one female name in the results. That is her.
 
 
 ```r
@@ -264,7 +264,7 @@ loss_leaders |> head(5)
 ```
 
 
-Customer 8342 has, by far, the most loss-making orders. That's the frugal cousin.
+Customer 8342 has, by far, the most loss-making orders. That is the frugal cousin.
 
 
 ```r
@@ -281,7 +281,7 @@ customers |>
 
 ## Puzzle 7: The Ex-Boyfriend
 
-The frugal cousin tells a romantic story: she met a man at Noah's when he handed back something she'd dropped. They'd bought nearly identical items but preferred each other's colour choices, so they swapped. They dated, she moved in, it didn't work out. She left hastily one night and the rug stayed behind.
+The frugal cousin tells a romantic story: she met a man at Noah's when he handed back something she had dropped. They had bought nearly identical items but preferred each other's colour choices, so they swapped. They dated, she moved in, it did not work out. She left hastily one night and the rug stayed behind.
 
 This is the trickiest puzzle. We need to find two orders placed on the same day for the same product but in different colours. Essentially a self-join on colour-stripped product descriptions.
 
@@ -345,6 +345,6 @@ orders_plus |>
 
 ## The Finale
 
-Entering the final phone number reveals something quite spectacular --- but I won't spoil it. If you haven't tried the Hanukkah of Data yet, [give it a go](https://hanukkah.bluebird.sh/5783/). They've continued the tradition with new datasets and puzzles in subsequent years.
+Entering the final phone number reveals something quite spectacular --- but I will not spoil it. If you have not tried the Hanukkah of Data yet, [give it a go](https://hanukkah.bluebird.sh/5783/). They have continued the tradition with new datasets and puzzles in subsequent years.
 
 What I particularly enjoyed is how the puzzles mirror real analytical work. You have messy, interconnected datasets. You have vague requirements ("find someone who shops the sales"). You make assumptions, poke at the data, iterate. Eight puzzles, eight phone numbers, one rug recovered. Not bad for a Christmas afternoon.

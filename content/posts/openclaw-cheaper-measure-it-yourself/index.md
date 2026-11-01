@@ -43,7 +43,7 @@ openclaw plugins enable credence-pi
 openclaw plugins list   # credence-pi should read "loaded"
 ```
 
-That is the whole install, and both artifacts are published and public, so it works as written today.
+That is the whole install, and both artefacts are published and public, so it works as written today.
 
 **Audit before you enforce.** This step is optional, but it is the one I would actually do first. Set `shadowMode: true` in the plugin config so credence-pi observes without changing anything, use your agent normally for a while, then read back what it would have done:
 

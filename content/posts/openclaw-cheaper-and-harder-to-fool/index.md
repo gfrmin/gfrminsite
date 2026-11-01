@@ -1,7 +1,7 @@
 ---
 title: "Make Your OpenClaw Cheaper and Harder to Fool"
 subtitle: "A governor that learns your agent, blocks the tool calls it wastes, and asks you first about the ones that smell of injection. Two commands to install."
-description: "credence-pi is an OpenClaw plugin plus a local daemon that learns your agent's behaviour and governs its tool calls by expected utility: it blocks the calls your agent wastes, flags injected exfiltration as a confirmation at 0.94 precision on a public benchmark, and makes ask-or-proceed decisions a fixed rule provably can't reproduce. Research-stage, local-first, installable today."
+description: "credence-pi is an OpenClaw plugin plus a local daemon that learns your agent's behaviour and governs its tool calls by expected utility: it blocks the calls your agent wastes, flags injected exfiltration as a confirmation at 0.94 precision on a public benchmark, and makes ask-or-proceed decisions a fixed rule provably cannot reproduce. Research-stage, local-first, installable today."
 author: "Guy Freeman"
 date: 2026-06-09
 series: [tool-call-governor]
@@ -9,7 +9,7 @@ series_order: 3
 categories: [essays, bayesian, ai, decision-theory]
 ---
 
-*Update (June 2026): a lot has shipped since this post. Routing each call to the cheapest capable model is now on by default, and shadow mode will audit the savings on your own traffic before it changes anything. The current announcement is [Make Your OpenClaw Agent Cheaper, and Measure It Yourself](/posts/openclaw-cheaper-measure-it-yourself/); this one stays as a point-in-time record.*
+*Update (June 2026): much has shipped since this essay. Routing each call to the cheapest capable model is now on by default, and shadow mode will audit the savings on your own traffic before it changes anything. The current announcement is [Make Your OpenClaw Agent Cheaper, and Measure It Yourself](/posts/openclaw-cheaper-measure-it-yourself/); this one stays as a point-in-time record.*
 
 [OpenClaw](https://github.com/openclaw/openclaw) makes tool calls all day, and two kinds of them deserve more scrutiny than they get. The first merely costs money: the agent runs a call it has already run — same tool, same arguments, same session — because nothing in its loop is keeping score. The second is worse: a prompt injection in something the agent read persuades it to carry untrusted data into a consequential action, and an address that arrived inside a document it was summarising turns up as the recipient of a forward.
 
