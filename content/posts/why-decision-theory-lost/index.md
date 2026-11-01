@@ -62,7 +62,7 @@ I find this cyclical pattern more explanatory than any single technical argument
 
 ## What Might Change
 
-The methods never stopped working. The [Bayesian agent I built](/posts/agentic-ai/) uses nothing more exotic than Beta distributions and expected-value-of-information calculations. It outscored a LangChain agent by 120 points not because it was smarter, but because it could answer a question that LangChain cannot even pose: is the next tool query worth its cost?
+The methods never stopped working. The [Bayesian agent I built](/posts/agentic-ai/) uses nothing more exotic than Beta distributions and expected-value-of-information calculations. It outscored a LangChain agent by 120 points not because it was smarter, but because it could answer a question that LangChain cannot even pose: is the next tool query worth its cost? That margin belongs to the first version of the benchmark; once it was made fair to the language model, the ordering reversed, as a [later essay](/posts/credence-paper/) sets out. The question, though, remains one that LangChain cannot pose.
 
 Whether this matters beyond a toy benchmark remains to be seen. But the question the commenter asked --- why we stopped using these methods --- has a clear answer: not because they failed, but because something shinier came along, and the institutions that transmit knowledge reorganised themselves around the new shiny thing. This has happened before. It will happen again. The half-life of methodological fashion is shorter than most practitioners' careers, which means if you wait long enough, your unfashionable expertise becomes avant-garde.
 
