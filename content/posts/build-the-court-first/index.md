@@ -4,7 +4,7 @@ subtitle: "Once a program is written in prose, the machinery we built to govern 
 description: "A dispatch from day six, written 10 October 2026 and scored against the record. assize is a court for a self-improving agent that does not exist yet. Coding sessions read its constitution, are judged by a separate reviewer against criteria fixed in advance, are audited, scored by a proper rule and elected by their record, and the one human in it is priced and forecast. Why natural-language programs make that possible, what it rests on, and what its first week produced, failures included."
 author: "Guy Freeman"
 date: 2026-11-02
-draft: true
+draft: false
 categories: [essays, ai, decision-theory]
 series: [coding-agents]
 series_order: 6
