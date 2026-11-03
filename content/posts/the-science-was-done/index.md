@@ -40,6 +40,10 @@ The core is an append-only, hash-chained log of signed entries, and the law is a
 
 Three older maxims became kernel rules. *Nemo iudex in causa sua* — Coke in Dr Bonham's Case, 1610 — is the rule that no party resolves its own forecast, judged by principal and not by key. *Lex non cogit ad impossibilia* is the rule that every rule is admitted with a witness that violates it and one that satisfies it, so that a rule can be seen to fail and compliance to be possible. And habeas corpus — the Act of 1679 — is the clerk: every obligation derived from present state and the clock, carrying a deadline, escalating when the deadline passes, never waiting to be told. **Jefferson's** letter to Madison (1789), that the earth belongs to the living, is why every window is a maximum and every layer freezes. **Madison's *Federalist* 51** is the build order's sentence: first enable the government to control the governed; then oblige it to control itself.
 
+{{< callout type="note" >}}
+**A correction, 3 November.** Only two of the three maxims above are mechanisms today. *Nemo iudex* is in the kernel, and habeas corpus is the clerk. The witness rule for *lex non cogit ad impossibilia* is written in the charter (§3, Change), but it waits for the first primary rule, and by amendment A2.1 that rule enters only when a first case arises. None has yet. What the kernel refuses as impossible today is narrower: a key that no one could hold alone, and the loss of the last key able to declare keys. So the witness rule is law-in-waiting, not a kernel rule. [Fifteen Things a Self-Modifying Agent Cannot Do Without](/posts/necessities/) and the book's chapter 4 (§4.5) state it that way.
+{{< /callout >}}
+
 ### Tests you may stop whenever you like
 
 The record exists so that three things can be tested without taking anyone's word: that nothing invalid was ever admitted (safety), that obligations do not rot (liveness), and that what the agent produces is worth more than knowing nothing (value).
