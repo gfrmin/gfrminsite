@@ -28,13 +28,10 @@
        gfrmin/agent-court (mdBook) into public/book/ at deploy time. English only —
        the book is English — so the block, like the menu entry, is absent from the
        Hebrew homepage; the i18n keys exist in both files all the same.
-       The href comes from the English menu entry with identifier "book", the one
-       place /book/ is written; a missing entry fails the build rather than
-       leaving the block pointing nowhere. */}}
+       The href comes from partials/book-url.html, which reads the menu entry and
+       fails the build if it is missing. */}}
   {{ if eq .Language.Lang "en" }}
-  {{ $book := "" }}
-  {{ range site.Menus.main }}{{ if eq .Identifier "book" }}{{ $book = .URL | relURL }}{{ end }}{{ end }}
-  {{ if not $book }}{{ errorf "layouts/index.html: no English menu entry with identifier \"book\" in hugo.toml; the homepage book block takes its link from it" }}{{ end }}
+  {{ $book := partial "book-url.html" . }}
   <h2>{{ i18n "homeBook" }}</h2>
   <p class="home-book-title"><a href="{{ $book }}">{{ i18n "homeBookTitle" }}</a> <span class="home-book-subtitle">{{ i18n "homeBookSubtitle" }}</span></p>
   <p class="section-lede">{{ i18n "homeBookLede" }}</p>

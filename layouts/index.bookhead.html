@@ -1,17 +1,20 @@
 {{- /* The <head> fragment for the book at /book/, which mdBook builds from
-       gfrmin/agent-court. publish.yml copies the English output of this file
-       (public/book-head.html) to the book checkout's theme/head.hbs before
-       `mdbook build`, then deletes it from public/. It is emitted for every
+       gfrmin/agent-court. publish.yml inserts the English output of this file
+       (public/book-head.html) before </head> in every built book page
+       (scripts/inject-book-head.py), then deletes it from public/. It is emitted for every
        language because [outputs] is site-wide; only the English one is used.
 
        It carries the site's PostHog snippet (the same partial, so the key lives in
        one place) and a link home to gfrm.in in mdBook's menu bar, which otherwise
-       has no route back to the site. Nothing here may contain a double brace:
-       head.hbs is a Handlebars template. This is a plain-text output format, so
+       has no route back to the site. This is a plain-text output format, so
        nothing is context-escaped: values going into the script go through jsonify. */ -}}
 {{- if eq .Language.Lang "en" }}
 {{ partial "posthog.html" . }}
 <script>
+  /* A link home in mdBook's menu bar. It is an inline SVG rather than a Font
+     Awesome class, because mdBook dropped Font Awesome after 0.4. publish.yml
+     checks that the built book still has .right-buttons, so a markup change
+     fails the build rather than silently losing the link. */
   document.addEventListener('DOMContentLoaded', function () {
     var bar = document.querySelector('.right-buttons');
     if (!bar) { return; }
@@ -19,7 +22,8 @@
     a.href = {{ site.Home.RelPermalink | jsonify }};
     a.title = {{ site.Title | jsonify }};
     a.setAttribute('aria-label', {{ printf "%s — home" site.Title | jsonify }});
-    a.innerHTML = '<i class="fa fa-home" aria-hidden="true"></i>';
+    /* Inside an <i>, because mdBook colours its menu icons through `.menu-bar i`. */
+    a.innerHTML = '<i aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="vertical-align:-2px"><path d="M8 1.5 1 7.5h2V14h4v-4h2v4h4V7.5h2z"/></svg></i>';
     bar.insertBefore(a, bar.firstChild);
   });
 </script>

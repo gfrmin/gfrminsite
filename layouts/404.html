@@ -17,24 +17,18 @@
 {{- if eq .Language.Lang (index hugo.Sites 0).Language.Lang }}
 {{- /* The book at /book/ is an mdBook site (built by publish.yml from
        gfrmin/agent-court) with its own 404 at /book/404.html, which GitHub Pages
-       never serves either. A missing /book/ page gets that one whole, with the
-       book's sidebar, search and theme, rather than the blog's 404. It works as a
-       document replacement because the book's site-url makes its asset paths
-       absolute. If the fetch fails, the blog's 404 stays, which is still correct. */}}
-{{- with site.Menus.main }}{{ range . }}{{ if eq .Identifier "book" }}
+       never serves either. A missing /book/ page is sent there at once, with
+       location.replace while this page is still parsing, so the blog's PostHog
+       (which waits for window load) never runs for it and the book's 404 loads as
+       a normal page with the book's own head. The 404.html guard stops a loop if
+       the book's 404 is ever missing: that path then shows this page. */}}
 <script>
 (function () {
-  var prefix = {{ .URL }};
-  if (location.pathname.indexOf(prefix) !== 0 || location.pathname === prefix + '404.html' || !window.fetch) { return; }
-  fetch(prefix + '404.html').then(function (r) { return r.ok ? r.text() : null; }).then(function (html) {
-    if (!html) { return; }
-    document.open();
-    document.write(html);
-    document.close();
-  });
+  var prefix = {{ partial "book-url.html" . }};
+  var p = location.pathname;
+  if (p.indexOf(prefix) === 0 && p !== prefix + '404.html') { location.replace(prefix + '404.html'); }
 })();
 </script>
-{{- end }}{{ end }}{{ end }}
 {{- range hugo.Sites }}{{ with .Language }}{{ if ne .Lang site.Language.Lang }}
 <script>
 (function () {

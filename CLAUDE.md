@@ -467,46 +467,67 @@ only headings, and on a Hebrew page the headings are Hebrew.
 
 ## The book (`/book/`)
 
-*A Court for Agents* is published at `/book/` but its source is **`gfrmin/agent-court`**
-(`chapters/`, `book.toml`, `theme/`). `publish.yml` checks that repository out into
-`.book-src`, builds it with mdBook and copies the result to `public/book/`. Hugo owns
-nothing under `/book/` except one fragment, described below. So **every deploy of this site
-depends on agent-court**, and a change to how the book looks belongs in that repo.
+*A Court for Agents* is published at `/book/`, but its source is **`gfrmin/agent-court`**
+(`chapters/`, `book.toml`, `theme/`). That repository has its own session: changes to the
+book, or to agent-court's CI, go through it, not through this repo. `publish.yml` has four
+jobs:
 
-- **Which commit gets built.** On a `workflow_dispatch` with a `book_sha` input, that commit.
-  Otherwise, the last commit agent-court's own `book` workflow built **green** on `master`.
-  It is never agent-court's moving HEAD, so a broken chapter cannot turn this site's build red.
-  The resolved SHA is printed in the build log.
-- **When it refreshes.** Any deploy here, a nightly `schedule` (03:17 UTC), and agent-court's
-  `book` workflow, which calls this workflow's `workflow_dispatch` after each green build on
-  `master`. That last one only happens when agent-court has a `GFRMINSITE_DISPATCH_TOKEN`
-  secret: a fine-grained PAT on this repo with **Actions: write only**. Do not swap it for
-  `repository_dispatch`, which needs Contents: write and so the power to push here.
-- **mdBook version.** It is pinned in agent-court as `.mdbook-version` + `.mdbook-sha256` and
-  installed by its `scripts/install-mdbook.sh`, which checks the checksum. Both repos' CI run
-  that one script, so they cannot drift. `site-url` lives only in agent-court's `book.toml`,
-  so do not override it with an env var.
-- **Analytics and the way home.** The `BookHead` output format renders
-  `layouts/index.bookhead.html` (the PostHog partial plus a script that puts a home link in
-  mdBook's menu bar) to `public/book-head.html`. CI copies that file to the book's
-  `theme/head.hbs` before building, then deletes every `book-head.html` from `public/`. It is
-  a plain-text format, so nothing in it is auto-escaped (use `jsonify`), and it must not
-  contain `{{` because head.hbs is Handlebars.
-- **The link.** `/book/` is written once, in the English menu entry with
-  `identifier = "book"`. `layouts/index.html` and `layouts/404.html` read it from there, and
-  the homepage calls `errorf` if it is missing. CI asserts `public/book/index.html` exists.
-- **404.** GitHub Pages serves only the root `404.html`. On a `/book/` path, its script
-  fetches mdBook's `/book/404.html` and replaces the whole document with it.
-- **No MathJax.** The book has no math and `mathjax-support` is off, because it loaded from
-  cdnjs. If math ever arrives, render it at build time rather than turning that back on.
+- **`book`** has read-only permissions. It resolves an agent-court commit, checks it out,
+  builds it with mdBook and uploads `book-site` as an artifact (kept 90 days). mdBook runs
+  only here because `book.toml` can name preprocessors, which run commands, and this job
+  holds no deploy rights. The commit is:
+  - the `book_sha` input of a `workflow_dispatch`, which must be on agent-court's master;
+  - otherwise, the last commit agent-court's `book` workflow built **green on a push to
+    master**. Runs must come from `gfrmin/agent-court` itself, because a fork's PR from a
+    branch named master also reports `head_branch=master`.
+
+  It is never the moving HEAD, so a broken chapter does not reach this site.
+- **`build`** runs Hugo and downloads the book. **If the `book` job failed for any reason,
+  it falls back to the last `book-site` artifact from a run on this repo's master and
+  warns**, so the blog deploys regardless. `scripts/inject-book-head.py` then inserts
+  Hugo's `BookHead` output (`layouts/index.bookhead.html`: the PostHog partial plus a
+  home link in mdBook's menu bar) before `</head>` in every book page except `toc.html`.
+  It edits static files only. Finally it writes `public/build-id.txt` (`blog=<sha>
+  book=<sha>`).
+- **`deploy`** is unchanged.
+- **`purge`** polls GitHub Pages directly, bypassing Cloudflare (`--resolve
+  gfrm.in:443:185.199.108.153 -k`, because Pages holds no certificate for a proxied
+  domain), until it serves this run's `build-id.txt`. Then it runs `purge_everything`.
+  Purging any earlier lets Cloudflare re-cache the previous build from Pages' own CDN.
+
+**Refreshes:**
+- every deploy here;
+- nightly at 03:17 UTC, which **skips everything** when the deployed `build-id.txt`
+  already matches;
+- agent-court's dispatch, if that repo holds a `GFRMINSITE_DISPATCH_TOKEN`: a fine-grained
+  PAT on this repo with **Actions: write only**. Not `repository_dispatch`, which needs
+  Contents: write and with it the power to push here.
+
+**mdBook is pinned here**: `.mdbook-version` + `.mdbook-sha256`, installed by
+`scripts/install-mdbook.sh`, which verifies the checksum. Bump the two files together, and
+take the hash from `gh api repos/rust-lang/mdBook/releases/tags/v<ver>` (`.digest`). If
+agent-court pins a different version, the build warns rather than fails. The `book` job
+fails if the built menu bar loses `.right-buttons`, where the home link goes, which mdBook
+0.5 changed. `site-url` lives only in agent-court's `book.toml`.
+
+**The link.** `/book/` is written once, in the English menu entry with
+`identifier = "book"`. `layouts/partials/book-url.html` reads it, or calls `errorf`, for
+both the homepage and the 404. On a `/book/` path the root 404 calls `location.replace` to
+`/book/404.html` (mdBook's own) while still parsing, before the blog's PostHog, which waits
+for `load`, can run.
+
+The book has no math, and MathJax (cdnjs) should stay off in `book.toml`; if math ever
+arrives, render it at build time.
 
 ## Deployment
 
-- Push to `master` → `.github/workflows/publish.yml` runs Hugo, builds the book, and deploys to
-  GitHub Pages. The same happens nightly and on a book dispatch (see above).
+- Push to `master` → `.github/workflows/publish.yml` builds the book and the site and deploys
+  to GitHub Pages; a nightly run and a book dispatch do the same (see above). A red run
+  can still have deployed: when only the `book` job failed, the deploy went out with the
+  previous book.
 - Custom domain `gfrm.in` (the apex; see the top of this file), DNS via Cloudflare.
 - **Cloudflare caches aggressively**, so a deploy is not visible until the cache is purged.
-  The `purge` job does this after every deploy (`purge_everything` on zone `gfrm.in`,
+  The `purge` job does this after every deploy, once Pages serves it (`purge_everything` on zone `gfrm.in`,
   `a8f9ffe2e792e663242e5e5e7c03d5ff`) using the repo secret `CLOUDFLARE_CACHE_PURGE_TOKEN`.
   That is CI's own token, `gfrminsite-ci-cache-purge`: Cache Purge on gfrm.in only, with a
   keyring copy at `CLOUDFLARE_GFRMINSITE_CI_PURGE_TOKEN`. If the job fails, purge by hand
