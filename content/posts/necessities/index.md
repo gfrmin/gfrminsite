@@ -95,7 +95,7 @@ That obligations do not rot is liveness: it can only be given a deadline and tes
 
 **Conant and Ashby (1970); Ashby (1956)** (necessity results of control, under conditions). The *simplest* optimal regulator is a model of the system it regulates: its actions are a function of the system's events. Optimal regulators that are not models may exist, but they are "unnecessarily complex", and the result holds the system's distribution fixed.
 
-Requisite variety bounds what any regulator can do: measured logarithmically, the variety of outcomes is at least the variety of the disturbances less the regulator's own, \(V(Z) \ge V(D) - V(R)\), so a regulator poorer in variety than what it faces cannot hold the outcome in bounds.
+Requisite variety bounds what any regulator can do: measured logarithmically, the variety of outcomes is at least the variety of the disturbances less the regulator's own, \(V(Z) \ge V(D) - V(R)\), so a regulator poorer in variety than what it faces cannot hold the outcomes to fewer than so many distinct values.
 
 jack's state is a fold of the law over the log — head, keys, charter, trusted base, forecasts and which are resolved — and the clerk derives every obligation from that state and the clock, which enters only as an argument; the kernel never reads one. The judge's grounds are "stated over powers and paths and never over a party's name" (A2.3), the election rule is "an entrant, not law" (CHARTER §5), and the proposers are sessions of more than one model family.
 
@@ -135,7 +135,7 @@ jack's second checker is in Go, by sessions of another model family that read th
 
 ## Irreversibility and growth
 
-**Arrow and Fisher (1974)** (theorem of decision under uncertainty). An irreversible act carries an extra cost — the value of the information waiting would bring — and a reversible one carries none, so a gate before it buys nothing.
+**Arrow and Fisher (1974)** (theorem of decision under uncertainty). An irreversible act carries an extra cost, their "quasi-option value". From their model it follows, though they do not say it, that an act undone at no cost carries none, so a gate before it buys nothing; Arrow and Fisher price irreversibility rather than forbid it, and the gate is this court's policy.
 
 Hard gates stand only before the irreversible: the sovereign's verbs are `genesis`, `key`, `amend`, `push`, `decision`, and the last key able to declare keys cannot be revoked. Everything reversible is priced: a refused proposal costs resubmission, and a failed window is followed and never patched.
 
