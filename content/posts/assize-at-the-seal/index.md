@@ -74,7 +74,7 @@ A *decision* is a wish filed, a draft signed or declined, an instruction filed o
 - a pull request closed unmerged;
 - an approval re-given because a push had dismissed the first.
 
-Four of the 24 merges discharged an obligation of the brief. Twenty changed the court's own procedure. Across the whole week of 7 to 13 October I made 147 repairs. In the week after, by a recount described at the end of this section, I made 55.
+Four of the 24 merges discharged an obligation of the brief. Twenty changed the court's own procedure. Across the whole week of 7 to 13 October I made 147 repairs. From 14 to 20 October, by a recount described at the end of this section, I made 55: about a third of what the same recount finds for the week before.
 
 Some of the repairs were the court finding real defects in itself, which is the point:
 - **The accused wrote its own test.** Until mid-October a pull request's checks ran that pull request's own harness. From mid-October the pins on trunk judged it too.
@@ -93,7 +93,7 @@ Nothing had declared the host's facts before the runs, so the court discovered t
 And one thing the ledger could not show at all. Counsel acted through my GitHub token: a late-night rebase, a key found and re-declared, a session launched from a terminal. None of it left an entry of its own. The script counts those acts as mine where GitHub records them at all, and edits to an issue's body it cannot see. Before 10 October, sessions were often started by hand and left no record. The 121 is a floor.
 
 {{< callout type="note" >}}
-**A later correction, 3 November 2026.** This post first said I made 40 repairs in the week after. Nothing in the record produced that figure: the script behind the 147 was never committed, and the forecast that would have measured the following week was never resolved. The 55 comes from a classifier rebuilt from the rules the court wrote down. On 10 to 13 October it matches the table's decisions and merges exactly, and it counts 124 repairs where the table has 121. Over the whole week of 7 to 13 October it counts 163 where the original counted 147. The difference falls on 7 to 9 October, the days with thin records. Counted the same way, the week after had about a third as many repairs as the week before.
+**A later correction, 3 November 2026.** This post first said I made 40 repairs from 14 to 20 October. Nothing in the record produced that figure: the script behind the 147 was never committed, and the forecast that would have measured the following week was never resolved. The 55 comes from a classifier rebuilt from the rules the court wrote down. On 10 to 13 October it matches the table's decisions and merges exactly, and it counts 124 repairs where the table has 121. Over the whole week of 7 to 13 October it counts 163 where the original counted 147; 13 of those 16 fall on 7 to 9 October, the days with thin records. Counted the same way, 14 to 20 October had 55 repairs to the previous week's 163, about a third. Both counts are floors, blind to the same acts described above.
 {{< /callout >}}
 
 ## What survived
