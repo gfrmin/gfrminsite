@@ -7,6 +7,7 @@ date: 2026-10-28
 draft: false
 series: [coding-agents]
 series_order: 5
+lastmod: 2026-11-03
 categories: [essays, ai, bayesian, decision-theory]
 ---
 
@@ -73,9 +74,7 @@ A *decision* is a wish filed, a draft signed or declined, an instruction filed o
 - a pull request closed unmerged;
 - an approval re-given because a push had dismissed the first.
 
-Four of the 24 merges discharged an obligation of the brief. Twenty changed the court's own procedure. Across the whole week of 7 to 13 October I made 147 repairs. In the week after, I made about 50, a third as many.
-
-**A later correction.** This post first said 40 for the week after. Nothing in the record produced that figure: the script behind the 147 was never committed, and the forecast that would have measured the week after was never resolved. A rebuilt classifier, which reproduces the four-day table above to within a few repairs, counts about 50.
+Four of the 24 merges discharged an obligation of the brief. Twenty changed the court's own procedure. Across the whole week of 7 to 13 October I made 147 repairs. In the week after, I made about a third as many.
 
 Some of the repairs were the court finding real defects in itself, which is the point:
 - **The accused wrote its own test.** Until mid-October a pull request's checks ran that pull request's own harness. From mid-October the pins on trunk judged it too.
@@ -92,6 +91,8 @@ The final verdict was the fourth measurement on the host on the same code.
 Nothing had declared the host's facts before the runs, so the court discovered them one gate at a time.
 
 And one thing the ledger could not show at all. Counsel acted through my GitHub token: a late-night rebase, a key found and re-declared, a session launched from a terminal. None of it left an entry of its own. The script counts those acts as mine where GitHub records them at all, and edits to an issue's body it cannot see. Before 10 October, sessions were often started by hand and left no record. The 121 is a floor.
+
+**A later correction, 3 November 2026.** This post first said I made 40 repairs in the week after. Nothing in the record produced that figure. The script behind the 147 was never committed, and the forecast that would have measured the following week was never resolved. I rebuilt the classifier from the rules the court wrote down. It matches the decisions and merges in the four-day table above exactly, and it counts 124 repairs where the table has 121. Counted with the rebuilt classifier, the two weeks come to 163 repairs and 55, a third. Because 7 to 9 October are a floor, the true fraction is probably smaller.
 
 ## What survived
 
