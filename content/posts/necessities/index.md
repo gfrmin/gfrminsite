@@ -21,7 +21,7 @@ I take each result in four parts: what it says, with its hypotheses; what it for
 
 ## Evaluation: why the change cannot be inspected
 
-**Rice (1953)** (theorem). In a Turing-complete language, every non-trivial property of what a program *does* — of the function it computes, not of its text — is undecidable. An agent that can write the next version of itself works in such a language, so "is this change an improvement?" has no procedure that inspects the change; and since improvement is a property of the program in the world, not of the program, it is settled by running the change and scoring the outcome.
+**Rice (1953)** (theorem). In a Turing-complete language, every non-trivial property of what a program *does* — of the function it computes, not of its text — is undecidable. An agent that can write the next version of itself works in such a language, so "is this change an improvement?" has no procedure that inspects the change; and improvement is in any case not a property of the program alone but of the program in the world, which no inspection of the text reaches. Both reasons send it to the same place: it is settled by running the change and scoring the outcome.
 
 jack's charter confines its statutes to decidable properties on exactly this ground, and separates validity from merit in the same clause: questions of merit "are forecasts, scored when the world resolves them" (CHARTER §3). Every check the kernel makes is syntactic and terminates — a canonical serialisation, a hash, a signature, a type in a list of powers (SPEC §8).
 
@@ -105,7 +105,7 @@ jack's state is a fold of the law over the log — head, keys, charter, trusted 
 
 **Hart (1961)** (a jurisprudential analysis, not a theorem). A legal system is primary rules plus three secondary ones — recognition, change, adjudication — and lacks one of three answers without any of them.
 
-jack's zeroth layer was cut to exactly those: a valid entry; a `key` entry, an `amend` preceded by a `transmute` and in force from a later height, a `push` naming a digest; a judge that runs trunk's kernel over the proposal's entries as data. The kernel holding all three is 450 lines (`tools/count_kernel.py`). No primary rule has yet been needed, and the charter says that if none is by the end of C2, "§12's thesis that three secondary rules suffice is on trial" (A2.1).
+jack's zeroth layer was cut to exactly those: a valid entry; a `key` entry, an `amend` preceded by a `transmute` and in force from a later height, a `push` naming a digest; a judge that runs trunk's kernel over the proposal's entries as data. The kernel that holds recognition and most of change is 450 lines (`tools/count_kernel.py`); the rest of change — that an `amend` be preceded by its `transmute` — and adjudication itself are the judge's (SPEC §10.13). No primary rule has yet been needed, and the charter says that if none is by the end of C2, "§12's thesis that three secondary rules suffice is on trial" (A2.1).
 
 *Misapplied if* a rule of conduct is written into the kernel in advance of a case.
 
