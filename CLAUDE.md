@@ -98,11 +98,11 @@ Templates: `layouts/series/taxonomy.html` (the `/series/` hub), `layouts/series/
 
 **Do not hand-maintain cross-links between parts of a series.** Every Velotix post used to carry a "This is Part 3, see Parts 1/2/4/5" callout *and* a trailing italic copy of the same list, in both languages — twenty hand-maintained link sets that had to be edited whenever a part was added. Those were removed in favour of the generated nav. Contextual references inside the prose ("as covered in [Part 1](...)") are fine and were kept.
 
-A post with no `series` simply renders no nav. Seven posts are deliberately standalone.
+A post with no `series` simply renders no nav. Twelve posts are deliberately standalone.
 
 ### Discovery: how a reader finds anything
 
-Thirty-seven posts, most of them long. Five surfaces exist to answer *where do I start*
+Forty-five posts, most of them long. Five surfaces exist to answer *where do I start*
 and *is there a post about X* without asking anyone to scroll ten screens of cards.
 
 **Start here** (homepage, between the book block and Series) is the one hand-curated list on
