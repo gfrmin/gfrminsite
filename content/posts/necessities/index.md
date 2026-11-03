@@ -8,6 +8,7 @@ draft: false
 categories: [essays, ai, bayesian, decision-theory]
 series: [a-court-for-agents]
 series_order: 2
+linkTitle: "Part 2: Fifteen Necessities"
 ---
 
 The [founding note](/posts/the-science-was-done/) for [jack](https://github.com/renavondata/jack) argued that nearly everything underneath a self-improving agent was finished decades ago, and that what is new is only the economy. This essay makes the stronger claim the book that follows rests on: that the pieces are not merely available but *forced*. Each component of jack's core is there because a result says that without it the agent cannot be evaluated, tested, governed or stopped. Remove one and you have not simplified the design; you have made an error that one of these results names.
@@ -122,7 +123,7 @@ One thing in the founding note went further than the record: the rule that every
 
 **Anderson (1972); Saltzer and Schroeder (1975)** (design principles). The reference monitor is always invoked, tamper-proof and small enough to verify; authority is a reference held, not a rule obeyed.
 
-Every proposal is judged by trunk's checkers in a workflow that comes from trunk; the trusted base is five paths compared by content, so a rename or a symbolic link under them is refused like an edit; a checker that cannot decide — a crash, a timeout — is treated as a refusal; and the herald's key holds `merge` alone, so the process that merges green proposals can do nothing else — every one of the 85 entries it had signed since that key was declared, at the commit this essay cites, is a `merge` (seq 201 onward).
+Every proposal is judged by trunk's checkers in a workflow that comes from trunk; the trusted base is five paths compared by content, so a rename or a symbolic link under them is refused like an edit; a checker that cannot decide — a crash, a timeout — is treated as a refusal; and the herald's key holds `merge` alone, so the process that merges green proposals can do nothing else — every one of the 83 entries it had signed since that key was declared, at the commit this essay cites, is a `merge` (seq 201 onward).
 
 *Misapplied if* the accused supplies its own test. Assize's F1 — a pull request's checks ran the pull request's own harness — is the witness, and `judge_from_proposal` is the pin.
 
