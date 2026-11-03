@@ -49,7 +49,7 @@ In jack this is a file format (SPEC §§5–8):
 
 *Misapplied if* a score ever uses a probability fixed after its event. The record already names the two ways: a forecast timestamped at or after the event's cutoff is listed as `rigged` and not used — there are three on the log, seqs 288–290 — and a later forecast of the same event by the same principal is listed as a `revision`; the first stands.
 
-**Proper scores (Good 1952; Gneiting and Raftery 2007)** (theorems). Only a strictly proper score makes reporting your belief the unique best move; the logarithmic score is one, and it is the one under which a Bayes mixture over \(K\) forecasters loses at most \(\ln K\) more than the best of them — a telescoping identity that holds for the log score and no other.
+**Proper scores (Good 1952; Gneiting and Raftery 2007)** (theorems). Only a strictly proper score makes reporting your belief the unique best move; the logarithmic score is one, and under it the Bayes mixture over \(K\) forecasters is itself conditioning: it loses at most \(\ln K\) more than the best of them, at no learning rate and with no tuning constant. Other mixable losses get a bound of that form only by a different algorithm and constant.
 
 jack scores log-loss, per mille, against a base-rate forecaster that is Laplace's rule over the resolved prefix of the forecast's type, and its aggregate is the Bayes mixture with the uniform prior and no learning rate: "η = 1 is the telescoping identity, the uniform prior the minimax choice for the ln K bound" (BRIEF-C2a).
 
@@ -77,9 +77,9 @@ The rule has already bitten: the clerk's window carried \(E\) to 214358881/83980
 
 *Misapplied if* a stake is set with knowledge of its outcome, the null is estimated from the window it judges, or the wealth is reset — which is \(k\) draws at one bound, and is the defect that forced amendment A4.
 
-**Bahadur and Savage (1956)** (theorem). In the family of all distributions with a finite mean, no test of the mean has power above its size. The quantities an operator most wants to see fall — minutes, dollars, repairs per merge — are unbounded, and no procedure can certify that their mean is small.
+**Bahadur and Savage (1956)** (theorem). In the family of all distributions with a finite mean — or with bounded support whose bound is unknown — no test of the mean has power above its size. The quantities an operator most wants to see fall — minutes, dollars, repairs per merge — are unbounded, and no procedure can certify that their mean is small.
 
-So jack tests only bounded outcomes — an item completed without repair, a log-loss difference bounded by \(\ln 999\) — and reports the rest as numbers, never as evidence (CHARTER §6).
+So jack tests only outcomes whose range is fixed in advance — an item completed without repair, a log-loss difference bounded by \(\ln 999\) — and reports the rest as numbers, never as evidence (CHARTER §6).
 
 *Misapplied if* anyone proposes "\(E \ge 20\) on mean latency".
 
@@ -93,9 +93,9 @@ That obligations do not rot is liveness: it can only be given a deadline and tes
 
 ## Control: what the governor must contain
 
-**Conant and Ashby (1970); Ashby (1956)** (necessity results of control, under conditions). A regulator that is optimal *and no more complex than it need be* is a model of the system it regulates: it acts on a representation of that system sufficient to determine the outcome, and anything it acts on outside that representation is redundant or wrong.
+**Conant and Ashby (1970); Ashby (1956)** (necessity results of control, under conditions). The *simplest* optimal regulator is a model of the system it regulates: its actions are a function of the system's events. Optimal regulators that are not models may exist, but they are "unnecessarily complex", and the result holds the system's distribution fixed.
 
-Requisite variety bounds what any regulator can do: the variety of outcomes is at least the variety of the disturbances less the regulator's own, \(V(Z) \ge V(D) - V(R)\), so a regulator poorer in variety than what it faces cannot hold the outcome in bounds.
+Requisite variety bounds what any regulator can do: measured logarithmically, the variety of outcomes is at least the variety of the disturbances less the regulator's own, \(V(Z) \ge V(D) - V(R)\), so a regulator poorer in variety than what it faces cannot hold the outcome in bounds.
 
 jack's state is a fold of the law over the log — head, keys, charter, trusted base, forecasts and which are resolved — and the clerk derives every obligation from that state and the clock, which enters only as an argument; the kernel never reads one. The judge's grounds are "stated over powers and paths and never over a party's name" (A2.3), the election rule is "an entrant, not law" (CHARTER §5), and the proposers are sessions of more than one model family.
 
