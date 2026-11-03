@@ -66,14 +66,21 @@ defaultContentLanguage = "en"
     name = "Research"
     url = "/research/"
     weight = 4
+  # /book/ is not Hugo content: publish.yml builds it from gfrmin/agent-court
+  # (mdBook) into public/book/. English only, so it is absent from the Hebrew
+  # menu, as the archive and the tab row are.
+  [[languages.en.menu.main]]
+    name = "Book"
+    url = "/book/"
+    weight = 5
   [[languages.en.menu.main]]
     name = "Projects"
     url = "/projects/"
-    weight = 5
+    weight = 6
   [[languages.en.menu.main]]
     name = "Contact"
     url = "/contact/"
-    weight = 6
+    weight = 7
 
 [languages.he.menu]
   [[languages.he.menu.main]]

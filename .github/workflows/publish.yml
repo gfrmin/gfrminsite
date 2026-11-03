@@ -7,6 +7,13 @@ on:
   # merge; only a push to master deploys.
   pull_request:
   workflow_dispatch:
+  # The book at /book/ is built from gfrmin/agent-court at deploy time (see the
+  # "Build the book" step), so it refreshes when that repository asks and once a
+  # night regardless.
+  repository_dispatch:
+    types: [book-updated]
+  schedule:
+    - cron: '17 3 * * *'
 
 permissions:
   contents: read
@@ -47,6 +54,24 @@ jobs:
 
       - name: Build site
         run: hugo --minify
+
+      # The book — "A Court for Agents", gfrmin/agent-court — lives at /book/.
+      # Its source stays in that repository; this step checks it out and builds
+      # its chapters/ with mdBook into public/book/, so there is one source of
+      # truth and nothing copied by hand. Hugo owns nothing under /book/.
+      - name: Check out the book
+        uses: actions/checkout@v6
+        with:
+          repository: gfrmin/agent-court
+          path: .book-src
+
+      - name: Build the book into /book/
+        run: |
+          curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.52/mdbook-v0.4.52-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./mdbook --version
+          MDBOOK_OUTPUT__HTML__SITE_URL=/book/ ./mdbook build .book-src
+          rm -rf public/book && cp -r .book-src/book-site public/book
+          test -f public/book/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5

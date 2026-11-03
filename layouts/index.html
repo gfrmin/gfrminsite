@@ -24,6 +24,17 @@
     {{ .Content }}
   </div>
 
+  {{/* The book. /book/ is not Hugo content: publish.yml builds it from
+       gfrmin/agent-court (mdBook) into public/book/ at deploy time. English only —
+       the book is English — so the block, like the menu entry, is absent from the
+       Hebrew homepage; the i18n keys exist in both files all the same. */}}
+  {{ if eq .Language.Lang "en" }}
+  <h2>{{ i18n "homeBook" }}</h2>
+  <p class="home-book-title"><a href="{{ "book/" | relURL }}">{{ i18n "homeBookTitle" }}</a> <span class="home-book-subtitle">{{ i18n "homeBookSubtitle" }}</span></p>
+  <p class="section-lede">{{ i18n "homeBookLede" }}</p>
+  <a href="{{ "book/" | relURL }}" class="cta-pill">{{ i18n "homeBookLink" }} {{ $fwd | safeHTML }}</a>
+  {{ end }}
+
   {{/* The curated entry point. English only: data/starthere.yaml carries English
        reasons, and five posts of the Hebrew site are the Velotix series, which the
        series block below already presents as a sequence. */}}

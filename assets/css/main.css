@@ -2150,6 +2150,27 @@ blockquote a,
   margin: calc(var(--space-md) * -1) 0 var(--space-lg);
 }
 
+/* --- The book (homepage) ---------------------------------------------- */
+/* Title and subtitle on one line, on the existing scale: the title at --fs-h3 in
+   the display face, the subtitle in the UI face at --fs-small, muted. The lede
+   below reuses .section-lede, so its negative top margin is cancelled here. */
+.home-book-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  margin: 0 0 var(--space-sm);
+}
+.home-book-title a { text-decoration: none; }
+.home-book-subtitle {
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-inline-start: 0.4em;
+}
+.home-book-title + .section-lede { margin-top: 0; }
+
 /* --- Start here (homepage) --------------------------------------------- */
 /* An <ol>, numbered by counter rather than by ::marker: the number sits in its
    own grid column beside the title, which a marker cannot do. */
