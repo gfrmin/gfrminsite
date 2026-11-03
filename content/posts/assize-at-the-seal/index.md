@@ -73,7 +73,9 @@ A *decision* is a wish filed, a draft signed or declined, an instruction filed o
 - a pull request closed unmerged;
 - an approval re-given because a push had dismissed the first.
 
-Four of the 24 merges discharged an obligation of the brief. Twenty changed the court's own procedure. Across the whole week of 7 to 13 October I made 147 repairs. In the week after, I made about a third as many.
+Four of the 24 merges discharged an obligation of the brief. Twenty changed the court's own procedure. Across the whole week of 7 to 13 October I made 147 repairs. In the week after, I made about 50, a third as many.
+
+**A later correction.** This post first said 40 for the week after. Nothing in the record produced that figure: the script behind the 147 was never committed, and the forecast that would have measured the week after was never resolved. A rebuilt classifier, which reproduces the four-day table above to within a few repairs, counts about 50.
 
 Some of the repairs were the court finding real defects in itself, which is the point:
 - **The accused wrote its own test.** Until mid-October a pull request's checks ran that pull request's own harness. From mid-October the pins on trunk judged it too.
