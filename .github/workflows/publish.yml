@@ -6,7 +6,19 @@ on:
   # Build every pull request too, so master can require a green build before a
   # merge; only a push to master deploys.
   pull_request:
+  # The book at /book/ is built from gfrmin/agent-court at deploy time (the `book`
+  # job). agent-court's `book` workflow can ask for a republish through
+  # workflow_dispatch, passing the commit it just built as book_sha; that needs a
+  # token with Actions: write here, and is optional. The nightly run catches
+  # everything else, and skips itself when nothing has changed.
   workflow_dispatch:
+    inputs:
+      book_sha:
+        description: "agent-court commit to build /book/ from (must be on its master; default: the last commit its book workflow built green on a push to master)"
+        required: false
+        default: ""
+  schedule:
+    - cron: '17 3 * * *'
 
 permissions:
   contents: read
@@ -20,8 +32,106 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  # The book: "A Court for Agents", whose source is gfrmin/agent-court. mdBook
+  # runs here, in a job that can only read, because book.toml can name
+  # preprocessors and so run commands; no code from that repository runs where
+  # the Pages deploy rights are. The build job takes the result as an artifact.
+  book:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      sha: ${{ steps.ref.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v6
+
+      # Which commit: the one a dispatch names, if it is on agent-court's master;
+      # otherwise the last one agent-court's own `book` workflow built green on a
+      # push to master. It is never the moving HEAD, so a broken chapter there does
+      # not reach this site. The run must come from agent-court itself: a fork's PR
+      # from a branch named master also reports head_branch=master.
+      - name: Resolve the book commit
+        id: ref
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUESTED: ${{ inputs.book_sha }}
+        run: |
+          set -euo pipefail
+          if [ -n "$REQUESTED" ]; then
+            [[ "$REQUESTED" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::book_sha must be a full commit SHA"; exit 1; }
+            status="$(gh api "repos/gfrmin/agent-court/compare/master...$REQUESTED" --jq .status)"
+            case "$status" in
+              behind|identical) ;;
+              *) echo "::error::book_sha $REQUESTED is not on agent-court's master (compare: $status)"; exit 1 ;;
+            esac
+            sha="$REQUESTED"
+            echo "book: the requested agent-court commit"
+          else
+            sha="$(gh api 'repos/gfrmin/agent-court/actions/workflows/book.yml/runs?branch=master&event=push&status=success&per_page=20' \
+              --jq '[.workflow_runs[] | select(.head_repository.full_name == "gfrmin/agent-court")][0].head_sha // empty')"
+            echo "book: agent-court's last green push to master"
+          fi
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::no valid agent-court commit to build (got '$sha')"; exit 1; }
+          echo "book: gfrmin/agent-court@$sha"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+      - name: Check out the book
+        uses: actions/checkout@v6
+        with:
+          repository: gfrmin/agent-court
+          ref: ${{ steps.ref.outputs.sha }}
+          path: .book-src
+          persist-credentials: false
+
+      # mdBook is pinned here (.mdbook-version, .mdbook-sha256) and the installer
+      # checks the checksum. agent-court's CI pins its own; a difference is
+      # reported, not fatal, because the book should not stop the blog deploying.
+      - name: Install mdBook
+        run: |
+          scripts/install-mdbook.sh
+          ours="$(tr -d '[:space:]' < .mdbook-version)"
+          if [ -f .book-src/.mdbook-version ]; then
+            theirs="$(tr -d '[:space:]' < .book-src/.mdbook-version)"
+            [ "$ours" = "$theirs" ] || echo "::warning::mdBook $ours here but agent-court pins $theirs; bump .mdbook-version and .mdbook-sha256 to match"
+          fi
+
+      # site-url (/book/) comes from agent-court's book.toml alone.
+      - name: Build the book
+        run: |
+          ./mdbook build .book-src
+          test -f .book-src/book-site/index.html
+          grep -q 'class="right-buttons"' .book-src/book-site/index.html \
+            || { echo "::error::mdBook's menu bar has no .right-buttons; layouts/index.bookhead.html puts the link home there"; exit 1; }
+          # The same test the build job's insert makes, so a book that cannot take
+          # the head fragment fails here and the build falls back, not the deploy.
+          python3 -I scripts/inject-book-head.py --check .book-src/book-site
+          echo "${{ steps.ref.outputs.sha }}" > .book-src/book-site/BOOK_SHA
+
+      # Uploaded on every run, nightly ones included, so the fallback always has
+      # a recent book. A pull request's book goes under another name and is kept a
+      # day: it is only for that run, and PR traffic must not crowd master's books
+      # out of the fallback's lookup.
+      - name: Upload the book
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ github.event_name == 'pull_request' && 'book-site-pr' || 'book-site' }}
+          path: .book-src/book-site
+          retention-days: ${{ github.event_name == 'pull_request' && 1 || 90 }}
+
+  build:
+    needs: book
+    # Runs even when the book job fails: the blog must still deploy, so the last
+    # book built for master is used instead (see the fallback step).
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      pages: write
+      id-token: write
+    outputs:
+      build_id: ${{ steps.id.outputs.build_id }}
+      deploy: ${{ steps.changed.outputs.deploy }}
     steps:
       - uses: actions/checkout@v6
 
@@ -48,6 +158,66 @@ jobs:
       - name: Build site
         run: hugo --minify
 
+      - name: Fetch this run's book
+        if: needs.book.result == 'success'
+        uses: actions/download-artifact@v8
+        with:
+          name: ${{ github.event_name == 'pull_request' && 'book-site-pr' || 'book-site' }}
+          path: public/book
+
+      # If the book job failed (GitHub API, the mdBook download, a bad commit in
+      # agent-court), keep publishing the last book built for this repository's
+      # master rather than failing the blog deploy. The artifact must come from a
+      # run on this repository's own master: a fork's PR runs here too.
+      - name: Fall back to the last book built for master
+        if: needs.book.result != 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          id="$(gh api "repos/${{ github.repository }}/actions/artifacts?name=book-site&per_page=100" --jq \
+            '[.artifacts[] | select(.expired == false and .workflow_run.head_branch == "master"
+              and .workflow_run.head_repository_id == .workflow_run.repository_id)][0].id // empty')"
+          [ -n "$id" ] || { echo "::error::the book job failed and no earlier book artifact from master exists"; exit 1; }
+          gh api "repos/${{ github.repository }}/actions/artifacts/$id/zip" > book.zip
+          mkdir -p public/book && unzip -q book.zip -d public/book && rm book.zip
+          echo "::warning::the book job failed; publishing the last book built for master (artifact $id, agent-court@$(cat public/book/BOOK_SHA))"
+
+      # Analytics and the link home: Hugo's BookHead output, inserted into every
+      # built page. Only static files are touched here.
+      - name: Put the site's head fragment into the book
+        run: |
+          test -f public/book/index.html
+          python3 -I scripts/inject-book-head.py public/book-head.html public/book
+          find public -name book-head.html -delete
+          grep -q 'posthog.init' public/book/index.html
+
+      # build-id.txt names what this deploy contains. The nightly run compares it to
+      # decide whether there is anything to do, and the purge job waits for GitHub
+      # Pages to serve it before purging Cloudflare.
+      - name: Record the build id
+        id: id
+        run: |
+          build_id="blog=${{ github.sha }} book=$(cat public/book/BOOK_SHA)"
+          rm public/book/BOOK_SHA
+          echo "$build_id" > public/build-id.txt
+          echo "build_id=$build_id" >> "$GITHUB_OUTPUT"
+          echo "$build_id"
+
+      # A nightly run whose blog and book commits are already what Pages serves
+      # has nothing to publish: no deploy, and no purge of the whole zone. Decided
+      # here, after the build, so it also holds when the book job failed and the
+      # fallback produced the book already deployed.
+      - name: Decide whether to deploy
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = schedule ] \
+             && [ "$(scripts/origin-build-id.sh "nightly-${{ github.run_id }}")" = "${{ steps.id.outputs.build_id }}" ]; then
+            echo "deploy=false" >> "$GITHUB_OUTPUT"; echo "Pages already serves this build; nothing to deploy"
+          else
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
@@ -55,7 +225,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.event_name != 'pull_request'
+    if: ${{ !cancelled() && needs.build.result == 'success' && needs.build.outputs.deploy == 'true' && github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -64,3 +234,42 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  # Cloudflare caches gfrm.in for a day (a cache rule overrides the origin), so a
+  # deploy is not visible until the cache is purged; the nightly and dispatched
+  # book refreshes run with nobody there to purge by hand. GitHub Pages' own CDN
+  # can serve the previous build for a few minutes after deploy-pages returns, and
+  # a purge in that window lets Cloudflare re-cache the old pages, so this waits
+  # until the origin serves this run's build-id.txt. The token is CI's own
+  # (gfrminsite-ci-cache-purge: Cache Purge on the gfrm.in zone and nothing else).
+  purge:
+    needs: [build, deploy]
+    if: ${{ !cancelled() && needs.deploy.result == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Wait for GitHub Pages to serve this build
+        env:
+          WANT: ${{ needs.build.outputs.build_id }}
+        run: |
+          for i in $(seq 1 40); do
+            live="$(scripts/origin-build-id.sh "${{ github.run_id }}-${{ github.run_attempt }}-$i")"
+            [ "$live" = "$WANT" ] && { echo "origin serves: $live"; exit 0; }
+            echo "origin still serves: ${live:-nothing}"; sleep 15
+          done
+          echo "::warning::origin did not serve this build within 10 minutes; purging anyway"
+
+      - name: Purge the Cloudflare cache for gfrm.in
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_PURGE_TOKEN }}
+        run: |
+          [ -n "$CF_TOKEN" ] || { echo "::error::repo secret CLOUDFLARE_CACHE_PURGE_TOKEN is not set"; exit 1; }
+          resp="$(curl -sS -X POST \
+            -H "Authorization: Bearer $CF_TOKEN" -H "Content-Type: application/json" \
+            https://api.cloudflare.com/client/v4/zones/a8f9ffe2e792e663242e5e5e7c03d5ff/purge_cache \
+            --data '{"purge_everything":true}')"
+          echo "$resp" | jq -c '{success, errors}'
+          [ "$(echo "$resp" | jq -r .success)" = "true" ]

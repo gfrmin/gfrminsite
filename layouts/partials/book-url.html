@@ -1,0 +1,8 @@
+{{- /* The URL of the book at /book/, from the English menu entry with
+       identifier "book" in hugo.toml, the one place it is written. Fails the
+       build if that entry is missing, rather than leaving a link to nowhere.
+       Call it only on English pages: the Hebrew menu has no book entry, by design. */ -}}
+{{- $url := "" -}}
+{{- range first 1 (where site.Menus.main "Identifier" "book") }}{{ $url = .URL | relURL }}{{ end -}}
+{{- if not $url }}{{ errorf "partials/book-url.html: no menu entry with identifier \"book\" in the %s menu; the book links take their URL from it" site.Language.Lang }}{{ end -}}
+{{- return $url -}}

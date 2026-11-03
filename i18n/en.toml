@@ -145,6 +145,28 @@ other = "{n} results"
 [readingTimeShort]
 other = "{{ . }} min"
 
+# --- Homepage: the book -----------------------------------------------------
+# bookHomeLink: accessible name of the link home that publish.yml adds to the
+# book's menu bar (layouts/index.bookhead.html). The book is English, so only the
+# English value is shown; the Hebrew one keeps the two files key for key.
+[bookHomeLink]
+other = "Guy Freeman — home"
+
+[homeBook]
+other = "The book"
+
+[homeBookTitle]
+other = "A Court for Agents"
+
+[homeBookSubtitle]
+other = "Law, scoring and the self-modifying machine"
+
+[homeBookLede]
+other = "The monograph of jack, a court for a self-modifying agent, written as a construction: each chapter builds the smallest thing that answers what the last one left open, and every number carries the entry of the record it came from. A first draft, open to read while the layers cross."
+
+[homeBookLink]
+other = "Read the draft"
+
 # --- Homepage: the curated entry point ------------------------------------
 [homeStartHere]
 other = "Start here"

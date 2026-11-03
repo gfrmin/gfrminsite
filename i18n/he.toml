@@ -146,6 +146,28 @@ other = "{n} תוצאות"
 [readingTimeShort]
 other = "{{ . }} דק׳"
 
+# --- Homepage: the book -----------------------------------------------------
+# bookHomeLink: accessible name of the link home that publish.yml adds to the
+# book's menu bar (layouts/index.bookhead.html). The book is English, so only the
+# English value is shown; the Hebrew one keeps the two files key for key.
+[bookHomeLink]
+other = "גיא פרימן — דף הבית"
+
+[homeBook]
+other = "הספר"
+
+[homeBookTitle]
+other = "A Court for Agents"
+
+[homeBookSubtitle]
+other = "חוק, ניקוד והמכונה המשנה את עצמה"
+
+[homeBookLede]
+other = "המונוגרפיה של jack, בית דין לסוכן המשנה את עצמו, כתובה כבנייה: כל פרק בונה את הדבר הקטן ביותר שעונה על מה שהפרק הקודם השאיר פתוח, וכל מספר נושא את הרשומה שממנה הגיע. טיוטה ראשונה, באנגלית."
+
+[homeBookLink]
+other = "לקריאת הטיוטה"
+
 # --- Homepage: the curated entry point ------------------------------------
 [homeStartHere]
 other = "מכאן מתחילים"

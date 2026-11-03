@@ -15,8 +15,9 @@ was deleted in Aug 2026 and none of it was ever served. The last Quarto remnant 
 `.sourceCode .kw/.dt/.st/.fu/.co` palette — Pandoc's token classes, which no
 Hugo-built page has ever carried. Removed Aug 2026. If you find a reference to
 `_quarto.yml`, `*.qmd`, `_freeze/`, `.sourceCode`, R, or `uv`/`pyproject.toml`
-anywhere, it is stale — the live site is entirely Hugo (`hugo.toml` plus the
-`layouts/` tree).
+anywhere, it is stale — the live site is Hugo (`hugo.toml` plus the
+`layouts/` tree), with one exception: `/book/` is built by mdBook from another
+repository at deploy time (see **The book** below).
 
 The published domain is the **apex**, `gfrm.in`, and everything now agrees on it:
 `baseURL`, every canonical, `static/CNAME`, and the custom-domain setting GitHub
@@ -70,7 +71,7 @@ Math is rendered to **MathML at build time** via goldmark's passthrough extensio
   meta description, because Hugo falls back to the section name). Hugo pairs them by filename.
   Hebrew currently covers the homepage, the posts index, the five Velotix posts, the
   election-night post (`election-night-station-by-station`), and the taxonomy titles those
-  posts use; `/research/`, `/projects/` and `/contact/` are English-only
+  posts use; `/research/`, `/book/`, `/projects/` and `/contact/` are English-only
   and deliberately absent from the Hebrew menu.
 - `content/projects/`, `content/contact/`, `content/research/` — non-post sections.
 - `content/archive.md` — the year archive, a **regular page** with `layout: archive`, not a
@@ -104,7 +105,7 @@ A post with no `series` simply renders no nav. Seven posts are deliberately stan
 Thirty-seven posts, most of them long. Five surfaces exist to answer *where do I start*
 and *is there a post about X* without asking anyone to scroll ten screens of cards.
 
-**Start here** (homepage, between "What I Do" and Series) is the one hand-curated list on
+**Start here** (homepage, between the book block and Series) is the one hand-curated list on
 the site — the picks and the reason to read each one live in `data/starthere.yaml`, so the
 whole thing is one file to reorder or rewrite. It opens with
 `why-decision-theory-lost`, which is the site's actual front door: ~4,835 of the
@@ -263,7 +264,8 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   characters to 862, so half of it was ragged and the longest sat in a 45-character column.
   The row links only its title — a separate "View on GitHub" CTA was a second link to the same
   URL, and it was wrong for the five entries that are not on GitHub at all.
-- The homepage order is bio, what I do, series, recent posts, **projects last**. Projects used
+- The homepage order is bio, what I do, **the book** (English only), start here, series,
+  recent posts, **projects last**. Projects used
   to run third, which put roughly 2,000px of grid between the bio and any of the writing.
 - `layouts/partials/darkmode-init.html` — sets `data-theme` from a blocking script in
   `<head>`. It has to run before the first paint; when this lived with the toggle wiring at
@@ -463,8 +465,80 @@ stacks — fallback is per-glyph, so digits and Latin words still set in them. F
 reason `baseof.html` preloads `fraunces-latin.woff2` on English pages only: Fraunces draws
 only headings, and on a Hebrew page the headings are Hebrew.
 
+## The book (`/book/`)
+
+*A Court for Agents* is published at `/book/`, but its source is **`gfrmin/agent-court`**
+(`chapters/`, `book.toml`, `theme/`). That repository has its own session: changes to the
+book, or to agent-court's CI, go through it, not through this repo. `publish.yml` has four
+jobs:
+
+- **`book`** has read-only permissions. It resolves an agent-court commit, checks it out,
+  builds it with mdBook, checks every page can take the head fragment
+  (`inject-book-head.py --check`, so a bad book fails here and the build falls back), and
+  uploads it as an artifact: `book-site` (kept 90 days, uploaded on **every** non-PR run,
+  nightly ones included, so the fallback never runs dry), or `book-site-pr` (1 day) on a pull
+  request, so PR runs cannot crowd master's books out of the fallback's lookup. mdBook runs
+  only here because `book.toml` can name preprocessors, which run commands, and this job
+  holds no deploy rights. The commit is:
+  - the `book_sha` input of a `workflow_dispatch`, which must be on agent-court's master;
+  - otherwise, the last commit agent-court's `book` workflow built **green on a push to
+    master**. Runs must come from `gfrmin/agent-court` itself, because a fork's PR from a
+    branch named master also reports `head_branch=master`.
+
+  It is never the moving HEAD, so a broken chapter does not reach this site.
+- **`build`** runs Hugo and downloads the book. **If the `book` job failed for any reason,
+  it falls back to the last `book-site` artifact from a run on this repo's master and
+  warns**, so the blog deploys regardless. `scripts/inject-book-head.py` then inserts
+  Hugo's `BookHead` output (`layouts/index.bookhead.html`: the PostHog partial plus a
+  home link in mdBook's menu bar) before `</head>` in every book page except `toc.html`.
+  It edits static files only, and adds a robots `noindex` to the book's `404.html`. It
+  writes `public/build-id.txt` (`blog=<sha> book=<sha>`). On a nightly run it then compares
+  that with what Pages serves and, if they match, sets `deploy=false`, so the run builds
+  but neither deploys nor purges.
+- **`deploy`** is unchanged.
+- **`purge`** polls GitHub Pages directly, bypassing Cloudflare
+  (`scripts/origin-build-id.sh`: `--resolve gfrm.in:443:185.199.108.153 -k`, because Pages
+  holds no certificate for a proxied domain; cache-busted per run, because Pages' CDN keeps
+  each URL ~10 minutes), until it serves this run's `build-id.txt`. Then it runs `purge_everything`.
+  Purging any earlier lets Cloudflare re-cache the previous build from Pages' own CDN.
+
+**Refreshes:**
+- every deploy here;
+- nightly at 03:17 UTC, which builds but **does not deploy or purge** when the deployed
+  `build-id.txt` already matches;
+- agent-court's dispatch, if that repo holds a `GFRMINSITE_DISPATCH_TOKEN`: a fine-grained
+  PAT on this repo with **Actions: write only**. Not `repository_dispatch`, which needs
+  Contents: write and with it the power to push here.
+
+**mdBook is pinned here**: `.mdbook-version` + `.mdbook-sha256`, installed by
+`scripts/install-mdbook.sh`, which verifies the checksum. Bump the two files together, and
+take the hash from `gh api repos/rust-lang/mdBook/releases/tags/v<ver>` (`.digest`). If
+agent-court pins a different version, the build warns rather than fails. The `book` job
+fails if the built menu bar loses `.right-buttons`, where the home link goes, which mdBook
+0.5 changed. `site-url` lives only in agent-court's `book.toml`.
+
+**The link.** `/book/` is written once, in the English menu entry with
+`identifier = "book"`. `layouts/partials/book-url.html` reads it, or calls `errorf`, for
+both the homepage and the 404. On a `/book/` path the root 404 calls `location.replace` to
+`/book/404.html` (mdBook's own) while still parsing, before the blog's PostHog, which waits
+for `load`, can run. That costs the requested URL in the address bar and serves the 404 with
+status 200 (hence its `noindex`). Swapping the content in place, as the `/he/` branch does,
+is not an option: mdBook's sidebar, search and theme are scripts, which `innerHTML` does not
+run, and `document.write` broke the blog's own scripts.
+
+The book has no math, and MathJax (cdnjs) should stay off in `book.toml`; if math ever
+arrives, render it at build time.
+
 ## Deployment
 
-- Push to `master` → `.github/workflows/publish.yml` runs Hugo and deploys to GitHub Pages.
-- Custom domain `www.gfrm.in`, DNS via Cloudflare (CNAME to `gfrmin.github.io`).
-- **Cloudflare caches aggressively** — a deploy is not visible until the cache is purged. After confirming the GitHub Actions run succeeds, purge the Cloudflare cache for zone `gfrm.in` (zone ID `a8f9ffe2e792e663242e5e5e7c03d5ff`).
+- Push to `master` → `.github/workflows/publish.yml` builds the book and the site and deploys
+  to GitHub Pages; a nightly run and a book dispatch do the same (see above). A red run
+  can still have deployed: when only the `book` job failed, the deploy went out with the
+  previous book.
+- Custom domain `gfrm.in` (the apex; see the top of this file), DNS via Cloudflare.
+- **Cloudflare caches aggressively**, so a deploy is not visible until the cache is purged.
+  The `purge` job does this after every deploy, once Pages serves it (`purge_everything` on zone `gfrm.in`,
+  `a8f9ffe2e792e663242e5e5e7c03d5ff`) using the repo secret `CLOUDFLARE_CACHE_PURGE_TOKEN`.
+  That is CI's own token, `gfrminsite-ci-cache-purge`: Cache Purge on gfrm.in only, with a
+  keyring copy at `CLOUDFLARE_GFRMINSITE_CI_PURGE_TOKEN`. If the job fails, purge by hand
+  and fix the token.

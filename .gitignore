@@ -39,3 +39,7 @@ Thumbs.db
 
 # Drafts
 drafts/
+
+# The book job (publish.yml): mdBook binary and the agent-court checkout
+/mdbook
+.book-src/
