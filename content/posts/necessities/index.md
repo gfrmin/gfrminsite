@@ -49,7 +49,7 @@ In jack this is a file format (SPEC §§5–8):
 
 *Misapplied if* a score ever uses a probability fixed after its event. The record already names the two ways: a forecast timestamped at or after the event's cutoff is listed as `rigged` and not used — there are three on the log, seqs 288–290 — and a later forecast of the same event by the same principal is listed as a `revision`; the first stands.
 
-**Proper scores (Good 1952; Gneiting and Raftery 2007)** (theorems). Only a strictly proper score makes reporting your belief the unique best move; the logarithmic score is one, and under it the Bayes mixture over \(K\) forecasters is itself conditioning: it loses at most \(\ln K\) more than the best of them, at no learning rate and with no tuning constant. Other mixable losses get a bound of that form only by a different algorithm and constant.
+**Proper scores (Good 1952; Gneiting and Raftery 2007)** (theorems). Only a strictly proper score makes reporting your belief the unique best move; the logarithmic score is one, and under it the Bayes mixture over \(K\) forecasters is itself conditioning: it loses at most \(\ln K\) more than the best of them, at no learning rate and with no tuning constant. Other mixable losses get a bound of that form too, but only through a substitution step, so that their aggregate is not itself conditioning.
 
 jack scores log-loss, per mille, against a base-rate forecaster that is Laplace's rule over the resolved prefix of the forecast's type, and its aggregate is the Bayes mixture with the uniform prior and no learning rate: "η = 1 is the telescoping identity, the uniform prior the minimax choice for the ln K bound" (BRIEF-C2a).
 
