@@ -6,12 +6,16 @@ on:
   # Build every pull request too, so master can require a green build before a
   # merge; only a push to master deploys.
   pull_request:
-  workflow_dispatch:
   # The book at /book/ is built from gfrmin/agent-court at deploy time (see the
-  # "Build the book" step), so it refreshes when that repository asks and once a
-  # night regardless.
-  repository_dispatch:
-    types: [book-updated]
+  # book steps below). agent-court's `book` workflow asks for a republish through
+  # workflow_dispatch with the commit it just built as book_sha (optional: it needs
+  # a token with Actions: write here). The nightly run catches everything else.
+  workflow_dispatch:
+    inputs:
+      book_sha:
+        description: "agent-court commit to build /book/ from (default: the last commit its book workflow built green on master)"
+        required: false
+        default: ""
   schedule:
     - cron: '17 3 * * *'
 
@@ -56,22 +60,52 @@ jobs:
         run: hugo --minify
 
       # The book — "A Court for Agents", gfrmin/agent-court — lives at /book/.
-      # Its source stays in that repository; this step checks it out and builds
-      # its chapters/ with mdBook into public/book/, so there is one source of
-      # truth and nothing copied by hand. Hugo owns nothing under /book/.
+      # Its source stays in that repository; these steps build its chapters/ with
+      # mdBook into public/book/, so there is one source of truth and nothing
+      # copied by hand. Hugo owns nothing under /book/ except the <head> fragment
+      # (layouts/index.bookhead.html: analytics and a link home).
+      #
+      # Which commit: the one a dispatch names, otherwise the last one agent-court's
+      # own `book` workflow built green on master. Never agent-court's moving HEAD,
+      # so a broken chapter there cannot block a deploy of the blog.
+      - name: Resolve the book commit
+        id: bookref
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUESTED: ${{ inputs.book_sha }}
+        run: |
+          if [ -n "$REQUESTED" ]; then
+            sha="$REQUESTED"
+            echo "book: building the requested agent-court commit"
+          else
+            sha="$(gh api 'repos/gfrmin/agent-court/actions/workflows/book.yml/runs?branch=master&status=success&per_page=1' \
+              --jq '.workflow_runs[0].head_sha // empty')"
+            echo "book: building agent-court's last green master commit"
+          fi
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::no valid agent-court commit to build (got '$sha')"; exit 1; }
+          echo "book: gfrmin/agent-court@$sha"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
       - name: Check out the book
         uses: actions/checkout@v6
         with:
           repository: gfrmin/agent-court
+          ref: ${{ steps.bookref.outputs.sha }}
           path: .book-src
 
+      # mdBook's version and sha256 are pinned in agent-court (.mdbook-version,
+      # .mdbook-sha256) and installed by its scripts/install-mdbook.sh, which
+      # verifies the checksum. agent-court's own CI runs the same script, so the
+      # build it passed is the build published here. site-url comes from book.toml.
       - name: Build the book into /book/
         run: |
-          curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.52/mdbook-v0.4.52-x86_64-unknown-linux-gnu.tar.gz | tar xz
-          ./mdbook --version
-          MDBOOK_OUTPUT__HTML__SITE_URL=/book/ ./mdbook build .book-src
+          .book-src/scripts/install-mdbook.sh
+          cp public/book-head.html .book-src/theme/head.hbs
+          ./mdbook build .book-src
+          find public -name book-head.html -delete
           rm -rf public/book && cp -r .book-src/book-site public/book
           test -f public/book/index.html
+          grep -q 'posthog.init' public/book/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
@@ -89,3 +123,22 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  # Cloudflare caches gfrm.in aggressively, so a deploy is not visible until the
+  # cache is purged; the nightly and dispatched book refreshes run with nobody
+  # there to purge by hand. The token is CI's own (gfrminsite-ci-cache-purge:
+  # Cache Purge on the gfrm.in zone and nothing else).
+  purge:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge the Cloudflare cache for gfrm.in
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_PURGE_TOKEN }}
+        run: |
+          resp="$(curl -sS -X POST \
+            -H "Authorization: Bearer $CF_TOKEN" -H "Content-Type: application/json" \
+            https://api.cloudflare.com/client/v4/zones/a8f9ffe2e792e663242e5e5e7c03d5ff/purge_cache \
+            --data '{"purge_everything":true}')"
+          echo "$resp" | jq -c '{success, errors}'
+          [ "$(echo "$resp" | jq -r .success)" = "true" ]

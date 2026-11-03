@@ -69,7 +69,11 @@ defaultContentLanguage = "en"
   # /book/ is not Hugo content: publish.yml builds it from gfrmin/agent-court
   # (mdBook) into public/book/. English only, so it is absent from the Hebrew
   # menu, as the archive and the tab row are.
+  # identifier = "book" is load-bearing: layouts/index.html takes the homepage
+  # book links from this entry and fails the build if it is missing, so this is
+  # the one place /book/ is written.
   [[languages.en.menu.main]]
+    identifier = "book"
     name = "Book"
     url = "/book/"
     weight = 5
@@ -125,7 +129,10 @@ defaultContentLanguage = "en"
 [outputs]
   # SearchIndex is the client-side search corpus (layouts/index.searchindex.json),
   # emitted once per language at /search-index.json and /he/search-index.json.
-  home = ["HTML", "RSS", "SearchIndex"]
+  # BookHead is the <head> fragment injected into the mdBook build of /book/
+  # (layouts/index.bookhead.html); publish.yml copies it to the book's
+  # theme/head.hbs and deletes it from public/. See "The book" in CLAUDE.md.
+  home = ["HTML", "RSS", "SearchIndex", "BookHead"]
   section = ["HTML", "RSS"]
 
 [outputFormats]
@@ -139,6 +146,12 @@ defaultContentLanguage = "en"
     isPlainText = true
     # Without this, baseof.html's `range .AlternativeOutputFormats` would advertise
     # the corpus to feed readers as a <link rel="alternate"> beside the RSS one.
+    notAlternative = true
+
+  [outputFormats.BookHead]
+    mediaType = "text/html"
+    baseName = "book-head"
+    isPlainText = true
     notAlternative = true
 
 [minify]
