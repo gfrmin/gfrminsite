@@ -473,7 +473,11 @@ book, or to agent-court's CI, go through it, not through this repo. `publish.yml
 jobs:
 
 - **`book`** has read-only permissions. It resolves an agent-court commit, checks it out,
-  builds it with mdBook and uploads `book-site` as an artifact (kept 90 days). mdBook runs
+  builds it with mdBook, checks every page can take the head fragment
+  (`inject-book-head.py --check`, so a bad book fails here and the build falls back), and
+  uploads it as an artifact: `book-site` (kept 90 days, uploaded on **every** non-PR run,
+  nightly ones included, so the fallback never runs dry), or `book-site-pr` (1 day) on a pull
+  request, so PR runs cannot crowd master's books out of the fallback's lookup. mdBook runs
   only here because `book.toml` can name preprocessors, which run commands, and this job
   holds no deploy rights. The commit is:
   - the `book_sha` input of a `workflow_dispatch`, which must be on agent-court's master;
@@ -487,18 +491,21 @@ jobs:
   warns**, so the blog deploys regardless. `scripts/inject-book-head.py` then inserts
   Hugo's `BookHead` output (`layouts/index.bookhead.html`: the PostHog partial plus a
   home link in mdBook's menu bar) before `</head>` in every book page except `toc.html`.
-  It edits static files only. Finally it writes `public/build-id.txt` (`blog=<sha>
-  book=<sha>`).
+  It edits static files only, and adds a robots `noindex` to the book's `404.html`. It
+  writes `public/build-id.txt` (`blog=<sha> book=<sha>`). On a nightly run it then compares
+  that with what Pages serves and, if they match, sets `deploy=false`, so the run builds
+  but neither deploys nor purges.
 - **`deploy`** is unchanged.
-- **`purge`** polls GitHub Pages directly, bypassing Cloudflare (`--resolve
-  gfrm.in:443:185.199.108.153 -k`, because Pages holds no certificate for a proxied
-  domain), until it serves this run's `build-id.txt`. Then it runs `purge_everything`.
+- **`purge`** polls GitHub Pages directly, bypassing Cloudflare
+  (`scripts/origin-build-id.sh`: `--resolve gfrm.in:443:185.199.108.153 -k`, because Pages
+  holds no certificate for a proxied domain; cache-busted per run, because Pages' CDN keeps
+  each URL ~10 minutes), until it serves this run's `build-id.txt`. Then it runs `purge_everything`.
   Purging any earlier lets Cloudflare re-cache the previous build from Pages' own CDN.
 
 **Refreshes:**
 - every deploy here;
-- nightly at 03:17 UTC, which **skips everything** when the deployed `build-id.txt`
-  already matches;
+- nightly at 03:17 UTC, which builds but **does not deploy or purge** when the deployed
+  `build-id.txt` already matches;
 - agent-court's dispatch, if that repo holds a `GFRMINSITE_DISPATCH_TOKEN`: a fine-grained
   PAT on this repo with **Actions: write only**. Not `repository_dispatch`, which needs
   Contents: write and with it the power to push here.
@@ -514,7 +521,10 @@ fails if the built menu bar loses `.right-buttons`, where the home link goes, wh
 `identifier = "book"`. `layouts/partials/book-url.html` reads it, or calls `errorf`, for
 both the homepage and the 404. On a `/book/` path the root 404 calls `location.replace` to
 `/book/404.html` (mdBook's own) while still parsing, before the blog's PostHog, which waits
-for `load`, can run.
+for `load`, can run. That costs the requested URL in the address bar and serves the 404 with
+status 200 (hence its `noindex`). Swapping the content in place, as the `/he/` branch does,
+is not an option: mdBook's sidebar, search and theme are scripts, which `innerHTML` does not
+run, and `document.write` broke the blog's own scripts.
 
 The book has no math, and MathJax (cdnjs) should stay off in `book.toml`; if math ever
 arrives, render it at build time.

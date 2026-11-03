@@ -147,6 +147,12 @@ other = "{n} תוצאות"
 other = "{{ . }} דק׳"
 
 # --- Homepage: the book -----------------------------------------------------
+# bookHomeLink: accessible name of the link home that publish.yml adds to the
+# book's menu bar (layouts/index.bookhead.html). The book is English, so only the
+# English value is shown; the Hebrew one keeps the two files key for key.
+[bookHomeLink]
+other = "גיא פרימן — דף הבית"
+
 [homeBook]
 other = "הספר"
 

@@ -42,7 +42,6 @@ jobs:
       contents: read
     outputs:
       sha: ${{ steps.ref.outputs.sha }}
-      skip: ${{ steps.unchanged.outputs.skip }}
     steps:
       - uses: actions/checkout@v6
 
@@ -76,22 +75,7 @@ jobs:
           echo "book: gfrmin/agent-court@$sha"
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
 
-      # A nightly run with nothing new to publish stops here: no rebuild, no deploy
-      # and no purge of the whole zone. The deployed build-id.txt is read from
-      # GitHub Pages directly (-k: Pages holds no certificate for a proxied
-      # domain), because Cloudflare's copy may be the stale thing being asked about.
-      - name: Skip a nightly run with nothing new
-        id: unchanged
-        if: github.event_name == 'schedule'
-        run: |
-          want="blog=${{ github.sha }} book=${{ steps.ref.outputs.sha }}"
-          live="$(curl -fsSk --max-time 20 -H 'Cache-Control: no-cache' \
-            --resolve gfrm.in:443:185.199.108.153 "https://gfrm.in/build-id.txt?nightly-${{ github.run_id }}" || true)"
-          echo "deployed: ${live:-unknown}"; echo "this run: $want"
-          if [ "$live" = "$want" ]; then echo "skip=true" >> "$GITHUB_OUTPUT"; echo "nothing new; skipping"; fi
-
       - name: Check out the book
-        if: steps.unchanged.outputs.skip != 'true'
         uses: actions/checkout@v6
         with:
           repository: gfrmin/agent-court
@@ -103,7 +87,6 @@ jobs:
       # checks the checksum. agent-court's CI pins its own; a difference is
       # reported, not fatal, because the book should not stop the blog deploying.
       - name: Install mdBook
-        if: steps.unchanged.outputs.skip != 'true'
         run: |
           scripts/install-mdbook.sh
           ours="$(tr -d '[:space:]' < .mdbook-version)"
@@ -114,27 +97,32 @@ jobs:
 
       # site-url (/book/) comes from agent-court's book.toml alone.
       - name: Build the book
-        if: steps.unchanged.outputs.skip != 'true'
         run: |
           ./mdbook build .book-src
           test -f .book-src/book-site/index.html
           grep -q 'class="right-buttons"' .book-src/book-site/index.html \
             || { echo "::error::mdBook's menu bar has no .right-buttons; layouts/index.bookhead.html puts the link home there"; exit 1; }
+          # The same test the build job's insert makes, so a book that cannot take
+          # the head fragment fails here and the build falls back, not the deploy.
+          python3 -I scripts/inject-book-head.py --check .book-src/book-site
           echo "${{ steps.ref.outputs.sha }}" > .book-src/book-site/BOOK_SHA
 
+      # Uploaded on every run, nightly ones included, so the fallback always has
+      # a recent book. A pull request's book goes under another name and is kept a
+      # day: it is only for that run, and PR traffic must not crowd master's books
+      # out of the fallback's lookup.
       - name: Upload the book
-        if: steps.unchanged.outputs.skip != 'true'
         uses: actions/upload-artifact@v7
         with:
-          name: book-site
+          name: ${{ github.event_name == 'pull_request' && 'book-site-pr' || 'book-site' }}
           path: .book-src/book-site
-          retention-days: 90
+          retention-days: ${{ github.event_name == 'pull_request' && 1 || 90 }}
 
   build:
     needs: book
     # Runs even when the book job fails: the blog must still deploy, so the last
-    # book built for master is used instead (see "Fetch the book").
-    if: ${{ !cancelled() && needs.book.outputs.skip != 'true' }}
+    # book built for master is used instead (see the fallback step).
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -143,6 +131,7 @@ jobs:
       id-token: write
     outputs:
       build_id: ${{ steps.id.outputs.build_id }}
+      deploy: ${{ steps.changed.outputs.deploy }}
     steps:
       - uses: actions/checkout@v6
 
@@ -173,7 +162,7 @@ jobs:
         if: needs.book.result == 'success'
         uses: actions/download-artifact@v8
         with:
-          name: book-site
+          name: ${{ github.event_name == 'pull_request' && 'book-site-pr' || 'book-site' }}
           path: public/book
 
       # If the book job failed (GitHub API, the mdBook download, a bad commit in
@@ -215,6 +204,20 @@ jobs:
           echo "build_id=$build_id" >> "$GITHUB_OUTPUT"
           echo "$build_id"
 
+      # A nightly run whose blog and book commits are already what Pages serves
+      # has nothing to publish: no deploy, and no purge of the whole zone. Decided
+      # here, after the build, so it also holds when the book job failed and the
+      # fallback produced the book already deployed.
+      - name: Decide whether to deploy
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = schedule ] \
+             && [ "$(scripts/origin-build-id.sh "nightly-${{ github.run_id }}")" = "${{ steps.id.outputs.build_id }}" ]; then
+            echo "deploy=false" >> "$GITHUB_OUTPUT"; echo "Pages already serves this build; nothing to deploy"
+          else
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
@@ -222,7 +225,7 @@ jobs:
 
   deploy:
     needs: build
-    if: ${{ !cancelled() && needs.build.result == 'success' && github.event_name != 'pull_request' }}
+    if: ${{ !cancelled() && needs.build.result == 'success' && needs.build.outputs.deploy == 'true' && github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -243,15 +246,17 @@ jobs:
     needs: [build, deploy]
     if: ${{ !cancelled() && needs.deploy.result == 'success' }}
     runs-on: ubuntu-latest
-    permissions: {}
+    permissions:
+      contents: read
     steps:
+      - uses: actions/checkout@v6
+
       - name: Wait for GitHub Pages to serve this build
         env:
           WANT: ${{ needs.build.outputs.build_id }}
         run: |
           for i in $(seq 1 40); do
-            live="$(curl -fsSk --max-time 20 -H 'Cache-Control: no-cache' \
-              --resolve gfrm.in:443:185.199.108.153 "https://gfrm.in/build-id.txt?$i" || true)"
+            live="$(scripts/origin-build-id.sh "${{ github.run_id }}-${{ github.run_attempt }}-$i")"
             [ "$live" = "$WANT" ] && { echo "origin serves: $live"; exit 0; }
             echo "origin still serves: ${live:-nothing}"; sleep 15
           done
