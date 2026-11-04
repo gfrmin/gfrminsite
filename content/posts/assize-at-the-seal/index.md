@@ -3,6 +3,7 @@ title: "The Court That Tried Itself"
 subtitle: "Twenty-three days, 364 issues and pull requests, 906 commits, one sealed judge and one verdict. I built a constitution for coding agents, gave it machine accounts and a ledger, and let it run. It worked. The bill was me."
 description: "assize was a court for coding agents: a constitution in a CLAUDE.md, checks that must catch a planted bug, a forecast ledger, builders and reviewers that never share a context, and a judge sealed as a container image. It reached its seal and a measured verdict. It also cost 121 of my repairs in four days, and twenty merges on its own procedure for every four on the thing it was building."
 author: "Guy Freeman"
+drafted_with: claude
 date: 2026-10-28
 draft: false
 series: [coding-agents]

@@ -3,6 +3,7 @@ title: "Fifteen Things a Self-Modifying Agent Cannot Do Without"
 subtitle: "The core underneath an agent that rewrites itself is not a free design. Fifteen old results each force something into it — and each thing forced is a line of code, a clause of a charter, or an entry on a log you can check."
 description: "Rice, Löb, Dawid, proper scores, Goodhart, Ville, Bahadur–Savage, Alpern–Schneider, Conant–Ashby, Hart, Fuller, Anderson, Thompson, Arrow–Fisher, Gall: what each forbids or forces for an agent allowed to change itself, the mechanism in jack's core that discharges it, and what would show it misapplied. An essay from A Court for Agents."
 author: "Guy Freeman"
+drafted_with: claude
 date: 2026-11-03
 draft: false
 categories: [essays, ai, bayesian, decision-theory]

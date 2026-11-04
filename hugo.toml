@@ -4,7 +4,7 @@ locale = "en"
 defaultContentLanguage = "en"
 
 [params]
-  description = "Guy Freeman — Bayesian statistician and ML researcher working on principled agent architecture. PhD in Statistics (Warwick). 1,750+ citations. Production AI at scale."
+  description = "Guy Freeman — statistician working on the evaluation and oversight of AI systems: how to score an agent no human watches, and how to govern one allowed to rewrite itself. Author of A Court for Agents. PhD Statistics (Warwick), 1,750+ citations. Hong Kong."
   author = "Guy Freeman"
   ogImage = "images/og-default.png"
   twitterHandle = "gfrm_in"
@@ -29,7 +29,7 @@ defaultContentLanguage = "en"
     # Hebrew pages fell back to the English bio for their meta description, and
     # the Hebrew RSS channel described itself in English.
     [languages.he.params]
-      description = "גיא פרימן — סטטיסטיקאי בייסיאני וחוקר למידת מכונה, עוסק בארכיטקטורה עקרונית של סוכני בינה מלאכותית. דוקטורט בסטטיסטיקה (וורוויק). מעל 1,750 ציטוטים."
+      description = "גיא פרימן — סטטיסטיקאי העוסק בהערכה ובפיקוח על מערכות בינה מלאכותית: איך מדרגים סוכן שאיש אינו משגיח עליו, ואיך מושלים בסוכן שמותר לו לשכתב את עצמו. מחבר A Court for Agents. דוקטורט בסטטיסטיקה (וורוויק), מעל 1,750 ציטוטים. הונג קונג."
 
 # The Hugo version is pinned so local builds and CI produce identical output.
 # Single source of truth is `.hugo-version`, which the publish workflow reads and

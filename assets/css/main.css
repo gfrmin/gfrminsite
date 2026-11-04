@@ -2170,6 +2170,18 @@ blockquote a,
   margin-inline-start: 0.4em;
 }
 .home-book-title + .section-lede { margin-top: 0; }
+.home-book-status {
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  color: var(--text-secondary);
+  max-width: 68ch;
+}
+.drafted-with {
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  margin: 0.25rem 0 0;
+}
 
 /* --- Start here (homepage) --------------------------------------------- */
 /* An <ol>, numbered by counter rather than by ::marker: the number sits in its

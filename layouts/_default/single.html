@@ -9,6 +9,11 @@
         <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
         <span class="reading-time">{{ i18n "readingTime" .ReadingTime }}</span>
       </div>
+      {{/* How the post was written (#52). `drafted_with: claude` in the frontmatter
+           prints one line from i18n under the byline, so no post carries a
+           hand-written note and the wording lives in one place. The book's own
+           front matter says the same of its chapters. */}}
+      {{ if eq .Params.drafted_with "claude" }}<p class="drafted-with">{{ i18n "draftedWithClaude" }}</p>{{ end }}
       {{ partial "category-tags.html" . }}
     </header>
 

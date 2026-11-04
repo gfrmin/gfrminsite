@@ -1,0 +1,45 @@
+{{/* JSON-LD for the person, emitted once, on the homepage. Recruiters' tools and
+     search engines read `jobTitle`, `knowsAbout`, `alumniOf` and `address` from
+     this before they read the prose; before Nov 2026 the site had schema for
+     posts only and nothing said who the author was. English only: the Hebrew
+     homepage links across to this one, and one Person record is enough. The
+     social URLs come from hugo.toml so the two never drift. */}}
+{{ $social := .Site.Params.social }}
+{{ $person := dict
+  "@context" "https://schema.org"
+  "@type" "Person"
+  "@id" (printf "%s#person" .Site.BaseURL)
+  "name" "Guy Freeman"
+  "alternateName" "傅明谷"
+  "url" .Site.BaseURL
+  "image" ("images/profile.jpg" | absURL)
+  "jobTitle" "AI evaluation scientist"
+  "description" "Statistician working on the evaluation and oversight of AI systems: how to score an agent no human watches, and how to govern one allowed to rewrite itself. Author of A Court for Agents."
+  "honorificSuffix" "PhD"
+  "nationality" (slice (dict "@type" "Country" "name" "United Kingdom") (dict "@type" "Country" "name" "Israel"))
+  "address" (dict "@type" "PostalAddress" "addressRegion" "Hong Kong" "addressCountry" "HK")
+  "alumniOf" (slice
+    (dict "@type" "CollegeOrUniversity" "name" "University of Warwick")
+    (dict "@type" "CollegeOrUniversity" "name" "University of Oxford")
+    (dict "@type" "CollegeOrUniversity" "name" "The University of Hong Kong"))
+  "knowsAbout" (slice
+    "Evaluation of AI systems"
+    "AI control and scalable oversight"
+    "Bayesian decision theory"
+    "Proper scoring rules"
+    "Anytime-valid sequential testing"
+    "Causal inference"
+    "Chain event graphs"
+    "Financial crime analytics"
+    "Hong Kong public data")
+  "sameAs" (slice $social.github $social.linkedin $social.scholar $social.twitter $social.mastodon)
+  "subjectOf" (dict
+    "@type" "Book"
+    "name" "A Court for Agents"
+    "alternateName" "Law, scoring and the self-modifying machine"
+    "author" (dict "@type" "Person" "name" "Guy Freeman")
+    "url" ("book/" | absURL)
+    "inLanguage" "en"
+    "creativeWorkStatus" "Draft")
+}}
+<script type="application/ld+json">{{ $person | jsonify | safeJS }}</script>

@@ -1,0 +1,17 @@
+# Where the book stands (#53). Rendered under the homepage book block by
+# layouts/index.html. The status changes at every window exit and the lede does
+# not, which is why this is data and not an i18n string.
+#
+# The book prints the same status in its own draft banner (agent-court
+# theme/draft.css), which that repository's author session updates. The two are
+# kept in step by hand: agent-court owns the banner, this file owns the homepage
+# line, and the author session files an issue here when a window exit moves it.
+# Dates are ISO; the template formats them. `next` is one sentence, no trailing
+# full stop. `errata_url` is where corrections go; findings about jack itself go
+# to jack's own tracker, which the book's front matter links.
+
+status: "First draft, November 2026"
+next: "chapters 6, 7 and 13 are completed from the C2a and C2b window exits; C2a ends on 15 November at the latest"
+edition: "The first edition is cut at C3's exit, when the agent arrives; it scores chapter 15's bets"
+errata_url: "https://github.com/gfrmin/agent-court/issues"
+revisions_url: "https://github.com/gfrmin/agent-court/releases.atom"

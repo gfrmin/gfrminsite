@@ -1,11 +1,11 @@
 ---
 title: "Contact"
-description: "Open to contract, consulting, part-time, and full-time opportunities — whether you're building something new or have a stuck project that needs rescuing."
+description: "Open to research and senior scientist roles in AI evaluation, oversight and assurance, and to contract and consulting work — whether you're building something new or have a stuck AI project that needs an honest measurement."
 ---
 
 <div class="availability-box">
-<p><strong>Open to contract, consulting, part-time, and full-time opportunities.</strong></p>
-<p>Whether you're building something new or have a stuck project that needs rescuing, I'd love to hear from you.</p>
+<p><strong>Open to research and senior scientist roles in AI evaluation, oversight and assurance, and to contract and consulting work.</strong> Hong Kong, Singapore, London, Tel Aviv or remote.</p>
+<p>Whether you're building something new or have a stuck AI project that needs an honest measurement, I'd love to hear from you. The <a href="/cv/">CV</a> is on the site; the two-page PDF is <a href="/guy-freeman-cv.pdf">here</a>.</p>
 </div>
 
 ## Get in touch

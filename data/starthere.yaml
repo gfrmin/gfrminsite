@@ -1,19 +1,21 @@
 # The curated entry point, rendered by layouts/partials/start-here.html into the
-# homepage between "What I Do" and Series.
+# homepage between the book block and Series.
 #
 # This is the one hand-curated list on the site: everything else — series nav,
 # related posts, the archive, the category counts — is generated. The point is a
-# path through 37 posts for a reader who has never been here, so it is ordered by
+# path through ~48 posts for a reader who has never been here, so it is ordered by
 # what to read first, NOT by date. Five is the ceiling; a "start here" list of ten
 # is just the posts index again.
 #
 # Order is deliberate: it opens with the piece that actually is the site's front
 # door — "Why We Stopped Using the Mathematics That Works" brought ~4,835 readers
-# from Hacker News, an order of magnitude more than anything else — and works
-# inward from there to the current research, ending on the investigation, which
-# is the one thing here that is not about agents at all. Do not reorder this by
-# date or by pageviews; the four research posts have almost no traffic because
-# they are new and unlinked, not because nobody wants them.
+# from Hacker News, an order of magnitude more than anything else — and then walks
+# a reader who evaluates or governs AI systems for a living from the argument
+# (the founding essay) to the method (signed tests) to the integrity (the
+# retraction) to the measured cost (the predecessor court). Reordered 4 November
+# 2026 when the site was reframed around jack and the book; the Accuracy Paradox
+# pick came out because its headline number was retired by the retrospective that
+# replaced it here. Do not reorder this by date or by pageviews.
 #
 # `path` is a Hugo page path and is resolved with site.GetPage — a typo fails the
 # build rather than rendering a dead row. `why` is the reason to read it, in the
@@ -28,20 +30,27 @@
     weighing it against something better, but because ImageNet made a different
     bet pay off and nobody looked back.
 
-- path: /posts/accuracy-paradox
+- path: /posts/the-science-was-done
   why: >-
-    What that mathematics buys once you put it in an agent: it answered fewer
-    questions correctly than a ReAct baseline and beat it by 120 points. Knowing
-    more answers is not the same as knowing which answers are worth finding.
-
-- path: /posts/the-alphabet-is-the-prior
-  why: >-
-    Where the research is now. If hypotheses are programs, every terminal you
-    admit into the language costs a bit against every hypothesis that uses it —
-    so the alphabet is the prior, and design becomes deletion.
+    The argument. An agent allowed to change itself needs a core it cannot
+    reach, an edge it may rewrite, and a score that is rigid everywhere — and
+    nearly every piece of that was proved decades ago. The founding note for
+    jack and the book.
 
 - path: /posts/signed-before-the-code-existed
   why: >-
-    The same discipline pointed at coding agents. The acceptance tests were
-    written, hashed and signed before a line of the implementation existed, then
-    handed to an agent that could not change them.
+    The method. The acceptance tests were written, hashed and signed before a
+    line of the implementation existed, then handed to a coding agent that could
+    not change them. Pre-registration, made binding.
+
+- path: /posts/credence-paper
+  why: >-
+    The integrity. A one-line ablation beat the agent I had announced a paper
+    about, so the paper never went out and the record of why is here instead.
+    What survived is narrower and better than the claim.
+
+- path: /posts/assize-at-the-seal
+  why: >-
+    The cost. The predecessor court reached its seal and a measured verdict,
+    and it also cost 121 of my repairs in four days. The book begins where
+    this essay ends.
