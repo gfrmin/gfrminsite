@@ -3,6 +3,7 @@ title: "The Science Was Done. The Engineering Wasn't."
 subtitle: "What has to sit underneath an agent that is allowed to change itself, and why nearly every piece of it was finished decades ago — waiting for something cheap enough to govern."
 description: "A self-modifying agent needs a fixed core it cannot reach, a free edge it can rewrite, and a score that is rigid everywhere. The founding note for jack: the theorems that bound the design, the old mechanisms they force — Hart, Dawid, Ville, Hedge, the reference monitor — what is actually new, and what the programme claims in terms that can be shown wrong."
 author: "Guy Freeman"
+drafted_with: claude
 date: 2026-11-01
 draft: false
 categories: [essays, ai, bayesian, decision-theory]

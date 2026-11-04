@@ -35,6 +35,12 @@
   <h2>{{ i18n "homeBook" }}</h2>
   <p class="home-book-title"><a href="{{ $book }}">{{ i18n "homeBookTitle" }}</a> <span class="home-book-subtitle">{{ i18n "homeBookSubtitle" }}</span></p>
   <p class="section-lede">{{ i18n "homeBookLede" }}</p>
+  {{/* Where the draft stands (#53): data/book.yaml, which changes at every window
+       exit. Missing keys fail the build rather than printing an empty status. */}}
+  {{ with hugo.Data.book }}
+  {{ range slice "status" "next" "edition" "errata_url" "revisions_url" }}{{ if not (index hugo.Data.book .) }}{{ errorf "data/book.yaml: missing %q" . }}{{ end }}{{ end }}
+  <p class="home-book-status"><strong>{{ .status }}.</strong> {{ i18n "homeBookNext" }} {{ .next }}. {{ .edition }}. <a href="{{ .errata_url }}">{{ i18n "homeBookErrata" }}</a> · <a href="{{ .revisions_url }}">{{ i18n "homeBookRevisions" }}</a></p>
+  {{ end }}
   <a href="{{ $book }}" class="cta-pill">{{ i18n "homeBookLink" }} {{ $fwd | safeHTML }}</a>
   {{ end }}
 
@@ -71,6 +77,7 @@
   {{/* data/projects.yaml is English-only, so the grid is skipped rather than
        served as a block of English inside the Hebrew page. */}}
   {{ if eq .Language.Lang "en" }}
+  {{ partial "person-schema.html" . }}
   <h2>{{ i18n "homeProjects" }}</h2>
   {{ range where hugo.Data.projects "hero" true }}
   {{ partial "project-row.html" (dict "project" . "clip" 420 "level" 3) }}

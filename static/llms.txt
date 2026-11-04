@@ -1,49 +1,82 @@
 # Guy Freeman
 
-> The personal site of Guy Freeman, a Bayesian statistician working on principled AI agent architecture: essays on decision theory, value of information and agents that know what they don't know, his research languages proplang and Credence, and the projects he has built.
+> The personal site of Guy Freeman, a statistician working on the evaluation and oversight of AI systems: how to score an agent no human watches, and how to govern one that is allowed to rewrite itself. Author of A Court for Agents, the monograph of jack, a court for a self-modifying agent. PhD in Statistics (Warwick), 1,750+ citations. Based in Hong Kong; UK and Israeli citizen; open to research and senior scientist roles in AI evaluation, oversight and assurance, and to consulting.
 
-Most of the writing is about building agents whose behaviour follows from Bayesian decision theory rather than from prompt engineering, and about the discipline of building them with coding agents. Some posts are also available in Hebrew.
+Most of the writing is about how to know whether an AI system works — pre-registered evaluation, proper scoring rules, anytime-valid tests, checks that must prove they can fail — and about the institutions that let a system change itself safely. Earlier series derive agent behaviour from Bayesian decision theory. Some posts are also available in Hebrew.
 
 ## Main pages
 
-- [Home](https://gfrm.in/): who Guy Freeman is, what he works on, a curated start-here list, recent posts and featured projects
+- [Home](https://gfrm.in/): who Guy Freeman is, what he works on, a curated start-here list, the book, recent posts and featured projects
+- [The book: A Court for Agents](https://gfrm.in/book/): the monograph of jack, in first draft; every number recomputable from the court's public record
+- [Research](https://gfrm.in/research/): jack and the book, the predecessor court assize, the agent languages proplang and wald, the Credence retrospective, and published work
+- [CV](https://gfrm.in/cv/): the two-page CV, as a page
 - [Posts](https://gfrm.in/posts/): every essay, newest first
 - [Series](https://gfrm.in/series/): posts grouped into reading sequences
-- [Research](https://gfrm.in/research/): proplang, its predecessor Credence, and published work on chain event graphs and Bayesian event trees
 - [Projects](https://gfrm.in/projects/): research tools, open-source projects and civic tech
 - [Contact](https://gfrm.in/contact/): how to get in touch about research, roles or consulting
 - [RSS feed](https://gfrm.in/index.xml): the full post feed
 
+## The book
+
+A Court for Agents: law, scoring and the self-modifying machine. Guy Freeman, with two Claude sessions whose acts and forecasts are scored in the text like anyone's. First draft, November 2026; the first edition cuts when the agent arrives at layer C3. Source: https://github.com/gfrmin/agent-court. Chapters:
+
+- [Front matter](https://gfrm.in/book/front.html): jack in plain words, how to read the book by audience, conventions and the glossary
+- [0. What is wanted](https://gfrm.in/book/ch-00-what-is-wanted.html): the question in four parts, and the thesis in three words — loop, lock, score
+- [1. The loop](https://gfrm.in/book/ch-01-the-loop.html): adaptation requires a closed loop with a model inside it
+- [2. Every suggestion is a bet](https://gfrm.in/book/ch-02-every-suggestion-a-bet.html): merit cannot be inspected, so a helper's suggestion is a forecast under a proper score
+- [3. The record](https://gfrm.in/book/ch-03-the-record.html): a score needs a record nobody can rewrite and outcomes nobody controls
+- [4. The smallest law](https://gfrm.in/book/ch-04-the-smallest-law.html): who may write to the record, what counts, and who decides, in 450 lines
+- [5. The clerk](https://gfrm.in/book/ch-05-the-clerk.html): obligations derived from state and the clock
+- [6. Testing by betting](https://gfrm.in/book/ch-06-testing-by-betting.html): when has it worked, for an operator who looks whenever he likes
+- [7. The election](https://gfrm.in/book/ch-07-the-election.html): which helper, chosen by its record
+- [8. Language into law](https://gfrm.in/book/ch-08-language-into-law.html): from a wish to a refusal
+- [9. The law changes under itself](https://gfrm.in/book/ch-09-the-law-changes-under-itself.html): amendment, the irreversible, lapse
+- [10. The lock](https://gfrm.in/book/ch-10-the-lock.html): the system changes its own programs under a judge it cannot reach
+- [11. The loops and the bootstrap](https://gfrm.in/book/ch-11-the-loops-and-the-bootstrap.html): why in layers, why this order, why the same law at every level
+- [12. The ground](https://gfrm.in/book/ch-12-the-ground.html): where every chain of justification stops
+- [13. The evidence](https://gfrm.in/book/ch-13-the-evidence.html): the windows as pre-registered experiments, every number recomputed
+- [14. Lineage](https://gfrm.in/book/ch-14-lineage.html): the same loop run open seven times, measured
+- [15. Residue](https://gfrm.in/book/ch-15-residue.html): what was not built, and what would force it
+- [16. How it could be wrong](https://gfrm.in/book/ch-16-how-it-could-be-wrong.html): the referee's case, written first
+- [Afterword](https://gfrm.in/book/afterword.html): how the book is made, and how it will change by editions
+
 ## Start here
 
 - [Why We Stopped Using the Mathematics That Works](https://gfrm.in/posts/why-decision-theory-lost/): why AI walked away from decision theory, and what that cost
-- [The Accuracy Paradox](https://gfrm.in/posts/accuracy-paradox/): a decision-theoretic agent that answers fewer questions correctly yet wins, and why accuracy misleads
-- [The Alphabet Is the Prior](https://gfrm.in/posts/the-alphabet-is-the-prior/): in a language where hypotheses are programs, every terminal is a bit charged against every belief, so design becomes deletion
+- [The Science Was Done. The Engineering Wasn't.](https://gfrm.in/posts/the-science-was-done/): the founding note for jack — a fixed core, a free edge, a rigid score, and the old results that force them
 - [Signed Before the Code Existed](https://gfrm.in/posts/signed-before-the-code-existed/): the frozen-oracle protocol, with acceptance tests signed before any code and handed to an agent that could not change them
+- [The Ablation That Beat the Agent](https://gfrm.in/posts/credence-paper/): a one-line ablation overturned Credence's headline, so the paper was withdrawn and the record of why published instead
+- [The Court That Tried Itself](https://gfrm.in/posts/assize-at-the-seal/): the predecessor court reached its seal and a measured verdict, and cost 121 repairs in four days
 
 ## Series
 
-- [Agents from First Principles](https://gfrm.in/series/first-principles/): deriving agent behaviour from a few fundamentals
-- [proplang](https://gfrm.in/series/proplang/): the cornered language for Bayesian agents
+- [A Court for Agents](https://gfrm.in/series/a-court-for-agents/): essays from the book, each a chapter compressed
+- [Disciplining the Coding Agent](https://gfrm.in/series/coding-agents/): specs, gates, custody chains and courts for work done by coding agents
 - [Credence](https://gfrm.in/series/credence/): value of information for tool-using LLM agents, and the retrospective that narrowed its claims
+- [proplang](https://gfrm.in/series/proplang/): the cornered language for Bayesian agents
 - [The Tool-Call Governor](https://gfrm.in/series/tool-call-governor/): a Bayesian layer that decides which of a coding agent's tool calls to allow, block or ask about
-- [Disciplining the Coding Agent](https://gfrm.in/series/coding-agents/): specs, gates and custody chains for work done by coding agents
+- [Agents from First Principles](https://gfrm.in/series/first-principles/): deriving agent behaviour from a few fundamentals
 
 ## Notable posts
 
-- [The Ablation That Beat the Agent](https://gfrm.in/posts/credence-paper/): how a simple greedy ablation overturned Credence's headline, and what survived
+- [Fifteen Things a Self-Modifying Agent Cannot Do Without](https://gfrm.in/posts/necessities/): the results that forbid or force each piece of jack's core, and what would show each misapplied
+- [Build the Court Before the Agent](https://gfrm.in/posts/build-the-court-first/): a dispatch from assize's first week, scored against the record afterwards
+- [Fifteen Ways Past My Own Gate](https://gfrm.in/posts/fifteen-ways-past-my-own-gate/): a red team found fifteen ways to break a governance repo's rules with the gate green, and each became a planted violation the gate must catch
+- [The Gate That Said No](https://gfrm.in/posts/the-gate-that-said-no/): a pre-committed adoption gate that refused a tool its author built
 - [There Is No Forgetting](https://gfrm.in/posts/there-is-no-forgetting/): non-stationarity as content in the hypothesis space rather than a forgetting mechanism
 - [What You Cannot Say, You Cannot Get Wrong](https://gfrm.in/posts/make-it-unsayable/): making axiom violations unsayable in a Bayesian agent language
 - [The Agent That Prefers to Be Wrong](https://gfrm.in/posts/alignment-axiom/): the off-switch theorem as a consequence of expected utility under uncertainty about the user
-- [Think More, or Act Now](https://gfrm.in/posts/think-more-or-act-now/): rational metareasoning as a single argmax
-- [The Gate That Said No](https://gfrm.in/posts/the-gate-that-said-no/): a pre-committed adoption gate that refused a tool its author built
 - [The Bitter Lesson Has No Utility Function](https://gfrm.in/posts/bitter-lesson-missing-half/): what the Bitter Lesson leaves out
-- [Agentic AI Is Neither Intelligent Nor an Agent](https://gfrm.in/posts/agentic-ai/): a Bayesian agent against LangChain on a tool-use benchmark
 
 ## Optional
 
+- [jack on GitHub](https://github.com/renavondata/jack): the court — the record, the kernel, the judge, the briefs and the windows
+- [agent-court on GitHub](https://github.com/gfrmin/agent-court): the book's source, its data and its checker
 - [proplang on GitHub](https://github.com/gfrmin/proplang): the frozen research artifact, its design and reference implementation
-- [Credence on GitHub](https://github.com/gfrmin/credence): the decision-theoretic agent framework
+- [wald on GitHub](https://github.com/gfrmin/wald): the exact-rational Bayesian decision kernel
+- [Credence on GitHub](https://github.com/gfrmin/credence): the decision-theoretic agent framework and its governor and router
+- [doorplate.dev](https://doorplate.dev/): Bayesian resolution of Hong Kong addresses in English or Chinese
+- [Renavon](https://renavon.com/): Hong Kong public data, and the preserved Webb-site database
 - [Kana Derivation Chart](https://kana.gfrm.in/): an interactive map of how hiragana and katakana grew out of kanji
 - [docaviv+](https://docavivplus.gfrm.in/): a phone-friendly guide to the Tel Aviv International Documentary Film Festival
 - [accessinfo.hk](https://accessinfo.hk/): Hong Kong's freedom of information request platform

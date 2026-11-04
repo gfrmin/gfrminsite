@@ -9,6 +9,25 @@
        has no route back to the site. This is a plain-text output format, so
        nothing is context-escaped: values going into the script go through jsonify. */ -}}
 {{- if eq .Language.Lang "en" }}
+{{- /* Share cards (#51). mdBook emits a <title> and one book-wide description and
+       nothing else, so a link to /book/ previewed as a bare URL. The tags that are
+       the same on every page live here; og:title, og:description, og:url and the
+       canonical link are per page and are written by scripts/inject-book-head.py
+       from each page's own <title> and <meta name="description">. The card is
+       static/images/og-book.png, drawn by scripts/make-og-cards.py. */}}
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:type" content="book">
+<meta property="og:locale" content="en_GB">
+<meta property="og:image" content="{{ "images/og-book.png" | absURL }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A Court for Agents: law, scoring and the self-modifying machine. Guy Freeman, gfrm.in/book.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@{{ site.Params.twitterHandle }}">
+<meta name="author" content="Guy Freeman">
+{{- /* The book's revisions, as a feed (#54): agent-court tags a release per
+       substantive revision, and GitHub serves Atom for releases. */}}
+<link rel="alternate" type="application/atom+xml" title="A Court for Agents: revisions" href="https://github.com/gfrmin/agent-court/releases.atom">
 {{ partial "posthog.html" . }}
 <script>
   /* A link home in mdBook's menu bar. It is an inline SVG rather than a Font

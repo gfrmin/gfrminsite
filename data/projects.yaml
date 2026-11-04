@@ -22,18 +22,26 @@
   featured: true
   hero: false
 
+- title: "jack"
+  kind: "code"
+  url: "https://github.com/renavondata/jack"
+  description: "A court for an agent that is allowed to change itself. At its centre is an append-only, hash-chained, signed record; a 450-line checker that accepts or refuses each entry; and a judge that runs the checker over every pull request and refuses what breaks the law. The parties are one person and several language-model sessions, and every suggestion any of them makes is a forecast scored by log-loss against a base rate, resolved by someone else from saved evidence. The system is built in layers, each tried in a window whose pass mark is written down before it opens and tested by betting, so an operator may look whenever he likes. The agent that will rewrite its own programs arrives at layer C3; what exists now is the court that will judge it, and the book about it, A Court for Agents, recomputes every number from the record. Python, standard library only in the kernel."
+  weight: 12
+  featured: false
+  hero: true
+
 - title: "proplang"
   kind: "code"
   url: "https://github.com/gfrmin/proplang"
   description: "A small language built on one claim: an adaptive Bayesian decision-theoretic agent needs no adaptation machinery. If hypotheses are programs and the prior is 2^-|program| under a grammar, then adaptivity, bounded rationality, and inductive bias stop being modules and become posterior dynamics — so the alphabet of the language is the prior, and the design method is to delete every terminal whose removal costs no capability. Ten terminals survived an executed deletion audit; one failed its own proof and is recorded as a standing bug rather than quietly kept. The repository is a closed, frozen artifact: the acceptance tests were written and cryptographically signed before any implementation existed, and the reference implementation and its Haskell port were built against that frozen oracle by an agent that could not change the tests. Python and Haskell."
   weight: 15
-  featured: false
-  hero: true
+  featured: true
+  hero: false
 
 - title: "Credence"
   kind: "code"
   url: "https://github.com/gfrmin/credence"
-  description: "A Bayesian agent framework that treats tool selection as a decision problem rather than a prompt-engineering one. It keeps a Beta posterior over each tool's reliability and, before every call, computes the expected value of the information that call would buy — acting only when the expected utility justifies it. On a tool-use benchmark it scored +112 against LangChain ReAct's -8 while answering fewer questions correctly: the accuracy paradox, where knowing more answers is not the same as knowing which answers are worth finding. The predecessor to proplang, which cornered its foundation. Python, NumPy, and SciPy."
+  description: "A Bayesian agent framework that treats tool selection as a decision problem rather than a prompt-engineering one: a Beta posterior over each tool's reliability, and before every call the expected value of the information the call would buy. Its announced headline — a twelve-fold win over LangChain ReAct — did not survive a fair benchmark: hand the agent the question's category and it wins, infer the category and a one-line greedy ablation beats it. The paper was withdrawn and the record of why published instead. What survived is a law, not a victory: the value of exploration depends on the quality of attribution, +27 with clean categories and −12 with inferred ones. The predecessor to proplang, which cornered its foundation. Julia, with Python tooling."
   weight: 20
   featured: false
   hero: false
@@ -89,6 +97,14 @@
   alt: ""
   description: "An open archive of 35 years of Hong Kong corporate data — directors, board memberships, CCASS shareholdings, and company-registry filings — cross-linked so you can follow who sits on which boards and who owns what. Corporate transparency as a queryable dataset."
   weight: 50
+  featured: true
+  hero: false
+
+- title: "doorplate.dev"
+  kind: "use"
+  url: "https://doorplate.dev"
+  description: "Resolve a Hong Kong address written any way a person might write it — English, Traditional or Simplified Chinese, mixed, abbreviated, misspelt, in any order — to the premises it names in the government gazetteer. A text is treated as a noisy rendering of the name of a place: the resolver computes the posterior over which place, returns the Bayes act under a loss the caller may replace, and asks a clarifying question only when the value of that information pays. On real-world text from company filings, forums and listings it answers 89.5% right and 3.8% wrong; on 25,000 synthetic round trips, 92.1% right and 0.1% wrong; 99.7% of non-addresses are refused. Python, over the hkaddresses library in the Renavon monorepo."
+  weight: 55
   featured: true
   hero: false
 

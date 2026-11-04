@@ -264,9 +264,21 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   characters to 862, so half of it was ragged and the longest sat in a 45-character column.
   The row links only its title — a separate "View on GitHub" CTA was a second link to the same
   URL, and it was wrong for the five entries that are not on GitHub at all.
-- The homepage order is bio, what I do, **the book** (English only), start here, series,
-  recent posts, **projects last**. Projects used
-  to run third, which put roughly 2,000px of grid between the bio and any of the writing.
+- The homepage order is bio, what I do, **the book** (English only, with a status line
+  from `data/book.yaml`, #53), start here, series, recent posts, **projects last**. The
+  English homepage also emits the site's one `Person` JSON-LD record
+  (`layouts/partials/person-schema.html`): job title, places, `knowsAbout`, the book.
+- `/cv/` is a section like `/contact/`: the CV as a page. The two-page PDF is
+  `static/guy-freeman-cv.pdf`, linked from `/contact/` only, and is replaced by hand
+  when the CV in the Drive folder changes. **Neither carries a phone number or a
+  postal address**: the site is public, and the Drive CVs, which do carry the number,
+  are for direct applications. Strip the contact line before replacing the PDF.
+- The share cards are drawn by `scripts/make-og-cards.py` from TTF instances of the
+  site's own woff2 fonts (not committed; see the script's docstring):
+  `static/images/og-default.png` for every page without its own, and
+  `static/images/og-book.png` for the book, named in `layouts/index.bookhead.html`.
+- Projects run last on the homepage. They used to run third, which put roughly 2,000px of
+  grid between the bio and any of the writing.
 - `layouts/partials/darkmode-init.html` — sets `data-theme` from a blocking script in
   `<head>`. It has to run before the first paint; when this lived with the toggle wiring at
   the end of `<body>`, dark-mode readers saw the whole page render light and then flip.
@@ -298,6 +310,7 @@ series: [coding-agents]             # optional; slug, not display title (see Ser
 series_order: 3                     # required whenever series is set
 linkTitle: "Part 3: The Takedown"   # optional; short form used in series nav and related lists
 image: og-image.png                 # optional, relative to page bundle; falls back to site default (layouts/_default/baseof.html:19)
+drafted_with: claude                # optional; prints one i18n line under the byline (#52). Set it on any post a Claude session drafted.
 ---
 ```
 
