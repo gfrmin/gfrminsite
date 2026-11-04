@@ -94,10 +94,37 @@ hog "select pv.path as post,
      ) pp on pv.path = pp.slug
      order by readers desc limit 15"
 
+# book_progress began on 2026-11-04 (PR #56); book readers before then have no depth,
+# so over a window reaching back past that date the percentages here are understated.
+# /book/ is the same page as /book/index.html and is counted as it, as book_progress
+# does; print.html and 404.html send no depth and are left out.
+echo; echo "## Book: read depth by page (book_progress, since 2026-11-04)"
+hog "select pv.path as page,
+            pv.readers as readers,
+            bp.d25 as reached_25, bp.d50 as reached_50, bp.d75 as reached_75, bp.d100 as finished,
+            if(pv.readers>0, round(100.0*bp.d100/pv.readers), 0) as pct_finished
+     from (
+       select replaceRegexpOne(properties.\$pathname, '/\$', '/index.html') as path,
+              count(distinct distinct_id) as readers
+       from events where event='\$pageview' and properties.\$pathname like '/book/%'
+         and properties.\$pathname not in ('/book/print.html', '/book/404.html')
+         and timestamp > now() - $W group by path
+     ) pv
+     left join (
+       select properties.slug as slug,
+              uniqIf(distinct_id, toInt(properties.depth) >= 25) as d25,
+              uniqIf(distinct_id, toInt(properties.depth) >= 50) as d50,
+              uniqIf(distinct_id, toInt(properties.depth) >= 75) as d75,
+              uniqIf(distinct_id, toInt(properties.depth) = 100) as d100
+       from events where event='book_progress' and timestamp > now() - $W
+       group by slug
+     ) bp on pv.path = bp.slug
+     order by readers desc limit 25"
+
 echo; echo "## Engagement & conversion events"
 hog "select event, count() as n, count(distinct distinct_id) as people
      from events
-     where event in ('outbound_click','cta_click','share_click','lang_switch','contact_submitted','post_progress')
+     where event in ('outbound_click','cta_click','share_click','lang_switch','contact_submitted','post_progress','book_progress')
        and timestamp > now() - $W
      group by event order by n desc"
 
