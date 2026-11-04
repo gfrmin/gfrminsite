@@ -22,7 +22,7 @@ I take each result in four parts: what it says, with its hypotheses; what it for
 
 ## Evaluation: why the change cannot be inspected
 
-**Rice (1953)** (theorem). In a Turing-complete language, every non-trivial property of what a program *does* — of the function it computes, not of its text — is undecidable. An agent that can write the next version of itself works in such a language, so "is this change an improvement?" has no procedure that inspects the change; and since improvement is a property of the program in the world, not of the program, it is settled by running the change and scoring the outcome.
+**Rice (1953)** (theorem). In a Turing-complete language, every non-trivial property of what a program *does* — of the function it computes, not of its text — is undecidable. An agent that can write the next version of itself works in such a language, so "is this change an improvement?" has no procedure that inspects the change; and improvement is in any case not a property of the program alone but of the program in the world, which no inspection of the text reaches. Both reasons send it to the same place: it is settled by running the change and scoring the outcome.
 
 jack's charter confines its statutes to decidable properties on exactly this ground, and separates validity from merit in the same clause: questions of merit "are forecasts, scored when the world resolves them" (CHARTER §3). Every check the kernel makes is syntactic and terminates — a canonical serialisation, a hash, a signature, a type in a list of powers (SPEC §8).
 
@@ -50,7 +50,7 @@ In jack this is a file format (SPEC §§5–8):
 
 *Misapplied if* a score ever uses a probability fixed after its event. The record already names the two ways: a forecast timestamped at or after the event's cutoff is listed as `rigged` and not used — there are three on the log, seqs 288–290 — and a later forecast of the same event by the same principal is listed as a `revision`; the first stands.
 
-**Proper scores (Good 1952; Gneiting and Raftery 2007)** (theorems). Only a strictly proper score makes reporting your belief the unique best move; the logarithmic score is one, and under it the Bayes mixture over \(K\) forecasters is itself conditioning: it loses at most \(\ln K\) more than the best of them, at no learning rate and with no tuning constant. Other mixable losses get a bound of that form only by a different algorithm and constant.
+**Proper scores (Good 1952; Gneiting and Raftery 2007)** (theorems). Only a strictly proper score makes reporting your belief the unique best move; the logarithmic score is one, and under it the Bayes mixture over \(K\) forecasters is itself conditioning: it loses at most \(\ln K\) more than the best of them, at no learning rate and with no tuning constant. Other mixable losses get a bound of that form too, but only through a substitution step, so that their aggregate is not itself conditioning.
 
 jack scores log-loss, per mille, against a base-rate forecaster that is Laplace's rule over the resolved prefix of the forecast's type, and its aggregate is the Bayes mixture with the uniform prior and no learning rate: "η = 1 is the telescoping identity, the uniform prior the minimax choice for the ln K bound" (BRIEF-C2a).
 
@@ -96,7 +96,7 @@ That obligations do not rot is liveness: it can only be given a deadline and tes
 
 **Conant and Ashby (1970); Ashby (1956)** (necessity results of control, under conditions). The *simplest* optimal regulator is a model of the system it regulates: its actions are a function of the system's events. Optimal regulators that are not models may exist, but they are "unnecessarily complex", and the result holds the system's distribution fixed.
 
-Requisite variety bounds what any regulator can do: measured logarithmically, the variety of outcomes is at least the variety of the disturbances less the regulator's own, \(V(Z) \ge V(D) - V(R)\), so a regulator poorer in variety than what it faces cannot hold the outcome in bounds.
+Requisite variety bounds what any regulator can do: measured logarithmically, the variety of outcomes is at least the variety of the disturbances less the regulator's own, \(V(Z) \ge V(D) - V(R)\), so a regulator poorer in variety than what it faces cannot hold the outcomes to fewer than so many distinct values.
 
 jack's state is a fold of the law over the log — head, keys, charter, trusted base, forecasts and which are resolved — and the clerk derives every obligation from that state and the clock, which enters only as an argument; the kernel never reads one. The judge's grounds are "stated over powers and paths and never over a party's name" (A2.3), the election rule is "an entrant, not law" (CHARTER §5), and the proposers are sessions of more than one model family.
 
@@ -106,7 +106,7 @@ jack's state is a fold of the law over the log — head, keys, charter, trusted 
 
 **Hart (1961)** (a jurisprudential analysis, not a theorem). A legal system is primary rules plus three secondary ones — recognition, change, adjudication — and lacks one of three answers without any of them.
 
-jack's zeroth layer was cut to exactly those: a valid entry; a `key` entry, an `amend` preceded by a `transmute` and in force from a later height, a `push` naming a digest; a judge that runs trunk's kernel over the proposal's entries as data. The kernel holding all three is 450 lines (`tools/count_kernel.py`). No primary rule has yet been needed, and the charter says that if none is by the end of C2, "§12's thesis that three secondary rules suffice is on trial" (A2.1).
+jack's zeroth layer was cut to exactly those: a valid entry; a `key` entry, an `amend` preceded by a `transmute` and in force from a later height, a `push` naming a digest; a judge that runs trunk's kernel over the proposal's entries as data. The kernel that holds recognition and most of change is 450 lines (`tools/count_kernel.py`); the rest of change — that an `amend` be preceded by its `transmute` — and adjudication itself are the judge's (SPEC §10.13). No primary rule has yet been needed, and the charter says that if none is by the end of C2, "§12's thesis that three secondary rules suffice is on trial" (A2.1).
 
 *Misapplied if* a rule of conduct is written into the kernel in advance of a case.
 
@@ -136,7 +136,7 @@ jack's second checker is in Go, by sessions of another model family that read th
 
 ## Irreversibility and growth
 
-**Arrow and Fisher (1974)** (theorem of decision under uncertainty). An irreversible act carries an extra cost — the value of the information waiting would bring — and a reversible one carries none, so a gate before it buys nothing.
+**Arrow and Fisher (1974)** (theorem of decision under uncertainty). An irreversible act carries an extra cost, their "quasi-option value". From their model it follows, though they do not say it, that an act undone at no cost carries none, so a gate before it buys nothing; Arrow and Fisher price irreversibility rather than forbid it, and the gate is this court's policy.
 
 Hard gates stand only before the irreversible: the sovereign's verbs are `genesis`, `key`, `amend`, `push`, `decision`, and the last key able to declare keys cannot be revoked. Everything reversible is priced: a refused proposal costs resubmission, and a failed window is followed and never patched.
 
