@@ -6,22 +6,36 @@
 
   Events emitted:
     post_progress    {depth: 25|50|75|100, slug}   — how far posts are actually read
+    book_progress    {depth: 25|50|75|100, slug}   — the same, for a page of the book at /book/
     outbound_click   {href, link_text, location}   — social / project / scholar links
     cta_click        {label, location}             — "See all posts/projects" pills
     share_click      {network, slug}               — share buttons
     lang_switch      {to, href}                    — EN <-> HE translation link
     contact_submitted{location}                    — Formspree contact form submit
   Every event also carries the `site_lang` super-property registered in posthog.html.
+
+  The book (layouts/index.bookhead.html) calls this with (dict "book" true): there the
+  text is mdBook's `#content > main` and the event is book_progress, kept apart from
+  post_progress so that insights over posts are not diluted by chapters. On the book this
+  runs from <head>, before the body exists, hence the wait for DOMContentLoaded.
 */}}
+{{- $book := and (reflect.IsMap .) (index . "book") }}
 <script>
 (function () {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+  function start() {
   function cap(event, props) {
     if (window.posthog && posthog.capture) posthog.capture(event, props);
   }
   function path() { return location.pathname; }
 
-  /* ---- Read depth / completion (posts only) ---- */
-  var body = document.querySelector('.post-body');
+  /* ---- Read depth / completion (posts and book pages) ---- */
+  var body = document.querySelector({{ if $book }}'#content > main'{{ else }}'.post-body'{{ end }});
+  var progressEvent = {{ if $book }}'book_progress'{{ else }}'post_progress'{{ end }};
   if (body) {
     var fired = {}, marks = [25, 50, 75, 100], ticking = false;
     function check() {
@@ -32,7 +46,7 @@
       marks.forEach(function (m) {
         if (!fired[m] && pct >= m) {
           fired[m] = true;
-          cap('post_progress', { depth: m, slug: path() });
+          cap(progressEvent, { depth: m, slug: path() });
         }
       });
       if (fired[100]) window.removeEventListener('scroll', onScroll);
@@ -93,5 +107,6 @@
       cap('contact_submitted', { location: path() });
     }
   }, true);
+  }
 })();
 </script>
