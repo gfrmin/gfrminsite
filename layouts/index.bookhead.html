@@ -5,7 +5,7 @@
        language because [outputs] is site-wide; only the English one is used.
 
        It carries the site's PostHog snippet (the same partial, so the key lives in
-       one place) and a link home to gfrm.in in mdBook's menu bar, which otherwise
+       one place), the site's analytics events with read depth as book_progress, and a link home to gfrm.in in mdBook's menu bar, which otherwise
        has no route back to the site. This is a plain-text output format, so
        nothing is context-escaped: values going into the script go through jsonify. */ -}}
 {{- if eq .Language.Lang "en" }}
@@ -29,6 +29,7 @@
        substantive revision, and GitHub serves Atom for releases. */}}
 <link rel="alternate" type="application/atom+xml" title="A Court for Agents: revisions" href="https://github.com/gfrmin/agent-court/releases.atom">
 {{ partial "posthog.html" . }}
+{{ partial "analytics-events.html" (dict "book" true) }}
 <script>
   /* A link home in mdBook's menu bar. It is an inline SVG rather than a Font
      Awesome class, because mdBook dropped Font Awesome after 0.4. publish.yml

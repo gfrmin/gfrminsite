@@ -6,92 +6,123 @@
 
   Events emitted:
     post_progress    {depth: 25|50|75|100, slug}   — how far posts are actually read
+    book_progress    {depth: 25|50|75|100, slug}   — the same, for a page of the book at /book/
     outbound_click   {href, link_text, location}   — social / project / scholar links
     cta_click        {label, location}             — "See all posts/projects" pills
     share_click      {network, slug}               — share buttons
     lang_switch      {to, href}                    — EN <-> HE translation link
     contact_submitted{location}                    — Formspree contact form submit
   Every event also carries the `site_lang` super-property registered in posthog.html.
+
+  The book (layouts/index.bookhead.html) calls this with (dict "book" true): there the
+  text is mdBook's `#content > main` and the event is book_progress, kept apart from
+  post_progress so that insights over posts are not diluted by chapters. On the book this
+  runs from <head>, before the body exists, hence the wait for DOMContentLoaded. The
+  book's 404.html and print.html (the whole book on one page) are not chapter reads and
+  send no depth; `/book/` is reported as `/book/index.html`, the same page.
+
+  A mark counts as sent only once PostHog has taken it. The first check runs before
+  posthog.html's `load` handler has created `window.posthog`, and a mark set then was
+  lost: a page short enough to be partly read on arrival never reported its first marks.
 */}}
+{{- $book := and (reflect.IsMap .) (index . "book") }}
 <script>
 (function () {
-  function cap(event, props) {
-    if (window.posthog && posthog.capture) posthog.capture(event, props);
-  }
-  function path() { return location.pathname; }
-
-  /* ---- Read depth / completion (posts only) ---- */
-  var body = document.querySelector('.post-body');
-  if (body) {
-    var fired = {}, marks = [25, 50, 75, 100], ticking = false;
-    function check() {
-      var rect = body.getBoundingClientRect();
-      var total = body.offsetHeight;
-      var seen = Math.min(total, Math.max(0, window.innerHeight - rect.top));
-      var pct = total > 0 ? (seen / total) * 100 : 100;
-      marks.forEach(function (m) {
-        if (!fired[m] && pct >= m) {
-          fired[m] = true;
-          cap('post_progress', { depth: m, slug: path() });
-        }
-      });
-      if (fired[100]) window.removeEventListener('scroll', onScroll);
-    }
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { check(); ticking = false; });
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('load', check);
-    check();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
   }
 
-  /* ---- Delegated clicks ---- */
-  document.addEventListener('click', function (e) {
-    var t = e.target;
-    if (!t || !t.closest) return;
-
-    var share = t.closest('.share-btn');
-    if (share) {
-      var net = (Array.prototype.find.call(share.classList, function (c) {
-        return c.indexOf('share-') === 0 && c !== 'share-btn';
-      }) || 'share-unknown').replace('share-', '');
-      cap('share_click', { network: net, slug: path() });
-      return;
+  function start() {
+    function ready() { return !!(window.posthog && posthog.capture); }
+    function cap(event, props) {
+      if (ready()) posthog.capture(event, props);
     }
+    function path() { return location.pathname; }
 
-    var lang = t.closest('.translation-link a');
-    if (lang) {
-      cap('lang_switch', { to: (lang.textContent || '').trim(), href: lang.getAttribute('href') });
-      return;
-    }
-
-    var cta = t.closest('.cta-pill');
-    if (cta) {
-      cap('cta_click', { label: (cta.textContent || '').trim(), location: path() });
-      return;
-    }
-
-    var a = t.closest('a[href]');
-    if (a) {
-      var href = a.getAttribute('href') || '';
-      var external = a.target === '_blank' || (/^https?:\/\//.test(href) && a.host !== location.host);
-      if (external) {
-        cap('outbound_click', {
-          href: a.href,
-          link_text: (a.textContent || '').trim().slice(0, 80),
-          location: path()
+    /* ---- Read depth / completion (posts and book chapters) ---- */
+    {{- if $book }}
+    var body = /\/(404|print)\.html$/.test(path()) ? null : document.querySelector('#content > main');
+    var progressEvent = 'book_progress';
+    var slug = path().replace(/\/$/, '/index.html');
+    {{- else }}
+    var body = document.querySelector('.post-body');
+    var progressEvent = 'post_progress';
+    var slug = path();
+    {{- end }}
+    if (body) {
+      var fired = {}, marks = [25, 50, 75, 100], ticking = false;
+      function check() {
+        if (!ready()) return;
+        var rect = body.getBoundingClientRect();
+        var total = body.offsetHeight;
+        var seen = Math.min(total, Math.max(0, window.innerHeight - rect.top));
+        var pct = total > 0 ? (seen / total) * 100 : 100;
+        marks.forEach(function (m) {
+          if (!fired[m] && pct >= m) {
+            fired[m] = true;
+            cap(progressEvent, { depth: m, slug: slug });
+          }
         });
+        if (fired[100]) window.removeEventListener('scroll', onScroll);
       }
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () { check(); ticking = false; });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('load', check);
+      check();
     }
-  }, true);
 
-  /* ---- Contact form submit ---- */
-  document.addEventListener('submit', function (e) {
-    if (e.target && e.target.matches && e.target.matches('form.contact-form')) {
-      cap('contact_submitted', { location: path() });
-    }
-  }, true);
+    /* ---- Delegated clicks ---- */
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      if (!t || !t.closest) return;
+
+      var share = t.closest('.share-btn');
+      if (share) {
+        var net = (Array.prototype.find.call(share.classList, function (c) {
+          return c.indexOf('share-') === 0 && c !== 'share-btn';
+        }) || 'share-unknown').replace('share-', '');
+        cap('share_click', { network: net, slug: path() });
+        return;
+      }
+
+      var lang = t.closest('.translation-link a');
+      if (lang) {
+        cap('lang_switch', { to: (lang.textContent || '').trim(), href: lang.getAttribute('href') });
+        return;
+      }
+
+      var cta = t.closest('.cta-pill');
+      if (cta) {
+        cap('cta_click', { label: (cta.textContent || '').trim(), location: path() });
+        return;
+      }
+
+      var a = t.closest('a[href]');
+      if (a) {
+        var href = a.getAttribute('href') || '';
+        var external = a.target === '_blank' || (/^https?:\/\//.test(href) && a.host !== location.host);
+        if (external) {
+          cap('outbound_click', {
+            href: a.href,
+            link_text: (a.textContent || '').trim().slice(0, 80),
+            location: path()
+          });
+        }
+      }
+    }, true);
+
+    /* ---- Contact form submit ---- */
+    document.addEventListener('submit', function (e) {
+      if (e.target && e.target.matches && e.target.matches('form.contact-form')) {
+        cap('contact_submitted', { location: path() });
+      }
+    }, true);
+  }
 })();
 </script>

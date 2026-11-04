@@ -102,6 +102,8 @@ jobs:
           test -f .book-src/book-site/index.html
           grep -q 'class="right-buttons"' .book-src/book-site/index.html \
             || { echo "::error::mdBook's menu bar has no .right-buttons; layouts/index.bookhead.html puts the link home there"; exit 1; }
+          grep -Pzq 'id="content"[^>]*>\s*<main' .book-src/book-site/index.html \
+            || { echo "::error::the book has no #content > main; analytics-events.html measures book_progress there"; exit 1; }
           # The same test the build job's insert makes, so a book that cannot take
           # the head fragment fails here and the build falls back, not the deploy.
           python3 -I scripts/inject-book-head.py --check .book-src/book-site
@@ -191,6 +193,7 @@ jobs:
           python3 -I scripts/inject-book-head.py public/book-head.html public/book
           find public -name book-head.html -delete
           grep -q 'posthog.init' public/book/index.html
+          grep -q 'book_progress' public/book/index.html
 
       # build-id.txt names what this deploy contains. The nightly run compares it to
       # decide whether there is anything to do, and the purge job waits for GitHub

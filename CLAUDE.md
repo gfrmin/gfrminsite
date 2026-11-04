@@ -502,8 +502,10 @@ jobs:
 - **`build`** runs Hugo and downloads the book. **If the `book` job failed for any reason,
   it falls back to the last `book-site` artifact from a run on this repo's master and
   warns**, so the blog deploys regardless. `scripts/inject-book-head.py` then inserts
-  Hugo's `BookHead` output (`layouts/index.bookhead.html`: the PostHog partial plus a
-  home link in mdBook's menu bar) before `</head>` in every book page except `toc.html`.
+  Hugo's `BookHead` output (`layouts/index.bookhead.html`: the PostHog partial, the
+  site's `analytics-events.html` called with `(dict "book" true)` so read depth on
+  mdBook's `#content > main` is sent as **`book_progress`** rather than `post_progress`,
+  and a home link in mdBook's menu bar) before `</head>` in every book page except `toc.html`.
   It edits static files only, and adds a robots `noindex` to the book's `404.html`. It
   writes `public/build-id.txt` (`blog=<sha> book=<sha>`). On a nightly run it then compares
   that with what Pages serves and, if they match, sets `deploy=false`, so the run builds
