@@ -268,9 +268,11 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   from `data/book.yaml`, #53), start here, series, recent posts, **projects last**. The
   English homepage also emits the site's one `Person` JSON-LD record
   (`layouts/partials/person-schema.html`): job title, places, `knowsAbout`, the book.
-- `/cv/` is a section like `/contact/`: the CV as a page, with no phone number. The
-  two-page PDF is `static/guy-freeman-cv.pdf`, linked from `/contact/` only, and is
-  replaced by hand when the CV in the Drive folder changes.
+- `/cv/` is a section like `/contact/`: the CV as a page. The two-page PDF is
+  `static/guy-freeman-cv.pdf`, linked from `/contact/` only, and is replaced by hand
+  when the CV in the Drive folder changes. **Neither carries a phone number or a
+  postal address**: the site is public, and the Drive CVs, which do carry the number,
+  are for direct applications. Strip the contact line before replacing the PDF.
 - The share cards are drawn by `scripts/make-og-cards.py` from TTF instances of the
   site's own woff2 fonts (not committed; see the script's docstring):
   `static/images/og-default.png` for every page without its own, and
