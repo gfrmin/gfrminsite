@@ -1,19 +1,20 @@
 # Guy Freeman
 
-> The personal site of Guy Freeman, a statistician working on the evaluation and oversight of AI systems: how to score an agent no human watches, and how to govern one that is allowed to rewrite itself. Author of A Court for Agents, the monograph of jack, a court for a self-modifying agent. PhD in Statistics (Warwick), 1,750+ citations. Based in Hong Kong; UK and Israeli citizen; open to research and senior scientist roles in AI evaluation, oversight and assurance, and to consulting.
+> The personal site of Guy Freeman, an AI evaluation scientist: a Bayesian statistician who designs AI workflows and proves whether they work. Evaluation of LLM and agent systems (LLM-as-judge validation, variance decomposition, ablations, power analysis, pre-registered criteria, ship/no-ship decisions); oversight of agents that rewrite themselves (jack, a court for a self-modifying agent, and its monograph A Court for Agents); evidence records for agentic AI under the HKMA's ART framework and MAS's AI risk guidelines; Bayesian decision theory. PhD Statistics (Warwick), 1,750+ citations. Based in Hong Kong; UK and Israeli citizen; open to research and senior scientist roles in AI evaluation, oversight and assurance, and to contract and consulting work.
 
-Most of the writing is about how to know whether an AI system works — pre-registered evaluation, proper scoring rules, anytime-valid tests, checks that must prove they can fail — and about the institutions that let a system change itself safely. Earlier series derive agent behaviour from Bayesian decision theory. Some posts are also available in Hebrew.
+The site is written for three readers: teams shipping LLM and agent systems, banks and insurers governing AI, and people doing evaluation or oversight research. Most of the writing is about how to know whether an AI system works — pre-registered evaluation, proper scoring rules, anytime-valid tests, checks that must prove they can fail — and about the institutions that let a system change itself safely. Earlier series derive agent behaviour from Bayesian decision theory. Some posts are also available in Hebrew.
 
 ## Main pages
 
-- [Home](https://gfrm.in/): who Guy Freeman is, what he works on, a curated start-here list, the book, recent posts and featured projects
+- [Home](https://gfrm.in/): the proposition, three proofs with their evidence, who he works with and what to read for each, the book, a curated start-here list
+- [Work with me](https://gfrm.in/work/): what he builds for teams shipping LLM systems, for banks and insurers under HKMA ART and MAS, and for evaluation and oversight research, with one example each, the work in the field's terms, and how an engagement runs
 - [The book: A Court for Agents](https://gfrm.in/book/): the monograph of jack, in first draft; every number recomputable from the court's public record
 - [Research](https://gfrm.in/research/): jack and the book, the predecessor court assize, the agent languages proplang and wald, the Credence retrospective, and published work
 - [CV](https://gfrm.in/cv/): the two-page CV, as a page
-- [Posts](https://gfrm.in/posts/): every essay, newest first
+- [Writing](https://gfrm.in/posts/): every essay, newest first, with Series, Archive and Categories views
 - [Series](https://gfrm.in/series/): posts grouped into reading sequences
 - [Projects](https://gfrm.in/projects/): research tools, open-source projects and civic tech
-- [Contact](https://gfrm.in/contact/): how to get in touch about research, roles or consulting
+- [Contact](https://gfrm.in/contact/): a role, an evaluation to design or audit, agentic AI under HKMA ART or MAS, or the book
 - [RSS feed](https://gfrm.in/index.xml): the full post feed
 
 ## The book

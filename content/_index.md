@@ -1,40 +1,50 @@
 ---
 title: "Guy Freeman"
-description: "Guy Freeman — statistician working on the evaluation and oversight of AI systems: how to score an agent no human watches, and how to govern one allowed to rewrite itself. Author of A Court for Agents. PhD Statistics (Warwick), 1,750+ citations. Hong Kong."
+description: "Guy Freeman — AI evaluation scientist. I design AI workflows and prove whether they work: evaluation of LLM and agent systems, oversight of agents that rewrite themselves, Bayesian decision theory. PhD Statistics (Warwick), 1,750+ citations. Author of A Court for Agents. Hong Kong."
 ---
 
-I'm a Bayesian statistician who works out whether an AI system can be trusted: how to evaluate an agent that no human is watching, how to score every suggestion a model makes, and how to govern a system that is allowed to rewrite itself. That work is [jack](https://github.com/renavondata/jack), a court for a self-modifying agent, and the book about it, [*A Court for Agents*](/book/), in which every number can be recomputed from the court's public record. My PhD on Chain Event Graphs (Warwick, 2010, supervised by Jim Smith) established methods for Bayesian structure learning that have been [cited over 1,750 times](https://scholar.google.com/citations?hl=en&user=H422hdkAAAAJ).
+<p class="lede">I design AI workflows and prove whether they work.</p>
 
-In industry I design the evaluation that decides whether an LLM system ships. At Booking.com the measurement redesigned the system: task completion up 2.7×, latency down an order of magnitude. At HSBC I design and measure LLM workflows for vendor compliance and fraud. When a one-line ablation beat my own agent, [I said so](/posts/credence-paper/).
+I'm a Bayesian statistician. For a team shipping an LLM or agent system, I build the evaluation that decides whether it ships, and when the answer is no I say so. For the question behind that one — how to oversee an agent that no human is watching and that is allowed to rewrite itself — I built [jack](https://github.com/renavondata/jack), a court for a self-modifying agent, and I'm writing the book about it, [*A Court for Agents*](/book/), in which every number can be recomputed from the court's public record.
 
-Oxford mathematics. Warwick PhD. Hong Kong, by way of Tel Aviv; a UK and Israeli citizen.
+<div class="proof-grid">
+<div class="proof">
+<p class="proof-figure">2.7×</p>
+<p class="proof-label">task completion at Booking.com, after the evaluation I designed redesigned the system; latency down an order of magnitude. <a href="/work/#ship">The work</a></p>
+</div>
+<div class="proof">
+<p class="proof-figure">1 paper</p>
+<p class="proof-label">withdrawn when a one-line ablation beat my own agent, and the reason published instead. <a href="/posts/credence-paper/">The Ablation That Beat the Agent</a></p>
+</div>
+<div class="proof">
+<p class="proof-figure">81 / 81</p>
+<p class="proof-label">planted faults caught by the predecessor court's checks at its seal, and a half-achievement improvement detectable at 33 episodes per arm. <a href="/posts/assize-at-the-seal/">The Court That Tried Itself</a></p>
+</div>
+</div>
+
+## Who I work with
+
+<div class="service-grid audiences">
+<div class="service-card">
+<h3>Teams shipping LLM and agent systems</h3>
+<p>You have a system that works in the demo. What is usually missing is the evaluation that says whether the next change made it better. I build that: metrics tied to the ship decision, an LLM-as-judge validated against human labels with its variance decomposed, paired comparisons with the power to mean something, ablations that tell a real regression from an artefact of the evaluation, and criteria fixed before the run.</p>
+<p class="reading-path">Read: <a href="/posts/signed-before-the-code-existed/">Signed Before the Code Existed</a> · <a href="/posts/openclaw-cheaper-measure-it-yourself/">Make Your Agent Cheaper, and Measure It Yourself</a> · <a href="/posts/credence-paper/">The Ablation That Beat the Agent</a></p>
+</div>
+<div class="service-card">
+<h3>Banks and insurers governing AI</h3>
+<p>The HKMA's ART framework (October 2026) puts accountability and human oversight first and is about to propose a registry of material AI agents and ways to intervene in them; MAS's guidelines take effect in October 2027 and make you answerable for third-party AI too. I build the evidence a second line can sign off: an audit trail of what an agent did and under which rule, the inventory and the obligations derived from it, change control for the rules themselves, and independent validation of vendor and in-house GenAI against pre-stated criteria. I've worked inside HSBC twice, and at Prudential and EY. Financial crime is where this started: address data turned into fraud signals.</p>
+<p class="reading-path">Read: <a href="/work/#banks">what that looks like</a> · the audit trail (<a href="/book/ch-03-the-record.html">book, chapter 3</a>) · change control for the rules (<a href="/book/ch-09-the-law-changes-under-itself.html">chapter 9</a>)</p>
+</div>
+<div class="service-card">
+<h3>Evaluation and oversight research</h3>
+<p>In the field's words: pre-registration made binding (acceptance tests signed before the code exists), mutation testing (every check must catch a planted fault), AI control (a judge the policy cannot reach), proper scoring rules on every forecast, and anytime-valid sequential tests for whether a layer has worked. jack runs all of it on a public record; assize measured what it cost in human attention; the book derives each piece from a result that was mostly settled decades ago.</p>
+<p class="reading-path">Read: <a href="/book/ch-02-every-suggestion-a-bet.html">Every suggestion is a bet</a> · <a href="/book/ch-06-testing-by-betting.html">Testing by betting</a> · <a href="/book/ch-13-the-evidence.html">The evidence</a> · <a href="/posts/necessities/">Fifteen Necessities</a></p>
+</div>
+</div>
 
 <div class="availability-box">
 <p><strong>Open to research and senior scientist roles in AI evaluation, oversight and assurance</strong>, and to contract and consulting work. Hong Kong, Singapore, London, Tel Aviv or remote.</p>
-<p>If you need to know whether an AI system works, and to be able to show it — <a href="/contact/">let's talk</a>. A two-page CV is at <a href="/cv/">/cv/</a>.</p>
+<p>If you need to know whether an AI system works, and to be able to show it — <a href="/work/">here is how I work</a>, the <a href="/cv/">two-page CV</a>, and <a href="/contact/">where to write</a>.</p>
 </div>
 
-## What I Do
-
-<div class="service-grid">
-<div class="service-card">
-<div class="service-card-icon">&#x2696;&#xFE0F;</div>
-<h3>Evaluating AI systems</h3>
-<p>Evaluation that is fixed before the run and can tell a real regression from an artefact: LLM-as-judge with its variance decomposed, ablations, power analysis, proper scoring rules, and criteria signed before the code exists. The method is in <a href="/posts/signed-before-the-code-existed/">Signed Before the Code Existed</a>; the ship decision it produced at Booking.com is on the CV.</p>
-</div>
-<div class="service-card">
-<div class="service-card-icon">&#x1F3DB;&#xFE0F;</div>
-<h3>Governing self-modifying agents</h3>
-<p>A fixed core the agent cannot reach, a free edge it may rewrite, and a score that is rigid everywhere. <a href="https://github.com/renavondata/jack">jack</a> is the court that runs it; <a href="/book/"><em>A Court for Agents</em></a> is the book that derives it from results that were mostly settled decades ago. The founding argument is <a href="/posts/the-science-was-done/">The Science Was Done. The Engineering Wasn't.</a></p>
-</div>
-<div class="service-card">
-<div class="service-card-icon">&#x1F4CA;</div>
-<h3>Bayesian decision theory</h3>
-<p>Agents whose beliefs are probabilities and whose choices maximise expected utility, with no other machinery. <a href="https://github.com/gfrmin/proplang">proplang</a> makes the architecture unsayable to break; <a href="https://github.com/gfrmin/wald">wald</a> is the exact decision kernel that audits production choices.</p>
-</div>
-<div class="service-card">
-<div class="service-card-icon">&#x1F3D9;&#xFE0F;</div>
-<h3>Hong Kong data</h3>
-<p><a href="https://renavon.com">Renavon</a> collects and serves the territory's public data and preserves Webb-site's 35-year financial database. <a href="https://doorplate.dev">doorplate.dev</a> resolves any Hong Kong address, in English or Chinese, to the government gazetteer with a Bayesian posterior and an honest refusal.</p>
-</div>
-</div>
+<p class="credentials">Oxford mathematics · Warwick PhD in statistics, cited 1,750+ times · Postdoctoral fellow, University of Hong Kong · HSBC · Booking.com · Hong Kong permanent resident · UK and Israeli citizen</p>

@@ -73,7 +73,7 @@ Math is rendered to **MathML at build time** via goldmark's passthrough extensio
   election-night post (`election-night-station-by-station`), and the taxonomy titles those
   posts use; `/research/`, `/book/`, `/projects/` and `/contact/` are English-only
   and deliberately absent from the Hebrew menu.
-- `content/projects/`, `content/contact/`, `content/research/` — non-post sections.
+- `content/work/`, `content/projects/`, `content/contact/`, `content/research/`, `content/cv/` — non-post sections.
 - `content/archive.md` — the year archive, a **regular page** with `layout: archive`, not a
   section. As a section Hugo would also emit an empty `/archive/index.xml` (`[outputs]` gives
   every section an RSS feed) and advertise it in the head. As a regular page it has no date,
@@ -105,7 +105,7 @@ A post with no `series` simply renders no nav. Twelve posts are deliberately sta
 Forty-five posts, most of them long. Five surfaces exist to answer *where do I start*
 and *is there a post about X* without asking anyone to scroll ten screens of cards.
 
-**Start here** (homepage, between the book block and Series) is the one hand-curated list on
+**Start here** (homepage, after the book block) is the one hand-curated list on
 the site — the picks and the reason to read each one live in `data/starthere.yaml`, so the
 whole thing is one file to reorder or rewrite. It opens with
 `why-decision-theory-lost`, which is the site's actual front door: ~4,835 of the
@@ -121,11 +121,13 @@ that silently drops a row is worse than no list. Five is the ceiling — a "star
 is the posts index again. English only; the Hebrew site is five Velotix posts, which the
 series block already presents as a sequence.
 
-**The tab row** (`layouts/partials/views-nav.html`) sits on `/posts/`, `/archive/` and
-`/categories/` and names them as three views of one corpus: the full list with descriptions,
-every title by year, the same posts cut by subject. It is **English-only and deliberately
-so** — the archive does not exist in Hebrew, and a three-tab row with two tabs crossing back
-into English is worse than no row.
+**The tab row** (`layouts/partials/views-nav.html`) sits on `/posts/`, `/series/`, `/archive/`
+and `/categories/` and names them as four views of one corpus: the full list with
+descriptions, the same posts grouped into reading sequences, every title by year, the
+corpus cut by subject. Series joined the row in the November 2026 rewrite, when it left the
+main nav (the nav entry **Writing** points at `/posts/`). It is **English-only and
+deliberately so** — the archive does not exist in Hebrew, and a tab row with tabs crossing
+back into English is worse than no row.
 
 **`/archive/`** is the only listing that fits on a screen or two. Dates use a literal Go
 layout (`Jan 2`) rather than `:date_medium`, which is the one place on the site that is
@@ -248,8 +250,10 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   image** — for those five there is nothing to describe that the heading does not say.
 - `layouts/partials/project-row.html` — the same data as a full-width row: thumbnail beside
   the prose, or prose alone at a 68ch measure when there is no image. `/projects/` uses it for
-  all thirteen entries at full length, and the homepage uses it for the single `hero: true`
-  entry clipped to 420. It prints **where the link goes** under the title — the host for a
+  every entry at full length; the homepage used it for the single `hero: true` entry until
+  the November 2026 rewrite took projects off the homepage (`hero` and `featured` in
+  `data/projects.yaml` are now unused by any template, kept for the day a teaser returns).
+  It prints **where the link goes** under the title — the host for a
   hosted thing, `owner/repo` for a GitHub URL — derived from the URL rather than stored,
   because a second field is one more thing to keep true. It is suppressed when it would
   merely repeat the title (accessinfo.hk).
@@ -258,16 +262,30 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   `code` = a repository), because thirteen rows in one list asked the reader to work out from
   each description whether a thing was a website or a checkout. `layouts/projects/list.html`
   **fails the build** if the two groups do not add up to the whole file: a misspelt `kind`
-  would otherwise drop a project from the site without a trace. The homepage keeps its hero
-  row and featured grid — it is a teaser, not a discovery surface, and the images earn their
-  place there. The card grid could not carry that page: the descriptions run from 108
+  would otherwise drop a project from the site without a trace. The card grid could not carry
+  that page: the descriptions run from 108
   characters to 862, so half of it was ragged and the longest sat in a 45-character column.
   The row links only its title — a separate "View on GitHub" CTA was a second link to the same
   URL, and it was wrong for the five entries that are not on GitHub at all.
-- The homepage order is bio, what I do, **the book** (English only, with a status line
-  from `data/book.yaml`, #53), start here, series, recent posts, **projects last**. The
-  English homepage also emits the site's one `Person` JSON-LD record
-  (`layouts/partials/person-schema.html`): job title, places, `knowsAbout`, the book.
+- **The homepage is a pitch, not a bio** (November 2026 rewrite, written against the
+  October 2026 market research): the proposition in one sentence (`.lede`), one paragraph,
+  three proofs with their evidence (`.proof-grid`), **Who I work with** — three stacked
+  cards, one per buyer (teams shipping LLM systems; banks and insurers under HKMA ART and
+  MAS; evaluation and oversight research), each in that buyer's vocabulary with a reading
+  path — the availability box pointing at `/work/`, `/cv/` and `/contact/`, a credentials
+  strip, then **the book** (English only, with a status line from `data/book.yaml`, #53),
+  start here, and the three latest posts. The series list and the projects grid left the
+  English homepage (the Hebrew one keeps the series list: five of its seven posts are one
+  series); `/projects/` is one link away. The English homepage also emits the site's one
+  `Person` JSON-LD record (`layouts/partials/person-schema.html`). Regulator facts on the
+  homepage and `/work/` (HKMA ART, 15 October 2026, the agentic discussion paper's registry
+  and intervention mechanisms; MAS guidelines, 7 October 2026, in force 7 October 2027)
+  were checked against the regulators' own releases; re-check before restating them.
+- `/work/` is the selling page: the same three buyers, each with the problem in their
+  words, what gets built, one example (only what the CV already says about HSBC), what to
+  read, then the work in the field's terms as a table and how an engagement runs. No rates,
+  no testimonials, no availability date: the contract decision is live, so "open to" stays.
+  The nav is Home · Work · Research · Book · Writing · CV · Contact.
 - `/cv/` is a section like `/contact/`: the CV as a page. The two-page PDF is
   `static/guy-freeman-cv.pdf`, linked from `/contact/` only, and is replaced by hand
   when the CV in the Drive folder changes. **Neither carries a phone number or a
@@ -277,8 +295,6 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   site's own woff2 fonts (not committed; see the script's docstring):
   `static/images/og-default.png` for every page without its own, and
   `static/images/og-book.png` for the book, named in `layouts/index.bookhead.html`.
-- Projects run last on the homepage. They used to run third, which put roughly 2,000px of
-  grid between the bio and any of the writing.
 - `layouts/partials/darkmode-init.html` — sets `data-theme` from a blocking script in
   `<head>`. It has to run before the first paint; when this lived with the toggle wiring at
   the end of `<body>`, dark-mode readers saw the whole page render light and then flip.

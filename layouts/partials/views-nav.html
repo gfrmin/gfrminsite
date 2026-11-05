@@ -1,6 +1,8 @@
-{{/* The three ways into 37 posts, shown as a tab row on all three of them:
-     /posts/ is the full list with descriptions, /archive/ is every title by year,
-     /categories/ is the same corpus cut by subject.
+{{/* The four ways into the posts, shown as a tab row on all four of them:
+     /posts/ is the full list with descriptions, /series/ the same posts grouped
+     into reading sequences, /archive/ every title by year, /categories/ the
+     corpus cut by subject. Series joined the row in the November 2026 rewrite,
+     when it left the main nav (Writing points at /posts/).
 
      English only. The archive does not exist in Hebrew — five translated posts,
      all from one year, would make it a worse version of /he/posts/ — so rather
@@ -10,6 +12,7 @@
 {{- $cur := .RelPermalink }}
 {{- $tabs := slice
     (dict "url" (relLangURL "posts/")      "name" (i18n "viewList"))
+    (dict "url" (relLangURL "series/")     "name" (i18n "viewSeries"))
     (dict "url" (relLangURL "archive/")    "name" (i18n "viewArchive"))
     (dict "url" (relLangURL "categories/") "name" (i18n "viewCategories")) }}
 <nav class="views-nav" aria-label="{{ i18n "viewsLabel" }}">
