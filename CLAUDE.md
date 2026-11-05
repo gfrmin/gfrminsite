@@ -262,9 +262,8 @@ Hebrew posts live at `/he/posts/<slug>/` — not `/posts/<slug>/he/`. A recent f
   `code` = a repository), because thirteen rows in one list asked the reader to work out from
   each description whether a thing was a website or a checkout. `layouts/projects/list.html`
   **fails the build** if the two groups do not add up to the whole file: a misspelt `kind`
-  would otherwise drop a project from the site without a trace. The homepage keeps its hero
-  row and featured grid — it is a teaser, not a discovery surface, and the images earn their
-  place there. The card grid could not carry that page: the descriptions run from 108
+  would otherwise drop a project from the site without a trace. The card grid could not carry
+  that page: the descriptions run from 108
   characters to 862, so half of it was ragged and the longest sat in a 45-character column.
   The row links only its title — a separate "View on GitHub" CTA was a second link to the same
   URL, and it was wrong for the five entries that are not on GitHub at all.
