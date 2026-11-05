@@ -2150,6 +2150,86 @@ blockquote a,
   margin: calc(var(--space-md) * -1) 0 var(--space-lg);
 }
 
+/* --- The pitch (homepage, November 2026 rewrite) ---------------------- */
+/* The proposition is one sentence in the display face at --fs-h3: larger than
+   the prose, smaller than the h1 above it, so it reads as the first line of the
+   page rather than as a second title. */
+.lede {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: var(--lh-snug);
+  margin: 0 0 var(--space-md);
+}
+
+/* Three proofs, each a figure over its sentence and a link to the evidence. The
+   figure is at --fs-h2 in the display face with tabular numerals; the sentence in
+   the UI face at --fs-small on --text-secondary (5.16:1 on the page ground). The
+   ochre rule above each is the same structural ochre the h2 rules use. Logical
+   properties only, so RTL needs no pair. */
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-lg);
+  margin: var(--space-xl) 0;
+}
+
+.proof {
+  border-block-start: 2px solid var(--brand-secondary);
+  padding-block-start: var(--space-md);
+}
+
+.proof-figure {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--lh-tight);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-xs);
+}
+
+.proof-label {
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  line-height: var(--lh-snug);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* The three audience cards stack full-width: each is a paragraph of prose and
+   a reading path, which at a third of the measure would run to a dozen short
+   lines, and at the auto-fit width the third card sat alone under two. */
+.service-grid.audiences {
+  grid-template-columns: 1fr;
+}
+
+/* The reading path at the foot of each audience card: metadata-sized, in the UI
+   face, on --text-secondary rather than --text-muted because it sits on the card
+   ground at --fs-meta, which is normal-size text and owes the full 4.5:1. */
+.service-card .reading-path {
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  color: var(--text-secondary);
+  margin-top: var(--space-md);
+}
+
+/* The credentials strip under the availability box: one centred line of
+   metadata, the dots doing the separating. */
+.credentials {
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  color: var(--text-secondary);
+  text-align: center;
+  margin: var(--space-lg) 0 var(--space-xl);
+}
+
+/* The one link to /projects/ that remains on the homepage. */
+.home-projects-link {
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  margin: var(--space-lg) 0 0;
+}
+
 /* --- The book (homepage) ---------------------------------------------- */
 /* Title and subtitle on one line, on the existing scale: the title at --fs-h3 in
    the display face, the subtitle in the UI face at --fs-small, muted. The lede

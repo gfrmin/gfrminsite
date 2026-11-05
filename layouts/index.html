@@ -48,11 +48,15 @@
        reasons, and five posts of the Hebrew site are the Velotix series, which the
        series block below already presents as a sequence. */}}
   {{ if eq .Language.Lang "en" }}
-  <h2>{{ i18n "homeStartHere" }}</h2>
+  <h2 id="start-here">{{ i18n "homeStartHere" }}</h2>
   <p class="section-lede">{{ i18n "homeStartHereLede" }}</p>
   {{ partial "start-here.html" . }}
   {{ end }}
 
+  {{/* The series list stays on the Hebrew homepage, where five of the seven
+       posts are one series and it is the way in. The English homepage sends a
+       reader to /posts/, whose tab row has a Series view. */}}
+  {{ if eq .Language.Lang "he" }}
   {{ with site.GetPage "/series" }}
   <h2>{{ i18n "homeSeries" }}</h2>
   <ul class="home-series">
@@ -65,29 +69,22 @@
   </ul>
   <a href="{{ "series/" | relURL }}" class="cta-pill">{{ i18n "seeAllSeriesLink" }} {{ $fwd | safeHTML }}</a>
   {{ end }}
+  {{ end }}
 
   <h2>{{ i18n "homeRecentPosts" }}</h2>
   <div class="post-listing">
-    {{ range ((where .Site.RegularPages "Section" "posts").ByDate.Reverse | first 5) }}
+    {{ range ((where .Site.RegularPages "Section" "posts").ByDate.Reverse | first 3) }}
     {{ partial "post-card.html" (dict "post" . "level" 3) }}
     {{ end }}
   </div>
   <a href="{{ "posts/" | relURL }}" class="cta-pill">{{ i18n "seeAllPosts" }} {{ $fwd | safeHTML }}</a>
 
-  {{/* data/projects.yaml is English-only, so the grid is skipped rather than
-       served as a block of English inside the Hebrew page. */}}
+  {{/* The projects grid left the homepage in the November 2026 rewrite: the page
+       sells the work to its three buyers, and /projects/ is one link away from
+       Research and Work. The Person record stays with the English page. */}}
   {{ if eq .Language.Lang "en" }}
   {{ partial "person-schema.html" . }}
-  <h2>{{ i18n "homeProjects" }}</h2>
-  {{ range where hugo.Data.projects "hero" true }}
-  {{ partial "project-row.html" (dict "project" . "clip" 420 "level" 3) }}
-  {{ end }}
-  <div class="project-grid">
-    {{ range sort (where hugo.Data.projects "featured" true) "weight" }}
-    {{ partial "project-card.html" (dict "project" . "clip" 200 "level" 3) }}
-    {{ end }}
-  </div>
-  <a href="{{ "projects/" | relURL }}" class="cta-pill">{{ i18n "seeAllProjects" }} {{ $fwd | safeHTML }}</a>
+  <p class="home-projects-link"><a href="{{ "projects/" | relURL }}">{{ i18n "seeAllProjects" }} {{ $fwd | safeHTML }}</a></p>
   {{ end }}
 </main>
 {{ end }}

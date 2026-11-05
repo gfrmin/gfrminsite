@@ -5,6 +5,7 @@
 <main class="content {{ if eq .Language.Direction "rtl" }}rtl-content{{ end }}">
   <h1>{{ .Title }}</h1>
   {{ .Content }}
+  {{ partial "views-nav.html" . }}
 
   <div class="series-index">
     {{ range .Pages.ByDate.Reverse }}

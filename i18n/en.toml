@@ -112,6 +112,9 @@ other = "Ways to browse"
 [viewList]
 other = "Full list"
 
+[viewSeries]
+other = "Series"
+
 [viewArchive]
 other = "Archive"
 
