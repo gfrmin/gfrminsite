@@ -13,8 +13,8 @@ I'm a Bayesian statistician. For a team shipping an LLM or agent system, I build
 <p class="proof-label">task completion at Booking.com, after the evaluation I designed redesigned the system; latency down an order of magnitude. <a href="/work/#ship">The work</a></p>
 </div>
 <div class="proof">
-<p class="proof-figure">1 line</p>
-<p class="proof-label">of ablation beat my own agent. The paper was withdrawn and the reason published. <a href="/posts/credence-paper/">The Ablation That Beat the Agent</a></p>
+<p class="proof-figure">1 paper</p>
+<p class="proof-label">withdrawn when a one-line ablation beat my own agent, and the reason published instead. <a href="/posts/credence-paper/">The Ablation That Beat the Agent</a></p>
 </div>
 <div class="proof">
 <p class="proof-figure">81 / 81</p>
@@ -27,13 +27,13 @@ I'm a Bayesian statistician. For a team shipping an LLM or agent system, I build
 <div class="service-grid audiences">
 <div class="service-card">
 <h3>Teams shipping LLM and agent systems</h3>
-<p>You have a system and a demo. You don't have the evaluation that would say whether the next change made it better. I build that: metrics tied to the ship decision, an LLM-as-judge validated against human labels with its variance decomposed, paired comparisons with the power to mean something, ablations that tell a real regression from an artefact of the evaluation, and criteria fixed before the run.</p>
-<p class="reading-path">Read: <a href="/posts/signed-before-the-code-existed/">Signed Before the Code Existed</a> · <a href="/posts/openclaw-cheaper-measure-it-yourself/">Measure It Yourself</a> · <a href="/posts/credence-paper/">The Ablation That Beat the Agent</a></p>
+<p>You have a system that works in the demo. What is usually missing is the evaluation that says whether the next change made it better. I build that: metrics tied to the ship decision, an LLM-as-judge validated against human labels with its variance decomposed, paired comparisons with the power to mean something, ablations that tell a real regression from an artefact of the evaluation, and criteria fixed before the run.</p>
+<p class="reading-path">Read: <a href="/posts/signed-before-the-code-existed/">Signed Before the Code Existed</a> · <a href="/posts/openclaw-cheaper-measure-it-yourself/">Make Your Agent Cheaper, and Measure It Yourself</a> · <a href="/posts/credence-paper/">The Ablation That Beat the Agent</a></p>
 </div>
 <div class="service-card">
 <h3>Banks and insurers governing AI</h3>
-<p>The HKMA's ART framework (October 2026) asks who is accountable for each AI application and is about to ask for a registry of material AI agents and a way to intervene in them; MAS's guidelines take effect in October 2027 and make you answerable for third-party AI too. I build the evidence: a tamper-evident record of what an agent did and under which rule, obligations derived from that record, change control for the rules themselves, and evaluation of vendor and in-house GenAI against pre-stated criteria. Financial crime is where I started: address data turned into fraud signals.</p>
-<p class="reading-path">Read: <a href="/work/#banks">what that looks like</a> · <a href="/book/ch-03-the-record.html">The record</a> · <a href="/book/ch-09-the-law-changes-under-itself.html">The law changes under itself</a></p>
+<p>The HKMA's ART framework (October 2026) puts accountability and human oversight first and is about to propose a registry of material AI agents and ways to intervene in them; MAS's guidelines take effect in October 2027 and make you answerable for third-party AI too. I build the evidence a second line can sign off: an audit trail of what an agent did and under which rule, the inventory and the obligations derived from it, change control for the rules themselves, and independent validation of vendor and in-house GenAI against pre-stated criteria. I've worked inside HSBC twice, and at Prudential and EY. Financial crime is where this started: address data turned into fraud signals.</p>
+<p class="reading-path">Read: <a href="/work/#banks">what that looks like</a> · the audit trail (<a href="/book/ch-03-the-record.html">book, chapter 3</a>) · change control for the rules (<a href="/book/ch-09-the-law-changes-under-itself.html">chapter 9</a>)</p>
 </div>
 <div class="service-card">
 <h3>Evaluation and oversight research</h3>
